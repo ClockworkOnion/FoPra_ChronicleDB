@@ -1,5 +1,5 @@
 import { TabMenuComponent } from './components/tab-menu/tab-menu.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './page-home/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

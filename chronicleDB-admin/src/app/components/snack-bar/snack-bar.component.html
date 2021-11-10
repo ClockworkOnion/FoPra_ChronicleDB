@@ -1,7 +1,8 @@
 <mat-form-field appearance="fill">
-    <mat-label>Connect to</mat-label>
-    <input matInput  #message>
-  </mat-form-field>
-  
- 
-  <button mat-stroked-button (click)="openSnackBar(message.value)">Create Stream</button>
+  <mat-label>Connect to</mat-label>
+  <input matInput #message />
+</mat-form-field>
+&nbsp;
+<button mat-stroked-button (click)="openSnackBar(message.value)">
+  Create Stream
+</button>

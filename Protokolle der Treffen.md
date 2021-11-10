@@ -49,3 +49,15 @@ Wir wollen mit ChronicleDB im Code kommunizieren und die Anfragen, die wir in Po
 
 ## Zwischenzeitige Absprachen
 Wir haben uns dazu entschlossen, [Angular Material](https://material.angular.io/) zu verwenden.
+
+
+
+
+## Besprechung vom 10.11.2021
+Anwesend: Lars Happel, Johannes Buder, Davit Davtyan
+
+### GUI Design besprechen
+Wir haben uns eine Skizze erstellt, wie wir uns die Website vorstellen und angefangen, dies umzusetzen.
+
+### ChronicleDB im Code anfragen
+Wir haben bisher immer Fehlermeldungen bekommen, wenn wir anfragen an ChronicleDB stellen. Wir haben beschlossen, bei der Besprechung am Donnerstag dieses Thema nochmal aufzugreifen.

@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './page-home/dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
@@ -22,6 +22,12 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { TabMenuComponent } from './components/tab-menu/tab-menu.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { GeneralStreamComponent } from './page-home/general-stream/general-stream.component';
+import { CreateStreamComponent } from './page-home/create-stream-card/create-stream/create-stream.component';
+import { StreamEventPropertiesComponent } from './page-home/create-stream-card/stream-event-properties/stream-event-properties.component';
+import { MatSelectModule} from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +35,11 @@ import {MatInputModule} from '@angular/material/input';
     DashboardComponent,
     ExpansionPanelComponent,
     SnackBarComponent,
-    TabMenuComponent
+    TabMenuComponent,
+    CreateStreamComponent,
+    GeneralStreamComponent,
+    StreamEventPropertiesComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -49,6 +59,9 @@ import {MatInputModule} from '@angular/material/input';
     MatTabsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

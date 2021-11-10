@@ -1,0 +1,12 @@
+<p>stream-event-properties works!</p>
+<h4>Basic mat-select</h4>
+<mat-form-field appearance="fill">
+  <mat-label>Choose Format</mat-label>
+  <mat-select multiple>
+    <mat-option (onSelectionChange)="getValues($event)" *ngFor="let input of inputs" [value]="input.value">
+      {{input.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button onclick =""mat-button color="primary">Select</button>
+

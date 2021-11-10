@@ -1,0 +1,15 @@
+<div>
+  <div>
+    <mat-form-field  appearance="fill" class="urlInput">
+      <mat-label>ChronicleDB Url</mat-label>
+      <input matInput [(ngModel)]="chronicleURL" />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-label class="shadowLabel">Current Stream</mat-label>
+  
+    <button mat-icon-button color="primary" aria-label="refresh current stream" (click) = "refreshCurrentStream()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+</div>
