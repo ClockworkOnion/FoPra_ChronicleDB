@@ -1,4 +1,11 @@
+<!-- 
 <p>create-stream works!</p>
 
-<app-stream-event-properties>
+<app-stream-event-properties id="app-stream-property-01">
 </app-stream-event-properties>
+-->
+<div *ngFor='let property of properties'>
+    <app-stream-event-properties [attr.name]="property"></app-stream-event-properties>
+</div>
+
+<input type="button" value="Add property" (click)="addProperty()">
