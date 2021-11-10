@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {path:"home",component:DashboardComponent},
   {path:"settings",component:TabMenuComponent},
+  {path: '**', redirectTo: 'home'} // als letztes wird alles andere zu home weitergeleitet...
   
 ];
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChronicleService } from 'src/app/services/chronicle.service';
 
 @Component({
   selector: 'app-general-stream',
@@ -7,14 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GeneralStreamComponent implements OnInit {
   chronicleURL = "";
+  currentStreamText = "No Stream available";
 
-  constructor() { }
+  constructor(private service: ChronicleService) { }
 
   ngOnInit(): void {
   }
 
   refreshCurrentStream() {
-    
+    this.currentStreamText = this.service.existsStream() ? this.service.getStreamInfo() : "No Stream available"
   }
-
 }

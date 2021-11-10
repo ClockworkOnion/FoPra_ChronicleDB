@@ -27,6 +27,7 @@ import { CreateStreamComponent } from './page-home/create-stream-card/create-str
 import { StreamEventPropertiesComponent } from './page-home/create-stream-card/stream-event-properties/stream-event-properties.component';
 import { MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { ChronicleService } from './services/chronicle.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
 
   ],
-  providers: [],
+  providers: [ChronicleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

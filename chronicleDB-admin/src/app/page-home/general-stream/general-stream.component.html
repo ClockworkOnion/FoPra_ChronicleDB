@@ -1,4 +1,4 @@
-<div>
+<div style="padding: 32pt; ">
   <div>
     <mat-form-field  appearance="fill" class="urlInput">
       <mat-label>ChronicleDB Url</mat-label>
@@ -6,7 +6,7 @@
     </mat-form-field>
   </div>
   <div>
-    <mat-label class="shadowLabel">Current Stream</mat-label>
+    <mat-label class="shadowLabel">{{currentStreamText}}</mat-label>
   
     <button mat-icon-button color="primary" aria-label="refresh current stream" (click) = "refreshCurrentStream()">
       <mat-icon>refresh</mat-icon>
