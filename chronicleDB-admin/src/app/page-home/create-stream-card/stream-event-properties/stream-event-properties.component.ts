@@ -1,3 +1,4 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 
@@ -25,24 +26,35 @@ export class StreamEventPropertiesComponent implements OnInit {
     {value: 'VarString', viewValue: 'VarString'},
   ];
 
+  selectedInputs = new Set<String>();
+  sortedInputs = new Array<String>();
+  
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  // Testmethode von Stackoverflow
+  /**
+   * Updates selected values (sortedInputs) from mat-select multiple input
+   * @param event 
+   */
   getValues(event: {
     isUserInput: any;
-    source: { value: any; selected: any };
+    source: { value: String; selected: any };
   }) {
     if (event.isUserInput) {
       if (event.source.selected === true) {
-        console.log(event.source.value + " ist " + event.source.selected)
+        // console.log(event.source.value + " is now " + event.source.selected + "!")
+        this.selectedInputs.add(event.source.value);
       } else {
-        console.log(event.source.value)
+        // console.log(event.source.value + " is now " + event.source.selected + "!")
+        this.selectedInputs.delete(event.source.value);
       }
-      console.log(event);
-      
+      let allValues: String = "Selected items: ";
+      this.sortedInputs = Array.from(this.selectedInputs).sort();
+      this.sortedInputs.forEach(x => allValues = allValues.concat(x.toString() + ", "));
+      console.log(allValues);
     }
   }
 
