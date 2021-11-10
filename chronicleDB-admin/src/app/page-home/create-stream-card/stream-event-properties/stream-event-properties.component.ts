@@ -37,10 +37,12 @@ export class StreamEventPropertiesComponent implements OnInit {
   }) {
     if (event.isUserInput) {
       if (event.source.selected === true) {
-        console.log(event.source.value)
+        console.log(event.source.value + " ist " + event.source.selected)
       } else {
         console.log(event.source.value)
       }
+      console.log(event);
+      
     }
   }
 
