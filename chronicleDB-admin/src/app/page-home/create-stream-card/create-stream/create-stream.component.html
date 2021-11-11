@@ -4,10 +4,15 @@
 <app-stream-event-properties id="app-stream-property-01">
 </app-stream-event-properties>
 -->
+
+
 <div *ngFor='let property of properties'>
     <app-stream-event-properties [attr.name]="property"></app-stream-event-properties>
+    <button mat-mini-fab color="primary" aria-label="Remove this Element" (click)="deleteProperty(property)">
+        <mat-icon>remove</mat-icon>
+    </button>
 </div>
 
-<input type="button" value="Add property" (click)="addProperty()">
- 
-<input type="button" mat-button color="primary" value="Remove property" (click)="deleteProperty()"><!-- Wie geht das mit dem hübschen Button?? -->
+<button mat-fab color="primary" aria-label="Add a new Element" (click)="addProperty()">
+    <mat-icon>add</mat-icon>
+</button>

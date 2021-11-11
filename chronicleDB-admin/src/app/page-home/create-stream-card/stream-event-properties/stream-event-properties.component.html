@@ -1,14 +1,26 @@
-<!-- 
-<p>stream-event-properties works!</p>
-<h4>Basic mat-select</h4>
--->
-<mat-form-field appearance="fill">
-  <mat-label>Choose Format</mat-label>
-  <mat-select multiple>
-    <mat-option (onSelectionChange)="getValues($event)" *ngFor="let input of inputs" [value]="input.value">
-      {{input.viewValue}}
-    </mat-option>
+<mat-form-field>
+  <mat-select placeholder="Select List if List or Single" name="data_level" (selectionChange)="selectionChangeAction(data_level)" [(ngModel)]="data_level">
+    <mat-option *ngFor= "let event of eventList" [value]="event.type1">{{event.type1}}</mat-option>
   </mat-select>
 </mat-form-field>
-<button onclick =""mat-button color="primary">Select</button>
+&nbsp;
+<mat-form-field>
+  <mat-select placeholder="Select Type" name="data_title" (selectionChange)="selectionChangeAction2(data_title)" [(ngModel)]="data_title" [disabled]="!data_level">
+    <mat-option *ngFor="let dataType of dataTypeList" [value]="dataType['type2']">{{ dataType["type2"] }}</mat-option>
+  </mat-select>
+</mat-form-field>
+&nbsp;
+<mat-form-field>
+  <mat-select placeholder="Select Size" name="data_size" [(ngModel)]="data_size" [disabled]="!data_title">
+    <mat-option *ngFor="let dataSize of dataSizeList" [value]="dataSize">{{ dataSize }}</mat-option>
+  </mat-select>
+</mat-form-field>
+&nbsp;
+<mat-form-field  *ngIf="data_title === 'String'"   appearance="fill">
+  <mat-label>Size</mat-label>
+  <input matInput [(ngModel)]="stringSize" />
+</mat-form-field>
+&nbsp;&nbsp;
+
+You selected: {{data_level}}  {{data_title}}  {{data_size}}
 

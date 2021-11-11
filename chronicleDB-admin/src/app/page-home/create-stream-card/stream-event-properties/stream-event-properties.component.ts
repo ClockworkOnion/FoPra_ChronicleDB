@@ -12,50 +12,63 @@ interface Inputs {
   templateUrl: './stream-event-properties.component.html',
   styleUrls: ['./stream-event-properties.component.css']
 })
-export class StreamEventPropertiesComponent implements OnInit {
-  toppings = new FormControl();
+export class StreamEventPropertiesComponent {
+  data_level :any;
+  
+  data_title : any;
+  dataTypeList =[];
 
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  data_size :any;
+  dataSizeList=[];
 
-  inputs: Inputs[] = [
-    {value: '"U8"', viewValue: '"U8"'},
-    {value: 'U16', viewValue: 'U16'},
-    {value: 'F32', viewValue: 'F32'},
-    {value: 'F62', viewValue: 'F42'},
-    {value: 'ConstString', viewValue: 'ConstString'},
-    {value: 'VarString', viewValue: 'VarString'},
-  ];
-
-  selectedInputs = new Set<String>();
-  sortedInputs = new Array<String>();
+  stringSize: any = 5;
   
 
-  constructor() { }
+  constructor() {}
+  
+  eventList:any=[
+    {
+      "type1":"List", dataTypeList:[
+        {"type2":"Integer",dataSizeList:[ "8","16","32","64"]},
+        {"type2":"Unsigned",dataSizeList:[ "8","16","32","64"]},    
+        {"type2":"Float",dataSizeList:["32","64"]}
+      ]
+    },
+    {
+      "type1":"Single",dataTypeList:[
+        {"type2":"Integer",dataSizeList:[ "8","16","32","64"]},
+        {"type2":"Unsigned",dataSizeList:[ "8","16","32","64"]},    
+        {"type2":"Float",dataSizeList:["32","64"]},
+        {"type2":"String",dataSizeList:["ConstString","VarString"]}
+      ]
+    },
+  ];
 
-  ngOnInit(): void {
-  }
-
-  /**
-   * Updates selected values (sortedInputs) from mat-select multiple input
-   * @param event 
-   */
-  getValues(event: {
-    isUserInput: any;
-    source: { value: String; selected: any };
-  }) {
-    if (event.isUserInput) {
-      if (event.source.selected === true) {
-        // console.log(event.source.value + " is now " + event.source.selected + "!")
-        this.selectedInputs.add(event.source.value);
-      } else {
-        // console.log(event.source.value + " is now " + event.source.selected + "!")
-        this.selectedInputs.delete(event.source.value);
+  selectionChangeAction(typ:any){
+    let dropDownData = this.eventList.find((data:any)=> data.type1 === typ);
+    console.log(dropDownData);
+    if(dropDownData){
+      this.dataTypeList = dropDownData.dataTypeList;
+      if(this.dataTypeList){
+        this.data_title = (this.dataTypeList[0] as any).type2;
       }
-      let allValues: String = "Selected items: ";
-      this.sortedInputs = Array.from(this.selectedInputs).sort();
-      this.sortedInputs.forEach(x => allValues = allValues.concat(x.toString() + ", "));
-      console.log(allValues);
+    }else{
+      this.dataTypeList =[]
     }
-  }
 
+    this.selectionChangeAction2(this.data_title)
+  }
+  
+  selectionChangeAction2(typ:any){
+    let dropDownData : any = this.dataTypeList.find((data:any)=> data.type2 === typ);
+    console.log(dropDownData);
+    if(dropDownData){
+      this.dataSizeList = dropDownData.dataSizeList;
+      if(this.dataSizeList){
+        this.data_size = this.dataSizeList[0];
+      }
+    }else{
+      this.dataSizeList =[]
+    }
+  }  
 }

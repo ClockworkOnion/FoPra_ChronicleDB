@@ -63,7 +63,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     MatSelectModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [ChronicleService],
   bootstrap: [AppComponent]

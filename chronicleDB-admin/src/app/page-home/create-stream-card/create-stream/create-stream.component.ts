@@ -21,8 +21,9 @@ export class CreateStreamComponent implements OnInit {
     this.properties.push("property"+this.propertyCount);
   }
 
-  deleteProperty() {
-    this.properties.splice(this.propertyCount-1, 1); // geht das so??
+  deleteProperty(property: any) {
+    let index = this.properties.findIndex(data => data === property);
+    this.properties.splice(index, 1);
     this.propertyCount = (this.propertyCount == 0 ? 0 : this.propertyCount-1);
   }
 
