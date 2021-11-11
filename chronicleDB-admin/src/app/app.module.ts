@@ -28,6 +28,7 @@ import { StreamEventPropertiesComponent } from './page-home/create-stream-card/s
 import { MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { ChronicleService } from './services/chronicle.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { ChronicleService } from './services/chronicle.service';
     MatInputModule,
     MatSelectModule,
     FormsModule,
-
+    HttpClientModule
   ],
   providers: [ChronicleService],
   bootstrap: [AppComponent]
