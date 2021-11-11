@@ -21,7 +21,7 @@ export class StreamEventPropertiesComponent {
   dataSize :any;
   currentDataSizeList=[];
 
-  stringSize: any = 5;
+  stringOrListSize: any = 5;
   
 
   constructor() {}
@@ -46,7 +46,6 @@ export class StreamEventPropertiesComponent {
 
   listOrSingleSelectionChanged(typ:any){
     let dropDownData = this.eventList.find((data:any)=> data.type1 === typ);
-    console.log(dropDownData);
     if(dropDownData){
       this.currentDataTypeList = dropDownData.dataTypeList;
       if(this.currentDataTypeList){
@@ -61,7 +60,6 @@ export class StreamEventPropertiesComponent {
   
   typeSelectionChanged(typ:any){
     let dropDownData : any = this.currentDataTypeList.find((data:any)=> data.type2 === typ);
-    console.log(dropDownData);
     if(dropDownData){
       this.currentDataSizeList = dropDownData.dataSizeList;
       if(this.currentDataSizeList){

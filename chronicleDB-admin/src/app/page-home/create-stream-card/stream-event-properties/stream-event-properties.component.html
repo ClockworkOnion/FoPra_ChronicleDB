@@ -11,16 +11,17 @@
 </mat-form-field>
 &nbsp;
 <mat-form-field>
-  <mat-select placeholder="Select Size" name="dataSize" [(ngModel)]="dataSize" [disabled]="!dataType">
+  <mat-select placeholder="Select Subtype" name="dataSize" [(ngModel)]="dataSize" [disabled]="!dataType">
     <mat-option *ngFor="let dataSize of currentDataSizeList" [value]="dataSize">{{ dataSize }}</mat-option>
   </mat-select>
 </mat-form-field>
 &nbsp;
-<mat-form-field  *ngIf="dataType === 'String'"   appearance="fill">
+<mat-form-field  *ngIf="dataType === 'String' || (dataSingleOrList && dataSingleOrList === 'List')" appearance="fill">
   <mat-label>Size</mat-label>
-  <input matInput [(ngModel)]="stringSize" />
+  <input matInput [(ngModel)]="stringOrListSize" />
 </mat-form-field>
-You selected: {{dataSingleOrList}}  {{dataType}}  {{dataSize}}
+You selected: {{dataSingleOrList}}  {{dataType}}  {{dataSize}}  {{(dataType === 'String' || (dataSingleOrList && dataSingleOrList === 'List')) ? stringOrListSize : ""}}
+<!-- Sry, die If bedingung ist ein bischen lang geworden... Muss erst testen, ob es überhaupt definiert ist...-->
 &nbsp;&nbsp;
 
 
