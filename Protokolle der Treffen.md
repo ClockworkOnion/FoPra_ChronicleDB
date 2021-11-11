@@ -61,3 +61,12 @@ Wir haben uns eine Skizze erstellt, wie wir uns die Website vorstellen und angef
 
 ### ChronicleDB im Code anfragen
 Wir haben bisher immer Fehlermeldungen bekommen, wenn wir anfragen an ChronicleDB stellen. Wir haben beschlossen, bei der Besprechung am Donnerstag dieses Thema nochmal aufzugreifen.
+
+
+
+
+## Besprechung vom 11.11.21
+Anwesend: Lars Happel, Johannes Buder, Davit Davtyan
+
+### Entscheidung für Design des GUIs beim Erstellen eines Streams
+Wir haben uns dazu entschieden, die Erstellung des Streams (die einzelnen Bestandteile) über mehrere Dropdown-Menüs zu gewährleisten. Damit kann man dann einige Komponenten designen und mit + oder - Buttons einzelne löschen oder hinzufügen. In Zukunft wollen wir vielleicht noch die Reihenfolge nachträglich durch Drag-and-Drop oder Knöpfe manipulierbar machen. Ebenso wollen wir erst später verschachtelte Compounds ermöglichen und zunächst eine einfachere Funktionalität bieten.
