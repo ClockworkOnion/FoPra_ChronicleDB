@@ -13,13 +13,13 @@ interface Inputs {
   styleUrls: ['./stream-event-properties.component.css']
 })
 export class StreamEventPropertiesComponent {
-  data_level :any;
+  dataSingleOrList :any;
   
-  data_title : any;
-  dataTypeList =[];
+  dataType : any;
+  currentDataTypeList =[];
 
-  data_size :any;
-  dataSizeList=[];
+  dataSize :any;
+  currentDataSizeList=[];
 
   stringSize: any = 5;
   
@@ -44,31 +44,31 @@ export class StreamEventPropertiesComponent {
     },
   ];
 
-  selectionChangeAction(typ:any){
+  listOrSingleSelectionChanged(typ:any){
     let dropDownData = this.eventList.find((data:any)=> data.type1 === typ);
     console.log(dropDownData);
     if(dropDownData){
-      this.dataTypeList = dropDownData.dataTypeList;
-      if(this.dataTypeList){
-        this.data_title = (this.dataTypeList[0] as any).type2;
+      this.currentDataTypeList = dropDownData.dataTypeList;
+      if(this.currentDataTypeList){
+        this.dataType = (this.currentDataTypeList[0] as any).type2;
       }
     }else{
-      this.dataTypeList =[]
+      this.currentDataTypeList =[]
     }
 
-    this.selectionChangeAction2(this.data_title)
+    this.typeSelectionChanged(this.dataType)
   }
   
-  selectionChangeAction2(typ:any){
-    let dropDownData : any = this.dataTypeList.find((data:any)=> data.type2 === typ);
+  typeSelectionChanged(typ:any){
+    let dropDownData : any = this.currentDataTypeList.find((data:any)=> data.type2 === typ);
     console.log(dropDownData);
     if(dropDownData){
-      this.dataSizeList = dropDownData.dataSizeList;
-      if(this.dataSizeList){
-        this.data_size = this.dataSizeList[0];
+      this.currentDataSizeList = dropDownData.dataSizeList;
+      if(this.currentDataSizeList){
+        this.dataSize = this.currentDataSizeList[0];
       }
     }else{
-      this.dataSizeList =[]
+      this.currentDataSizeList =[]
     }
   }  
 }
