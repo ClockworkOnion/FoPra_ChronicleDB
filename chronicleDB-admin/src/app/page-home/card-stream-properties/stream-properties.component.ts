@@ -93,7 +93,8 @@ compressorList:any =[
   }
   submit(){
     
-    console.log(this.selectLogging,
+    console.log(
+      this.selectLogging,
       this.selectDebugging,
       this.inputFileName,
       this.inputTranslationName,
@@ -113,7 +114,7 @@ compressorList:any =[
       this.inputMaxDeltaQueue)
   }
   fillDefaults(){
-    this.selectLogging ="true";
+    this.selectLogging ="false";
       this.selectDebugging="false";
       this.inputFileName= "data0";
       this.inputTranslationName="translation"
