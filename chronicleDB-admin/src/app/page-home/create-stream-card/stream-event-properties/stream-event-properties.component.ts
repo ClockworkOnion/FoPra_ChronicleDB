@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-import { stringify } from '@angular/compiler/src/util';
-import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
-=======
 import { Component } from '@angular/core';
->>>>>>> bccb0c9eb90b10197a6bdc5106608e4119e49982
 
 @Component({
   selector: 'app-stream-event-properties',
