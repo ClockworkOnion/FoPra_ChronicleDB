@@ -28,18 +28,18 @@ export class StreamEventPropertiesComponent {
   
   eventList:any=[
     {
-      "type1":"List", dataTypeList:[
-        {"type2":"Integer",dataSizeList:[ "8","16","32","64"]},
-        {"type2":"Unsigned",dataSizeList:[ "8","16","32","64"]},    
-        {"type2":"Float",dataSizeList:["32","64"]}
-      ]
-    },
-    {
       "type1":"Single",dataTypeList:[
         {"type2":"Integer",dataSizeList:[ "8","16","32","64"]},
         {"type2":"Unsigned",dataSizeList:[ "8","16","32","64"]},    
         {"type2":"Float",dataSizeList:["32","64"]},
         {"type2":"String",dataSizeList:["ConstString","VarString"]}
+      ]
+    },
+    {
+      "type1":"List", dataTypeList:[
+        {"type2":"Integer",dataSizeList:[ "8","16","32","64"]},
+        {"type2":"Unsigned",dataSizeList:[ "8","16","32","64"]},    
+        {"type2":"Float",dataSizeList:["32","64"]}
       ]
     },
   ];
