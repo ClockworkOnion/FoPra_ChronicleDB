@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
 
-interface Inputs {
-  value: string;
-  viewValue: string;
-}
-
 @Component({
   selector: 'app-stream-event-properties',
   templateUrl: './stream-event-properties.component.html',
@@ -21,7 +16,7 @@ export class StreamEventPropertiesComponent {
 
   stringOrListSize: any = 5;
   
-
+  
   constructor() {}
   
   eventList:any=[
