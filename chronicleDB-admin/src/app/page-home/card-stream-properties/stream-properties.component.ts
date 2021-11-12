@@ -20,8 +20,29 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./stream-properties.component.css']
 })
 export class StreamPropertiesComponent implements OnInit {
-  compressor: any;
+ selectLogging:any;
+ selectDebugging:any;
+ inputFileName:any ;
+ inputTranslationName:any;
+ inputBootName:any;
+ inputMaxQueue:any
+ inputLogicalBlockSize:any;
+ inputMacroBlockSize:any;
+ inputSpareSpace:any;
+ inputMacroBlockPreallocation:any;
+ inputMacroBlockBatchallocation:any;
+ inputBlockCache:any;
+ inputNodeCache:any;
+ selectCompressor:any;
+ selectCompressorExtra:any;
+ selectCompressorSize:any;
+ selectRiverThreads:any;
+ inputMaxDeltaQueue:any;
 
+
+  
+  
+  compressor: any;
   compressorExtras=[];
   compressorExtra :any;
 
@@ -36,16 +57,8 @@ export class StreamPropertiesComponent implements OnInit {
     {value: "true", viewValue:"true"},
     {value: "false", viewValue:"false"}
   ];
-  /* this are specified in Stream.ini  dunno if neccessary to make input field for that
-translation:any[] =[
-  {value: "translation", viewValue:"Translation"},
-]
-boot: any[]=[
-  {value: ".boot", viewValue:"Boot"},
-];
-
+  /* 
 Lightweight index				= {"aggregate":{"SMA":{"cnt":0,"sum":0.0,"min":0.0,"max":0.0}},"projector_sequence":"Mono"}
-
 */
 lightweigtIndex :any ;
 riverThreads : any[]=[
@@ -58,46 +71,67 @@ riverThreads : any[]=[
 ]
 
 compressorList:any =[
-  {
-    "compressorName":"none",
-    compressorExtras:[
-      "none"
-    ]
-  },
-  {
-    "compressorName":"LZ4_Fast_No_Meta",
-    compressorExtras:[
-      "I32"
-    ]
-
-  },
-  {
-    "compressorName":"LZ4_Fast_With_Meta",
-    compressorExtras:[
-      "I32"
-    ]
-
-  },
-  {
-    "compressorName":"Sprintz",
-    compressorExtras:[
-      "is_8bits","data_dims", "is_delta"," write_size"
-    ]
-  },
+  {"compressorName":"none",compressorExtras:["none"]},
+  {"compressorName":"LZ4_Fast_No_Meta",compressorExtras:["I32"]},
+  {"compressorName":"LZ4_Fast_With_Meta",compressorExtras:["I32"]},
+  {"compressorName":"Sprintz", compressorExtras:["is_8bits","data_dims", "is_delta"," write_size"]},
   ];
-  compressorChangeAction(compressor:any ) {
-    this.compressorExtra="";
-    let dropDownData = this.compressorList.find((data: any) => data.compressorName === compressor);
+
+  compressorChangeAction(selectCompressor:any ) {
+    this.selectCompressorExtra="";
+    let dropDownData = this.compressorList.find((data: any) => data.compressorName === selectCompressor);
     if (dropDownData) {
       this.compressorExtras = dropDownData.compressorExtras;
       if(this.compressorExtras){
-        this.compressorExtra=this.compressorExtras[0];
+        this.selectCompressorExtra=this.compressorExtras[0];
       }
       
     } else {
       this.compressorExtras = [];
     }
 
+  }
+  submit(){
+    
+    console.log(this.selectLogging,
+      this.selectDebugging,
+      this.inputFileName,
+      this.inputTranslationName,
+      this.inputBootName,
+      this.inputMaxQueue,
+      this.inputLogicalBlockSize,
+      this.inputMacroBlockSize,
+      this.inputSpareSpace,
+      this.inputMacroBlockPreallocation,
+      this.inputMacroBlockBatchallocation,
+      this.inputBlockCache,
+      this.inputNodeCache,
+      this.selectCompressor,
+      this.selectCompressorExtra,
+      this.selectCompressorSize,
+      this.selectRiverThreads,
+      this.inputMaxDeltaQueue)
+  }
+  fillDefaults(){
+    this.selectLogging ="true";
+      this.selectDebugging="false";
+      this.inputFileName= "data0";
+      this.inputTranslationName="translation"
+      this.inputBootName =".boot";
+      this.inputMaxQueue=10;
+      this.inputLogicalBlockSize=32768,
+      this.inputMacroBlockSize=10;
+      this.inputSpareSpace=0.1;
+      this.inputMacroBlockPreallocation =300;
+      this.inputMacroBlockBatchallocation=300;
+      this.inputBlockCache=2500;
+      this.inputNodeCache=10000;
+      this.selectCompressor="LZ4_Fast_No_Meta";
+      this.selectCompressorExtra="I32";
+      this.selectCompressorSize=12;
+      this.selectRiverThreads = "t";
+      this.inputMaxDeltaQueue="10"
+      
   }
 
 
