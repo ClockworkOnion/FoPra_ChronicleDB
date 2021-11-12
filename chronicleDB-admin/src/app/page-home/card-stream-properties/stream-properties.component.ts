@@ -21,7 +21,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class StreamPropertiesComponent implements OnInit {
   compressor: any;
+
   compressorExtras=[];
+  compressorExtra :any;
 
   properties = ["property1"];
   propertyCount = 1;
@@ -34,18 +36,26 @@ export class StreamPropertiesComponent implements OnInit {
     {value: "true", viewValue:"true"},
     {value: "false", viewValue:"false"}
   ];
+  /* this are specified in Stream.ini  dunno if neccessary to make input field for that
 translation:any[] =[
   {value: "translation", viewValue:"Translation"},
 ]
 boot: any[]=[
   {value: ".boot", viewValue:"Boot"},
 ];
-multipleDiskQueueCheckpoint: any[]=[
-  "1","2","3","4","5","6","7","8","9","10"
-];
+
+Lightweight index				= {"aggregate":{"SMA":{"cnt":0,"sum":0.0,"min":0.0,"max":0.0}},"projector_sequence":"Mono"}
+
+*/
 lightweigtIndex :any ;
-logBlockSizeControl = new FormControl("",[Validators.required,Validators.max(15)]);
-matcher = new MyErrorStateMatcher();
+riverThreads : any[]=[
+    {value: "0", viewValue:"Pipeline bypassed"},
+    {value: "t", viewValue:"Number of CPU threads"},
+    {value: "c", viewValue:"Number of CPU cores"},
+    {value: "d", viewValue:"Default number threads"},
+    {value: "<number> ", viewValue:"<number> of threads"},
+    {value: "[t|c] - <number>", viewValue:"[t|c] - <number> of threads"}
+]
 
 compressorList:any =[
   {
@@ -75,6 +85,20 @@ compressorList:any =[
     ]
   },
   ];
+  compressorChangeAction(compressor:any ) {
+    this.compressorExtra="";
+    let dropDownData = this.compressorList.find((data: any) => data.compressorName === compressor);
+    if (dropDownData) {
+      this.compressorExtras = dropDownData.compressorExtras;
+      if(this.compressorExtras){
+        this.compressorExtra=this.compressorExtras[0];
+      }
+      
+    } else {
+      this.compressorExtras = [];
+    }
+
+  }
 
 
 
