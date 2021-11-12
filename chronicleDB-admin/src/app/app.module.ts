@@ -1,3 +1,4 @@
+import { StreamPropertiesComponent } from './page-home/card-stream-properties/stream-properties.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -22,14 +23,14 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { TabMenuComponent } from './components/tab-menu/tab-menu.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { GeneralStreamComponent } from './page-home/general-stream/general-stream.component';
-import { CreateStreamComponent } from './page-home/create-stream-card/create-stream/create-stream.component';
-import { StreamEventPropertiesComponent } from './page-home/create-stream-card/stream-event-properties/stream-event-properties.component';
+import { GeneralStreamComponent } from './page-home/card-general-stream/general-stream.component';
 import { MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { ChronicleService } from './services/chronicle.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StreamEventPropertiesComponent } from './page-home/card-stream-event-properties/stream-event-properties.component';
+import { StreamEventPropertiesGeneratorComponent } from './page-home/card-stream-event-properties/stream-event-properties-generator/stream-event-properties-generator.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +40,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     ExpansionPanelComponent,
     SnackBarComponent,
     TabMenuComponent,
-    CreateStreamComponent,
+    StreamPropertiesComponent,
     GeneralStreamComponent,
     StreamEventPropertiesComponent,
-    
+    StreamEventPropertiesGeneratorComponent
   ],
   imports: [
     BrowserModule,

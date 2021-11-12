@@ -1,5 +1,6 @@
  <div class="grid-container">
   <mat-grid-list cols="2" rowHeight="350px">
+
     <mat-grid-tile>
       <mat-card class="dashboard-card">
         <mat-card-header>
@@ -10,14 +11,28 @@
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title> Stream Properties </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <app-stream-properties></app-stream-properties>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
   </mat-grid-list>
+
+  
 
   <mat-grid-list cols="1">
     <mat-grid-tile>
       <mat-card class="dashboard-card">
         <mat-card-title> Customize Event </mat-card-title>
         <mat-card-content style="padding: 32pt;">
-          <app-create-stream></app-create-stream>
+          <app-stream-event-properties-generator></app-stream-event-properties-generator>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

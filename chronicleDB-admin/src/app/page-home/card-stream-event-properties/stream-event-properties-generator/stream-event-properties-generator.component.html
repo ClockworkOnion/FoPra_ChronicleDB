@@ -1,0 +1,10 @@
+<div *ngFor='let property of properties'>
+    <app-stream-event-properties [attr.name]="property"></app-stream-event-properties>
+    <button mat-mini-fab color="primary" aria-label="Remove this Element" (click)="deleteProperty(property)">
+        <mat-icon>remove</mat-icon>
+    </button>
+</div>
+
+<button mat-fab color="primary" aria-label="Add a new Element" (click)="addProperty()">
+    <mat-icon>add</mat-icon>
+</button>

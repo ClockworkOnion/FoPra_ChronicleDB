@@ -15,11 +15,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 
 @Component({
-  selector: 'app-create-stream',
-  templateUrl: './create-stream.component.html',
-  styleUrls: ['./create-stream.component.css']
+  selector: 'app-stream-properties',
+  templateUrl: './stream-properties.component.html',
+  styleUrls: ['./stream-properties.component.css']
 })
-export class CreateStreamComponent implements OnInit {
+export class StreamPropertiesComponent implements OnInit {
   compressor: any;
   compressorExtras=[];
 
@@ -89,17 +89,7 @@ compressorList:any =[
   ngOnInit(): void {
   }
 
-  addProperty() {
-    this.propertyCount++;
-    this.properties.push("property"+this.propertyCount);
-  }
-
-  deleteProperty(property: any) {
-    let index = this.properties.findIndex(data => data === property);
-    this.properties.splice(index, 1);
-    this.propertyCount = (this.propertyCount == 0 ? 0 : this.propertyCount-1);
-  }
-
+  
   
 
 }
