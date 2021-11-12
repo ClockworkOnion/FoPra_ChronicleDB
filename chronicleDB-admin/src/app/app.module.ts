@@ -29,6 +29,7 @@ import { MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { ChronicleService } from './services/chronicle.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [

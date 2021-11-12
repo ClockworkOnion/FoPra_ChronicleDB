@@ -2,11 +2,6 @@ import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 
-interface Inputs {
-  value: string;
-  viewValue: string;
-}
-
 @Component({
   selector: 'app-stream-event-properties',
   templateUrl: './stream-event-properties.component.html',

@@ -16,3 +16,99 @@
 <button mat-fab color="primary" aria-label="Add a new Element" (click)="addProperty()">
     <mat-icon>add</mat-icon>
 </button>
+
+<div class="create-stream-input">
+    <mat-form-field hintLabel="Max 10 characters" appearance="fill">
+      <mat-label>Enter Data Name</mat-label>
+      <input matInput #inputDataName maxlength="10" placeholder="data0">
+      <mat-hint align="end">{{inputDataName.value?.length || 0}}/10</mat-hint>
+    </mat-form-field>
+</div>
+
+    <div class="create-stream-input">
+        <mat-form-field hintLabel="Should match I/O block size" appearance="fill">
+          <mat-label>Logical Block size</mat-label>
+          <input type="" matInput #LogicalBlockSize maxlength="10" placeholder="32768">
+          <mat-hint align="end">{{LogicalBlockSize.value?.length || 0}}/10</mat-hint>
+        </mat-form-field>
+</div>
+<div class="makro-block-input">
+    <mat-form-field hintLabel="Number of bytes for a MacroBlock" appearance="fill">
+      <mat-label>Macro Block size</mat-label>
+      <input type="" matInput #MacroBlockSize maxlength="10" placeholder="10">
+      <mat-hint align="end">{{MacroBlockSize.value?.length || 0}}/10</mat-hint>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field hintLabel="Percent of spare space in a MacroBlock." appearance="fill">
+      <mat-label>Space Percentage</mat-label>
+      <input type="" matInput #MacroBlockSpareSpace maxlength="4" placeholder="0.1">
+      <mat-hint align="end">{{MacroBlockSpareSpace.value?.length || 0}}/4</mat-hint>
+    </mat-form-field>
+    &nbsp;
+
+    <mat-form-field hintLabel="Number of MacroBlocks to preallocate at start." appearance="fill">
+      <mat-label>MacroBlock preallocation </mat-label>
+      <input type="" matInput #MacroBlockPreallocate maxlength="10" placeholder="300">
+      <mat-hint align="end">{{MacroBlockPreallocate.value?.length || 0}}/10</mat-hint>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field hintLabel="Allocates a number of MacroBlocks when Preallocation is qxhausted." appearance="fill">
+      <mat-label>MacroBlock batch allocation</mat-label>
+      <input type="" matInput #MacroBlockBatchallocate maxlength="10" placeholder="300">
+      <mat-hint align="end">{{MacroBlockBatchallocate.value?.length || 0}}/10</mat-hint>
+    </mat-form-field>
+</div>
+
+<div> &nbsp;</div>
+
+<div class ="cache-input">
+    <mat-form-field hintLabel="Number of MacroBlocks to keep in memory in LRU i.e. cache" appearance="fill">
+        <mat-label>Macro Blocks Cache</mat-label>
+        <input type="" matInput #MacroBlockCache maxlength="10"  placeholder="2500">
+        <mat-hint align="end">{{MacroBlockCache.value?.length || 0}}/10</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="Number of Nodes to keep in memory in LRU i.e. cache." appearance="fill">
+        <mat-label>Nodes in Cache</mat-label>
+        <input type="" matInput #NodesCache maxlength="10"  placeholder="10000">
+        <mat-hint align="end">{{NodesCache.value?.length || 0}}/10</mat-hint>
+      </mat-form-field>
+
+</div>
+
+<div class ="compressor-input">
+    <!-- put selector here
+    <mat-form-field>
+        <mat-select placeholder="Select Compressor" name="compressor" (selectionChange)="educationLevelChangeAction(education_level)" [(ngModel)]="education_level" >
+          <mat-option *ngFor="let education of educationList" [value]="education.educationLevelName" >{{ education.educationLevelName }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-select placeholder="Select Exam/Degree Title" name="exam_title" [(ngModel)]="exam_title">
+          <mat-option *ngFor="let degreeTitle of degreeTitleList" [value]="degreeTitle">{{ degreeTitle }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      ->
+</div>
+
+
+
+
+
+
+
+<!-- <form class="example-form">
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Logical block size</mat-label>
+    <input type="int" matInput [formControlObject]="logBlockSizeControl" [errorStateMatcher]="matcher"
+           placeholder="32768">
+    <mat-hint>Errors appear instantly!</mat-hint>
+    <mat-error *ngIf="logBlockSizeControl.hasError('int') && !logBlockSizeControl.hasError('required')">
+      Enter a valid number
+    </mat-error>
+    <mat-error *ngIf="logBlockSizeControl.hasError('required')">
+      Number is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</form> -->

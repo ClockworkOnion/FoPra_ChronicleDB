@@ -1,17 +1,17 @@
-<mat-form-field>
-  <mat-select placeholder="Select List or Single" name="dataSingleOrList" (selectionChange)="listOrSingleSelectionChanged(dataSingleOrList)" [(ngModel)]="dataSingleOrList">
+<mat-form-field class ="eventSelect" appearance="fill">
+  <mat-select  placeholder="Select List or Single" name="dataSingleOrList" (selectionChange)="listOrSingleSelectionChanged(dataSingleOrList)" [(ngModel)]="dataSingleOrList">
     <mat-option *ngFor= "let event of eventList" [value]="event.type1">{{event.type1}}</mat-option>
   </mat-select>
 </mat-form-field>
 &nbsp;
-<mat-form-field>
+<mat-form-field class ="eventSelect" appearance="fill">
   <mat-select placeholder="Select Type" name="dataType" (selectionChange)="typeSelectionChanged(dataType)" [(ngModel)]="dataType" [disabled]="!dataSingleOrList">
     <mat-option *ngFor="let dataType of currentDataTypeList" [value]="dataType['type2']">{{ dataType["type2"] }}</mat-option>
   </mat-select>
 </mat-form-field>
 &nbsp;
-<mat-form-field>
-  <mat-select placeholder="Select Subtype" name="dataSize" [(ngModel)]="dataSize" [disabled]="!dataType">
+<mat-form-field class ="eventSelect" appearance="fill">
+  <mat-select   placeholder="Select Subtype" name="dataSize" [(ngModel)]="dataSize" [disabled]="!dataType">
     <mat-option *ngFor="let dataSize of currentDataSizeList" [value]="dataSize">{{ dataSize }}</mat-option>
   </mat-select>
 </mat-form-field>
