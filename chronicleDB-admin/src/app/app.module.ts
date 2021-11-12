@@ -19,17 +19,16 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ExpansionPanelComponent } from './components/expansion-panel/expansion-panel.component';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { TabMenuComponent } from './components/tab-menu/tab-menu.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { GeneralStreamComponent } from './page-home/card-general-stream/general-stream.component';
-import { MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { ChronicleService } from './services/chronicle.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
-import { StreamEventPropertiesComponent } from './page-home/card-stream-event-properties/stream-event-properties.component';
+import { StreamEventPropertyComponent } from './page-home/card-stream-event-properties/stream-event-property.component';
 import { StreamEventPropertiesGeneratorComponent } from './page-home/card-stream-event-properties/stream-event-properties-generator/stream-event-properties-generator.component';
 
 @NgModule({
@@ -42,8 +41,8 @@ import { StreamEventPropertiesGeneratorComponent } from './page-home/card-stream
     TabMenuComponent,
     StreamPropertiesComponent,
     GeneralStreamComponent,
-    StreamEventPropertiesComponent,
-    StreamEventPropertiesGeneratorComponent
+    StreamEventPropertyComponent,
+    StreamEventPropertiesGeneratorComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +67,6 @@ import { StreamEventPropertiesGeneratorComponent } from './page-home/card-stream
     HttpClientModule,
   ],
   providers: [ChronicleService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

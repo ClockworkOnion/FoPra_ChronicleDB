@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-stream-event-properties',
-  templateUrl: './stream-event-properties.component.html',
-  styleUrls: ['./stream-event-properties.component.css']
+  selector: 'app-stream-event-property',
+  templateUrl: './stream-event-property.component.html',
+  styleUrls: ['./stream-event-property.component.css']
 })
-export class StreamEventPropertiesComponent {
+export class StreamEventPropertyComponent {
   dataSingleOrList :any;
   
   dataType : any;
