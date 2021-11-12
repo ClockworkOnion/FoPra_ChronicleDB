@@ -1,6 +1,4 @@
-import { stringify } from '@angular/compiler/src/util';
-import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { Component } from '@angular/core';
 
 interface Inputs {
   value: string;
@@ -18,8 +16,8 @@ export class StreamEventPropertiesComponent {
   dataType : any;
   currentDataTypeList =[];
 
-  dataSize :any;
-  currentDataSizeList=[];
+  dataSubtype :any;
+  currentDataSubtypeList=[];
 
   stringOrListSize: any = 5;
   
@@ -29,23 +27,23 @@ export class StreamEventPropertiesComponent {
   eventList:any=[
     {
       "type1":"Single",dataTypeList:[
-        {"type2":"Integer",dataSizeList:[ "8","16","32","64"]},
-        {"type2":"Unsigned",dataSizeList:[ "8","16","32","64"]},    
-        {"type2":"Float",dataSizeList:["32","64"]},
-        {"type2":"String",dataSizeList:["ConstString","VarString"]}
+        {"type2":"Integer",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},
+        {"type2":"Unsigned",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},    
+        {"type2":"Float",dataSubtypeList:[{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},
+        {"type2":"String",dataSubtypeList:[{"display":"const length", "value": "ConstString"},{"display":"var length", "value": "VarString"}]}
       ]
     },
     {
       "type1":"List", dataTypeList:[
-        {"type2":"Integer",dataSizeList:[ "8","16","32","64"]},
-        {"type2":"Unsigned",dataSizeList:[ "8","16","32","64"]},    
-        {"type2":"Float",dataSizeList:["32","64"]}
+        {"type2":"Integer",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},
+        {"type2":"Unsigned",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},    
+        {"type2":"Float",dataSubtypeList:[{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]}
       ]
     },
   ];
 
-  listOrSingleSelectionChanged(typ:any){
-    let dropDownData = this.eventList.find((data:any)=> data.type1 === typ);
+  listOrSingleSelectionChanged(dataSingleOrList:any){
+    let dropDownData = this.eventList.find((data:any)=> data.type1 === dataSingleOrList);
     if(dropDownData){
       this.currentDataTypeList = dropDownData.dataTypeList;
       if(this.currentDataTypeList){
@@ -58,15 +56,15 @@ export class StreamEventPropertiesComponent {
     this.typeSelectionChanged(this.dataType)
   }
   
-  typeSelectionChanged(typ:any){
-    let dropDownData : any = this.currentDataTypeList.find((data:any)=> data.type2 === typ);
+  typeSelectionChanged(dataType:any){
+    let dropDownData : any = this.currentDataTypeList.find((data:any)=> data.type2 === dataType);
     if(dropDownData){
-      this.currentDataSizeList = dropDownData.dataSizeList;
-      if(this.currentDataSizeList){
-        this.dataSize = this.currentDataSizeList[0];
+      this.currentDataSubtypeList = dropDownData.dataSubtypeList;
+      if(this.currentDataSubtypeList){
+        this.dataSubtype = (this.currentDataSubtypeList[0] as any).value;
       }
     }else{
-      this.currentDataSizeList =[]
+      this.currentDataSubtypeList =[]
     }
   }  
 }
