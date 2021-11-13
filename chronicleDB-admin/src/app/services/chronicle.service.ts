@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChronicleService {
+  
+  private messageSource = new BehaviorSubject<any>('default message');
+  currentMessage = this.messageSource.asObservable();
   constructor(private http: HttpClient) { }
 
   private fillStreamBodyText = (eventText: string) => 
@@ -58,4 +62,8 @@ export class ChronicleService {
   private post(url: string, body: any) {
     return this.http.post(url, body);
   }
+  changeMessage(message: any) {
+    this.messageSource.next(message)
+  }
+
 }

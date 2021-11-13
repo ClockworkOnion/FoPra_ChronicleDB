@@ -1,16 +1,9 @@
+
 import { PropertyWrite } from '@angular/compiler';
 import { Component, NgModule, OnInit } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
-
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import { ChronicleService } from 'src/app/services/chronicle.service';
 
 
 
@@ -20,6 +13,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./stream-properties.component.css']
 })
 export class StreamPropertiesComponent implements OnInit {
+
+  message:any;
+
  selectLogging:any;
  selectDebugging:any;
  inputFileName:any ;
@@ -39,15 +35,7 @@ export class StreamPropertiesComponent implements OnInit {
  selectRiverThreads:any;
  inputMaxDeltaQueue:any;
 
-
-  
-  
-  compressor: any;
   compressorExtras=[];
-  compressorExtra :any;
-
-  properties = ["property1"];
-  propertyCount = 1;
 
   log : any[] = [
     {value: "true", viewValue:"true"},
@@ -71,48 +59,14 @@ riverThreads : any[]=[
 ]
 
 compressorList:any =[
-  {"compressorName":"none",compressorExtras:["none"]},
+  {"compressorName":"none"},
   {"compressorName":"LZ4_Fast_No_Meta",compressorExtras:["I32"]},
   {"compressorName":"LZ4_Fast_With_Meta",compressorExtras:["I32"]},
-  {"compressorName":"Sprintz", compressorExtras:["is_8bits","data_dims", "is_delta"," write_size"]},
+  {"compressorName":"Sprintz",compressorExtras:["false","false","false"]},
   ];
+toppings = new FormControl(); 
+sprintzValues:any=[ "is_8bits", "is_delta"," write_size"]
 
-  compressorChangeAction(selectCompressor:any ) {
-    this.selectCompressorExtra="";
-    let dropDownData = this.compressorList.find((data: any) => data.compressorName === selectCompressor);
-    if (dropDownData) {
-      this.compressorExtras = dropDownData.compressorExtras;
-      if(this.compressorExtras){
-        this.selectCompressorExtra=this.compressorExtras[0];
-      }
-      
-    } else {
-      this.compressorExtras = [];
-    }
-
-  }
-  submit(){
-    
-    console.log(
-      this.selectLogging,
-      this.selectDebugging,
-      this.inputFileName,
-      this.inputTranslationName,
-      this.inputBootName,
-      this.inputMaxQueue,
-      this.inputLogicalBlockSize,
-      this.inputMacroBlockSize,
-      this.inputSpareSpace,
-      this.inputMacroBlockPreallocation,
-      this.inputMacroBlockBatchallocation,
-      this.inputBlockCache,
-      this.inputNodeCache,
-      this.selectCompressor,
-      this.selectCompressorExtra,
-      this.selectCompressorSize,
-      this.selectRiverThreads,
-      this.inputMaxDeltaQueue)
-  }
   fillDefaults(){
     this.selectLogging ="false";
       this.selectDebugging="false";
@@ -135,17 +89,51 @@ compressorList:any =[
       
   }
 
-
-
-
-
-
-
-
-
-  constructor() { }
+  constructor(private data: ChronicleService) { }
 
   ngOnInit(): void {
+    this.data.currentMessage.subscribe(message => this.message = message)
+  }
+  //method to format Compressor inputs
+  decideCompressorExtra():string{
+    if(this.selectCompressor==="none"){
+      return "none";
+    }if(this.selectCompressor==="LZ4_Fast_No_Meta" ||  this.selectCompressor==="LZ4_Fast_With_Meta"){
+      return `{"32I":${this.selectCompressorSize}}`
+    }if(this.selectCompressor==="Sprintz"){
+      return `{"Sprintz":[true,${this.selectCompressorSize},true,true]`
+    }else{
+      return "";
+    }
+
+  }
+  sendData(){
+      //the String is prepared and build together here
+      let streamPropertyData =`
+      Log = ${this.selectLogging}
+      Debug = ${this.selectDebugging}
+      Data =  ${this.inputFileName}
+      Translation = ${this.inputTranslationName}
+      Boot = ${this.inputBootName}
+      Multiple disk max queue = ${this.inputMaxQueue}
+      Event 							= {"VarCompound":[{"U64":0},{"I64":0},{"F64":0.0},{"VarString":"Hallo-Welt"}]}
+      Lightweight index = {"aggregate":{"SMA":{"cnt":0,"sum":0.0,"min":0.0,"max":0.0}},"projector_sequence":"Mono"}
+      LogicalBlock size = ${this.inputLogicalBlockSize}
+      MacroBlock size = ${this.inputMacroBlockSize}
+      MacroBlock spare = ${this.inputSpareSpace}
+      MacroBlock preallocation = ${this.inputMacroBlockPreallocation}
+      MacroBlock batch allocation = ${this.inputMacroBlockBatchallocation}
+      MacroBlocks cache = ${this.inputBlockCache}
+      Nodes cache = ${this.inputNodeCache}
+      Compressor = ${this.selectCompressor}
+      Compressor extras = ${this.decideCompressorExtra()}
+      River threads = ${this.selectRiverThreads}
+      Max delta queue = ${this.inputMaxDeltaQueue}`;
+
+
+    //service sends the data to other components
+    this.data.changeMessage(streamPropertyData);
+    console.log(this.message)
   }
 
   
