@@ -21,8 +21,12 @@
 &nbsp;
 <mat-form-field  *ngIf="dataType === 'String' || (dataSingleOrList && dataSingleOrList === 'List')" appearance="fill">
   <mat-label>Size</mat-label>
-  <input matInput [(ngModel)]="stringOrListSize" />
+  <input type ="number" matInput [(ngModel)]="stringOrListSize" />
 </mat-form-field>
+
+<button color="primary" aria-label="send data" matTooltip ="send data" (click)="testData()" >
+  sendToConsole
+</button>
 You selected: {{dataSingleOrList}}  {{dataType}}  {{dataSubtype}}  {{(dataType === 'String' || (dataSingleOrList && dataSingleOrList === 'List')) ? stringOrListSize : ""}}
 <!-- Sry, die If bedingung ist ein bischen lang geworden... Muss erst testen, ob es überhaupt definiert ist...-->
 &nbsp;&nbsp;
