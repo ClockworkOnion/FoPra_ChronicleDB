@@ -30,10 +30,14 @@ import { ChronicleService } from './services/chronicle.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StreamEventPropertyComponent } from './page-home/card-stream-event-properties/stream-event-property.component';
 import { StreamEventPropertiesGeneratorComponent } from './page-home/card-stream-event-properties/stream-event-properties-generator/stream-event-properties-generator.component';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {  ReactiveFormsModule } from '@angular/forms';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ReactiveFormsModule } from '@angular/forms';
 import { EventgeneratorComponent } from './page-home/card-stream-event-properties/eventgenerator/eventgenerator.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+
+
 
 
 @NgModule({
@@ -73,7 +77,9 @@ import { EventgeneratorComponent } from './page-home/card-stream-event-propertie
     HttpClientModule,
     MatDividerModule,
     MatTooltipModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatRadioModule
     
   ],
   providers: [ChronicleService],

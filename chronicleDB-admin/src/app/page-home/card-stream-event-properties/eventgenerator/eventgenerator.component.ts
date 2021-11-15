@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 import {StreamEventPropertyComponent} from "src/app/page-home/card-stream-event-properties/stream-event-property.component"
 
-
 @Component({
   selector: 'app-eventgenerator',
   templateUrl: './eventgenerator.component.html',
   styleUrls: ['./eventgenerator.component.css']
 })
+
 export class EventgeneratorComponent implements OnInit {
 
   @ViewChild('container', { read: ViewContainerRef })
@@ -22,14 +22,16 @@ export class EventgeneratorComponent implements OnInit {
   // Keep track of list of generated components for removal purposes
   child_unique_key: number = 0;
   componentsReferences = Array<ComponentRef<StreamEventPropertyComponent>>()
-
+  selectedCompound:string="";
   // Expose class so that it can be used in the template
   class = StreamEventPropertyComponent;
+
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   addComponent(componentClass: Type<any>) {
+    if(this.selectedCompound==="1" && this.componentsReferences.length>=1){console.log("cant add more")}else{
     // Create component dynamically inside  ng-template
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
     let component = this.container.createComponent(componentFactory);
@@ -39,7 +41,7 @@ export class EventgeneratorComponent implements OnInit {
 
     // Push the component so that we can keep track of which components are created
     this.componentsReferences.push(component);
-    
+    }
   }
 
   removeComponent(key:number) {

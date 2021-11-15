@@ -1,10 +1,25 @@
 
- <div>
-   <!-- Use ng-template to ensure that the generated components end up in the right place -->
-   <ng-template #container>
-   </ng-template>
-   &nbsp;
- </div>
- <button (click)="addComponent(class)">Add</button>
- &nbsp;
- <button (click)="sendAll()">sendAll2Console</button>
+<div style="text-align: end;" >
+
+  <mat-radio-group [(ngModel)]="selectedCompound" aria-label="Select an option">
+    <mat-radio-button id="single" value="1">Single</mat-radio-button>
+    &nbsp;
+    <mat-radio-button id="varCompound"value="2">VarCompound</mat-radio-button>
+    &nbsp;
+    <mat-radio-button id="compound"value="3">Compound </mat-radio-button> 
+    &nbsp;
+  </mat-radio-group>
+</div>
+
+
+    <div>
+      <!-- Use ng-template to ensure that the generated components end up in the right place -->
+    <ng-template #container>
+    </ng-template>
+    &nbsp;
+  </div>
+  <button (click)="addComponent(class)">Add</button>
+  &nbsp;
+  <button (click)="sendAll()">sendAll2Console</button>
+  <button (click)="openSnackBar()">ok</button>
+
