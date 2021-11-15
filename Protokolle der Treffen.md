@@ -71,6 +71,9 @@ Anwesend: Lars Happel, Johannes Buder, Davit Davtyan
 ### Entscheidung für Design des GUIs beim Erstellen eines Streams
 Wir haben uns dazu entschieden, die Erstellung des Streams (die einzelnen Bestandteile) über mehrere Dropdown-Menüs zu gewährleisten. Damit kann man dann einige Komponenten designen und mit + oder - Buttons einzelne löschen oder hinzufügen. In Zukunft wollen wir vielleicht noch die Reihenfolge nachträglich durch Drag-and-Drop oder Knöpfe manipulierbar machen. Ebenso wollen wir erst später verschachtelte Compounds ermöglichen und zunächst eine einfachere Funktionalität bieten.
 
+
+
+
 ## Besprechung vom 15.11.21
 Awensend: Johannes Buder, Davit Davtyan, Lars Happel
 
@@ -83,4 +86,3 @@ Das Python Script zur Weiterleitung der API Anfragen wurde besprochen.
 ### Weitere Planung
 - Mit dem fertigen JSON String fuer den Body des Create Stream requests soll eine Weiterleitung ueber das Python Script eingerichtet werden
 - Stream-Properties Compressor Eigenschaften muessen noch korrekt implementiert werden
-- 
