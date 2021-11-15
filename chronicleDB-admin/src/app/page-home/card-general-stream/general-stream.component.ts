@@ -11,7 +11,8 @@ export class GeneralStreamComponent implements OnInit {
   eventProperties:any;
 
   chronicleURL!: string;
-  currentStreamText = "No Stream available";
+  private defaultStreamDescription = "No Stream available";
+  currentStreamText = this.defaultStreamDescription;
 
   constructor(private data: ChronicleService) { }
 
@@ -22,7 +23,11 @@ export class GeneralStreamComponent implements OnInit {
   }
 
   refreshCurrentStream(){
-    
+    if (this.data.existsStream()) {
+      this.currentStreamText = this.data.getStreamInfo();
+    } else {
+      this.currentStreamText = this.defaultStreamDescription;
+    }
   }
 
   onCreateStreamClicked() {

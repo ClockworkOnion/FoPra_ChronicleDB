@@ -3,19 +3,29 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChronicleService {
-  
   private createStreamProperties = new BehaviorSubject<any>('default message');
   private eventProperties = new BehaviorSubject<any>('default event properties');
+
   currentCreateStreamProperties = this.createStreamProperties.asObservable();
   currentEventProperties = this.eventProperties.asObservable();
 
-  constructor(private http: HttpClient) { }
+  private currentStream: string = "N/A";
 
-  private fillStreamBodyText = (eventText: string) => 
-  `
+  constructor(private http: HttpClient) {}
+
+  existsStream() : boolean {
+    return this.currentStream != "N/A";
+  }
+
+  getStreamInfo() : string {
+    return this.currentStream;
+  }
+
+  private fillStreamBodyText = (eventText: string) =>
+    `
   Log = false
   Debug = false
   Data = data0
@@ -36,17 +46,14 @@ export class ChronicleService {
   River threads = 1
   Max delta queue = 10`;
 
-
-
-
   createStream(url: string, ...eventTypes: string[]) {
     // create the text of the Event line
     let eventString: string = 'Event = {"Compound":[';
-    eventTypes.forEach(type => {
-      eventString = eventString.concat(type, ",");
+    eventTypes.forEach((type) => {
+      eventString = eventString.concat(type, ',');
     });
-    eventString = eventString.substring(0, eventString.length-1).concat(']}');
-    let body : string = this.fillStreamBodyText(eventString);
+    eventString = eventString.substring(0, eventString.length - 1).concat(']}');
+    let body: string = this.fillStreamBodyText(eventString);
 
     let response$ = this.post(url, body).subscribe();
 
@@ -58,10 +65,12 @@ export class ChronicleService {
   private post(url: string, body: any) {
     return this.http.post(url, body);
   }
+
   changeCreateStreamProperties(message: any) {
-    this.createStreamProperties.next(message)
+    this.createStreamProperties.next(message);
   }
-  changeEventProperties(properties : any){
-    this.eventProperties.next(properties)
+
+  changeEventProperties(properties: any) {
+    this.eventProperties.next(properties);
   }
 }
