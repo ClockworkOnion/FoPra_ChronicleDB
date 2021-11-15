@@ -1,19 +1,14 @@
-
-import { PropertyWrite } from '@angular/compiler';
-import { Component, NgModule, OnInit } from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import { Component,  OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ChronicleService } from 'src/app/services/chronicle.service';
-
-
 
 @Component({
   selector: 'app-stream-properties',
   templateUrl: './stream-properties.component.html',
-  styleUrls: ['./stream-properties.component.css']
+  styleUrls: ['./stream-properties.component.css'],
 })
 export class StreamPropertiesComponent implements OnInit {
-
+  constructor(private data: ChronicleService) { }
   message:any;
   eventProperties:any;
 
@@ -42,9 +37,9 @@ export class StreamPropertiesComponent implements OnInit {
     {value: "true", viewValue:"true"},
     {value: "false", viewValue:"false"}
   ];
-  debug : any[] = [
-    {value: "true", viewValue:"true"},
-    {value: "false", viewValue:"false"}
+  debug: any[] = [
+    { value: 'true', viewValue: 'true' },
+    { value: 'false', viewValue: 'false' },
   ];
   /* 
   Lightweight index				= {"aggregate":{"SMA":{"cnt":0,"sum":0.0,"min":0.0,"max":0.0}},"projector_sequence":"Mono"}
@@ -90,24 +85,27 @@ export class StreamPropertiesComponent implements OnInit {
       
   }
 
-  constructor(private data: ChronicleService) { }
-
   ngOnInit(): void {
     this.data.currentCreateStreamProperties.subscribe(message => this.message = message)
     this.data.currentEventProperties.subscribe(eventproperties => this.eventProperties = eventproperties)
   }
-  //method to format Compressor inputs
-  decideCompressorExtra():string{
-    if(this.selectCompressor==="none"){
-      return "none";
-    }if(this.selectCompressor==="LZ4_Fast_No_Meta" ||  this.selectCompressor==="LZ4_Fast_With_Meta"){
-      return `{"32I":${this.selectCompressorSize}}`
-    }if(this.selectCompressor==="Sprintz"){
-      return `{"Sprintz":[true,${this.selectCompressorSize},true,true]`
-    }else{
-      return "";
-    }
 
+  //method to format Compressor inputs
+  decideCompressorExtra(): string {
+    if (this.selectCompressor === 'none') {
+      return 'none';
+    }
+    if (
+      this.selectCompressor === 'LZ4_Fast_No_Meta' ||
+      this.selectCompressor === 'LZ4_Fast_With_Meta'
+    ) {
+      return `{"32I":${this.selectCompressorSize}}`;
+    }
+    if (this.selectCompressor === 'Sprintz') {
+      return `{"Sprintz":[true,${this.selectCompressorSize},true,true]`;
+    } else {
+      return '';
+    }
   }
 
   sendData(){
@@ -132,7 +130,6 @@ export class StreamPropertiesComponent implements OnInit {
       Compressor extras = ${this.decideCompressorExtra()}
       River threads = ${this.selectRiverThreads}
       Max delta queue = ${this.inputMaxDeltaQueue}`;
-
 
     //service sends the data to other components
     this.data.changeCreateStreamProperties(streamPropertyData);

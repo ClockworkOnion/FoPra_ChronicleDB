@@ -19,10 +19,8 @@ export class GeneralStreamComponent implements OnInit {
     this.data.currentCreateStreamProperties.subscribe((message: any) => this.createStreamProperties = message)
     this.data.currentEventProperties.subscribe((message:any)=> this.eventProperties = message)
   }
-
-  refreshCurrentStream() {
-    this.currentStreamText = this.data.existsStream() ? this.data.getStreamInfo() : "No Stream available"
+  refreshCurrentStream(){
+    
   }
-
 
 }

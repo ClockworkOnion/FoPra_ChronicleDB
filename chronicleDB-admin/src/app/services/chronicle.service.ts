@@ -36,15 +36,8 @@ export class ChronicleService {
   River threads = 1
   Max delta queue = 10`;
 
-  private currentStream: string = "N/A";
 
-  existsStream() : boolean {
-    return this.currentStream != "N/A";
-  }
 
-  getStreamInfo() : string {
-    return this.currentStream;
-  }
 
   createStream(url: string, ...eventTypes: string[]) {
     // create the text of the Event line
@@ -71,5 +64,4 @@ export class ChronicleService {
   changeEventProperties(properties : any){
     this.eventProperties.next(properties)
   }
-
 }
