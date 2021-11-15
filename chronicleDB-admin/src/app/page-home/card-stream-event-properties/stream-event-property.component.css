@@ -7,4 +7,6 @@
     width: autos;
    
   }
- 
+  button[mat-mini-fab] {
+    transform: scale(0.7) !important;
+   }

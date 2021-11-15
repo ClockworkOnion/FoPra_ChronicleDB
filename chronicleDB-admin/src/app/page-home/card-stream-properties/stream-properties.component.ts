@@ -15,6 +15,7 @@ import { ChronicleService } from 'src/app/services/chronicle.service';
 export class StreamPropertiesComponent implements OnInit {
 
   message:any;
+  eventProperties:any;
 
  selectLogging:any;
  selectDebugging:any;
@@ -92,7 +93,8 @@ sprintzValues:any=[ "is_8bits", "is_delta"," write_size"]
   constructor(private data: ChronicleService) { }
 
   ngOnInit(): void {
-    this.data.currentMessage.subscribe(message => this.message = message)
+    this.data.currentCreateStreamProperties.subscribe(message => this.message = message)
+    this.data.currentEventProperties.subscribe(eventproperties => this.eventProperties = eventproperties)
   }
   //method to format Compressor inputs
   decideCompressorExtra():string{
@@ -116,7 +118,7 @@ sprintzValues:any=[ "is_8bits", "is_delta"," write_size"]
       Translation = ${this.inputTranslationName}
       Boot = ${this.inputBootName}
       Multiple disk max queue = ${this.inputMaxQueue}
-      Event 							= {"VarCompound":[{"U64":0},{"I64":0},{"F64":0.0},{"VarString":"Hallo-Welt"}]}
+      Event 							= ${this.eventProperties}
       Lightweight index = {"aggregate":{"SMA":{"cnt":0,"sum":0.0,"min":0.0,"max":0.0}},"projector_sequence":"Mono"}
       LogicalBlock size = ${this.inputLogicalBlockSize}
       MacroBlock size = ${this.inputMacroBlockSize}
@@ -132,8 +134,9 @@ sprintzValues:any=[ "is_8bits", "is_delta"," write_size"]
 
 
     //service sends the data to other components
-    this.data.changeMessage(streamPropertyData);
+    this.data.changeCreateStreamProperties(streamPropertyData);
     console.log(this.message)
+  
   }
 
   

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ChronicleService } from 'src/app/services/chronicle.service';
+import { EventgeneratorComponent } from './eventgenerator/eventgenerator.component';
 
 @Component({
   selector: 'app-stream-event-property',
@@ -6,6 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./stream-event-property.component.css']
 })
 export class StreamEventPropertyComponent {
+  public unique_key!: number;
+  public parentRef!: EventgeneratorComponent;
   dataSingleOrList :any;
 
   dataType : any;
@@ -16,9 +20,10 @@ export class StreamEventPropertyComponent {
 
   stringOrListSize: any =5 ;
   repeatedCharacter:string ="";
+
   
   
-  constructor() {}
+  constructor(private data: ChronicleService) {}
   
   eventList:any=[
     {
@@ -91,15 +96,14 @@ export class StreamEventPropertyComponent {
           return `{"VarU${this.dataSubtype}List":[${arr}]}`;      
       }else {
         let arr = new Array<string>(this.stringOrListSize).fill("1.0");
-        return `{"Var${this.dataType}${this.dataSubtype}List":[${arr}]}`;
+        return `{"VarF${this.dataSubtype}List":[${arr}]}`;
 
       }
     }
 
   }
 
-
-  testData(){
-    console.log(this.sendEvent())
+  remove_me(){
+    this.parentRef.removeComponent(this.unique_key);
   }
 }

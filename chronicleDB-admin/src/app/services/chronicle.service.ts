@@ -7,8 +7,11 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ChronicleService {
   
-  private messageSource = new BehaviorSubject<any>('default message');
-  currentMessage = this.messageSource.asObservable();
+  private createStreamProperties = new BehaviorSubject<any>('default message');
+  private eventProperties = new BehaviorSubject<any>('default event properties');
+  currentCreateStreamProperties = this.createStreamProperties.asObservable();
+  currentEventProperties = this.eventProperties.asObservable();
+
   constructor(private http: HttpClient) { }
 
   private fillStreamBodyText = (eventText: string) => 
@@ -62,8 +65,11 @@ export class ChronicleService {
   private post(url: string, body: any) {
     return this.http.post(url, body);
   }
-  changeMessage(message: any) {
-    this.messageSource.next(message)
+  changeCreateStreamProperties(message: any) {
+    this.createStreamProperties.next(message)
+  }
+  changeEventProperties(properties : any){
+    this.eventProperties.next(properties)
   }
 
 }

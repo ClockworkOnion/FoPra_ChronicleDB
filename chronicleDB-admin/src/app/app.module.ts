@@ -33,6 +33,7 @@ import { StreamEventPropertiesGeneratorComponent } from './page-home/card-stream
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {  ReactiveFormsModule } from '@angular/forms';
+import { EventgeneratorComponent } from './page-home/card-stream-event-properties/eventgenerator/eventgenerator.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import {  ReactiveFormsModule } from '@angular/forms';
     GeneralStreamComponent,
     StreamEventPropertyComponent,
     StreamEventPropertiesGeneratorComponent,
+    EventgeneratorComponent,
   ],
   imports: [
     BrowserModule,

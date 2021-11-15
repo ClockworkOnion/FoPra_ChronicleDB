@@ -7,7 +7,8 @@ import { ChronicleService } from 'src/app/services/chronicle.service';
   styleUrls: ['./general-stream.component.css']
 })
 export class GeneralStreamComponent implements OnInit {
-  message:any;
+  createStreamProperties:any;
+  eventProperties:any;
   chronicleURL = "";
   currentStreamText = "No Stream available";
 
@@ -15,7 +16,8 @@ export class GeneralStreamComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.data.currentMessage.subscribe((message: any) => this.message = message)
+    this.data.currentCreateStreamProperties.subscribe((message: any) => this.createStreamProperties = message)
+    this.data.currentEventProperties.subscribe((message:any)=> this.eventProperties =message)
   }
 
   refreshCurrentStream() {
