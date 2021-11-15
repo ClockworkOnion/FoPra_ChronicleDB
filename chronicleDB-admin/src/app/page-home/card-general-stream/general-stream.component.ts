@@ -17,7 +17,7 @@ export class GeneralStreamComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.currentCreateStreamProperties.subscribe((message: any) => this.createStreamProperties = message)
-    this.data.currentEventProperties.subscribe((message:any)=> this.eventProperties =message)
+    this.data.currentEventProperties.subscribe((message:any)=> this.eventProperties = message)
   }
 
   refreshCurrentStream() {

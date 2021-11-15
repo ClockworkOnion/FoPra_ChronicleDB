@@ -102,6 +102,7 @@ export class StreamEventPropertyComponent {
     }
 
   }
+  
 
   remove_me(){
     this.parentRef.removeComponent(this.unique_key);

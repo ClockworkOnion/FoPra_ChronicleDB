@@ -1,3 +1,5 @@
+import { ChronicleService } from 'src/app/services/chronicle.service';
+import { SnackBarService } from './../../../services/snack-bar.service';
 import {
   Component,
   OnInit,
@@ -22,16 +24,17 @@ export class EventgeneratorComponent implements OnInit {
   // Keep track of list of generated components for removal purposes
   child_unique_key: number = 0;
   componentsReferences = Array<ComponentRef<StreamEventPropertyComponent>>()
-  selectedCompound:string="";
   // Expose class so that it can be used in the template
   class = StreamEventPropertyComponent;
 
+  selectedCompound:string="";
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private snackbar :SnackBarService, private data :ChronicleService) {
   }
+  
 
   addComponent(componentClass: Type<any>) {
-    if(this.selectedCompound==="1" && this.componentsReferences.length>=1){console.log("cant add more")}else{
+    if(this.selectedCompound==="single" && this.componentsReferences.length>=1){this.openSnackBar(this.singleWarning)}else{
     // Create component dynamically inside  ng-template
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
     let component = this.container.createComponent(componentFactory);
@@ -59,12 +62,26 @@ export class EventgeneratorComponent implements OnInit {
 
     //to be modified to send to other components
     for(var x of this.componentsReferences){
-      console.log(x.instance.sendEvent())
+
+    if(x.instance.dataSingleOrList===undefined){
+      this.openSnackBar("Can't add EMPTY Event property !");
+    }else{
+     
+      console.log(x.instance.sendEvent());
+      this.data.changeEventProperties(x.instance.sendEvent());
+    }
     }
 
   }
 
   ngOnInit(): void {
+    this.selectedCompound="single";
+  }
+
+  singleWarning : string="Can't add more Event properties! Please select Compound or VarCompound";
+
+  openSnackBar(message : string){
+    this.snackbar.openSnackBar(message);
   }
 
 }
