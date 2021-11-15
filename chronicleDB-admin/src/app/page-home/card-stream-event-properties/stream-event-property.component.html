@@ -21,7 +21,7 @@
       </mat-select>
     </mat-form-field>
     &nbsp;
-    <mat-form-field  *ngIf="dataType === 'String' || (dataSingleOrList && dataSingleOrList === 'List')" appearance="fill">
+    <mat-form-field  *ngIf="dataType === 'String' || (dataSingleOrList && (dataSingleOrList === 'List (constant size)' || dataSingleOrList === 'List (variable size)'))" appearance="fill">
       <mat-label>Size</mat-label>
       <input type ="number" min="1" matInput [(ngModel)]="stringOrListSize" />
     </mat-form-field>

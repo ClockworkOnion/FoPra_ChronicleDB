@@ -19,9 +19,6 @@ export class StreamEventPropertyComponent {
   currentDataSubtypeList = [];
 
   stringOrListSize: any = 5;
-  repeatedCharacter:string ="";
-
-  
   
   constructor(private data: ChronicleService) {}
   
@@ -31,16 +28,23 @@ export class StreamEventPropertyComponent {
         {"type2":"Integer",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},
         {"type2":"Unsigned",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},    
         {"type2":"Float",dataSubtypeList:[{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},
-        {"type2":"String",dataSubtypeList:[{"display":"const length", "value": "ConstString"},{"display":"var length", "value": "VarString"}]}
+        {"type2":"String",dataSubtypeList:[{"display":"constant length", "value": "ConstString"},{"display":"variable length", "value": "VarString"}]}
       ]
     },
     {
-      "type1":"List", dataTypeList:[
+      "type1":"List (constant size)", dataTypeList:[
         {"type2":"Integer",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},
         {"type2":"Unsigned",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},    
         {"type2":"Float",dataSubtypeList:[{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]}
       ]
     },
+    {
+      "type1":"List (variable size)", dataTypeList:[
+        {"type2":"Integer",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},
+        {"type2":"Unsigned",dataSubtypeList:[{"display":"8 Bit", "value": "8"},{"display":"16 Bit", "value": "16"},{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]},    
+        {"type2":"Float",dataSubtypeList:[{"display":"32 Bit", "value": "32"},{"display":"64 Bit", "value": "64"}]}
+      ]
+    }
   ];
 
   listOrSingleSelectionChanged(dataSingleOrList: any) {
@@ -69,7 +73,6 @@ export class StreamEventPropertyComponent {
     }
   }
 
-  //need to implement ConstList still!!!
   sendEvent(): any {
     if (this.dataSingleOrList === 'Single') {
       if (this.dataType === 'Integer') {
@@ -85,21 +88,28 @@ export class StreamEventPropertyComponent {
         return `{"${this.dataSubtype}":"${repeatedCharacter}"}`;
       }
     } else {
+      let listType: string; // select if variable or const list
+      if (this.dataSingleOrList === 'List (variable size)') {
+        listType = "Var";
+      } else {
+        listType = "Const";
+      }
+
+      // build String
       let arr = new Array<string>(this.stringOrListSize).fill('1');
       if (this.dataType === 'Integer') {
-        return `{"VarI${this.dataSubtype}List":[${arr}]}`;
+        return `{"${listType}I${this.dataSubtype}List":[${arr}]}`;
       }
         if(this.dataType==="Unsigned"){  
-          return `{"VarU${this.dataSubtype}List":[${arr}]}`;      
-      }else {
+          return `{"${listType}U${this.dataSubtype}List":[${arr}]}`;      
+      } else {
         let arr = new Array<string>(this.stringOrListSize).fill("1.0");
-        return `{"VarF${this.dataSubtype}List":[${arr}]}`;
+        return `{"${listType}F${this.dataSubtype}List":[${arr}]}`;
 
       }
     }
   }
   
-
   remove_me(){
     this.parentRef.removeComponent(this.unique_key);
   }
