@@ -11,15 +11,15 @@ export class GeneralStreamComponent implements OnInit {
   chronicleURL = "";
   currentStreamText = "No Stream available";
 
-  constructor(private data: ChronicleService) { }
+  constructor(private chronicleService: ChronicleService) { }
 
 
   ngOnInit(): void {
-    this.data.currentMessage.subscribe((message: any) => this.message = message)
+    this.chronicleService.currentMessage.subscribe((message: any) => this.message = message)
   }
 
   refreshCurrentStream() {
-    this.currentStreamText = this.data.existsStream() ? this.data.getStreamInfo() : "No Stream available"
+    this.currentStreamText = this.chronicleService.existsStream() ? this.chronicleService.getStreamInfo() : "No Stream available"
   }
 
 

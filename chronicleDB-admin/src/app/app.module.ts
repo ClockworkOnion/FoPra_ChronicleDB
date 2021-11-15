@@ -30,10 +30,9 @@ import { ChronicleService } from './services/chronicle.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StreamEventPropertyComponent } from './page-home/card-stream-event-properties/stream-event-property.component';
 import { StreamEventPropertiesGeneratorComponent } from './page-home/card-stream-event-properties/stream-event-properties-generator/stream-event-properties-generator.component';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {  ReactiveFormsModule } from '@angular/forms';
-
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -71,8 +70,7 @@ import {  ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     MatDividerModule,
     MatTooltipModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
   ],
   providers: [ChronicleService],
   bootstrap: [AppComponent],

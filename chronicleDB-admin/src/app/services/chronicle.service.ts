@@ -7,9 +7,12 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ChronicleService {
   
+  constructor(private http: HttpClient) { }
+
   private messageSource = new BehaviorSubject<any>('default message');
   currentMessage = this.messageSource.asObservable();
-  constructor(private http: HttpClient) { }
+
+  private currentStream: string = "N/A";
 
   private fillStreamBodyText = (eventText: string) => 
   `
@@ -33,7 +36,6 @@ export class ChronicleService {
   River threads = 1
   Max delta queue = 10`;
 
-  private currentStream: string = "N/A";
 
   existsStream() : boolean {
     return this.currentStream != "N/A";
@@ -62,8 +64,8 @@ export class ChronicleService {
   private post(url: string, body: any) {
     return this.http.post(url, body);
   }
+
   changeMessage(message: any) {
     this.messageSource.next(message)
   }
-
 }
