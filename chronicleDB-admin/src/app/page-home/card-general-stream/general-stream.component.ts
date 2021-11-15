@@ -9,7 +9,8 @@ import { ChronicleService } from 'src/app/services/chronicle.service';
 export class GeneralStreamComponent implements OnInit {
   createStreamProperties:any;
   eventProperties:any;
-  chronicleURL = "";
+
+  chronicleURL!: string;
   currentStreamText = "No Stream available";
 
   constructor(private data: ChronicleService) { }
@@ -19,8 +20,12 @@ export class GeneralStreamComponent implements OnInit {
     this.data.currentCreateStreamProperties.subscribe((message: any) => this.createStreamProperties = message)
     this.data.currentEventProperties.subscribe((message:any)=> this.eventProperties = message)
   }
+
   refreshCurrentStream(){
     
   }
 
+  onCreateStreamClicked() {
+
+  }
 }
