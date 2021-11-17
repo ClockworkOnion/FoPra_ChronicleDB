@@ -11,7 +11,7 @@ export class StreamPropertiesComponent implements OnInit {
   constructor(private data: ChronicleService) {
     this.fillDefaults();
   }
-  
+
   message:any;
   eventProperties:any;
 
@@ -66,6 +66,11 @@ export class StreamPropertiesComponent implements OnInit {
   toppings = new FormControl(); 
   sprintzValues:any=[ "is_8bits", "is_delta"," write_size"]
 
+  ngOnInit(): void {
+    this.data.currentCreateStreamProperties.subscribe(message => this.message = message)
+    this.data.currentEventProperties.subscribe(eventproperties => this.eventProperties = eventproperties)
+  }
+
   fillDefaults(){
     this.selectLogging ="false";
     this.selectDebugging="false";
@@ -85,12 +90,8 @@ export class StreamPropertiesComponent implements OnInit {
     this.selectCompressorSize=12;
     this.selectRiverThreads = "t";
     this.inputMaxDeltaQueue="10";
-      
-  }
-
-  ngOnInit(): void {
-    this.data.currentCreateStreamProperties.subscribe(message => this.message = message)
-    this.data.currentEventProperties.subscribe(eventproperties => this.eventProperties = eventproperties)
+    
+    this.sendData();
   }
 
   //method to format Compressor inputs

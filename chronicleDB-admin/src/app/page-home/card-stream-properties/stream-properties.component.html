@@ -4,12 +4,12 @@
   <span>Reset to Default Values</span>
 </button>
 
-<div class="debug">
+<div class="debug" (change)="sendData()">
   <h4>Debug</h4>
   <mat-form-field matTooltip="Enables logs across the system, if log set to true Otherwise logs are disabled."
     appearance="fill">
     <mat-label>Logging</mat-label>
-    <mat-select [(ngModel)]="selectLogging">
+    <mat-select (selectionChange)="sendData()" [(ngModel)]="selectLogging">
       <mat-option *ngFor="let boolean of log" [value]="boolean.value">
         {{ boolean.viewValue }}
       </mat-option>
@@ -19,7 +19,7 @@
 
   <mat-form-field matTooltip="Enables or disables debugging" appearance="fill">
     <mat-label>Debugging</mat-label>
-    <mat-select [(ngModel)]="selectDebugging">
+    <mat-select (selectionChange)="sendData()" [(ngModel)]="selectDebugging">
       <mat-option *ngFor="let boolean of debug" [value]="boolean.value">
         {{ boolean.viewValue }}
       </mat-option>
@@ -29,7 +29,7 @@
 </div>
 <mat-divider></mat-divider>
 
-<div class="i/o">
+<div class="i/o" (change)="sendData()">
   <h4>I/O</h4>
   <mat-form-field hintLabel="Max 10 characters" matTooltip="Data is saved on local Disk as this input"
     appearance="fill">
@@ -64,7 +64,7 @@
 
 <mat-divider></mat-divider>
 
-<div class="makro-block">
+<div class="makro-block"  (change)="sendData()">
   <h4>Block</h4>
   <mat-form-field matTooltip="Number of bytes for an uncompressed serialized node.
 	Generally, this should match the I/O size of the data files." appearance="fill">
@@ -104,7 +104,7 @@
 <mat-divider></mat-divider>
 
 <h4>Cache</h4>
-<div class="cache">
+<div class="cache"  (change)="sendData()">
   <mat-form-field matTooltip="Number of MacroBlocks to keep in memory in LRU i.e. cache" appearance="fill">
     <mat-label>Macro Blocks Cache</mat-label>
     <input type="number" min="0" matInput [(ngModel)]="inputBlockCache" maxlength="10" placeholder="2500" />
@@ -117,11 +117,11 @@
   </mat-form-field>
 </div>
 <mat-divider></mat-divider>
-<div class="compressor">
+<div class="compressor"  (change)="sendData()">
   <h4>Compressor</h4>
 
   <mat-form-field matTooltip="The compression algorithm used. " appearance="fill">
-    <mat-select [(ngModel)]="selectCompressor" placeholder="Select Compressor" name="selectCompressor">
+    <mat-select (selectionChange)="sendData()" [(ngModel)]="selectCompressor" placeholder="Select Compressor" name="selectCompressor">
       <mat-option *ngFor="let compressor of compressorList" [value]="compressor.compressorName">{{
         compressor.compressorName }}</mat-option>
     </mat-select>
@@ -130,7 +130,7 @@
 
   <mat-form-field *ngIf="selectCompressor === 'Sprintz'" appearance="fill">
     <mat-label>Sprintz Values</mat-label>
-    <mat-select [formControl]="toppings" multiple>
+    <mat-select (selectionChange)="sendData()" [formControl]="toppings" multiple>
       <mat-option *ngFor="let type of sprintzValues" [value]="type">{{
         type
         }}</mat-option>
@@ -146,7 +146,7 @@
 
   <mat-form-field matTooltip="Number of river threads in the delta." appearance="fill">
     <mat-label>River Threads</mat-label>
-    <mat-select [(ngModel)]="selectRiverThreads">
+    <mat-select (selectionChange)="sendData()" [(ngModel)]="selectRiverThreads">
       <mat-option *ngFor="let type of riverThreads" [value]="type.value">
         {{ type.viewValue }}
       </mat-option>
