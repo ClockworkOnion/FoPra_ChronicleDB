@@ -31,6 +31,9 @@ export class ChronicleService {
       // undefined in den properties
       this.snackBar.openSnackBar("There is a problem with the properties of the stream.");
       return false;
+    } else if (!this.url || this.url.length < 8) {
+      this.snackBar.openSnackBar("No valid URL given!");
+      return false;
     } else if ((this.eventProperties.value as string).match(/.*undefined.*/gi) != null) {
       // undefined im Event
       this.snackBar.openSnackBar("The Event is not configured!");
@@ -47,6 +50,7 @@ export class ChronicleService {
   }
 
   createStream() {
+    console.log(this.url);
     console.log(this.createStreamBody);
   }
 
