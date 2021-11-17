@@ -34,7 +34,7 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
     private snackbar: SnackBarService,
     private data: ChronicleService
   ) {}
-  
+
   ngOnInit(): void {
     this.selectedCompoundOrSingle = 'single';
   }
@@ -76,25 +76,29 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
     );
   }
 
-  createCompoundList():string{
-    let res:string="";
+  createCompoundList(): string {
+    let res: string = '';
     for (var x of this.componentsReferences) {
-        res = res + x.instance.sendEvent()+",";
+      res = res + x.instance.sendEvent() + ',';
     }
-    return res.slice(0,-1)
+    return res.slice(0, -1);
   }
 
   sendAll() {
     let selectedOption = this.selectedCompoundOrSingle;
-    let res:string = "";
-    if(this.componentsReferences.length<=1 && selectedOption=="single"){
+    let res: string = '';
+    if (this.componentsReferences.length === 0) {
+      // kein Event vorhanden
+      res = 'undefined';
+    } else if (
+      this.componentsReferences.length <= 1 &&
+      selectedOption == 'single'
+    ) {
       res = this.componentsReferences[0].instance.sendEvent();
-    }
-    if(selectedOption=="varCompound"){
-       res =`{"VarCompound":[${this.createCompoundList()}]}` 
-    }
-    if(selectedOption=="compound"){
-       res=`{"Compound":[${this.createCompoundList()}]}` 
+    } else if (selectedOption == 'varCompound') {
+      res = `{"VarCompound":[${this.createCompoundList()}]}`;
+    } else if (selectedOption == 'compound') {
+      res = `{"Compound":[${this.createCompoundList()}]}`;
     }
     this.data.changeEventProperties(res);
   }

@@ -34,7 +34,7 @@ export class ChronicleService {
     } else if (!this.url || this.url.length < 8) {
       this.snackBar.openSnackBar("No valid URL given!");
       return false;
-    } else if ((this.eventProperties.value as string).match(/.*undefined.*/gi) != null) {
+    } else if ((this.eventProperties.value as string).match(/.*((undefined)|(\[\])).*/gi) != null) {
       // undefined im Event
       this.snackBar.openSnackBar("The Event is not configured!");
       return false;
