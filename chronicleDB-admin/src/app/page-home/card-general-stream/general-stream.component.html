@@ -2,7 +2,7 @@
   <div>
     <mat-form-field  appearance="fill" class="urlInput">
       <mat-label>ChronicleDB Url</mat-label>
-      <input matInput [(ngModel)]="chronicleURL" />
+      <input matInput (change)="updateURL(url.value)" ngModel #url="ngModel"/>
     </mat-form-field>
   </div>
   <div>
