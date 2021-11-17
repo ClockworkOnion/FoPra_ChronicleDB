@@ -114,30 +114,8 @@ export class StreamEventPropertyComponent {
     this.parentRef.removeComponent(this.unique_key);
     this.updateData();
   }
-  createCompoundList():string{
-    let res:string="";
-    for (var x of this.parentRef.componentsReferences) {
-        res = res + x.instance.sendEvent()+",";
-    }
-    return res.slice(0,-1)
-  }
 
   updateData() {
-    let selectedOption = this.parentRef.selectedCompound;
-    let res:string = "";
-    if(this.parentRef.componentsReferences.length<=1 && selectedOption=="single"){
-      res = this.parentRef.componentsReferences[0].instance.sendEvent();
-    }
-    if(selectedOption=="varCompound"){
-       res =`{"VarCompound":[${this.createCompoundList()}]}` 
-    }
-    if(selectedOption=="compound"){
-       res=`{"Compound":[${this.createCompoundList()}]}` 
-    }
-    this.data.changeEventProperties(res);
-     
+    this.parentRef.sendAll();
   }
-
-
-  
 }

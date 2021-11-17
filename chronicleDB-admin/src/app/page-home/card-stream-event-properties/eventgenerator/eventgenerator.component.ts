@@ -26,17 +26,21 @@ export class EventgeneratorComponent implements OnInit {
   // Expose class so that it can be used in the template
   class = StreamEventPropertyComponent;
 
-  selectedCompound: string = '';
+  selectedCompoundOrSingle: string = '';
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private snackbar: SnackBarService,
     private data: ChronicleService
   ) {}
+  
+  ngOnInit(): void {
+    this.selectedCompoundOrSingle = 'single';
+  }
 
   addComponent(componentClass: Type<any>) {
     if (
-      this.selectedCompound === 'single' &&
+      this.selectedCompoundOrSingle === 'single' &&
       this.componentsReferences.length >= 1
     ) {
       this.openSnackBar(this.singleWarning);
@@ -66,20 +70,27 @@ export class EventgeneratorComponent implements OnInit {
     );
   }
 
-  sendAll() {
-    //to be modified to send to other components
+  createCompoundList():string{
+    let res:string="";
     for (var x of this.componentsReferences) {
-      if (x.instance.dataSingleOrList === undefined) {
-        this.openSnackBar("Can't add EMPTY Event property !");
-      } else {
-        console.log(x.instance.sendEvent());
-        this.data.changeEventProperties(x.instance.sendEvent());
-      }
+        res = res + x.instance.sendEvent()+",";
     }
+    return res.slice(0,-1)
   }
 
-  ngOnInit(): void {
-    this.selectedCompound = 'single';
+  sendAll() {
+    let selectedOption = this.selectedCompoundOrSingle;
+    let res:string = "";
+    if(this.componentsReferences.length<=1 && selectedOption=="single"){
+      res = this.componentsReferences[0].instance.sendEvent();
+    }
+    if(selectedOption=="varCompound"){
+       res =`{"VarCompound":[${this.createCompoundList()}]}` 
+    }
+    if(selectedOption=="compound"){
+       res=`{"Compound":[${this.createCompoundList()}]}` 
+    }
+    this.data.changeEventProperties(res);
   }
 
   singleWarning: string =

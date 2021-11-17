@@ -1,7 +1,7 @@
 
 <div style="text-align: end;" >
 
-  <mat-radio-group [(ngModel)]="selectedCompound" aria-label="Select an option">
+  <mat-radio-group (change)="sendAll();" [(ngModel)]="selectedCompoundOrSingle" aria-label="Select an option">
     <mat-radio-button  value="single" >Single </mat-radio-button>
     &nbsp;
     <mat-radio-button value="varCompound" >VarCompound</mat-radio-button>
@@ -12,12 +12,10 @@
 </div>
 
 
-    <div>
-      <!-- Use ng-template to ensure that the generated components end up in the right place -->
-    <ng-template #container></ng-template>
-    &nbsp;
-  </div>
-  <button mat-mini-fab color="primary" (click)="addComponent(class)"> <mat-icon>add</mat-icon></button>
+<div>
+    <!-- Use ng-template to ensure that the generated components end up in the right place -->
+  <ng-template #container></ng-template>
   &nbsp;
-
-
+</div>
+<button mat-mini-fab color="primary" (click)="addComponent(class)"> <mat-icon>add</mat-icon></button>
+&nbsp;
