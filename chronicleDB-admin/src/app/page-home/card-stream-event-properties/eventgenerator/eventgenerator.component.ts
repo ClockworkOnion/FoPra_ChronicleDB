@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentRef,
+  AfterViewInit,
 } from '@angular/core';
 import { StreamEventPropertyComponent } from 'src/app/page-home/card-stream-event-properties/stream-event-property.component';
 
@@ -16,7 +17,7 @@ import { StreamEventPropertyComponent } from 'src/app/page-home/card-stream-even
   templateUrl: './eventgenerator.component.html',
   styleUrls: ['./eventgenerator.component.css'],
 })
-export class EventgeneratorComponent implements OnInit {
+export class EventgeneratorComponent implements OnInit, AfterViewInit {
   @ViewChild('container', { read: ViewContainerRef })
   container!: ViewContainerRef;
 
@@ -36,6 +37,11 @@ export class EventgeneratorComponent implements OnInit {
   
   ngOnInit(): void {
     this.selectedCompoundOrSingle = 'single';
+  }
+
+  ngAfterViewInit(): void {
+    // Erste Komponente erstellen
+    this.addComponent(this.class);
   }
 
   addComponent(componentClass: Type<any>) {
