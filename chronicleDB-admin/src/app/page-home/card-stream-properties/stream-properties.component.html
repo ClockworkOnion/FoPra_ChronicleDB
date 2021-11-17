@@ -1,20 +1,27 @@
-<div class ="debug">
+<button mat-icon-button color="primary" aria-label="refresh current stream" (click)="fillDefaults()">
+  <mat-icon>settings_backup_restore</mat-icon>
+  &nbsp;
+  <span>Reset to Default Values</span>
+</button>
+
+<div class="debug">
   <h4>Debug</h4>
-  <mat-form-field  matTooltip="Enables logs across the system, if log set to true Otherwise logs are disabled." appearance="fill">
+  <mat-form-field matTooltip="Enables logs across the system, if log set to true Otherwise logs are disabled."
+    appearance="fill">
     <mat-label>Logging</mat-label>
-    <mat-select [(ngModel)] ="selectLogging">
+    <mat-select [(ngModel)]="selectLogging">
       <mat-option *ngFor="let boolean of log" [value]="boolean.value">
-        {{boolean.viewValue}}
+        {{ boolean.viewValue }}
       </mat-option>
     </mat-select>
   </mat-form-field>
   &nbsp;
 
-  <mat-form-field matTooltip="Enables or disables debugging" appearance="fill" >
+  <mat-form-field matTooltip="Enables or disables debugging" appearance="fill">
     <mat-label>Debugging</mat-label>
-    <mat-select [(ngModel)] ="selectDebugging">
+    <mat-select [(ngModel)]="selectDebugging">
       <mat-option *ngFor="let boolean of debug" [value]="boolean.value">
-        {{boolean.viewValue}}
+        {{ boolean.viewValue }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -24,143 +31,138 @@
 
 <div class="i/o">
   <h4>I/O</h4>
-    <mat-form-field hintLabel="Max 10 characters"  matTooltip="Data is saved on local Disk as this input" appearance="fill">
-      <mat-label >Data filename</mat-label>
-      <input matInput [(ngModel)] ="inputFileName" maxlength="10" placeholder="data0"/>
-    </mat-form-field>
-    &nbsp;
+  <mat-form-field hintLabel="Max 10 characters" matTooltip="Data is saved on local Disk as this input"
+    appearance="fill">
+    <mat-label>Data filename</mat-label>
+    <input matInput [(ngModel)]="inputFileName" maxlength="10" placeholder="data0" />
+  </mat-form-field>
+  &nbsp;
 
-    <mat-form-field  matTooltip=" Translation file. This is used to serialize the rightFlank on a clean system shutdown." appearance="fill">
-      <mat-label >Translation filename</mat-label>
-      <input matInput [(ngModel)] ="inputTranslationName" maxlength="20" placeholder="translation">
-    </mat-form-field>
-    &nbsp;
+  <mat-form-field matTooltip=" Translation file. This is used to serialize the rightFlank on a clean system shutdown."
+    appearance="fill">
+    <mat-label>Translation filename</mat-label>
+    <input matInput [(ngModel)]="inputTranslationName" maxlength="20" placeholder="translation" />
+  </mat-form-field>
+  &nbsp;
 
-    <mat-form-field matTooltip="Boot file.
-    This is used to e.g. recover the system and contains information for loaders, such as NodeID counter and root NodeID." appearance="fill">
-      <mat-label >Boot filename</mat-label>
-      <input matInput [(ngModel)] ="inputBootName" maxlength="10" placeholder=".boot">
-    </mat-form-field>
-    &nbsp;
+  <mat-form-field
+    matTooltip="Boot file.
+    This is used to e.g. recover the system and contains information for loaders, such as NodeID counter and root NodeID."
+    appearance="fill">
+    <mat-label>Boot filename</mat-label>
+    <input matInput [(ngModel)]="inputBootName" maxlength="10" placeholder=".boot" />
+  </mat-form-field>
+  &nbsp;
 
-    <mat-form-field   matTooltip="The number of MacroBlocks allowed to be queued on disk writer thread(s).
-    This number must be much lower than MacroBlock Cache * number of data files."appearance="fill" >
-      <mat-label >Multiple Disk maxQueue</mat-label>
-      <input matInput [(ngModel)] ="inputMaxQueue" maxlength="10" placeholder="10">
-    </mat-form-field>
-    &nbsp;
+  <mat-form-field matTooltip="The number of MacroBlocks allowed to be queued on disk writer thread(s).
+    This number must be much lower than MacroBlock Cache * number of data files." appearance="fill">
+    <mat-label>Multiple Disk maxQueue</mat-label>
+    <input matInput [(ngModel)]="inputMaxQueue" maxlength="10" placeholder="10" />
+  </mat-form-field>
+  &nbsp;
 </div>
 
 <mat-divider></mat-divider>
 
-    
 <div class="makro-block">
   <h4>Block</h4>
-  <mat-form-field  matTooltip="Number of bytes for an uncompressed serialized node.
+  <mat-form-field matTooltip="Number of bytes for an uncompressed serialized node.
 	Generally, this should match the I/O size of the data files." appearance="fill">
     <mat-label>Logical Block size in bytes</mat-label>
-    <input type="number" min="0"   matInput [(ngModel)] ="inputLogicalBlockSize" maxlength="10" placeholder="32768">
+    <input type="number" min="0" matInput [(ngModel)]="inputLogicalBlockSize" maxlength="10" placeholder="32768" />
   </mat-form-field>
   &nbsp;
 
-    <mat-form-field  matTooltip="Number of bytes for a MacroBlock.
-     Denoted in a multiply of Logical Block Size. The multiply value must be a decimal number and never 0." appearance="fill">
-      <mat-label>Macro Block size in bytes</mat-label>
-      <input type="number" min ="0" matInput [(ngModel)] ="inputMacroBlockSize" maxlength="10" placeholder="10">
-    </mat-form-field>
-    &nbsp;
+  <mat-form-field matTooltip="Number of bytes for a MacroBlock.
+     Denoted in a multiply of Logical Block Size. The multiply value must be a decimal number and never 0."
+    appearance="fill">
+    <mat-label>Macro Block size in bytes</mat-label>
+    <input type="number" min="0" matInput [(ngModel)]="inputMacroBlockSize" maxlength="10" placeholder="10" />
+  </mat-form-field>
+  &nbsp;
 
-    <mat-form-field matTooltip="Percent of spare space in a MacroBlock." appearance="fill">
-      <mat-label>Spare space Percentage</mat-label>
-      <input type="number" min ="0" max="1"step="0.01" matInput [(ngModel)] ="inputSpareSpace" placeholder="0.1">
+  <mat-form-field matTooltip="Percent of spare space in a MacroBlock." appearance="fill">
+    <mat-label>Spare space Percentage</mat-label>
+    <input type="number" min="0" max="1" step="0.01" matInput [(ngModel)]="inputSpareSpace" placeholder="0.1" />
     <!--  <mat-hint align="end">{{MacroBlockSpareSpace.value?.length || 0}}/4</mat-hint>-->
-    </mat-form-field>
-    &nbsp;
+  </mat-form-field>
+  &nbsp;
 
-    <mat-form-field  matTooltip="Number of MacroBlocks to preallocate at start." appearance="fill" >
-      <mat-label>MacroBlockPreallocation </mat-label>
-      <input type="number" min ="0"matInput [(ngModel)] ="inputMacroBlockPreallocation" maxlength="10" placeholder="300">
-    </mat-form-field>
-    &nbsp;
+  <mat-form-field matTooltip="Number of MacroBlocks to preallocate at start." appearance="fill">
+    <mat-label>MacroBlockPreallocation </mat-label>
+    <input type="number" min="0" matInput [(ngModel)]="inputMacroBlockPreallocation" maxlength="10" placeholder="300" />
+  </mat-form-field>
+  &nbsp;
 
-    <mat-form-field matTooltip="Allocates a number of MacroBlocks when Preallocation is exhausted.
-    0	means Batch allocator disabled. Needs to be  greater or equal to MacroBlockPreallocation." appearance="fill" >
-      <mat-label>MacroBlock batch allocation</mat-label>
-      <input type="number" min ="0" matInput [(ngModel)] ="inputMacroBlockBatchallocation" maxlength="10" placeholder="300">
-    </mat-form-field>
+  <mat-form-field matTooltip="Allocates a number of MacroBlocks when Preallocation is exhausted.
+    0	means Batch allocator disabled. Needs to be  greater or equal to MacroBlockPreallocation." appearance="fill">
+    <mat-label>MacroBlock batch allocation</mat-label>
+    <input type="number" min="0" matInput [(ngModel)]="inputMacroBlockBatchallocation" maxlength="10"
+      placeholder="300" />
+  </mat-form-field>
 </div>
 <mat-divider></mat-divider>
 
 <h4>Cache</h4>
-<div class ="cache">
-    <mat-form-field matTooltip="Number of MacroBlocks to keep in memory in LRU i.e. cache" appearance="fill">
-        <mat-label>Macro Blocks Cache</mat-label>
-        <input type="number" min ="0" matInput [(ngModel)] ="inputBlockCache" maxlength="10"  placeholder="2500">
-      </mat-form-field>
-      &nbsp;
+<div class="cache">
+  <mat-form-field matTooltip="Number of MacroBlocks to keep in memory in LRU i.e. cache" appearance="fill">
+    <mat-label>Macro Blocks Cache</mat-label>
+    <input type="number" min="0" matInput [(ngModel)]="inputBlockCache" maxlength="10" placeholder="2500" />
+  </mat-form-field>
+  &nbsp;
 
-      <mat-form-field matTooltip="Number of Nodes to keep in memory in LRU i.e. cache." appearance="fill">
-        <mat-label>Nodes in Cache</mat-label>
-        <input type="number" min ="0" matInput [(ngModel)] ="inputNodeCache" maxlength="10"  placeholder="10000">
-      </mat-form-field>
-
+  <mat-form-field matTooltip="Number of Nodes to keep in memory in LRU i.e. cache." appearance="fill">
+    <mat-label>Nodes in Cache</mat-label>
+    <input type="number" min="0" matInput [(ngModel)]="inputNodeCache" maxlength="10" placeholder="10000" />
+  </mat-form-field>
 </div>
 <mat-divider></mat-divider>
 <div class="compressor">
-  
   <h4>Compressor</h4>
 
+  <mat-form-field matTooltip="The compression algorithm used. " appearance="fill">
+    <mat-select [(ngModel)]="selectCompressor" placeholder="Select Compressor" name="selectCompressor">
+      <mat-option *ngFor="let compressor of compressorList" [value]="compressor.compressorName">{{
+        compressor.compressorName }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;
 
-    <mat-form-field matTooltip ="The compression algorithm used. " appearance="fill">
-        <mat-select  [(ngModel)] ="selectCompressor" placeholder="Select Compressor" name="selectCompressor" >
-          <mat-option *ngFor="let compressor of compressorList" [value]="compressor.compressorName" >{{ compressor.compressorName }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      &nbsp;
-      
-      <mat-form-field  *ngIf="selectCompressor === 'Sprintz'" appearance="fill">
-        <mat-label>Sprintz Values</mat-label>
-        <mat-select [formControl]="toppings" multiple>
-          <mat-option *ngFor="let type of sprintzValues" [value]="type">{{type}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      &nbsp;
+  <mat-form-field *ngIf="selectCompressor === 'Sprintz'" appearance="fill">
+    <mat-label>Sprintz Values</mat-label>
+    <mat-select [formControl]="toppings" multiple>
+      <mat-option *ngFor="let type of sprintzValues" [value]="type">{{
+        type
+        }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;
 
+  <mat-form-field *ngIf="selectCompressor !== 'none'" appearance="fill">
+    <mat-label>Size/data_dims</mat-label>
+    <input type="" matInput [(ngModel)]="selectCompressorSize" maxlength="10" placeholder="12" />
+  </mat-form-field>
+  &nbsp;
 
-      <mat-form-field  *ngIf="selectCompressor !== 'none'" appearance="fill">
-        <mat-label>Size/data_dims</mat-label>
-        <input type="" matInput [(ngModel)] ="selectCompressorSize"  maxlength="10"  placeholder="12">
-      </mat-form-field>
-      &nbsp;
-      
-      <mat-form-field  matTooltip="Number of river threads in the delta." appearance="fill">
-        <mat-label>River Threads</mat-label>
-        <mat-select [(ngModel)] ="selectRiverThreads" >
-          <mat-option *ngFor="let type of riverThreads" [value]="type.value">
-            {{type.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    &nbsp;
+  <mat-form-field matTooltip="Number of river threads in the delta." appearance="fill">
+    <mat-label>River Threads</mat-label>
+    <mat-select [(ngModel)]="selectRiverThreads">
+      <mat-option *ngFor="let type of riverThreads" [value]="type.value">
+        {{ type.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;
 
-    <mat-form-field   matTooltip="Number of jobs to queue in the delta before blocking.
+  <mat-form-field matTooltip="Number of jobs to queue in the delta before blocking.
     Larger queues may enhance performance, but require longer syncing, when shutdown. 
-      This value * number of disks must be always smaller than MacroBlocksCache."appearance="fill" >
-          <mat-label >Max delta queue</mat-label>
-          <input matInput [(ngModel)] ="inputMaxDeltaQueue" type ="number" min ="0" maxlength="10" placeholder="10">
-        </mat-form-field>
-        &nbsp;
+      This value * number of disks must be always smaller than MacroBlocksCache." appearance="fill">
+    <mat-label>Max delta queue</mat-label>
+    <input matInput [(ngModel)]="inputMaxDeltaQueue" type="number" min="0" maxlength="10" placeholder="10" />
+  </mat-form-field>
+  &nbsp;
 
-  
-
-        <button color="primary"  aria-label="Add a new Element" matTooltip ="Fill in default Values" (click)="fillDefaults()" >
-          Fill
-        </button>
-
-        <button color="primary" aria-label="send data" matTooltip ="send data" (click)="sendData()" >
-          send
-        </button>
-        
-        
-    
-</div>     
+  <button color="primary" aria-label="send data" matTooltip="send data" (click)="sendData()">
+    send
+  </button>
+</div>

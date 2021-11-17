@@ -8,7 +8,10 @@ import { ChronicleService } from 'src/app/services/chronicle.service';
   styleUrls: ['./stream-properties.component.css'],
 })
 export class StreamPropertiesComponent implements OnInit {
-  constructor(private data: ChronicleService) { }
+  constructor(private data: ChronicleService) {
+    this.fillDefaults();
+  }
+  
   message:any;
   eventProperties:any;
 
