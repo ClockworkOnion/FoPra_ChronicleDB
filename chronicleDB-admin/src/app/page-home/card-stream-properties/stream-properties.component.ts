@@ -117,7 +117,7 @@ export class StreamPropertiesComponent implements OnInit {
       Translation = ${this.inputTranslationName}
       Boot = ${this.inputBootName}
       Multiple disk max queue = ${this.inputMaxQueue}
-      Event 							= {"I64":0}
+      Event = ${this.eventProperties}
       Lightweight index = {"aggregate":{"SMA":{"cnt":0,"sum":0.0,"min":0.0,"max":0.0}},"projector_sequence":"Mono"}
       LogicalBlock size = ${this.inputLogicalBlockSize}
       MacroBlock size = ${this.inputMacroBlockSize}
