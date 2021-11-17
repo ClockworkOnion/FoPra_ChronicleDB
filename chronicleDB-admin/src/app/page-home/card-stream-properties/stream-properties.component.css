@@ -1,16 +1,4 @@
-.mat-button { padding: 5px; }
-
-.button {padding: 25px; }
-
-.div{ padding: 40px;}
-.data-input{
-    font-size: 12px;
-
-}
-.makro-block-input{
-    font-size: 12px;
-
-}
-.cache-input{
-    font-size: 12px;
+.divider {
+  padding-bottom: 20px;
+  padding-top: 10px;
 }

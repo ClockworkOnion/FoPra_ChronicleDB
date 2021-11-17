@@ -1,4 +1,6 @@
-<button mat-icon-button color="primary" aria-label="refresh current stream" (click)="fillDefaults()">
+<button mat-icon-button color="primary" aria-label="refresh current stream" (click)="fillDefaults()"
+  style="position: absolute; right: 200px"
+  matTooltip="Reset all Stream Properites to the default values.">
   <mat-icon>settings_backup_restore</mat-icon>
   &nbsp;
   <span>Reset to Default Values</span>
@@ -27,7 +29,8 @@
   </mat-form-field>
   &nbsp;
 </div>
-<mat-divider></mat-divider>
+
+<div class="divider"><mat-divider></mat-divider></div>
 
 <div class="i/o" (change)="sendData()">
   <h4>I/O</h4>
@@ -62,9 +65,9 @@
   &nbsp;
 </div>
 
-<mat-divider></mat-divider>
+<div class="divider"><mat-divider></mat-divider></div>
 
-<div class="makro-block"  (change)="sendData()">
+<div class="makro-block" (change)="sendData()">
   <h4>Block</h4>
   <mat-form-field matTooltip="Number of bytes for an uncompressed serialized node.
 	Generally, this should match the I/O size of the data files." appearance="fill">
@@ -101,10 +104,11 @@
       placeholder="300" />
   </mat-form-field>
 </div>
-<mat-divider></mat-divider>
 
-<h4>Cache</h4>
-<div class="cache"  (change)="sendData()">
+<div class="divider"><mat-divider></mat-divider></div>
+
+<div class="cache" (change)="sendData()">
+  <h4>Cache</h4>
   <mat-form-field matTooltip="Number of MacroBlocks to keep in memory in LRU i.e. cache" appearance="fill">
     <mat-label>Macro Blocks Cache</mat-label>
     <input type="number" min="0" matInput [(ngModel)]="inputBlockCache" maxlength="10" placeholder="2500" />
@@ -116,12 +120,15 @@
     <input type="number" min="0" matInput [(ngModel)]="inputNodeCache" maxlength="10" placeholder="10000" />
   </mat-form-field>
 </div>
-<mat-divider></mat-divider>
-<div class="compressor"  (change)="sendData()">
+
+<div class="divider"><mat-divider></mat-divider></div>
+
+<div class="compressor" (change)="sendData()">
   <h4>Compressor</h4>
 
   <mat-form-field matTooltip="The compression algorithm used. " appearance="fill">
-    <mat-select (selectionChange)="sendData()" [(ngModel)]="selectCompressor" placeholder="Select Compressor" name="selectCompressor">
+    <mat-select (selectionChange)="sendData()" [(ngModel)]="selectCompressor" placeholder="Select Compressor"
+      name="selectCompressor">
       <mat-option *ngFor="let compressor of compressorList" [value]="compressor.compressorName">{{
         compressor.compressorName }}</mat-option>
     </mat-select>

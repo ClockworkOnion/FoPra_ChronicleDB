@@ -3,15 +3,20 @@
 }
 
 .dashboard-card {
-  position: absolute;
   top: 15px;
   left: 15px;
   right: 15px;
   bottom: 15px;
+  margin-bottom: 20px;
+  height: max-content;
 }
 
 .more-button {
   position: absolute;
   top: 5px;
   right: 10px;
+}
+
+.card-content {
+  padding: 20pt;
 }
