@@ -110,7 +110,12 @@ export class StreamEventPropertyComponent {
     }
   }
   
-  remove_me(){
+  removeMe(){
     this.parentRef.removeComponent(this.unique_key);
+    this.updateData();
+  }
+
+  updateData() {
+    this.parentRef.sendAll();
   }
 }

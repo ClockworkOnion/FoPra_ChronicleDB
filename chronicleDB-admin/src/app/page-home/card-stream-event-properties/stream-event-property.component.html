@@ -1,22 +1,22 @@
-<div>
-  <button color ="warn" mat-mini-fab (click)="remove_me()"><mat-icon>remove</mat-icon> </button>
+<div (change)="updateData()">
+  <button color ="warn" mat-mini-fab (click)="removeMe();"><mat-icon>remove</mat-icon> </button>
     <mat-form-field  appearance="fill">
       <mat-label>Select Single or List</mat-label>
-      <mat-select name="dataSingleOrList" (selectionChange)="listOrSingleSelectionChanged(dataSingleOrList)" [(ngModel)]="dataSingleOrList">
+      <mat-select name="dataSingleOrList" (selectionChange)="listOrSingleSelectionChanged(dataSingleOrList); updateData()" [(ngModel)]="dataSingleOrList">
         <mat-option *ngFor= "let event of eventList" [value]="event.type1">{{event.type1}}</mat-option>
       </mat-select>
     </mat-form-field>
     &nbsp;
     <mat-form-field  appearance="fill">
       <mat-label>Select Type</mat-label>
-      <mat-select name="dataType" (selectionChange)="typeSelectionChanged(dataType)" [(ngModel)]="dataType" [disabled]="!dataSingleOrList">
+      <mat-select name="dataType" (selectionChange)="typeSelectionChanged(dataType); updateData()" [(ngModel)]="dataType" [disabled]="!dataSingleOrList">
         <mat-option *ngFor="let dataType of currentDataTypeList" [value]="dataType['type2']">{{ dataType["type2"] }}</mat-option>
       </mat-select>
     </mat-form-field>
     &nbsp;
     <mat-form-field  appearance="fill">
       <mat-label>Select Subtype</mat-label>
-      <mat-select name="dataSubtype" [(ngModel)]="dataSubtype" [disabled]="!dataType">
+      <mat-select name="dataSubtype" (selectionChange)="updateData()" [(ngModel)]="dataSubtype" [disabled]="!dataType">
         <mat-option *ngFor="let dataSubtype of currentDataSubtypeList" [value]="dataSubtype['value']">{{ dataSubtype['display'] }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -30,7 +30,7 @@
 </div>
 
 
-<!--You selected: {{dataSingleOrList}}  {{dataType}}  {{dataSubtype}}  {{(dataType === 'String' || (dataSingleOrList && dataSingleOrList === 'List')) ? stringOrListSize : ""}}
+<!--You selected: {{dataSingleOrList}}  {{dataType}}  {{dataSubtype}}  {{(dataType === 'String' || (dataSingleOrList && dataSingleOrList === 'List')) ? stringOrListSize : ""}}-->
 <!-- Sry, die If bedingung ist ein bischen lang geworden... Muss erst testen, ob es überhaupt definiert ist...-->
 &nbsp;&nbsp;
 
