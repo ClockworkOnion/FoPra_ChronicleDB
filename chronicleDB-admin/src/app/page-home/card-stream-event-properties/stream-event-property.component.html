@@ -1,36 +1,43 @@
 <div (change)="updateData()">
-  <button color ="warn" mat-mini-fab (click)="removeMe();"><mat-icon>remove</mat-icon> </button>
-    <mat-form-field  appearance="fill">
-      <mat-label>Select Single or List</mat-label>
-      <mat-select name="dataSingleOrList" (selectionChange)="listOrSingleSelectionChanged(dataSingleOrList); updateData()" [(ngModel)]="dataSingleOrList">
-        <mat-option *ngFor= "let event of eventList" [value]="event.type1">{{event.type1}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    &nbsp;
-    <mat-form-field  appearance="fill">
-      <mat-label>Select Type</mat-label>
-      <mat-select name="dataType" (selectionChange)="typeSelectionChanged(dataType); updateData()" [(ngModel)]="dataType" [disabled]="!dataSingleOrList">
-        <mat-option *ngFor="let dataType of currentDataTypeList" [value]="dataType['type2']">{{ dataType["type2"] }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    &nbsp;
-    <mat-form-field  appearance="fill">
-      <mat-label>Select Subtype</mat-label>
-      <mat-select name="dataSubtype" (selectionChange)="updateData()" [(ngModel)]="dataSubtype" [disabled]="!dataType">
-        <mat-option *ngFor="let dataSubtype of currentDataSubtypeList" [value]="dataSubtype['value']">{{ dataSubtype['display'] }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    &nbsp;
-    <mat-form-field  *ngIf="dataType === 'String' || (dataSingleOrList && (dataSingleOrList === 'List (constant size)' || dataSingleOrList === 'List (variable size)'))" appearance="fill">
-      <mat-label>Size</mat-label>
-      <input type ="number" min="1" matInput [(ngModel)]="stringOrListSize" />
-    </mat-form-field>
+  <button color="warn" mat-mini-fab (click)="removeMe();" matTooltip="Remove this element">
+    <mat-icon>remove</mat-icon>
+  </button>
+  <mat-form-field appearance="fill" matTooltip="Select if this element should be a list or a single element.">
+    <mat-label>Select Single or List</mat-label>
+    <mat-select name="dataSingleOrList" (selectionChange)="listOrSingleSelectionChanged(dataSingleOrList); updateData()"
+      [(ngModel)]="dataSingleOrList">
+      <mat-option *ngFor="let event of eventList" [value]="event.type1">{{event.type1}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="fill" matTooltip="Select the type of this element.">
+    <mat-label>Select Type</mat-label>
+    <mat-select name="dataType" (selectionChange)="typeSelectionChanged(dataType); updateData()" [(ngModel)]="dataType"
+      [disabled]="!dataSingleOrList">
+      <mat-option *ngFor="let dataType of currentDataTypeList" [value]="dataType['type2']">{{ dataType["type2"] }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="fill" matTooltip="Select the subtype of this element. For example how many bits an integer should have or what kind of list.">
+    <mat-label>Select Subtype</mat-label>
+    <mat-select name="dataSubtype" (selectionChange)="updateData()" [(ngModel)]="dataSubtype" [disabled]="!dataType">
+      <mat-option *ngFor="let dataSubtype of currentDataSubtypeList" [value]="dataSubtype['value']">{{
+        dataSubtype['display'] }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field matTooltip="Select the default size of the list or of the string."
+    *ngIf="dataType === 'String' || (dataSingleOrList && (dataSingleOrList === 'List (constant size)' || dataSingleOrList === 'List (variable size)'))"
+    appearance="fill">
+    <mat-label>Size</mat-label>
+    <input type="number" min="1" matInput [(ngModel)]="stringOrListSize" />
+  </mat-form-field>
 
-    Nr.{{unique_key}}
+  Nr.{{unique_key}}
 </div>
 
 
 <!--You selected: {{dataSingleOrList}}  {{dataType}}  {{dataSubtype}}  {{(dataType === 'String' || (dataSingleOrList && dataSingleOrList === 'List')) ? stringOrListSize : ""}}-->
 <!-- Sry, die If bedingung ist ein bischen lang geworden... Muss erst testen, ob es überhaupt definiert ist...-->
 &nbsp;&nbsp;
-
