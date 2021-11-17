@@ -33,6 +33,8 @@ export class GeneralStreamComponent implements OnInit {
   }
 
   onCreateStreamClicked() {
-
+    if (this.data.checkInput()) {
+      this.data.createStream();
+    }
   }
 }

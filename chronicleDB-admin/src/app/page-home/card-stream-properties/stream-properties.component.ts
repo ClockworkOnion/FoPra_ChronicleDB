@@ -68,7 +68,6 @@ export class StreamPropertiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.currentCreateStreamProperties.subscribe(message => this.message = message)
-    this.data.currentEventProperties.subscribe(eventproperties => this.eventProperties = eventproperties)
   }
 
   fillDefaults(){
@@ -121,7 +120,7 @@ export class StreamPropertiesComponent implements OnInit {
       Translation = ${this.inputTranslationName}
       Boot = ${this.inputBootName}
       Multiple disk max queue = ${this.inputMaxQueue}
-      Event = ${this.eventProperties}
+      Event = <event-placeholder>
       Lightweight index = {"aggregate":{"SMA":{"cnt":0,"sum":0.0,"min":0.0,"max":0.0}},"projector_sequence":"Mono"}
       LogicalBlock size = ${this.inputLogicalBlockSize}
       MacroBlock size = ${this.inputMacroBlockSize}
@@ -136,7 +135,6 @@ export class StreamPropertiesComponent implements OnInit {
       Max delta queue = ${this.inputMaxDeltaQueue}`;
 
     //service sends the data to other components
-    this.data.changeCreateStreamProperties(streamPropertyData);
-    console.log(this.message)
+    this.data.changeStreamProperties(streamPropertyData);
   }
 }

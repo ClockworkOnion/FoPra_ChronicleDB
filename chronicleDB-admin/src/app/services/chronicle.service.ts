@@ -1,66 +1,53 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SnackBarService } from './snack-bar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChronicleService {
-  private createStreamProperties = new BehaviorSubject<any>('default message');
-  private eventProperties = new BehaviorSubject<any>('default event properties');
+  private streamProperties = new BehaviorSubject<any>('undefined');
+  private eventProperties = new BehaviorSubject<any>('undefined');
   private url!: string;
 
-  currentCreateStreamProperties = this.createStreamProperties.asObservable();
+  currentCreateStreamProperties = this.streamProperties.asObservable();
   currentEventProperties = this.eventProperties.asObservable();
 
-  private currentStream: string = "N/A";
+  private currentStream: string = 'N/A';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private snackBar: SnackBarService) {}
 
-  existsStream() : boolean {
-    return this.currentStream != "N/A";
+  existsStream(): boolean {
+    return this.currentStream != 'N/A';
   }
 
-  getStreamInfo() : string {
+  getStreamInfo(): string {
     return this.currentStream;
   }
 
-  private fillStreamBodyText = (eventText: string) =>
-    `
-  Log = false
-  Debug = false
-  Data = data0
-  Translation = translation
-  Boot = .boot
-  Multiple disk max queue = 10
-  ${eventText}
-  Lightweight index = {"aggregate":{"SMA":{"cnt":0,"sum":0.0,"min":0.0,"max":0.0}},"projector_sequence":"Mono"}
-  LogicalBlock size = 32768
-  MacroBlock size = 10
-  MacroBlock spare = 0.1
-  MacroBlock preallocation = 300
-  MacroBlock batch allocation = 300
-  MacroBlocks cache = 2500
-  Nodes cache = 10000
-  Compressor = Sprintz
-  Compressor extras = {"Sprintz":[true,53,true,true]}
-  River threads = 1
-  Max delta queue = 10`;
+  checkInput(): boolean {
+    if ((this.streamProperties.value as string).match(/.*undefined.*/gi) != null) {
+      // undefined in den properties
+      this.snackBar.openSnackBar("There is a problem with the properties of the stream.");
+      return false;
+    } else if ((this.eventProperties.value as string).match(/.*undefined.*/gi) != null) {
+      // undefined im Event
+      this.snackBar.openSnackBar("The Event is not configured!");
+      return false;
+    }
+    return true;
+  }
 
-  createStream(url: string, ...eventTypes: string[]) {
-    // create the text of the Event line
-    let eventString: string = 'Event = {"Compound":[';
-    eventTypes.forEach((type) => {
-      eventString = eventString.concat(type, ',');
-    });
-    eventString = eventString.substring(0, eventString.length - 1).concat(']}');
-    let body: string = this.fillStreamBodyText(eventString);
+  get createStreamBody(): string {
+    return (this.streamProperties.value as string).replace(
+      '<event-placeholder>',
+      this.eventProperties.value
+    );
+  }
 
-    let response$ = this.post(url, body).subscribe();
-
-    // TODO stream ID aus response abspeichern, und existsStream Methode etc
-
-    return response$;
+  createStream() {
+    console.log(this.createStreamBody);
   }
 
   private post(url: string, body: any) {
@@ -68,11 +55,11 @@ export class ChronicleService {
   }
 
   changeStreamUrl(url: string) {
-
+    this.url = url;
   }
 
-  changeCreateStreamProperties(message: any) {
-    this.createStreamProperties.next(message);
+  changeStreamProperties(message: any) {
+    this.streamProperties.next(message);
   }
 
   changeEventProperties(properties: any) {
