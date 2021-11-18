@@ -102,7 +102,7 @@ export class StreamPropertiesComponent implements OnInit {
       this.selectCompressor === 'LZ4_Fast_No_Meta' ||
       this.selectCompressor === 'LZ4_Fast_With_Meta'
     ) {
-      return `{"32I":${this.selectCompressorSize}}`;
+      return `{"I32":${this.selectCompressorSize}}`;
     }
     if (this.selectCompressor === 'Sprintz') {
       return `{"Sprintz":[true,${this.selectCompressorSize},true,true]`;
