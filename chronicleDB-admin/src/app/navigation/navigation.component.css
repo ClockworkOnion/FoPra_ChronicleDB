@@ -25,3 +25,6 @@
 .example-spacer2 {
   flex: 0.75 1 auto;
 }
+.mat-toolbar{
+  background-color: #23396e;
+}
