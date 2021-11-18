@@ -1,8 +1,8 @@
 <div >
   <div>
     <mat-form-field appearance="fill" class="urlInput" matTooltip="Insert the URL of ChronicleDB.">
-      <mat-label>ChronicleDB Url</mat-label>
-      <input matInput (change)="updateURL(url.value)" ngModel #url="ngModel" />
+      <mat-label>ChronicleDB URL</mat-label>
+      <input pattern="(https?:\/\/.+(\.|:).+\/)" matInput required (change)="updateURL(url.value)" ngModel #url="ngModel" type="url"/>
     </mat-form-field>
   </div>
   <div>

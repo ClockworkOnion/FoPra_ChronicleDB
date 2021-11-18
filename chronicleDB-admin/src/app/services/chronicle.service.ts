@@ -52,6 +52,9 @@ export class ChronicleService {
   createStream() {
     console.log(this.url);
     console.log(this.createStreamBody);
+    this.http.post(this.url + "/create_stream", this.createStreamBody).subscribe(response => {
+      console.log(response)
+    });
   }
 
   private post(url: string, body: any) {
