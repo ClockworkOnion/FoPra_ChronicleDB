@@ -84,5 +84,21 @@ Alle Leute auf den aktuellen Stand gebracht bzgl. der Neuerung, die Davit implem
 Das Python Script zur Weiterleitung der API Anfragen wurde besprochen.
 
 ### Weitere Planung
-- Mit dem fertigen JSON String fuer den Body des Create Stream requests soll eine Weiterleitung ueber das Python Script eingerichtet werden
+- Mit dem fertigen JSON String fuer den Body des Create Stream requests soll eine Weiterleitung über das Python Script eingerichtet werden
 - Stream-Properties Compressor Eigenschaften muessen noch korrekt implementiert werden
+
+
+
+
+## Besprechung vom 18.11.21
+Awensend: Johannes Buder, Davit Davtyan, Lars Happel
+
+### GUI Fortschritt
+Vor dem Vorstellen haben wir noch gemainsam die letzten groben GUI-Probleme behoben, Beschreibungen überall hinzugefügt und ein eigenes Theme mit einer Farbpalette erstellt, sodass das Uni Logo auf der Website zusammen mit den Farben von ILIAS etc. (Blau...) auftaucht.
+
+### REST-API
+Wir haben uns nochmal das Python Backend angeschaut, dass Lars zum Laufen gebracht hat, sodass wir nun mit ChronicleDB kommunizieren können.
+
+### Weitere Planung
+Wir müssen noch ein paar minimale Änderungen an Texten o. ä. vornehmen und die Dokumentation bis Ende der Woche vervollständigen, sodass wir den ersten Meilenstein in der nächsten Zeit abhaken können.  
+Ebenso wollen wir schon anfangen, die Komponenten für die anderen Operationen zu erstellen, damit der 2. Meilenstein bald begonnen werden kann.
