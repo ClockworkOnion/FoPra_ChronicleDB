@@ -41,7 +41,8 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // Erste Komponente erstellen
-    this.addComponent(this.class);
+    setTimeout(()=>this.addComponent(this.class),0)
+   
   }
 
   addComponent(componentClass: Type<any>) {

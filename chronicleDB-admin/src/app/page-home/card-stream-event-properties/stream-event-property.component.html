@@ -5,7 +5,7 @@
   <mat-form-field appearance="fill" matTooltip="Select if this element should be a list or a single element.">
     <mat-label>Select Single or List</mat-label>
     <mat-select name="dataSingleOrList" (selectionChange)="listOrSingleSelectionChanged(dataSingleOrList); updateData()"
-      [(ngModel)]="dataSingleOrList">
+      [(ngModel)]="dataSingleOrList" required ="true">
       <mat-option *ngFor="let event of eventList" [value]="event.type1">{{event.type1}}</mat-option>
     </mat-select>
   </mat-form-field>
