@@ -35,6 +35,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EventgeneratorComponent } from './page-home/card-stream-event-properties/eventgenerator/eventgenerator.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatBadgeModule} from '@angular/material/badge';
 
 
 
@@ -77,7 +78,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatTooltipModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatBadgeModule
     
   ],
   providers: [ChronicleService],
