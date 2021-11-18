@@ -1,11 +1,11 @@
 .shadowLabel {
     background-color: rgb(245, 245, 245);
     padding: 10pt;
-    width: 60%;
+    width: 40%;
     display: inline-flex;
 }
 
 .urlInput {
     top: 60%;
-    width: 70%; 
+    width: 60%; 
 }
