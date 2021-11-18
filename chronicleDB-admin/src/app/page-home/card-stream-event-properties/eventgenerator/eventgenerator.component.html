@@ -1,7 +1,7 @@
 
 <div style="text-align: end; padding-bottom: 12px;">
   <mat-radio-group (change)="sendAll();" [(ngModel)]="selectedCompoundOrSingle" aria-label="Select an option">
-    <mat-radio-button  value="single" matTooltip="The Event shall be just one value.">Single </mat-radio-button>
+    <mat-radio-button [disabled]="numberOfEventComponents != 1" value="single" matTooltip="The Event shall be just one value.">Single </mat-radio-button>
     &nbsp;
     <mat-radio-button value="varCompound" matTooltip="The Event shall consist of a variable number of elements">VarCompound</mat-radio-button>
     &nbsp;

@@ -65,6 +65,10 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
     }
   }
 
+  get numberOfEventComponents() {
+    return this.componentsReferences.length;
+  }
+
   removeComponent(key: number) {
     if (this.container.length <= 1){ this.openSnackBar("Can't have less than 1 Event") 
     return;}
