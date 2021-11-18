@@ -66,7 +66,8 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
   }
 
   removeComponent(key: number) {
-    if (this.container.length <= 1) this.openSnackBar("Can't have less than 1 Event"); return;
+    if (this.container.length <= 1){ this.openSnackBar("Can't have less than 1 Event") 
+    return;}
     let componentRef = this.componentsReferences.filter(
       (x) => x.instance.unique_key == key
     )[0];
