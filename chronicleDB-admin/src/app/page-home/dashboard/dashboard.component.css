@@ -1,5 +1,6 @@
 .grid-container {
   margin: 20px;
+  padding-bottom: 16px;
 }
 
 .dashboard-card {
@@ -8,7 +9,8 @@
   right: 15px;
   bottom: 15px;
   margin-bottom: 20px;
-  height: max-content;
+  margin-right: 32px;
+  border-radius: 25px;
 }
 
 .more-button {
