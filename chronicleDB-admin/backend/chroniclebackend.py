@@ -4,6 +4,7 @@ from flask_restful import Api, Resource
 from flask_cors import CORS, cross_origin
 import requests
 
+
 app = Flask(__name__)
 api = Api(app)
 cors = CORS(app) # Adding CORS header
@@ -24,10 +25,11 @@ class createStream(Resource):
         return "Not defined!"
 
     def post(self):
+        print("Trying to create stream...")
         print(request.data)
         response = requests.post("http://127.0.0.1:8000/create_stream", request.data)
         print("Response from ChronicleDB: " + str(response))
-        return {"response": "Posting success?" } 
+        return {"response from ChronicleDB": str(response) } 
 
 api.add_resource(createStream, "/create_stream")
 
