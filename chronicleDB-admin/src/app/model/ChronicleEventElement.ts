@@ -6,13 +6,13 @@ export interface ChronicleEventElement {
 }
 
 export enum EventElementSingleOrList {
-    single, constList, varList
+    single="single", constList="constList", varList="varList"
 }
 
 export enum EventElementType {
-    integer, string, float, unsigned
+    integer="Integer", string="String", float="Float", unsigned="Unsigned"
 }
 
 export enum EventElementSubtype {
-    constString, varString, eight, sixteen, thirtytwo, sixtyfour
+    eight=8, sixteen=16, thirtytwo=32, sixtyfour=64, constString="const", varString="var"
 }
