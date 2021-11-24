@@ -1,18 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEventElement';
+import { ChronicleStream } from '../model/ChronicleStream';
 import { SnackBarService } from './snack-bar.service';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChronicleService {
-  private streamProperties = new BehaviorSubject<any>('undefined');
-  private eventProperties = new BehaviorSubject<any>('undefined');
   private url!: string;
 
+  private streamProperties = new BehaviorSubject<any>('undefined');
+  private eventProperties = new BehaviorSubject<any>('undefined');
   currentCreateStreamProperties = this.streamProperties.asObservable();
   currentEventProperties = this.eventProperties.asObservable();
+
+  private selectedStream = new BehaviorSubject<ChronicleStream|null>(null);
+  selectedStream$ = this.selectedStream.asObservable();
 
   private currentStream: string = 'N/A';
 
@@ -24,6 +30,18 @@ export class ChronicleService {
 
   getStreamInfo(): string {
     return this.currentStream;
+  }
+
+  setupTestStreamData() {
+    this.selectedStream.next({
+      id: 1, 
+      event: [
+        {singleOrList: EventElementSingleOrList.single, type: EventElementType.float, subtype: EventElementSubtype.sixtyfour},
+        {singleOrList: EventElementSingleOrList.single, type: EventElementType.integer, subtype: EventElementSubtype.eight},
+        {singleOrList: EventElementSingleOrList.single, type: EventElementType.string, subtype: EventElementSubtype.varString, size: 10},
+        {singleOrList: EventElementSingleOrList.constList, type: EventElementType.integer, subtype: EventElementSubtype.eight, size: 3}
+      ]
+    });
   }
 
   checkInput(): boolean {

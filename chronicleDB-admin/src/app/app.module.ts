@@ -37,6 +37,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatBadgeModule} from '@angular/material/badge';
 import { InsertDataTabMenuComponent } from './page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
+import { InsertDataManuallyComponent } from './page-insert-data/insert-data-manually/insert-data-manually.component';
+import { InsertDataEventElementComponent } from './page-insert-data/insert-data-event-element/insert-data-event-element.component';
 
 
 
@@ -54,6 +56,8 @@ import { InsertDataTabMenuComponent } from './page-insert-data/insert-data-tab-m
     StreamEventPropertyComponent,
     EventgeneratorComponent,
     InsertDataTabMenuComponent,
+    InsertDataManuallyComponent,
+    InsertDataEventElementComponent,
   ],
   imports: [
     BrowserModule,
