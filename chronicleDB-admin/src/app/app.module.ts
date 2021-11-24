@@ -40,6 +40,7 @@ import { InsertDataTabMenuComponent } from './page-insert-data/insert-data-tab-m
 import { InsertDataManuallyComponent } from './page-insert-data/insert-data-manually/insert-data-manually.component';
 import { InsertDataEventElementComponent } from './page-insert-data/insert-data-event-element/insert-data-event-element.component';
 import { CreateStreamService } from './services/create-stream.service';
+import { InsertDataService } from './services/insert-data.service';
 
 
 
@@ -89,7 +90,7 @@ import { CreateStreamService } from './services/create-stream.service';
     MatBadgeModule
     
   ],
-  providers: [ChronicleService, CreateStreamService],
+  providers: [ChronicleService, CreateStreamService, InsertDataService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

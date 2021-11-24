@@ -1,4 +1,5 @@
 <mat-form-field appearance="fill">
   <mat-label>{{eventElementLabel}}</mat-label>
-  <input (change)="onValueChanged(model.value)" matInput ngModel #model=ngModel required />
+  <input (change)="onValueChanged()" matInput [formControl]="inputControl"/>
 </mat-form-field>
+<span *ngIf="inputControl.errors">{{inputControl.errors.error}}</span>
