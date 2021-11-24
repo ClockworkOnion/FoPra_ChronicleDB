@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChronicleEventElement } from 'src/app/model/ChronicleEventElement';
+import { ChronicleEventElement } from 'src/app/model/ChronicleEvent';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 
 @Component({

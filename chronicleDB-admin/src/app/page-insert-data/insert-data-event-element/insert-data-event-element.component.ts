@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ChronicleEventElement, EventElementSingleOrList, EventElementSubtype, EventElementType } from 'src/app/model/ChronicleEventElement';
+import { ChronicleEventElement, EventElementSingleOrList, EventElementSubtype, EventElementType } from 'src/app/model/ChronicleEvent';
 
 @Component({
   selector: 'app-insert-data-event-element',

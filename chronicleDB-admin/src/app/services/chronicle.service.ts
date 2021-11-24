@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEventElement';
+import { EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
 import { ChronicleStream } from '../model/ChronicleStream';
 import { SnackBarService } from './snack-bar.service';
 
@@ -41,7 +41,8 @@ export class ChronicleService {
         {singleOrList: EventElementSingleOrList.single, type: EventElementType.string, subtype: EventElementSubtype.varString, size: 10},
         {singleOrList: EventElementSingleOrList.single, type: EventElementType.string, subtype: EventElementSubtype.constString, size: 10},
         {singleOrList: EventElementSingleOrList.constList, type: EventElementType.integer, subtype: EventElementSubtype.eight, size: 3}
-      ]
+      ],
+      compundType: EventCompoundType.compound
     });
   }
 
