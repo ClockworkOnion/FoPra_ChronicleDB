@@ -16,4 +16,10 @@ export class InsertDataManuallyComponent implements OnInit {
     this.chronicle.selectedStream$.subscribe(stream => {if (stream) this.eventElements = stream.event});
     this.chronicle.setupTestStreamData();
   }
+
+  elementValueChanged(index: number, event:any) {
+    console.log("index: " + index);
+    console.log("value: " + event);
+    
+  }
 }

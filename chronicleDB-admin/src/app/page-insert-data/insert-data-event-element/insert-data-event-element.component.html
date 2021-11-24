@@ -1,4 +1,4 @@
 <mat-form-field appearance="fill">
   <mat-label>{{eventElementLabel}}</mat-label>
-  <input matInput required />
+  <input (change)="onValueChanged(model.value)" matInput ngModel #model=ngModel required />
 </mat-form-field>

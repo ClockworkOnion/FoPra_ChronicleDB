@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ChronicleEventElement, EventElementSingleOrList, EventElementSubtype, EventElementType } from 'src/app/model/ChronicleEvent';
 
 @Component({
@@ -8,6 +8,7 @@ import { ChronicleEventElement, EventElementSingleOrList, EventElementSubtype, E
 })
 export class InsertDataEventElementComponent {
   @Input("element") eventElement!: ChronicleEventElement;
+  @Output("valueChange") valueChanged = new EventEmitter<string>();
 
   constructor() { }
 
@@ -37,5 +38,9 @@ export class InsertDataEventElementComponent {
 
       default: {return "ERROR";}
     }
+  }
+
+  onValueChanged(value:string) {
+    this.valueChanged.emit(value);
   }
 }
