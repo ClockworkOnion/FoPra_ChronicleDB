@@ -1,55 +1,51 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-  >
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
 
     <mat-nav-list>
       <a mat-list-item routerLink="/home">
         <mat-icon class="sidenav-icon"> home </mat-icon>
-        &nbsp; Home</a
-      >
+        &nbsp; Home
+      </a>
+      <a mat-list-item routerLink="/insertData">
+        <mat-icon class="sidenav-icon"> upload_file </mat-icon>
+        &nbsp; Insert Data
+      </a>
       <a mat-list-item routerLink="/search">
         <mat-icon class="sidenav-icon"> search </mat-icon>
-        &nbsp; Search</a
-      >
+        &nbsp; Search
+      </a>
       <app-expansion-panel> </app-expansion-panel>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary"  style="height: 80px !important;">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
-      >
+    <mat-toolbar color="primary" style="height: 80px !important">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      
-      <span>ChronicleDB Admin Panel</span>  
+
+      <span>ChronicleDB Admin Panel</span>
       <span class="example-spacer2"></span>
-      <img class = "logo" src="/assets/UMR_Logo_weiss.svg" width="200" height="60" />
+      <img class="logo" src="/assets/UMR_Logo_weiss.svg" width="200" height="60" />
       <span class="example-spacer"></span>
-      
+
       <button type="button" mat-icon-button>
-        <span class="material-icons" matBadge="2" matBadgeColor="warn" matBadgeSize="small"> account_circle </span>
+        <span class="material-icons" matBadge="2" matBadgeColor="warn" matBadgeSize="small">
+          account_circle
+        </span>
       </button>
 
       <button type="button" mat-icon-button>
-        <span class="material-icons" matBadge="99+" matBadgeColor="warn" matBadgeSize="small" > email </span>
+        <span class="material-icons" matBadge="99+" matBadgeColor="warn" matBadgeSize="small">
+          email
+        </span>
       </button>
 
       <button type="button" mat-icon-button>
         <span class="material-icons"> logout </span>
       </button>
-      
     </mat-toolbar>
 
     <router-outlet></router-outlet>

@@ -36,6 +36,7 @@ import { EventgeneratorComponent } from './page-home/card-stream-event-propertie
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatBadgeModule} from '@angular/material/badge';
+import { InsertDataTabMenuComponent } from './page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
 
 
 
@@ -52,6 +53,7 @@ import {MatBadgeModule} from '@angular/material/badge';
     GeneralStreamComponent,
     StreamEventPropertyComponent,
     EventgeneratorComponent,
+    InsertDataTabMenuComponent,
   ],
   imports: [
     BrowserModule,
