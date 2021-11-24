@@ -12,6 +12,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 export class InsertDataManuallyComponent implements OnInit {
   selectedStream!: ChronicleStream;
   eventElements!: ChronicleEventElement[];
+
   eventElementValues!: string[];
 
   constructor(private chronicle: ChronicleService, private snackBar: SnackBarService) {}

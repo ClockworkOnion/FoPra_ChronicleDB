@@ -39,6 +39,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { InsertDataTabMenuComponent } from './page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
 import { InsertDataManuallyComponent } from './page-insert-data/insert-data-manually/insert-data-manually.component';
 import { InsertDataEventElementComponent } from './page-insert-data/insert-data-event-element/insert-data-event-element.component';
+import { CreateStreamService } from './services/create-stream.service';
 
 
 
@@ -88,7 +89,7 @@ import { InsertDataEventElementComponent } from './page-insert-data/insert-data-
     MatBadgeModule
     
   ],
-  providers: [ChronicleService],
+  providers: [ChronicleService, CreateStreamService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
