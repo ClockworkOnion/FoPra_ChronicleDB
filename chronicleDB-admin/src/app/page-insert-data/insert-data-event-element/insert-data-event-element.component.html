@@ -1,5 +1,6 @@
 <mat-form-field appearance="fill">
   <mat-label>{{eventElementLabel}}</mat-label>
-  <input (change)="onValueChanged()" matInput [formControl]="inputControl"/>
+  <input (change)="onValueChanged()" (blur)="onValueChanged()" matInput [formControl]="inputControl"/>
 </mat-form-field>
+
 <span *ngIf="inputControl.errors">{{inputControl.errors.error}}</span>

@@ -16,6 +16,7 @@ export class InsertDataManuallyComponent implements OnInit {
 
   // Values of the input fields
   eventElementValues!: string[];
+  timestamp!: string;
 
   constructor(private chronicle: ChronicleService,
     private insertService: InsertDataService, 

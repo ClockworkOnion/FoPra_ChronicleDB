@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, Validators } from '@angular/forms';
-import { ChronicleEventElement, EventElementSingleOrList, EventElementSubtype, EventElementType } from 'src/app/model/ChronicleEvent';
+import { ChronicleEventElement, EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from 'src/app/model/ChronicleEvent';
 import { EventElementValidator } from './event-element-validator';
 
 @Component({
@@ -10,9 +10,10 @@ import { EventElementValidator } from './event-element-validator';
 })
 export class InsertDataEventElementComponent {
   @Input("element") eventElement!: ChronicleEventElement;
+  @Input("varCompound") compoundType!: EventCompoundType;
   @Output("valueChange") valueChanged = new EventEmitter<string>();
 
-  inputControl: FormControl = new FormControl("", [Validators.required]);
+  inputControl: FormControl = new FormControl("");
 
   constructor() { }
 
@@ -53,6 +54,11 @@ export class InsertDataEventElementComponent {
   }
 
   validateInput(): boolean {
+    // if varComponent then it is ok to leave Elements blank
+    if (this.compoundType === EventCompoundType.varCompound && (this.inputControl.value as string).length == 0) {
+      return true;
+    }
+
     let error: ValidationErrors | null = null;
     if (this.eventElement.singleOrList == EventElementSingleOrList.single) {
       switch (this.eventElement.type) {
@@ -76,7 +82,7 @@ export class InsertDataEventElementComponent {
           error = {error: "Case could not be handled. No implementation yet!"};
       }
     } else {
-      error = {error: "Case could not be handled. No implementation yet!"};
+      error = {error: "No implementation yet! TODO"};
     }
 
     this.inputControl.setErrors(error);
