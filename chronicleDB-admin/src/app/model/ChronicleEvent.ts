@@ -18,5 +18,5 @@ export enum EventElementSubtype {
 }
 
 export enum EventCompoundType {
-    single, compound, varCompund
+    single="single", compound="compound", varCompound="varCompound"
 }

@@ -1,3 +1,14 @@
-<div *ngFor="let eventElement of eventElements; let i = index">
-    <app-insert-data-event-element  [element]=eventElement (valueChange)="elementValueChanged(i, $event)"></app-insert-data-event-element>
+<div>
+    <app-insert-data-event-element *ngFor="let eventElement of eventElements; let i = index" [element]="eventElement"
+        (valueChange)="elementValueChanged(i, $event)" style="margin-right: 8px;"></app-insert-data-event-element>
+</div>
+
+<div *ngIf="selectedStream?.compundType == 'varCompound'">
+    TODO: Neue Felder hinzufügen...
+</div>
+
+<div>
+    <button mat-raised-button color="primary" style="float: right; bottom: 20pt" (click)="onAddEventClicked()">
+        Add Event
+    </button>
 </div>
