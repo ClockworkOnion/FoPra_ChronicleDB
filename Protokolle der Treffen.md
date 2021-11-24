@@ -102,3 +102,16 @@ Wir haben uns nochmal das Python Backend angeschaut, dass Lars zum Laufen gebrac
 ### Weitere Planung
 Wir müssen noch ein paar minimale Änderungen an Texten o. ä. vornehmen und die Dokumentation bis Ende der Woche vervollständigen, sodass wir den ersten Meilenstein in der nächsten Zeit abhaken können.  
 Ebenso wollen wir schon anfangen, die Komponenten für die anderen Operationen zu erstellen, damit der 2. Meilenstein bald begonnen werden kann.
+
+## Besprechung vom 24.11.21
+Anwesend: Johannes Buder, Davit Davtyan, Lars Happel
+
+### Fortschritte
+- Insert Event GUI ist implementiert
+- Durch das ChronicleDB Update ist kein Backend für den Header mehr nötig
+
+### Weitere Planung
+- Aufteilung der Implementierung für die weiteren ChronicleDB Funktionen (show_system_info, insert_event etc.)
+- Beschlossen die Services aufzuspalten in
+- Es soll ein Modell implementiert werden, um die Stream-Events intern zu repräsentieren
+- Davit implementiert Dark-Mode und Progress Bar bei der Kommunikation mit ChronicleDB
