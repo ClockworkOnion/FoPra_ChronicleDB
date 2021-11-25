@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChronicleEventElement, EventCompoundType } from 'src/app/model/ChronicleEvent';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
-import { InsertDataService } from 'src/app/services/insert-data.service';
+import { InsertDataService } from 'src/app/services/rest services/insert-data.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
@@ -43,7 +43,7 @@ export class InsertDataManuallyComponent implements OnInit {
       this.snackBar.openSnackBar("Please enter all needed Data!");
     } else {
       console.log(this.eventElementValues);
-      // TODO hinzufügen in ChronicleDB
+      this.insertService.insertEvent(this.eventElementValues);
     }
   }
 

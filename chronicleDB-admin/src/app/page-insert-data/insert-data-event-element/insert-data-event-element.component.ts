@@ -82,7 +82,7 @@ export class InsertDataEventElementComponent {
           error = {error: "Case could not be handled. No implementation yet!"};
       }
     } else {
-      error = {error: "No implementation yet! TODO"};
+      error = EventElementValidator.validateList(this.inputControl.value, this.eventElement.singleOrList, this.eventElement.size);
     }
 
     this.inputControl.setErrors(error);

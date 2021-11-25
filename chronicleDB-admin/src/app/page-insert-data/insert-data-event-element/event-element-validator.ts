@@ -1,5 +1,5 @@
 import { ValidationErrors } from "@angular/forms";
-import { EventElementSubtype } from "src/app/model/ChronicleEvent";
+import { EventElementSingleOrList, EventElementSubtype } from "src/app/model/ChronicleEvent";
 
 export class EventElementValidator {
     static validateFloat(value: string, subtype: EventElementSubtype): ValidationErrors | null {
@@ -24,6 +24,16 @@ export class EventElementValidator {
     static validateUnsigned(value: string, subtype: EventElementSubtype): ValidationErrors | null {
         if (!value.match(/^\d+$/))
             return {error: "No Integer!"}
+        return null;
+    }
+
+    // Validates the amount of elements in the List
+    static validateList(value: string, singleOrList: EventElementSingleOrList, size: number | undefined): ValidationErrors | null {
+        if (singleOrList == EventElementSingleOrList.constList && size) {
+            // null == nein        
+            let correctNumberOfElements = value.match(new RegExp(`^[^,]+(,[^,]+){${size-1}}$`));
+            return !correctNumberOfElements ? {numberOfElements: "Not the right amount of elements!"} : null;
+        }
         return null;
     }
 }
