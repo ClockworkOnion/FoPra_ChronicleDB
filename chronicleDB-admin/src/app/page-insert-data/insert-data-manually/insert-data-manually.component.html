@@ -1,14 +1,18 @@
 <div>
-    <app-insert-data-event-element *ngFor="let eventElement of eventElements; let i = index" [element]="eventElement"
-        (valueChange)="elementValueChanged(i, $event)" style="margin-right: 8px;"></app-insert-data-event-element>
-</div>
-
-<div *ngIf="selectedStream?.compundType == 'varCompound'">
-    TODO: Neue Felder hinzufügen...
+    <mat-form-field appearance="fill">
+        <mat-label>Timestamp</mat-label>
+        <input type="number" min="0" matInput required pattern="\d+" [ngModel]="timestamp"/>
+    </mat-form-field>
 </div>
 
 <div>
-    <button mat-raised-button color="primary" style="float: right; bottom: 20pt" (click)="onAddEventClicked()">
-        Add Event
+    <app-insert-data-event-element *ngFor="let eventElement of eventElements; let i = index" 
+        [element]="eventElement" [varCompound]="selectedStream.compoundType"
+        (valueChange)="elementValueChanged(i, $event)" style="margin-right: 8px;"></app-insert-data-event-element>
+</div>
+
+<div>
+    <button mat-raised-button color="primary" style="float: right; bottom: 20pt" (click)="onInsertEventClicked()">
+        Insert Event
     </button>
 </div>
