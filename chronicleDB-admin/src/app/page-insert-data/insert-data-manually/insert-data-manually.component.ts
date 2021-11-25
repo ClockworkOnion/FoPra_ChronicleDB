@@ -29,29 +29,50 @@ export class InsertDataManuallyComponent implements OnInit {
         this.selectedStream = stream;
         this.eventElements = stream.event;
         this.eventElementValues = new Array<string>(this.eventElements.length);
+        for (let i = 0; i < this.eventElementValues.length; i++) { // defaultwert benutzen, damit es nicht undefined ist
+          this.eventElementValues[i] = "";
+        }
       }
     });
-    this.chronicle.setupTestStreamData();
+    this.chronicle.setupTestStreamData(); // Testdaten
   }
 
   elementValueChanged(index: number, newValue:string) {
     this.eventElementValues[index] = newValue;    
   }
 
-  onInsertEventClicked() {    
-    if (!this.checkAllElementsFilled()) {
-      this.snackBar.openSnackBar("Please enter all needed Data!");
-    } else {
-      console.log(this.eventElementValues);
+  onInsertEventClicked() {      
+    if (this.timestamp == null) {
+      this.snackBar.openSnackBar("Please enter a timestamp!");
+      return;
+    }
+    if (!this.checkNoErrorsOnElements()) {
+      this.snackBar.openSnackBar("Please fix the displayed errors first!");
+      return;
+    }
+    if (this.checkElementsFilled() 
+    || this.selectedStream.compoundType == EventCompoundType.varCompound)  {
       this.insertService.insertEvent(this.eventElementValues);
+    } else {
+      this.snackBar.openSnackBar("Please enter all needed Data!");
+      return;
     }
   }
 
-  checkAllElementsFilled(): boolean {
+  checkNoErrorsOnElements(): boolean {
     for (let index = 0; index < this.eventElementValues.length; index++) {
-      if (!this.eventElementValues[index])
+      if (this.eventElementValues[index] == undefined)
         return false;      
     }
     return true;
   }
+
+  checkElementsFilled(): boolean {
+    for (let index = 0; index < this.eventElementValues.length; index++) {
+      if (!this.eventElementValues[index] || this.eventElementValues[index].length == 0)
+        return false;      
+    }
+    return true;
+  }
+
 }

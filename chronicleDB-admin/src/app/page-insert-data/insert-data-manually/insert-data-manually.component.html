@@ -1,7 +1,7 @@
 <div>
     <mat-form-field appearance="fill">
         <mat-label>Timestamp</mat-label>
-        <input type="number" min="0" matInput required pattern="\d+" [ngModel]="timestamp"/>
+        <input [(ngModel)]="timestamp" type="number"  min="0" matInput required pattern="\d+"/>
     </mat-form-field>
 </div>
 
@@ -12,6 +12,7 @@
 </div>
 
 <div>
+    <br>
     <button mat-raised-button color="primary" style="float: right; bottom: 20pt" (click)="onInsertEventClicked()">
         Insert Event
     </button>
