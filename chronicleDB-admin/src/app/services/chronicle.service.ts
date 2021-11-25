@@ -25,10 +25,10 @@ export class ChronicleService {
   constructor(private http: HttpClient, private snackBar: SnackBarService) {}
 
   getHttp(){
-    return this.http
+    return this.http;
   }
   getUrl(){
-    return this.url
+    return this.url;
   }
 
   existsStream(): boolean {
@@ -82,12 +82,6 @@ export class ChronicleService {
     this.http.post(this.url + "create_stream", this.createStreamBody, {responseType: "text"}).subscribe(response => {
       console.log(response);
     });
-  }
-
-
-  getSystemInfo(){
-
-    return this.http.get(this.url +"system_info",{responseType:"text"}) 
   }
 
   private post(url: string, body: any) {
