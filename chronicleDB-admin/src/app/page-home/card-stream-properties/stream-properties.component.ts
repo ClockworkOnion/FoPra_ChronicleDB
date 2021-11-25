@@ -105,7 +105,7 @@ export class StreamPropertiesComponent implements OnInit {
       return `{"I32":${this.selectCompressorSize}}`;
     }
     if (this.selectCompressor === 'Sprintz') {
-      return `{"Sprintz":[true,${this.selectCompressorSize},true,true]`;
+      return `{"Sprintz":[true,${this.selectCompressorSize},true,true]}`;
     } else {
       return '';
     }

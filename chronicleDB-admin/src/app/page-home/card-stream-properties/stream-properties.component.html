@@ -145,9 +145,14 @@
   </mat-form-field>
   &nbsp;
 
-  <mat-form-field *ngIf="selectCompressor !== 'none'" appearance="fill">
-    <mat-label>Size/data_dims</mat-label>
+  <mat-form-field *ngIf="selectCompressor == 'LZ4_Fast_No_Meta'||selectCompressor =='LZ4_Fast_With_Meta'" appearance="fill">
+    <mat-label>CompressionLevel</mat-label>
     <input type="" matInput [(ngModel)]="selectCompressorSize" maxlength="10" placeholder="12" />
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field *ngIf="selectCompressor == 'Sprintz'" appearance="fill">
+    <mat-label>data_dims</mat-label>
+    <input type="" matInput [(ngModel)]="selectCompressorSize" maxlength="10" placeholder="16" />
   </mat-form-field>
   &nbsp;
 
