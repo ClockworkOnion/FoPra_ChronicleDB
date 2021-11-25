@@ -27,7 +27,10 @@ export class ChronicleService {
   getHttp(){
     return this.http;
   }
-  getUrl(){
+  getUrl() {
+    if (!this.url) {
+      this.snackBar.openSnackBar("Please enter a URL to the Chronicle Server.")
+    }
     return this.url;
   }
 
@@ -44,14 +47,14 @@ export class ChronicleService {
       id: 1, 
       event: [
         {singleOrList: EventElementSingleOrList.single, type: EventElementType.float, subtype: EventElementSubtype.sixtyfour},
-        {singleOrList: EventElementSingleOrList.single, type: EventElementType.integer, subtype: EventElementSubtype.eight},
-        {singleOrList: EventElementSingleOrList.single, type: EventElementType.string, subtype: EventElementSubtype.varString, size: 10},
-        {singleOrList: EventElementSingleOrList.single, type: EventElementType.string, subtype: EventElementSubtype.constString, size: 10},
-        {singleOrList: EventElementSingleOrList.constList, type: EventElementType.integer, subtype: EventElementSubtype.eight, size: 3},
-        {singleOrList: EventElementSingleOrList.constList, type: EventElementType.float, subtype: EventElementSubtype.eight, size: 3},
-        {singleOrList: EventElementSingleOrList.varList, type: EventElementType.integer, subtype: EventElementSubtype.eight, size: 3}
+        // {singleOrList: EventElementSingleOrList.single, type: EventElementType.integer, subtype: EventElementSubtype.eight},
+        // {singleOrList: EventElementSingleOrList.single, type: EventElementType.string, subtype: EventElementSubtype.varString, size: 10},
+        // {singleOrList: EventElementSingleOrList.single, type: EventElementType.string, subtype: EventElementSubtype.constString, size: 10},
+        // {singleOrList: EventElementSingleOrList.constList, type: EventElementType.integer, subtype: EventElementSubtype.eight, size: 3},
+        // {singleOrList: EventElementSingleOrList.constList, type: EventElementType.float, subtype: EventElementSubtype.eight, size: 3},
+        // {singleOrList: EventElementSingleOrList.varList, type: EventElementType.integer, subtype: EventElementSubtype.eight, size: 3}
       ],
-      compoundType: EventCompoundType.varCompound
+      compoundType: EventCompoundType.single
     });
   }
 

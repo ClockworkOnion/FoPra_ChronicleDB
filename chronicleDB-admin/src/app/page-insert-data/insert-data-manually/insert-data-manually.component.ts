@@ -16,7 +16,7 @@ export class InsertDataManuallyComponent implements OnInit {
 
   // Values of the input fields
   eventElementValues!: string[];
-  timestamp!: string;
+  timestamp!: number;
 
   constructor(private chronicle: ChronicleService,
     private insertService: InsertDataService, 
@@ -52,7 +52,7 @@ export class InsertDataManuallyComponent implements OnInit {
     }
     if (this.checkElementsFilled() 
     || this.selectedStream.compoundType == EventCompoundType.varCompound)  {
-      this.insertService.insertEvent(this.eventElementValues);
+      this.insertService.insertEvent(this.eventElementValues, this.timestamp);
     } else {
       this.snackBar.openSnackBar("Please enter all needed Data!");
       return;
