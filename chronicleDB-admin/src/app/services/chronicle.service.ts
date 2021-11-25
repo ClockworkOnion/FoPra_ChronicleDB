@@ -24,6 +24,13 @@ export class ChronicleService {
 
   constructor(private http: HttpClient, private snackBar: SnackBarService) {}
 
+  getHttp(){
+    return this.http;
+  }
+  getUrl(){
+    return this.url;
+  }
+
   existsStream(): boolean {
     return this.currentStream != 'N/A';
   }

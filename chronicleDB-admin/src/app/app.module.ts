@@ -41,6 +41,8 @@ import { InsertDataManuallyComponent } from './page-insert-data/insert-data-manu
 import { InsertDataEventElementComponent } from './page-insert-data/insert-data-event-element/insert-data-event-element.component';
 import { CreateStreamService } from './services/create-stream.service';
 import { InsertDataService } from './services/insert-data.service';
+import { SystemInfoComponent } from './page-system-info/system-info/system-info.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 
@@ -60,6 +62,7 @@ import { InsertDataService } from './services/insert-data.service';
     InsertDataTabMenuComponent,
     InsertDataManuallyComponent,
     InsertDataEventElementComponent,
+    SystemInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,8 @@ import { InsertDataService } from './services/insert-data.service';
     ReactiveFormsModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSlideToggleModule
     
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService],
