@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChronicleEventElement, EventCompoundType } from 'src/app/model/ChronicleEvent';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
+import { InsertDataService } from 'src/app/services/rest services/insert-data.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
@@ -13,11 +14,16 @@ export class InsertDataManuallyComponent implements OnInit {
   selectedStream!: ChronicleStream;
   eventElements!: ChronicleEventElement[];
 
+  // Values of the input fields
   eventElementValues!: string[];
+  timestamp!: string;
 
-  constructor(private chronicle: ChronicleService, private snackBar: SnackBarService) {}
+  constructor(private chronicle: ChronicleService,
+    private insertService: InsertDataService, 
+    private snackBar: SnackBarService) {}
 
   ngOnInit(): void {
+    // subscribe to selected Stream
     this.chronicle.selectedStream$.subscribe(stream => {
       if (stream) {
         this.selectedStream = stream;
@@ -32,16 +38,12 @@ export class InsertDataManuallyComponent implements OnInit {
     this.eventElementValues[index] = newValue;    
   }
 
-  onAddEventClicked() {
-    console.log(this.selectedStream);
-    this.selectedStream.compundType == EventCompoundType.varCompound
-    
+  onInsertEventClicked() {    
     if (!this.checkAllElementsFilled()) {
       this.snackBar.openSnackBar("Please enter all needed Data!");
-      return;
     } else {
       console.log(this.eventElementValues);
-      // TODO hinzufügen in ChronicleDB
+      this.insertService.insertEvent(this.eventElementValues);
     }
   }
 

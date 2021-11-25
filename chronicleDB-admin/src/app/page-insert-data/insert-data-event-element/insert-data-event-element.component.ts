@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ChronicleEventElement, EventElementSingleOrList, EventElementSubtype, EventElementType } from 'src/app/model/ChronicleEvent';
+import { AbstractControl, FormControl, ValidationErrors, Validators } from '@angular/forms';
+import { ChronicleEventElement, EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from 'src/app/model/ChronicleEvent';
+import { EventElementValidator } from './event-element-validator';
 
 @Component({
   selector: 'app-insert-data-event-element',
@@ -8,9 +10,20 @@ import { ChronicleEventElement, EventElementSingleOrList, EventElementSubtype, E
 })
 export class InsertDataEventElementComponent {
   @Input("element") eventElement!: ChronicleEventElement;
+  @Input("varCompound") compoundType!: EventCompoundType;
   @Output("valueChange") valueChanged = new EventEmitter<string>();
 
+  inputControl: FormControl = new FormControl("");
+
   constructor() { }
+
+  onValueChanged() {
+    if (this.validateInput()) {
+      this.valueChanged.emit(this.inputControl.value);
+    } else {
+      this.valueChanged.emit(undefined);
+    }
+  }
 
   get eventElementLabel() {
     switch (this.eventElement.singleOrList) {
@@ -40,7 +53,39 @@ export class InsertDataEventElementComponent {
     }
   }
 
-  onValueChanged(value:string) {
-    this.valueChanged.emit(value);
+  validateInput(): boolean {
+    // if varComponent then it is ok to leave Elements blank
+    if (this.compoundType === EventCompoundType.varCompound && (this.inputControl.value as string).length == 0) {
+      return true;
+    }
+
+    let error: ValidationErrors | null = null;
+    if (this.eventElement.singleOrList == EventElementSingleOrList.single) {
+      switch (this.eventElement.type) {
+        case EventElementType.float: {
+          error = EventElementValidator.validateFloat(this.inputControl.value, this.eventElement.subtype);
+          break;
+        }
+        case EventElementType.unsigned: {
+          error = EventElementValidator.validateUnsigned(this.inputControl.value, this.eventElement.subtype);
+          break;
+        }
+        case EventElementType.integer: {
+          error = EventElementValidator.validateInteger(this.inputControl.value, this.eventElement.subtype);
+          break;
+        }
+        case EventElementType.string: {
+          error = EventElementValidator.validateString(this.inputControl.value, this.eventElement.subtype, this.eventElement.size);
+          break;
+        }
+        default:
+          error = {error: "Case could not be handled. No implementation yet!"};
+      }
+    } else {
+      error = EventElementValidator.validateList(this.inputControl.value, this.eventElement);
+    }
+
+    this.inputControl.setErrors(error);
+    return !error;
   }
 }
