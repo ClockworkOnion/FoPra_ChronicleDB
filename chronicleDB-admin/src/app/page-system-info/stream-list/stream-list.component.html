@@ -1,0 +1,16 @@
+
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <div class="example-box" *ngFor="let stream of list" cdkDrag>
+    
+    <span class="online">●</span> &nbsp;
+    Stream ID : {{stream.id}}  Compound Type: {{stream.compoundType}}  Event(test) :{{stream.event}}
+  
+  </div>
+</div>
+
+
+  <button mat-raised-button color="primary" style="float: right" (click)="test()">
+    test
+  </button>
+
+  
