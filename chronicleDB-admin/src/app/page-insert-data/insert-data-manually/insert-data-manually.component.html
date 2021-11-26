@@ -1,7 +1,7 @@
 <div>
     <mat-form-field appearance="fill">
         <mat-label>Timestamp</mat-label>
-        <input [(ngModel)]="timestamp" type="number"  min="0" matInput required pattern="\d+"/>
+        <input [(ngModel)]="timestamp" type="number"  min="0" matInput required pattern="\d+" matTooltip="Define the timestamp needed for the event in ChronicleDB."/>
     </mat-form-field>
 </div>
 
@@ -13,7 +13,7 @@
 
 <div>
     <br>
-    <button mat-raised-button color="primary" style="float: right; bottom: 20pt" (click)="onInsertEventClicked()">
+    <button mat-raised-button color="primary" style="float: right; bottom: 20pt" (click)="onInsertEventClicked()" matTooltip="Insert this event to the selected stream.">
         Insert Event
     </button>
 </div>

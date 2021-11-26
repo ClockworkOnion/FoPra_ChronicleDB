@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { ChronicleEventElement, EventCompoundType, EventElementSingleOrList, EventElementType } from 'src/app/model/ChronicleEvent';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from '../chronicle.service';
+import { SnackBarService } from '../snack-bar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { ChronicleService } from '../chronicle.service';
 export class InsertDataService {
   private currentStream!: ChronicleStream|null;
 
-  constructor(private chronicleService: ChronicleService) {
+  constructor(private chronicleService: ChronicleService, private snackBar: SnackBarService) {
     this.chronicleService.selectedStream$.subscribe(stream => {
       this.currentStream = stream;
       console.log("Stream: " + stream);
@@ -25,7 +26,10 @@ export class InsertDataService {
       return; 
     }
     let body = this.parseInputToBody(event, timestamp);
-    console.log(body);    
+
+    this.chronicleService.getHttp()
+      .post(url + "insert_ordered/" + this.currentStream!.id, body)
+      .subscribe(response => this.snackBar.openSnackBar("Event successfully inserted!"));
   }
 
   parseInputToBody(eventInput:string[], timestamp: number) {
