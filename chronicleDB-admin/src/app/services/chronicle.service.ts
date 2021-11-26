@@ -41,7 +41,7 @@ export class ChronicleService {
 
   setupTestStreamData() {
     this.selectedStream.next({
-      id: 1, 
+      id: 0, 
       event: [
         {singleOrList: EventElementSingleOrList.single, type: EventElementType.float, subtype: EventElementSubtype.sixtyfour},
         {singleOrList: EventElementSingleOrList.single, type: EventElementType.integer, subtype: EventElementSubtype.eight},

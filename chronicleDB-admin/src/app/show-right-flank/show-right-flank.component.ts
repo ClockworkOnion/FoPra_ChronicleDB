@@ -22,7 +22,7 @@ export class ShowRightFlankComponent implements OnInit {
     let json = JSON.parse(this.flankInfo);
     console.log(json);
     console.log("Brother Left: " + json[0].brother_left)
-    console.log("Payload 1: " + json[0].node_variant.ValueNode.data_array[0].payload.I8) // im Fall, dass Payload den Typ I8 hat!
+    console.log("Payload 1: " + json[0].node_variant.ValueNode.data_array[0].payload["I8"]) // im Fall, dass Payload den Typ I8 hat!
     });
   }
 
