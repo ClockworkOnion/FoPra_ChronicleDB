@@ -1,0 +1,14 @@
+<!-- <mat-form-field appearance="fill">
+    <mat-label>Timestamp</mat-label>
+    <input type="file" matInput matTooltip="Upload a text file containing one or more Events"/>
+</mat-form-field> -->
+
+<input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
+
+<div class="file-upload">
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+        <mat-icon>attach_file</mat-icon>
+    </button>
+    &nbsp;
+    {{ fileName || "No file uploaded yet." }}
+</div>

@@ -43,6 +43,7 @@ import { CreateStreamService } from './services/create-stream.service';
 import { InsertDataService } from './services/rest services/insert-data.service';
 import { SystemInfoComponent } from './page-system-info/system-info/system-info.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
 
 
 
@@ -63,6 +64,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     InsertDataManuallyComponent,
     InsertDataEventElementComponent,
     SystemInfoComponent,
+    UploadDataComponent,
   ],
   imports: [
     BrowserModule,
