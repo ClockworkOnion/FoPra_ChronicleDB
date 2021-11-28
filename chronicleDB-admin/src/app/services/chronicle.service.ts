@@ -3,7 +3,7 @@ import { Injectable, TestabilityRegistry } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ChronicleEventElement, EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
 import { ChronicleStream } from '../model/ChronicleStream';
-import { eventParser } from './event-parser';
+import { EventParser } from './event-parser';
 import { SnackBarService } from './snack-bar.service';
 
 
@@ -106,7 +106,7 @@ export class ChronicleService {
       this.streamList.push({  
         id:parseInt(id),
         //the response event list is beeing parsed here
-        event:eventParser.parseResponseEvent(response),
+        event:EventParser.parseResponseEvent(response),
         compoundType: this.eventCompoundObjectType.value})
         console.log(this.streamList)
       console.log(response);

@@ -2,7 +2,7 @@ import { ChronicleEventElement } from './../model/ChronicleEvent';
 import { EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
 
 
-export class eventParser{
+export class EventParser{
     
 
 static parseResponseEvent(string:string):Array<ChronicleEventElement>{
