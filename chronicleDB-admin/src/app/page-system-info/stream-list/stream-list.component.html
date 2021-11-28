@@ -1,16 +1,46 @@
 
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-  <div class="example-box" *ngFor="let stream of list" cdkDrag>
+  <div class="streamListElement-box" *ngFor="let stream of streamList" cdkDrag>
     
     <span class="online">●</span> &nbsp;
-    Stream ID : {{stream.id}}  Compound Type: {{stream.compoundType}}  
-  
+    Stream ID : {{stream.id}}   
+
+    <div class= "filler"></div>
+    <span class="example-spacer"></span>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+
+      <button mat-menu-item>
+        <mat-icon>add</mat-icon>
+        <span>Insert Data</span>
+      </button>
+      <button mat-menu-item  (click)="showInfo()">
+        <mat-icon>info</mat-icon>
+        <span>Stream Info</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>visibility</mat-icon>
+        <span>Show right Flank</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>analytics</mat-icon>
+        <span>Query Time travel</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>close</mat-icon>
+        <span>Shutdown Stream</span>
+      </button>
+
+    </mat-menu>
   </div>
 </div>
 
-
+<!--
   <button mat-raised-button color="primary" style="float: right" (click)="test()">
     test
   </button>
-
+-->
   

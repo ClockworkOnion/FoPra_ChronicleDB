@@ -9,16 +9,15 @@
     
   }
   
-  .example-box {
-    padding: 20px 10px;
-    margin-top: 5px;
+  .streamListElement-box {
+    padding: 3px 3px;
+    margin-top: 3px;
     border-radius: 15px;
     border:solid 1px #ccc;
     color: rgba(0, 0, 0, 0.87);
     display: flex;
     flex-direction: row;
     align-items: center;
-   
     box-sizing: border-box;
     cursor: move;
     background: white;
@@ -40,9 +39,9 @@
   .cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
-  
-  .example-box:last-child {
-    
+
+  .example-spacer {
+    flex: 1 1 auto;
   }
   
   .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
@@ -50,11 +49,13 @@
   }
   .online {
       font-size: 30px;
-      color: green;
-      
+      color: green;   
   }
-  
   .offline {
     color: red;
     font-size: 30px;
   }
+  .filler{
+    flex-grow: 1;
+  }
+  

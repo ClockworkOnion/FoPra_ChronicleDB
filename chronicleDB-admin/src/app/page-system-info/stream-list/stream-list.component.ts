@@ -9,25 +9,28 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
   styleUrls: ['./stream-list.component.css']
 })
 export class StreamListComponent implements OnInit {
-  list :Array<ChronicleStream>=[];
+  streamList :Array<ChronicleStream>=[];
   constructor(private data : ChronicleService) { }
 
   ngOnInit(): void {
-    this.data.currentStreamList.subscribe((streamlist:any)=>this.list =streamlist)
+    this.data.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
   }
   
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.list, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.streamList, event.previousIndex, event.currentIndex);
   }
   test(){
-    for(let i =0;i<this.list.length;i++){
-      let element:ChronicleStream = this.list[i]
+    for(let i =0;i<this.streamList.length;i++){
+      let element:ChronicleStream = this.streamList[i]
       console.log(element.id);
       console.log(element.event);
       console.log(element.compoundType);
     }
     
-    console.log(this.list)
+    console.log(this.streamList)
+  }
+  showInfo(){
+    console.log("hier kommt bald die info")
   }
 
 }
