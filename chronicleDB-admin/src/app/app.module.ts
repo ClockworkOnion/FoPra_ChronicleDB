@@ -45,6 +45,8 @@ import { SystemInfoComponent } from './page-system-info/system-info/system-info.
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { StreamListComponent } from './page-system-info/stream-list/stream-list.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
+
 
 
 
@@ -66,6 +68,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     InsertDataEventElementComponent,
     SystemInfoComponent,
     StreamListComponent,
+    UploadDataComponent,
   ],
   imports: [
     BrowserModule,

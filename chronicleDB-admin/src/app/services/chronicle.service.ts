@@ -35,7 +35,10 @@ export class ChronicleService {
   getHttp(){
     return this.http;
   }
-  getUrl(){
+  getUrl() {
+    if (!this.url) {
+      this.snackBar.openSnackBar("Please enter a URL to the Chronicle Server.")
+    }
     return this.url;
   }
 
@@ -50,7 +53,7 @@ export class ChronicleService {
   setupTestStreamData() {
    
     this.selectedStream.next({
-      id: 1, 
+      id: 0, 
       event: [
         {singleOrList: EventElementSingleOrList.single, type: EventElementType.float, subtype: EventElementSubtype.sixtyfour},
         {singleOrList: EventElementSingleOrList.single, type: EventElementType.integer, subtype: EventElementSubtype.eight},
@@ -112,9 +115,8 @@ export class ChronicleService {
     });
   }
 
-
-  private post(url: string, body: any) {
-    return this.http.post(url, body);
+  post(url: string, body: any) {
+    return this.http.post(url, body, {responseType: "text"});
   }
 
   changeStreamUrl(url: string) {
