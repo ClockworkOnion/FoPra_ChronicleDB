@@ -44,6 +44,10 @@ import { InsertDataService } from './services/rest services/insert-data.service'
 import { SystemInfoComponent } from './page-system-info/system-info/system-info.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ShowRightFlankComponent } from './show-right-flank/show-right-flank.component';
+import { StreamListComponent } from './page-system-info/stream-list/stream-list.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
+
 
 
 
@@ -65,6 +69,8 @@ import { ShowRightFlankComponent } from './show-right-flank/show-right-flank.com
     InsertDataEventElementComponent,
     SystemInfoComponent,
     ShowRightFlankComponent,
+    StreamListComponent,
+    UploadDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,7 +99,8 @@ import { ShowRightFlankComponent } from './show-right-flank/show-right-flank.com
     MatCheckboxModule,
     MatRadioModule,
     MatBadgeModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    DragDropModule
     
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService],

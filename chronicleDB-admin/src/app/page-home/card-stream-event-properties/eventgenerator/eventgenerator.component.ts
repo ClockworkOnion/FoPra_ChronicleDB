@@ -1,3 +1,4 @@
+import { EventCompoundType } from './../../../model/ChronicleEvent';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { SnackBarService } from './../../../services/snack-bar.service';
 import {
@@ -28,6 +29,7 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
   class = StreamEventPropertyComponent;
 
   selectedCompoundOrSingle: string = '';
+  objectCompoundType :EventCompoundType | undefined;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -106,6 +108,8 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
     } else if (selectedOption == 'compound') {
       res = `{"Compound":[${this.createCompoundList()}]}`;
     }
+    this.setObjectCompoundType();
+    this.data.changeObjectCompound(this.objectCompoundType as EventCompoundType)
     this.data.changeEventProperties(res);
   }
 
@@ -114,5 +118,16 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
 
   openSnackBar(message: string) {
     this.snackbar.openSnackBar(message);
+  }
+  setObjectCompoundType(){
+    switch(this.selectedCompoundOrSingle){
+      case "single": this.objectCompoundType=EventCompoundType.single;
+    }
+    switch(this.selectedCompoundOrSingle){
+      case "varCompound": this.objectCompoundType=EventCompoundType.varCompound;
+    }
+    switch(this.selectedCompoundOrSingle){
+      case "compound": this.objectCompoundType=EventCompoundType.compound;
+    }
   }
 }

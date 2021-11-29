@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, TestabilityRegistry } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
+import { ChronicleEventElement, EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
 import { ChronicleStream } from '../model/ChronicleStream';
+import { EventParser } from './event-parser';
 import { SnackBarService } from './snack-bar.service';
 
 
@@ -14,11 +15,18 @@ export class ChronicleService {
 
   private streamProperties = new BehaviorSubject<any>('undefined');
   private eventProperties = new BehaviorSubject<any>('undefined');
+  private eventCompoundObjectType= new BehaviorSubject<any>('undefined');
+  currentEventCompoundObjectType = this.eventCompoundObjectType.asObservable();
   currentCreateStreamProperties = this.streamProperties.asObservable();
   currentEventProperties = this.eventProperties.asObservable();
 
   private selectedStream = new BehaviorSubject<ChronicleStream|null>(null);
   selectedStream$ = this.selectedStream.asObservable();
+
+  private streamListBS = new BehaviorSubject<ChronicleStream[]|null>(null);
+  currentStreamList = this.streamListBS.asObservable();
+  
+  streamList : Array<ChronicleStream>=[];
 
   private currentStream: string = 'N/A';
 
@@ -27,7 +35,10 @@ export class ChronicleService {
   getHttp(){
     return this.http;
   }
-  getUrl(){
+  getUrl() {
+    if (!this.url) {
+      this.snackBar.openSnackBar("Please enter a URL to the Chronicle Server.")
+    }
     return this.url;
   }
 
@@ -40,6 +51,7 @@ export class ChronicleService {
   }
 
   setupTestStreamData() {
+   
     this.selectedStream.next({
       id: 0, 
       event: [
@@ -53,6 +65,7 @@ export class ChronicleService {
       ],
       compoundType: EventCompoundType.varCompound
     });
+    
   }
 
   checkInput(): boolean {
@@ -79,15 +92,33 @@ export class ChronicleService {
   }
 
   createStream() {
+    sessionStorage.setItem("chronicleURL",this.url)
     console.log(this.url);
     console.log(this.createStreamBody);
     this.http.post(this.url + "create_stream", this.createStreamBody, {responseType: "text"}).subscribe(response => {
+      
+
+      //get the posisiton of the StreamID in the response string
+      let streamid = response.indexOf("StreamID:")
+      let id = response.slice(streamid+9,response.indexOf("StreamConfig"));
+     
+
+      //push our created stream into our streams array  
+      this.streamList.push({  
+        id:parseInt(id),
+        //the response event list is beeing parsed here
+        event:EventParser.parseResponseEvent(response),
+        compoundType: this.eventCompoundObjectType.value})
+
+        this.updateStreamList(JSON.stringify(this.streamList));
       console.log(response);
+      this.streamListBS.next(
+        this.streamList)
     });
   }
 
-  private post(url: string, body: any) {
-    return this.http.post(url, body);
+  post(url: string, body: any) {
+    return this.http.post(url, body, {responseType: "text"});
   }
 
   changeStreamUrl(url: string) {
@@ -101,4 +132,16 @@ export class ChronicleService {
   changeEventProperties(properties: any) {
     this.eventProperties.next(properties);
   }
+  changeObjectCompound(type:EventCompoundType){
+    this.eventCompoundObjectType.next(type);
+
+  }
+  
+  loadLastSelection(){
+    //tbd
+  }
+  updateStreamList(data :string){
+    sessionStorage.setItem("streamList",data);
+  }
+  
 }

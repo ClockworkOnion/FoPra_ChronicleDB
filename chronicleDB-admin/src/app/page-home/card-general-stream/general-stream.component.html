@@ -2,7 +2,7 @@
   <div>
     <mat-form-field appearance="fill" class="urlInput" matTooltip="Insert the URL of ChronicleDB.">
       <mat-label>ChronicleDB Server URL</mat-label>
-      <input pattern="(https?:\/\/.+(\.|:).+\/)" matInput required (change)="updateURL(url.value)" ngModel #url="ngModel" type="url"/>
+      <input value ="yo" pattern="(https?:\/\/.+(\.|:).+\/)" matInput required (change)="updateURL(url.value)" ngModel #url="ngModel"  [(ngModel)] ="urlPlaceholder" type="url"/>
     </mat-form-field>
   </div>
   <div>
