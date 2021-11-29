@@ -56,11 +56,10 @@ export class ShowRightFlankComponent implements OnInit {
     console.log("Payload Type:")
     console.log(this.streamList[0].event[0].type);
     console.log(this.streamList[0].event[0].subtype);
-    console.log("Payload nach Methode: "+ this.getPayloadTypeFromEvent(0,1)); 
+    console.log("Payload (stream 0, event 0) nach Methode: "+ this.getPayloadTypeFromEvent(0,0)); 
   }
 
   getPayloadFromJSON(json: any, streamNo: number, ValueNodeNo: number, payloadType: string) : string {
-
     return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload[payloadType];
   }
 
@@ -81,7 +80,7 @@ export class ShowRightFlankComponent implements OnInit {
       default:
         break;
     }
-    console.log("Prefix Type:" + prefix + this.streamList[streamNo].event[eventNo].subtype)
+    console.log("Payload type in stream no " + streamNo + ", event no " + eventNo + " is: " + prefix + this.streamList[streamNo].event[eventNo].subtype)
   return prefix + this.streamList[streamNo].event[eventNo].subtype;
   }
 
