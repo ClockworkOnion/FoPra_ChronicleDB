@@ -1,3 +1,4 @@
+import { StreamInfoService } from './../../services/rest services/stream-info.service';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +11,8 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 })
 export class StreamListComponent implements OnInit {
   streamList :Array<ChronicleStream>=[];
-  constructor(private data : ChronicleService) { }
+  stream :any;
+  constructor(private data : ChronicleService, private infoService:StreamInfoService) { }
 
   ngOnInit(): void {
     this.data.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
@@ -30,8 +32,8 @@ export class StreamListComponent implements OnInit {
     
     console.log(this.streamList)
   }
-  showInfo(){
-    console.log("hier kommt bald die info")
+  showInfo(id : number){
+    this.infoService.getStreamInfo(id);  
   }
-
+ 
 }
