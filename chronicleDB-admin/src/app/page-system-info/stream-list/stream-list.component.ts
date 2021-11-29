@@ -14,6 +14,7 @@ export class StreamListComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
+    this.streamList=JSON.parse(sessionStorage.getItem("streamList")!);
   }
   
   drop(event: CdkDragDrop<string[]>) {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgModel } from '@angular/forms';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { ChronicleService } from 'src/app/services/chronicle.service';
 export class GeneralStreamComponent implements OnInit {
   createStreamProperties:any;
   eventProperties:any;
+  urlPlaceholder:any ;
 
   private defaultStreamDescription = "No Stream available";
   currentStreamText = this.defaultStreamDescription;
@@ -22,6 +24,11 @@ export class GeneralStreamComponent implements OnInit {
   ngOnInit(): void {
     this.data.currentCreateStreamProperties.subscribe((message: any) => this.createStreamProperties = message)
     this.data.currentEventProperties.subscribe((message:any)=> this.eventProperties = message)
+    
+    this.urlPlaceholder=sessionStorage.getItem("chronicleURL")
+    this.updateURL(this.urlPlaceholder)
+    
+
   }
 
   refreshCurrentStream(){

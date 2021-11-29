@@ -92,6 +92,7 @@ export class ChronicleService {
   }
 
   createStream() {
+    sessionStorage.setItem("chronicleURL",this.url)
     console.log(this.url);
     console.log(this.createStreamBody);
     this.http.post(this.url + "create_stream", this.createStreamBody, {responseType: "text"}).subscribe(response => {
@@ -108,7 +109,8 @@ export class ChronicleService {
         //the response event list is beeing parsed here
         event:EventParser.parseResponseEvent(response),
         compoundType: this.eventCompoundObjectType.value})
-        console.log(this.streamList)
+
+        this.updateStreamList(JSON.stringify(this.streamList));
       console.log(response);
       this.streamListBS.next(
         this.streamList)
@@ -133,6 +135,13 @@ export class ChronicleService {
   changeObjectCompound(type:EventCompoundType){
     this.eventCompoundObjectType.next(type);
 
+  }
+  
+  loadLastSelection(){
+    //tbd
+  }
+  updateStreamList(data :string){
+    sessionStorage.setItem("streamList",data);
   }
   
 }
