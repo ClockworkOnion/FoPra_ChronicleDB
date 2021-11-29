@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, TestabilityRegistry } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { ChronicleEventElement, EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
+import { HttpClient} from '@angular/common/http';
+import { Injectable} from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
 import { ChronicleStream } from '../model/ChronicleStream';
 import { EventParser } from './event-parser';
 import { SnackBarService } from './snack-bar.service';
@@ -27,8 +27,10 @@ export class ChronicleService {
   currentStreamList = this.streamListBS.asObservable();
   
   streamList : Array<ChronicleStream>=[];
+  testList:Array<ChronicleStream>=[];
 
   private currentStream: string = 'N/A';
+  private subject = new Subject<any>();
 
   constructor(private http: HttpClient, private snackBar: SnackBarService) {}
 
@@ -93,11 +95,7 @@ export class ChronicleService {
 
   createStream() {
     sessionStorage.setItem("chronicleURL",this.url)
-    console.log(this.url);
-    console.log(this.createStreamBody);
     this.http.post(this.url + "create_stream", this.createStreamBody, {responseType: "text"}).subscribe(response => {
-      
-
       //get the posisiton of the StreamID in the response string
       let streamid = response.indexOf("StreamID:")
       let id = response.slice(streamid+9,response.indexOf("StreamConfig"));
@@ -108,9 +106,9 @@ export class ChronicleService {
         id:parseInt(id),
         //the response event list is beeing parsed here
         event:EventParser.parseResponseEvent(response),
-        compoundType: this.eventCompoundObjectType.value})
-
-        this.updateStreamList(JSON.stringify(this.streamList));
+        compoundType: this.eventCompoundObjectType.value});
+        
+        this.getStreamsFromChronicle();
       console.log(response);
       this.streamListBS.next(
         this.streamList)
@@ -140,8 +138,34 @@ export class ChronicleService {
   loadLastSelection(){
     //tbd
   }
-  updateStreamList(data :string){
+  saveUpdatedStreamList(data :string){
     sessionStorage.setItem("streamList",data);
+  }
+
+  getStreamsFromChronicle(){
+    this.streamList.length=0;
+    this.http.get(this.url + "show_streams", {responseType: "json"}).subscribe(response => {
+      for(let i of response as any){
+        if(i[1]=="Online"){
+        this.getHttp().get(this.getUrl() +"stream_info/"+i[0],{responseType:"text"}).subscribe(info =>{
+          
+          this.streamList.push({  
+            id:parseInt(i[0]),
+            event:EventParser.parseResponseEvent(info),
+            compoundType: EventParser.parseCompoundType(info)})
+          
+        })
+        }
+      }
+      this.saveUpdatedStreamList(JSON.stringify(this.streamList));
+      return response;
+  })
+  }
+  sendUpdateEvent() {
+    this.subject.next();
+  }
+  getUpdateEvent(): Observable<any>{ 
+    return this.subject.asObservable();
   }
   
 }
