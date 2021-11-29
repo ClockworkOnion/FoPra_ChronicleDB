@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 
@@ -11,6 +11,7 @@ export class GeneralStreamComponent implements OnInit {
   createStreamProperties:any;
   eventProperties:any;
   urlPlaceholder:any ;
+  @Output() updateSL = new EventEmitter();
 
   private defaultStreamDescription = "No Stream available";
   currentStreamText = this.defaultStreamDescription;
@@ -32,7 +33,8 @@ export class GeneralStreamComponent implements OnInit {
   }
 
   refreshCurrentStream(){
-    this.data.sendUpdateEvent();
+    this.updateSL.emit(null);
+  //  this.data.sendUpdateEvent();
     if (this.data.existsStream()) {
       this.currentStreamText = this.data.getStreamInfo();
     } else {

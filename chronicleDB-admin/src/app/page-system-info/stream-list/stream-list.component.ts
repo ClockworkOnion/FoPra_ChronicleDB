@@ -11,18 +11,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./stream-list.component.css']
 })
 export class StreamListComponent implements OnInit {
-  updateEventsubscription:Subscription;
   streamList :Array<ChronicleStream>=[];
-  stream :any;
 
   constructor(private data : ChronicleService, private infoService:StreamInfoService) { 
-    this.updateEventsubscription=this.data.getUpdateEvent().subscribe(()=>{
-      this.refresh();
-    })
+    
   }
 
   ngOnInit(): void {
     this.data.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
+    this.streamList= this.data.streamList;
   }
   
   drop(event: CdkDragDrop<string[]>) {
@@ -30,9 +27,9 @@ export class StreamListComponent implements OnInit {
   }
   refresh(){
     if(this.data.getUrl()!=null){
-    this.streamList=this.data.streamList;
-    this.data.getStreamsFromChronicle();
-  }
+      this.data.getStreamsFromChronicle();
+      this.streamList.length=0;
+    }
   }
   showInfo(id : number){
    // this.infoService.getStreamInfo(id);  

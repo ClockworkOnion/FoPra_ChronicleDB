@@ -27,10 +27,8 @@ export class ChronicleService {
   currentStreamList = this.streamListBS.asObservable();
   
   streamList : Array<ChronicleStream>=[];
-  testList:Array<ChronicleStream>=[];
 
   private currentStream: string = 'N/A';
-  private subject = new Subject<any>();
 
   constructor(private http: HttpClient, private snackBar: SnackBarService) {}
 
@@ -161,11 +159,6 @@ export class ChronicleService {
       return response;
   })
   }
-  sendUpdateEvent() {
-    this.subject.next();
-  }
-  getUpdateEvent(): Observable<any>{ 
-    return this.subject.asObservable();
-  }
+  
   
 }
