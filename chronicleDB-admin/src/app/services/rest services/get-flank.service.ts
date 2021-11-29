@@ -18,7 +18,8 @@ export class GetFlankService {
 
 
   basicRightFlank() {
-    return this.http.get(this.data.getUrl() + "show_right_flank/" + this.currentStream!.id, {responseType:"text"})
+    // return this.http.get(this.data.getUrl() + "show_right_flank/" + this.currentStream!.id, {responseType:"text"})
+    return this.http.get("http://127.0.0.1:8000/show_right_flank/0", {responseType:"text"});
   } 
 
 
