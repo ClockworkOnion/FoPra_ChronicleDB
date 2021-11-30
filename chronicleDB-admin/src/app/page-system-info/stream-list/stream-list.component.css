@@ -3,10 +3,8 @@
     max-width: 100%;
     min-height: 60px;
     display: block;
-    background: white;
     overflow: hidden;
     border-radius: 15px;
-    
   }
   
   .streamListElement-box {
@@ -14,13 +12,11 @@
     margin-top: 3px;
     border-radius: 15px;
     border:solid 1px #ccc;
-    color: rgba(0, 0, 0, 0.87);
     display: flex;
     flex-direction: row;
     align-items: center;
     box-sizing: border-box;
     cursor: move;
-    background: white;
     font-size: 14px;
   }
   
@@ -49,7 +45,8 @@
   }
   .online {
       font-size: 30px;
-      color: green;   
+      color: green;
+      padding: 8px;
   }
   .offline {
     color: red;
@@ -58,4 +55,7 @@
   .filler{
     flex-grow: 1;
   }
-  
+  .floatRight {
+    float: right;
+    top: 0px;
+  }

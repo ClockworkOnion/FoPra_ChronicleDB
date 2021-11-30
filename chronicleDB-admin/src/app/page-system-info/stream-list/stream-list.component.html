@@ -1,8 +1,6 @@
-
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
   <div class="streamListElement-box" *ngFor="let stream of streamList" cdkDrag>
-    
-    <span class="online">●</span> &nbsp;
+    <span class="online">●</span>
     Stream ID : {{stream.id}}   
 
     <div class= "filler"></div>

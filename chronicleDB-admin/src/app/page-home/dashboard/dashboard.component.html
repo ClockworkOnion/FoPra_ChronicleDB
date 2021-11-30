@@ -4,13 +4,18 @@
       <mat-card-title> General </mat-card-title>
     </mat-card-header>
     <mat-card-content class="card-content">
-      <app-general-stream (updateSL)="streamList.refresh()"></app-general-stream>
+      <app-general-stream></app-general-stream>
     </mat-card-content>
   </mat-card>
 
   <mat-card class="dashboard-card">
     <mat-card-header>
-      <mat-card-title> Stream List </mat-card-title>
+      <mat-card-title> 
+        Stream List 
+        <button mat-icon-button color="primary" (click)="streamList.refresh()" matTooltip="Refresh the stream selection." class="iconButtonInTitle">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </mat-card-title>
     </mat-card-header>
     <mat-card-content class="card-content">
       <app-stream-list #streamList></app-stream-list>

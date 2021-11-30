@@ -11,7 +11,6 @@ export class GeneralStreamComponent implements OnInit {
   createStreamProperties:any;
   eventProperties:any;
   urlPlaceholder:any ;
-  @Output() updateSL = new EventEmitter();
 
   private defaultStreamDescription = "No Stream available";
   currentStreamText = this.defaultStreamDescription;
@@ -28,18 +27,6 @@ export class GeneralStreamComponent implements OnInit {
     
     this.urlPlaceholder=sessionStorage.getItem("chronicleURL")
     this.updateURL(this.urlPlaceholder)
-    
-
-  }
-
-  refreshCurrentStream(){
-    this.updateSL.emit(null);
-  //  this.data.sendUpdateEvent();
-    if (this.data.existsStream()) {
-      this.currentStreamText = this.data.getStreamInfo();
-    } else {
-      this.currentStreamText = this.defaultStreamDescription;
-    }
   }
 
   onCreateStreamClicked() {
