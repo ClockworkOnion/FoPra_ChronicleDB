@@ -46,10 +46,7 @@ import { StreamListComponent } from './page-system-info/stream-list/stream-list.
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
 import { CreateStreamService } from './services/rest services/create-stream.service';
-
-
-
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -68,7 +65,7 @@ import { CreateStreamService } from './services/rest services/create-stream.serv
     InsertDataEventElementComponent,
     SystemInfoComponent,
     StreamListComponent,
-    UploadDataComponent,
+    UploadDataComponent
   ],
   imports: [
     BrowserModule,
@@ -98,8 +95,8 @@ import { CreateStreamService } from './services/rest services/create-stream.serv
     MatRadioModule,
     MatBadgeModule,
     MatSlideToggleModule,
-    DragDropModule
-    
+    DragDropModule,
+    MatDialogModule
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService],
   bootstrap: [AppComponent],
