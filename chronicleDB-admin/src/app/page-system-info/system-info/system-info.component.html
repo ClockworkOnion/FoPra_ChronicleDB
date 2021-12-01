@@ -1,0 +1,14 @@
+<mat-card class="card">
+    <mat-card-header>
+      <mat-card-title> System Info </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <div>{{systemInfo}}</div>
+      
+        <button mat-raised-button color="primary" style="float: right ; bottom : 20pt" (click)="onSystemInfoClicked()" matTooltip="Send GET request to Show System Info ">
+          Show Info
+        </button>
+
+
+    </mat-card-content>
+  </mat-card>

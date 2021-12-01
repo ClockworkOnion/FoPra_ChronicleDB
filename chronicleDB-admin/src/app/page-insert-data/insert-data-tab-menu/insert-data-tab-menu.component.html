@@ -1,0 +1,23 @@
+<mat-tab-group dynamicHeight mat-align-tabs="center">
+  <mat-tab label="Enter Data">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title> Insert An Event </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content">
+        <app-insert-data-manually></app-insert-data-manually>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+
+  <mat-tab label="Upload File"> 
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title> Upload File with Events </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content">
+        <app-upload-data></app-upload-data>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>

@@ -1,5 +1,6 @@
 .shadowLabel {
-    background-color: rgb(245, 245, 245);
+    /* commented until fixed with dark mode 
+    background-color: rgb(245, 245, 245);*/
     padding: 10pt;
     width: 40%;
     display: inline-flex;

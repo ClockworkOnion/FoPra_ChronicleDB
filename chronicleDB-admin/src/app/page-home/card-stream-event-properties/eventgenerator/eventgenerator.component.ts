@@ -1,3 +1,4 @@
+import { EventCompoundType } from './../../../model/ChronicleEvent';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { SnackBarService } from './../../../services/snack-bar.service';
 import {
@@ -11,6 +12,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { StreamEventPropertyComponent } from 'src/app/page-home/card-stream-event-properties/stream-event-property.component';
+import { CreateStreamService } from 'src/app/services/rest services/create-stream.service';
 
 @Component({
   selector: 'app-eventgenerator',
@@ -28,11 +30,13 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
   class = StreamEventPropertyComponent;
 
   selectedCompoundOrSingle: string = '';
+  objectCompoundType :EventCompoundType | undefined;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private snackbar: SnackBarService,
-    private data: ChronicleService
+    private chronicle: ChronicleService,
+    private createService: CreateStreamService
   ) {}
 
   ngOnInit(): void {
@@ -106,7 +110,9 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
     } else if (selectedOption == 'compound') {
       res = `{"Compound":[${this.createCompoundList()}]}`;
     }
-    this.data.changeEventProperties(res);
+    this.setObjectCompoundType();
+    this.createService.changeObjectCompound(this.objectCompoundType as EventCompoundType)
+    this.createService.changeEventProperties(res);
   }
 
   singleWarning: string =
@@ -114,5 +120,16 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
 
   openSnackBar(message: string) {
     this.snackbar.openSnackBar(message);
+  }
+  setObjectCompoundType(){
+    switch(this.selectedCompoundOrSingle){
+      case "single": this.objectCompoundType=EventCompoundType.single;
+    }
+    switch(this.selectedCompoundOrSingle){
+      case "varCompound": this.objectCompoundType=EventCompoundType.varCompound;
+    }
+    switch(this.selectedCompoundOrSingle){
+      case "compound": this.objectCompoundType=EventCompoundType.compound;
+    }
   }
 }

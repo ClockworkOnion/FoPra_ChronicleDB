@@ -1,22 +1,43 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient} from '@angular/common/http';
+import { Injectable} from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
+import { ChronicleStream } from '../model/ChronicleStream';
+import { EventParser } from './event-parser';
 import { SnackBarService } from './snack-bar.service';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChronicleService {
-  private streamProperties = new BehaviorSubject<any>('undefined');
-  private eventProperties = new BehaviorSubject<any>('undefined');
   private url!: string;
 
-  currentCreateStreamProperties = this.streamProperties.asObservable();
-  currentEventProperties = this.eventProperties.asObservable();
+  private selectedStream = new BehaviorSubject<ChronicleStream|null>(null);
+  selectedStream$ = this.selectedStream.asObservable();
+
+  private streamListBS = new BehaviorSubject<ChronicleStream[]|null>(null);
+  currentStreamList = this.streamListBS.asObservable();
+  streamList : Array<ChronicleStream>=[];
 
   private currentStream: string = 'N/A';
 
   constructor(private http: HttpClient, private snackBar: SnackBarService) {}
+
+  getHttp(){
+    return this.http;
+  }
+
+  getUrl() {
+    if (!this.url) {
+      this.snackBar.openSnackBar("Please enter a URL to the Chronicle Server.")
+    }
+    return this.url;
+  }
+
+  setUrl(url: string) {
+    this.url = url;
+  }
 
   existsStream(): boolean {
     return this.currentStream != 'N/A';
@@ -26,50 +47,56 @@ export class ChronicleService {
     return this.currentStream;
   }
 
-  checkInput(): boolean {
-    if ((this.streamProperties.value as string).match(/.*undefined.*/gi) != null) {
-      // undefined in den properties
-      this.snackBar.openSnackBar("There is a problem with the properties of the stream.");
-      return false;
-    } else if (!this.url || this.url.length < 8) {
-      this.snackBar.openSnackBar("No valid URL given!");
-      return false;
-    } else if ((this.eventProperties.value as string).match(/.*((undefined)|(\[\])).*/gi) != null) {
-      // undefined im Event
-      this.snackBar.openSnackBar("The Event is not configured!");
-      return false;
-    }
-    return true;
+  post(url: string, body: any) {
+    return this.http.post(url, body, {responseType: "text"});
+  }
+  
+  loadLastSelection(){
+    //tbd
   }
 
-  get createStreamBody(): string {
-    return (this.streamProperties.value as string).replace(
-      '<event-placeholder>',
-      this.eventProperties.value
-    );
+  saveUpdatedStreamList(data :string){
+    sessionStorage.setItem("streamList",data);
   }
 
-  createStream() {
-    console.log(this.url);
-    console.log(this.createStreamBody);
-    this.http.post(this.url + "/create_stream", this.createStreamBody).subscribe(response => {
-      console.log(response)
+  getStreamsFromChronicle(){
+    this.streamList.length=0;
+    this.http.get(this.url + "show_streams", {responseType: "json"}).subscribe(response => {
+      for(let i of response as any){
+        if(i[1]=="Online"){
+          this.getHttp().get(this.getUrl() +"stream_info/"+i[0],{responseType:"text"}).subscribe(info =>{ 
+            let newStream: ChronicleStream = {  
+              id:parseInt(i[0]),
+              event:EventParser.parseResponseEvent(info),
+              compoundType: EventParser.parseCompoundType(info)
+            }
+
+            this.streamList.push(newStream)
+            this.selectedStream.next(newStream); // put most recent stream as selected
+          })
+        }
+      }
+      this.saveUpdatedStreamList(JSON.stringify(this.streamList));
+      return response;
     });
   }
 
-  private post(url: string, body: any) {
-    return this.http.post(url, body);
-  }
+  addStreamToList(response: any) {
+    //get the posisiton of the StreamID in the response string
+    let streamid = response.indexOf("StreamID:");
+    let id = response.slice(streamid+9,response.indexOf("StreamConfig"));
+    
 
-  changeStreamUrl(url: string) {
-    this.url = url;
-  }
-
-  changeStreamProperties(message: any) {
-    this.streamProperties.next(message);
-  }
-
-  changeEventProperties(properties: any) {
-    this.eventProperties.next(properties);
+    //push our created stream into our streams array  
+    this.streamList.push({  
+      id:parseInt(id),
+      //the response event list is beeing parsed here
+      event:EventParser.parseResponseEvent(response),
+      compoundType: EventParser.parseCompoundType(response)
+    });
+    
+    this.getStreamsFromChronicle();
+    console.log(response);
+    this.streamListBS.next(this.streamList);
   }
 }

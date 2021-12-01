@@ -1,6 +1,7 @@
 import { Component,  OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ChronicleService } from 'src/app/services/chronicle.service';
+import { CreateStreamService } from 'src/app/services/rest services/create-stream.service';
 
 @Component({
   selector: 'app-stream-properties',
@@ -8,7 +9,7 @@ import { ChronicleService } from 'src/app/services/chronicle.service';
   styleUrls: ['./stream-properties.component.css'],
 })
 export class StreamPropertiesComponent implements OnInit {
-  constructor(private data: ChronicleService) {
+  constructor(private chronicle: ChronicleService, private createService: CreateStreamService) {
     this.fillDefaults();
   }
 
@@ -67,7 +68,7 @@ export class StreamPropertiesComponent implements OnInit {
   sprintzValues:any=[ "is_8bits", "is_delta"," write_size"]
 
   ngOnInit(): void {
-    this.data.currentCreateStreamProperties.subscribe(message => this.message = message)
+    this.createService.currentCreateStreamProperties.subscribe(message => this.message = message)
   }
 
   fillDefaults(){
@@ -105,7 +106,7 @@ export class StreamPropertiesComponent implements OnInit {
       return `{"I32":${this.selectCompressorSize}}`;
     }
     if (this.selectCompressor === 'Sprintz') {
-      return `{"Sprintz":[true,${this.selectCompressorSize},true,true]`;
+      return `{"Sprintz":[true,${this.selectCompressorSize},true,true]}`;
     } else {
       return '';
     }
@@ -135,6 +136,6 @@ export class StreamPropertiesComponent implements OnInit {
       Max delta queue = ${this.inputMaxDeltaQueue}`;
 
     //service sends the data to other components
-    this.data.changeStreamProperties(streamPropertyData);
+    this.createService.changeStreamProperties(streamPropertyData);
   }
 }

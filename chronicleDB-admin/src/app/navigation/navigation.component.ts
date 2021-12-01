@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-navigation',
@@ -15,7 +16,15 @@ export class NavigationComponent {
       map(result => result.matches),
       shareReplay()
     );
+    @HostBinding('class') className = '';
 
   constructor(private breakpointObserver: BreakpointObserver) {}
+  toggleControl = new FormControl(false);
+
+  ngOnInit():void{
+    this.toggleControl.valueChanges.subscribe(val =>{
+      this.className = val ?"darkMode":"";
+    })
+  }
 
 }

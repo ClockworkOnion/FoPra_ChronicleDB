@@ -1,21 +1,12 @@
-<div >
-  <div>
+<div>
     <mat-form-field appearance="fill" class="urlInput" matTooltip="Insert the URL of ChronicleDB.">
       <mat-label>ChronicleDB Server URL</mat-label>
-      <input pattern="(https?:\/\/.+(\.|:).+\/)" matInput required (change)="updateURL(url.value)" ngModel #url="ngModel" type="url"/>
+      <input value ="yo" pattern="(https?:\/\/.+(\.|:).+\/)" matInput required (change)="updateURL(url.value)" ngModel #url="ngModel"  [(ngModel)] ="urlPlaceholder" type="url"/>
     </mat-form-field>
-  </div>
-  <div>
-    <mat-label class="shadowLabel" matTooltip="Displays the currently selected Stream.">{{ currentStreamText }}</mat-label>
-
-    <button mat-icon-button color="primary" aria-label="refresh current stream" (click)="refreshCurrentStream()" matTooltip="Refresh the stream selection.">
-      <mat-icon>refresh</mat-icon>
-    </button>
-
-    <button mat-raised-button color="primary" style="float: right" (click)="onCreateStreamClicked()" matTooltip="Create a new stream with the given URL, the event definition and the defined properties.">
+    <!-- <mat-label class="shadowLabel" matTooltip="Displays the currently selected Stream.">{{ currentStreamText }}</mat-label> -->
+    <button mat-raised-button color="primary" style="float: right; top: 8px;" (click)="onCreateStreamClicked()" matTooltip="Create a new stream with the given URL, the event definition and the defined properties.">
       Create Stream
     </button>
-  </div>
 </div>
 
 <!-- Anzeige des CreateStream Body
