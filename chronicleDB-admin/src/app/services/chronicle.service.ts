@@ -60,22 +60,34 @@ export class ChronicleService {
   }
 
   getStreamsFromChronicle(){
-    this.streamList.length=0;
     this.http.get(this.url + "show_streams", {responseType: "json"}).subscribe(response => {
-      for(let i of response as any){
-        if(i[1]=="Online"){
-          this.getHttp().get(this.getUrl() +"stream_info/"+i[0],{responseType:"text"}).subscribe(info =>{ 
+      this.streamList = new Array<ChronicleStream>((response as any).length);
+      for (let index = 0; index < (response as any).length; index++) {
+        const stream = (response as any)[index];
+        
+        if(stream[1]=="Online"){
+          this.getHttp().get(this.getUrl() +"stream_info/"+stream[0],{responseType:"text"}).subscribe(info =>{ 
             let newStream: ChronicleStream = {  
-              id:parseInt(i[0]),
+              id:parseInt(stream[0]),
               event:EventParser.parseResponseEvent(info),
-              compoundType: EventParser.parseCompoundType(info)
+              compoundType: EventParser.parseCompoundType(info),
+              online: true
             }
 
-            this.streamList.push(newStream)
+            this.streamList[index] = newStream;
+            this.streamListBS.next(this.streamList);
             this.selectedStream.next(newStream); // put most recent stream as selected
-          })
+          });
+        } else {
+          let newStream: ChronicleStream = {  
+            id:parseInt(stream[0]),
+            online: false
+          }
+          this.streamList[index]=newStream;
+          this.streamListBS.next(this.streamList);
         }
       }
+      
       this.saveUpdatedStreamList(JSON.stringify(this.streamList));
       return response;
     });
@@ -92,7 +104,8 @@ export class ChronicleService {
       id:parseInt(id),
       //the response event list is beeing parsed here
       event:EventParser.parseResponseEvent(response),
-      compoundType: EventParser.parseCompoundType(response)
+      compoundType: EventParser.parseCompoundType(response),
+      online: true
     });
     
     this.getStreamsFromChronicle();
