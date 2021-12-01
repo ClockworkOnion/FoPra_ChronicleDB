@@ -1,19 +1,24 @@
-<div>
-    <mat-form-field appearance="fill">
-        <mat-label>Timestamp</mat-label>
-        <input [(ngModel)]="timestamp" type="number"  min="0" matInput required pattern="\d+" matTooltip="Define the timestamp needed for the event in ChronicleDB."/>
-    </mat-form-field>
+<div *ngIf="selectedStream">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Timestamp</mat-label>
+            <input [(ngModel)]="timestamp" type="number"  min="0" matInput required pattern="\d+" matTooltip="Define the timestamp needed for the event in ChronicleDB."/>
+        </mat-form-field>
+    </div>
+    
+    <div>
+        <app-insert-data-event-element *ngFor="let eventElement of eventElements; let i = index" 
+            [element]="eventElement" [varCompound]="selectedStream.compoundType"
+            (valueChange)="elementValueChanged(i, $event)" style="margin-right: 8px;"></app-insert-data-event-element>
+    </div>
+    
+    <div>
+        <br>
+        <button mat-raised-button color="primary" style="float: right; bottom: 20pt" (click)="onInsertEventClicked()" matTooltip="Insert this event to the selected stream.">
+            Insert Event
+        </button>
+    </div>
 </div>
-
-<div>
-    <app-insert-data-event-element *ngFor="let eventElement of eventElements; let i = index" 
-        [element]="eventElement" [varCompound]="selectedStream.compoundType"
-        (valueChange)="elementValueChanged(i, $event)" style="margin-right: 8px;"></app-insert-data-event-element>
-</div>
-
-<div>
-    <br>
-    <button mat-raised-button color="primary" style="float: right; bottom: 20pt" (click)="onInsertEventClicked()" matTooltip="Insert this event to the selected stream.">
-        Insert Event
-    </button>
+<div *ngIf="!selectedStream">
+    <h3 style="text-align: center;">No Stream selected!</h3>
 </div>

@@ -12,13 +12,9 @@ export class InsertDataService {
 
   constructor(private chronicleService: ChronicleService, private snackBar: SnackBarService) {
     this.chronicleService.selectedStream$.subscribe(stream => {
-      this.currentStream = stream;
-      console.log("Stream: " + stream);
-      
+      this.currentStream = stream;      
     });
-    this.chronicleService.setupTestStreamData();
-   }
-
+  }
 
   insertEvent(event:string[], timestamp: number) {
     let url = this.chronicleService.getUrl();

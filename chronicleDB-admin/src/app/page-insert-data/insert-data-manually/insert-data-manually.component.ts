@@ -25,7 +25,7 @@ export class InsertDataManuallyComponent implements OnInit {
   ngOnInit(): void {
     // subscribe to selected Stream
     this.chronicle.selectedStream$.subscribe(stream => {
-      if (stream) {
+      if (stream) {        
         this.selectedStream = stream;
         this.eventElements = stream.event;
         this.eventElementValues = new Array<string>(this.eventElements.length);
@@ -34,7 +34,6 @@ export class InsertDataManuallyComponent implements OnInit {
         }
       }
     });
-    this.chronicle.setupTestStreamData(); // Testdaten
   }
 
   elementValueChanged(index: number, newValue:string) {
