@@ -12,6 +12,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { StreamEventPropertyComponent } from 'src/app/page-home/card-stream-event-properties/stream-event-property.component';
+import { CreateStreamService } from 'src/app/services/rest services/create-stream.service';
 
 @Component({
   selector: 'app-eventgenerator',
@@ -34,7 +35,8 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private snackbar: SnackBarService,
-    private data: ChronicleService
+    private chronicle: ChronicleService,
+    private createService: CreateStreamService
   ) {}
 
   ngOnInit(): void {
@@ -109,8 +111,8 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
       res = `{"Compound":[${this.createCompoundList()}]}`;
     }
     this.setObjectCompoundType();
-    this.data.changeObjectCompound(this.objectCompoundType as EventCompoundType)
-    this.data.changeEventProperties(res);
+    this.createService.changeObjectCompound(this.objectCompoundType as EventCompoundType)
+    this.createService.changeEventProperties(res);
   }
 
   singleWarning: string =

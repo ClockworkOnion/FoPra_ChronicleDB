@@ -39,13 +39,13 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { InsertDataTabMenuComponent } from './page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
 import { InsertDataManuallyComponent } from './page-insert-data/insert-data-manually/insert-data-manually.component';
 import { InsertDataEventElementComponent } from './page-insert-data/insert-data-event-element/insert-data-event-element.component';
-import { CreateStreamService } from './services/create-stream.service';
 import { InsertDataService } from './services/rest services/insert-data.service';
 import { SystemInfoComponent } from './page-system-info/system-info/system-info.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { StreamListComponent } from './page-system-info/stream-list/stream-list.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
+import { CreateStreamService } from './services/rest services/create-stream.service';
 
 
 
