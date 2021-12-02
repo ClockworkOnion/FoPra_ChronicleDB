@@ -13,27 +13,27 @@ import { Subscription } from 'rxjs';
 export class StreamListComponent implements OnInit {
   streamList :Array<ChronicleStream>=[];
 
-  constructor(private data : ChronicleService, private infoService:StreamInfoService) { 
+  constructor(private chronicleService : ChronicleService, private infoService:StreamInfoService) { 
     
   }
 
   ngOnInit(): void {
-    this.data.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
-    this.streamList= this.data.streamList;
+    this.chronicleService.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
+    this.streamList= this.chronicleService.streamList;
   }
   
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.streamList, event.previousIndex, event.currentIndex);
   }
   refresh(){
-    if(this.data.getUrl()!=null){
-      this.data.getStreamsFromChronicle();
+    if(this.chronicleService.getUrl()!=null){
+      this.chronicleService.getStreamsFromChronicle();
       this.streamList.length=0;
     }
   }
-  showInfo(id : number){
-   // this.infoService.getStreamInfo(id);  
-    
+ async showInfo(id : number){
+   let res =await this.infoService.getStreamInfo(id);
+    console.log(res)
   }
  
 }
