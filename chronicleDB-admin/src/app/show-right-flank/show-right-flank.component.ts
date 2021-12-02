@@ -60,7 +60,9 @@ export class ShowRightFlankComponent implements OnInit {
   }
 
   getPayloadFromJSON(json: any, streamNo: number, ValueNodeNo: number, payloadType: string) : string {
+
     return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload[payloadType];
+    // return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload[payloadType];
   }
 
   getTimeStampFromJSON(json: any, streamNo: number, ValueNodeNo: number) : string {
@@ -71,12 +73,14 @@ export class ShowRightFlankComponent implements OnInit {
     let prefix = ""
     switch (this.streamList[streamNo].event[eventNo].type) {
       case "Integer":
-        prefix = "I"
+        prefix = "I";
         break;
       case "Float":
-        prefix = "F"
+        prefix = "F";
         break;
-        // TODO: Sonst noch was?
+      case "Unsigned":
+        prefix = "U";
+        break;
       default:
         break;
     }
@@ -84,4 +88,12 @@ export class ShowRightFlankComponent implements OnInit {
   return prefix + this.streamList[streamNo].event[eventNo].subtype;
   }
 
+  /*
+  TODO:
+  - varcompound: Einer von 2 beliebigen Typen im Stream
+  - Compound: Stream mit 2 Payloads
+
+  - List-Streams...
+  - Darstellung hübscher machen
+  */
 }
