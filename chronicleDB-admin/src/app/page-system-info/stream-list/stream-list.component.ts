@@ -4,6 +4,8 @@ import { ChronicleService } from 'src/app/services/chronicle.service';
 import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { Subscription } from 'rxjs';
+import { DialogService } from 'src/app/services/dialog.service';
+import { InsertDataTabMenuComponent } from 'src/app/page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
 
 @Component({
   selector: 'app-stream-list',
@@ -13,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class StreamListComponent implements OnInit {
   streamList :Array<ChronicleStream>=[];
 
-  constructor(private chronicleService : ChronicleService, private infoService:StreamInfoService) { 
+  constructor(private chronicleService : ChronicleService, private infoService:StreamInfoService , private dialog : DialogService) { 
     
   }
 
@@ -40,7 +42,11 @@ export class StreamListComponent implements OnInit {
 
   shutDown(id :number){
     this.chronicleService.shutdownStream(id)
+  }
+  open(){
+    this.dialog.openDialog(InsertDataTabMenuComponent);
 
   }
  
 }
+
