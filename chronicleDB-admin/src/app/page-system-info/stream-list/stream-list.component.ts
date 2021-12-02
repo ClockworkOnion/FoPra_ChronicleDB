@@ -18,8 +18,10 @@ export class StreamListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.chronicleService.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
-    this.streamList= this.chronicleService.streamList;
+    this.chronicleService.currentStreamList.subscribe(list => {
+      if (list)
+        this.streamList = list;
+    })
   }
   
   drop(event: CdkDragDrop<string[]>) {

@@ -18,8 +18,11 @@ export class ShowRightFlankComponent implements OnInit {
   outputInfo: string = "";
 
   ngOnInit(): void {
-    this.chronicle.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
-    this.streamList=this.chronicle.streamList; // JSON.parse(sessionStorage.getItem("streamList")!);
+    this.chronicle.currentStreamList.subscribe(list => {
+      if (list)
+        this.streamList = list;
+    })
+    // this.streamList=this.chronicle.streamList; // JSON.parse(sessionStorage.getItem("streamList")!);
   }
 
   showRightFlank(){
@@ -51,11 +54,11 @@ export class ShowRightFlankComponent implements OnInit {
     console.log(this.streamList);
     console.log(this.streamList[this.ACTIVE_STREAM]);
 
-    console.log("Event count:" + this.streamList[this.ACTIVE_STREAM].event.length);
+    console.log("Event count:" + this.streamList[this.ACTIVE_STREAM].event!.length);
 
     console.log("Payload Type:")
-    console.log(this.streamList[0].event[0].type);
-    console.log(this.streamList[0].event[0].subtype);
+    console.log(this.streamList[0].event![0].type);
+    console.log(this.streamList[0].event![0].subtype);
     console.log("Payload (stream 0, event 0) nach Methode: "+ this.getPayloadTypeFromEvent(0,0)); 
   }
 
@@ -69,7 +72,7 @@ export class ShowRightFlankComponent implements OnInit {
 
   getPayloadTypeFromEvent(streamNo: number, eventNo: number) : string {
     let prefix = ""
-    switch (this.streamList[streamNo].event[eventNo].type) {
+    switch (this.streamList[streamNo].event![eventNo].type) {
       case "Integer":
         prefix = "I";
         break;
@@ -82,8 +85,8 @@ export class ShowRightFlankComponent implements OnInit {
       default:
         break;
     }
-    console.log("Payload type in stream no " + streamNo + ", event no " + eventNo + " is: " + prefix + this.streamList[streamNo].event[eventNo].subtype)
-  return prefix + this.streamList[streamNo].event[eventNo].subtype;
+    console.log("Payload type in stream no " + streamNo + ", event no " + eventNo + " is: " + prefix + this.streamList[streamNo].event![eventNo].subtype)
+  return prefix + this.streamList[streamNo].event![eventNo].subtype;
   }
 
 }

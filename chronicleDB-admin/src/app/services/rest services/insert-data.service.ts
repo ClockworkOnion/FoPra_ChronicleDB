@@ -40,7 +40,7 @@ export class InsertDataService {
   }
 
   parseInputToBody(eventInput:string[], timestamp: number) {
-    let eventDef = this.currentStream!.event;
+    let eventDef = this.currentStream!.event!;
     let payload: string = '';
 
     for (let i = 0; i < eventInput.length; i++) {

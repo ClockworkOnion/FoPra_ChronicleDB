@@ -8,7 +8,7 @@
     
     <div>
         <app-insert-data-event-element *ngFor="let eventElement of eventElements; let i = index" 
-            [element]="eventElement" [varCompound]="selectedStream.compoundType"
+            [element]="eventElement" [varCompound]="selectedStream.compoundType!"
             (valueChange)="elementValueChanged(i, $event)" style="margin-right: 8px;"></app-insert-data-event-element>
     </div>
     
