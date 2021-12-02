@@ -1,4 +1,4 @@
-import { StreamInfoService } from './../../services/rest services/stream-info.service';
+import { StreamInfoService } from 'src/app/services/rest services/stream-info.service';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { Component, OnInit } from '@angular/core';
@@ -36,6 +36,11 @@ export class StreamListComponent implements OnInit {
  async showInfo(id : number){
    let res =await this.infoService.getStreamInfo(id);
     console.log(res)
+  }
+
+  shutDown(id :number){
+    this.chronicleService.shutdownStream(id)
+
   }
  
 }

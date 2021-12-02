@@ -28,7 +28,7 @@
           <mat-icon>analytics</mat-icon>
           <span>Query Time travel</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="shutDown(stream.id)">
           <mat-icon>close</mat-icon>
           <span>Shutdown Stream</span>
         </button>

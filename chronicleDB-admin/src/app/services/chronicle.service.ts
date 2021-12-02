@@ -59,6 +59,12 @@ export class ChronicleService {
     sessionStorage.setItem("streamList",data);
   }
 
+  shutdownStream(id: number){
+      this.http.get(this.url +"shutdown_stream/" + id,{responseType:"text"}).subscribe(response =>{
+        console.log("Sucessfully shut down Stream :" +id)    
+      } )
+  }
+
   getStreamsFromChronicle(){
     this.http.get(this.url + "show_streams", {responseType: "json"}).subscribe(response => {
       this.streamList = new Array<ChronicleStream>((response as any).length);
