@@ -32,6 +32,7 @@ export class GeneralStreamComponent implements OnInit {
   }
 
   refreshCurrentStream(){
+    this.data.sendUpdateEvent();
     if (this.data.existsStream()) {
       this.currentStreamText = this.data.getStreamInfo();
     } else {

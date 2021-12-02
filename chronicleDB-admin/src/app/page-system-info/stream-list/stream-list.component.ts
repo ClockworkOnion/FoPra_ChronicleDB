@@ -1,7 +1,9 @@
+import { StreamInfoService } from './../../services/rest services/stream-info.service';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-stream-list',
@@ -9,29 +11,32 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
   styleUrls: ['./stream-list.component.css']
 })
 export class StreamListComponent implements OnInit {
+  updateEventsubscription:Subscription;
   streamList :Array<ChronicleStream>=[];
-  constructor(private data : ChronicleService) { }
+  stream :any;
+
+  constructor(private data : ChronicleService, private infoService:StreamInfoService) { 
+    this.updateEventsubscription=this.data.getUpdateEvent().subscribe(()=>{
+      this.refresh();
+    })
+  }
 
   ngOnInit(): void {
     this.data.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
-    this.streamList=JSON.parse(sessionStorage.getItem("streamList")!);
   }
   
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.streamList, event.previousIndex, event.currentIndex);
   }
-  test(){
-    for(let i =0;i<this.streamList.length;i++){
-      let element:ChronicleStream = this.streamList[i]
-      console.log(element.id);
-      console.log(element.event);
-      console.log(element.compoundType);
-    }
+  refresh(){
+    if(this.data.getUrl()!=null){
+    this.streamList=this.data.streamList;
+    this.data.getStreamsFromChronicle();
+  }
+  }
+  showInfo(id : number){
+   // this.infoService.getStreamInfo(id);  
     
-    console.log(this.streamList)
   }
-  showInfo(){
-    console.log("hier kommt bald die info")
-  }
-
+ 
 }

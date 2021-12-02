@@ -1,4 +1,4 @@
-import { ChronicleEventElement } from './../model/ChronicleEvent';
+import { ChronicleEventElement, EventCompoundType } from './../model/ChronicleEvent';
 import { EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
 
 
@@ -31,6 +31,26 @@ static parseResponseEvent(string:string):Array<ChronicleEventElement>{
 
    // return string.slice(eventLayoutPosition,lightweightIndexPosition)
     return allEvents;
+}
+static parseCompoundType(string : string):EventCompoundType{
+    
+  let eventLayoutPosition=string.indexOf("Event layout:") +13;
+    let lightweightIndexPosition = string.indexOf("[Lightweight Index]");
+
+    //save event string into variable res
+    let res=string.slice(eventLayoutPosition,lightweightIndexPosition);
+
+    //determine if single, varcompound or compound
+    if(res.includes("VarCompound")){
+      return EventCompoundType.varCompound;
+    }
+    if(res.includes("Compound")&& !res.includes("VarCompound")){
+      return EventCompoundType.compound
+    }
+    else{
+      return EventCompoundType.single
+    }
+
 }
 
  static  parseEvent(singleEvent:string):ChronicleEventElement{
