@@ -19,7 +19,7 @@ export class ShowRightFlankComponent implements OnInit {
 
   ngOnInit(): void {
     this.chronicle.currentStreamList.subscribe((streamlist:any)=>this.streamList =streamlist)
-    this.streamList=JSON.parse(sessionStorage.getItem("streamList")!);
+    this.streamList=this.chronicle.streamList; // JSON.parse(sessionStorage.getItem("streamList")!);
   }
 
   showRightFlank(){
@@ -37,7 +37,6 @@ export class ShowRightFlankComponent implements OnInit {
 
       // Add "Brother Info":
       this.outputInfo += "Brother left: " + brotherLeft + "\nBrother right: " + brotherRight + "\n";
-
       // Output Index, Timestamp and Payload
       for (let i = 0; i < json[this.ACTIVE_STREAM].node_variant.ValueNode.data_array.length; i++) {
         this.outputInfo += "\n Index: " + i
@@ -49,6 +48,7 @@ export class ShowRightFlankComponent implements OnInit {
 
   debugGetStreamInfo() { 
     console.log("Stream Info:");
+    console.log(this.streamList);
     console.log(this.streamList[this.ACTIVE_STREAM]);
 
     console.log("Event count:" + this.streamList[this.ACTIVE_STREAM].event.length);
@@ -71,12 +71,14 @@ export class ShowRightFlankComponent implements OnInit {
     let prefix = ""
     switch (this.streamList[streamNo].event[eventNo].type) {
       case "Integer":
-        prefix = "I"
+        prefix = "I";
         break;
       case "Float":
-        prefix = "F"
+        prefix = "F";
         break;
-        // TODO: Sonst noch was?
+      case "Unsigned":
+        prefix = "U";
+        break;
       default:
         break;
     }
