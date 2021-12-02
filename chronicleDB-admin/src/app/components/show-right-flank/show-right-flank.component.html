@@ -1,0 +1,14 @@
+<div class="padded">
+    <h1>Show Right Flank</h1>
+    <br>
+    <button mat-raised-button color="secondary" style="float: left; bottom: 20pt" (click)="debugGetStreamInfo()">Get Stream Info</button>
+
+    <button mat-raised-button color="primary" style="float: left; bottom: 20pt" (click)="showRightFlank()">
+        Get Right Flank
+    </button>
+    <br><br>
+    Info: <br>
+    <div class="newlines">
+        {{ outputInfo }}
+    </div>
+</div>

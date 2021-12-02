@@ -47,6 +47,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
 import { CreateStreamService } from './services/rest services/create-stream.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     InsertDataEventElementComponent,
     SystemInfoComponent,
     StreamListComponent,
-    UploadDataComponent
+    UploadDataComponent,
+    ShowRightFlankComponent
   ],
   imports: [
     BrowserModule,
