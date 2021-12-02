@@ -104,7 +104,7 @@ export class ShowRightFlankComponent implements OnInit {
       default: // leave prefix empty when type is string
         break;
     }
-    console.log("Payload type in stream no " + streamNo + ", event no " + eventNo + " is: " + prefix + this.selectedStream.event[eventNo].subtype)
+    console.log("Payload type in stream no " + streamNo + ", event no " + eventNo + " is: " + prefix + this.selectedStream.event![eventNo].subtype)
   return prefix + this.selectedStream.event![eventNo].subtype;
   }
 
