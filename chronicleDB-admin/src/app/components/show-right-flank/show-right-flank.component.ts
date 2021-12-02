@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventElementType } from 'src/app/model/ChronicleEvent';
+import { EventCompoundType, EventElementSingleOrList, EventElementType } from 'src/app/model/ChronicleEvent';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { GetFlankService } from 'src/app/services/rest services/get-flank.service';
@@ -72,13 +72,14 @@ export class ShowRightFlankComponent implements OnInit {
   }
 
   getPayloadFromJSON(json: any, streamNo: number, ValueNodeNo: number, payloadType: string, eventNo?: number) : string {
-
-    // VarCompound Type:
+    // (Var)Compound Types:
     if (typeof eventNo != 'undefined') {
-    return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.VarCompound[eventNo][this.getPayloadTypeFromEvent(this.selectedStream.id, eventNo)];
+        if (this.selectedStream.compoundType == EventCompoundType.varCompound) {
+          return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.VarCompound[eventNo][this.getPayloadTypeFromEvent(this.selectedStream.id, eventNo)];
+        } else { // must be compound then
+          return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.Compound[eventNo][this.getPayloadTypeFromEvent(this.selectedStream.id, eventNo)];
+        } // TODO: Refactor by inserting Compound Type as String? .payload[compoundType][eventNo] ...?
     }
-    //return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.VarCompound[0].I8;
-    //return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.VarCompound[1].F32;
 
     // Single Type:
     return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload[payloadType];
