@@ -12,11 +12,10 @@ export class StreamInfoService {
     
   }
  
- async  getStreamInfo(id: number):Promise<string>{     
-    const res :any =  await this.chronicleService.getHttp().get(this.chronicleService.getUrl() +"stream_info/"+id,{responseType:"text"}).toPromise();
+ async  getStreamInfo(id: number){     
+    const res =  await this.chronicleService.getHttp().get(this.chronicleService.getUrl() +"stream_info/"+id,{responseType:"text"}).toPromise();
      this.info=res;
-     console.log(this.info)
-     return this.info;
+     return res;
     }
 
 }

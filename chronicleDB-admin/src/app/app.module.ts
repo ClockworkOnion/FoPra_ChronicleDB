@@ -41,13 +41,15 @@ import { InsertDataManuallyComponent } from './page-insert-data/insert-data-manu
 import { InsertDataEventElementComponent } from './page-insert-data/insert-data-event-element/insert-data-event-element.component';
 import { InsertDataService } from './services/rest services/insert-data.service';
 import { SystemInfoComponent } from './page-system-info/system-info/system-info.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { StreamListComponent } from './page-system-info/stream-list/stream-list.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
+
 import { CreateStreamService } from './services/rest services/create-stream.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
+
 
 @NgModule({
   declarations: [
@@ -99,6 +101,7 @@ import { ShowRightFlankComponent } from './components/show-right-flank/show-righ
     MatSlideToggleModule,
     DragDropModule,
     MatDialogModule
+
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService],
   bootstrap: [AppComponent],
