@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ChronicleService } from 'src/app/services/chronicle.service';
 import { InsertDataService } from 'src/app/services/rest services/insert-data.service';
 
 @Component({
@@ -6,11 +7,18 @@ import { InsertDataService } from 'src/app/services/rest services/insert-data.se
   templateUrl: './upload-data.component.html',
   styleUrls: ['./upload-data.component.css'],
 })
-export class UploadDataComponent {
+export class UploadDataComponent implements OnInit {
   fileName!: string;
   fileContent!: string;
+  steamAvailable!: boolean;
 
-  constructor(private insertService: InsertDataService) {}
+  constructor(private insertService: InsertDataService, private chronicle: ChronicleService) {}
+
+  ngOnInit() {
+    this.chronicle.selectedStream$.subscribe(stream => {
+      this.steamAvailable = stream != null;
+    })
+  }
 
   onFileSelected(event: any) {
     if (!event.target) return;

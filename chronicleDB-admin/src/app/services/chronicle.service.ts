@@ -20,8 +20,6 @@ export class ChronicleService {
   currentStreamList = this.streamListBS.asObservable();
   private streamList : Array<ChronicleStream>=[];
 
-  private currentStream: string = 'N/A';
-
   constructor(private http: HttpClient, private snackBar: SnackBarService) {}
 
   getHttp(){
@@ -40,11 +38,7 @@ export class ChronicleService {
   }
 
   existsStream(): boolean {
-    return this.currentStream != 'N/A';
-  }
-
-  getStreamInfo(): string {
-    return this.currentStream;
+    return this.selectedStream != null;
   }
 
   post(url: string, body: any) {
@@ -67,7 +61,12 @@ export class ChronicleService {
 
   getStreamsFromChronicle(){
     this.http.get(this.url + "show_streams", {responseType: "json"}).subscribe(response => {
+
+      // reset current data
       this.streamList = new Array<ChronicleStream>((response as any).length);
+      this.selectedStream.next(null);
+
+      // refill data
       for (let index = 0; index < (response as any).length; index++) {
         const stream = (response as any)[index];
         

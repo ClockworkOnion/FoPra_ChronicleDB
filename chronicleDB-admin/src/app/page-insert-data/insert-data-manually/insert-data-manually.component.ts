@@ -11,7 +11,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['./insert-data-manually.component.css']
 })
 export class InsertDataManuallyComponent implements OnInit {
-  selectedStream!: ChronicleStream;
+  selectedStream!: ChronicleStream | null;
   eventElements!: ChronicleEventElement[];
 
   // Values of the input fields
@@ -32,6 +32,8 @@ export class InsertDataManuallyComponent implements OnInit {
         for (let i = 0; i < this.eventElementValues.length; i++) { // defaultwert benutzen, damit es nicht undefined ist
           this.eventElementValues[i] = "";
         }
+      } else {
+        this.selectedStream = null;
       }
     });
   }
@@ -50,7 +52,7 @@ export class InsertDataManuallyComponent implements OnInit {
       return;
     }
     if (this.checkElementsFilled() 
-    || this.selectedStream.compoundType == EventCompoundType.varCompound)  {
+    || this.selectedStream!.compoundType == EventCompoundType.varCompound)  {
       this.insertService.insertEvent(this.eventElementValues, this.timestamp);
     } else {
       this.snackBar.openSnackBar("Please enter all needed Data!");
