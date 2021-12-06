@@ -109,20 +109,21 @@ Ebenso wollen wir schon anfangen, die Komponenten für die anderen Operationen z
 Awensend: Johannes Buder, Davit Davtyan, Lars Happel
 
 ## REST-API
-Wir wollen die reslichen get und post anfragen fertig machen. (/recover_stream(snapshot) , /insert_orderedArray , /min_key/StreamID ,/max_key/StreamID ,/tree_height/StreamID ,query_time_travel)
+Wir wollen die reslichen get und post anfragen fertig machen. (`/recover_stream(snapshot)`, `/insert_orderedArray`, `/min_key/StreamID`, `/max_key/StreamID`, `/tree_height/StreamID`, `query_time_travel`)
 
-##UI
-Wir wollen die Home-Seite übersichtlicher machen , indem wir einige Einstellungen in Dialoge oder andere routing Seiten packen.
+## UI
+Wir wollen die Home-Seite übersichtlicher machen, indem wir einige Einstellungen in Dialoge oder andere routing Seiten packen.
 
-## Weitere Planung : Johannes kümmert sich um die übersichtlichkeit von create_Stream und insert_orderedArray.
-Lars kümmert sich um timetravel und show_rightFlank. Davit schreibt die get methoden für min und max_key.
+## Weitere Planung
+Johannes kümmert sich um die Übersichtlichkeit von `/create_Stream` und `/insert_ordered_array`.
+Lars kümmert sich um `/query_time_travel/StreamID` und `/show_right_flank/StreamID`. Davit schreibt die get methoden für min und max_key.
 
 ## Weiteren To-Dos für die Zukunft:
-•    VarCompound anpassen
-•    Lightweight Index
-•    Compressor
-•    Upload File validation
-•    mehrere Data files erlauben
-•    Fehlerbehandlung bei http Sachen
+- VarCompound anpassen
+- Lightweight Index
+- Compressor
+- Upload File validation
+- mehrere Data files erlauben
+- Fehlerbehandlung bei http Sachen
 
 
