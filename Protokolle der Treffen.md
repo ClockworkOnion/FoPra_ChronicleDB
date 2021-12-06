@@ -102,3 +102,27 @@ Wir haben uns nochmal das Python Backend angeschaut, dass Lars zum Laufen gebrac
 ### Weitere Planung
 Wir müssen noch ein paar minimale Änderungen an Texten o. ä. vornehmen und die Dokumentation bis Ende der Woche vervollständigen, sodass wir den ersten Meilenstein in der nächsten Zeit abhaken können.  
 Ebenso wollen wir schon anfangen, die Komponenten für die anderen Operationen zu erstellen, damit der 2. Meilenstein bald begonnen werden kann.
+
+
+
+## Besprechung vom 06.12.21
+Awensend: Johannes Buder, Davit Davtyan, Lars Happel
+
+## REST-API
+Wir wollen die reslichen get und post anfragen fertig machen. (/recover_stream(snapshot) , /insert_orderedArray , /min_key/StreamID ,/max_key/StreamID ,/tree_height/StreamID ,query_time_travel)
+
+##UI
+Wir wollen die Home-Seite übersichtlicher machen , indem wir einige Einstellungen in Dialoge oder andere routing Seiten packen.
+
+## Weitere Planung : Johannes kümmert sich um die übersichtlichkeit von create_Stream und insert_orderedArray.
+Lars kümmert sich um timetravel und show_rightFlank. Davit schreibt die get methoden für min und max_key.
+
+## Weiteren To-Dos für die Zukunft:
+•    VarCompound anpassen
+•    Lightweight Index
+•    Compressor
+•    Upload File validation
+•    mehrere Data files erlauben
+•    Fehlerbehandlung bei http Sachen
+
+
