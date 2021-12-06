@@ -45,9 +45,11 @@ export class CreateStreamService {
 
   createStream() {
     sessionStorage.setItem("chronicleURL",this.chronicle.getUrl())
-    this.chronicle.post(this.chronicle.getUrl() + "create_stream", this.createStreamBody).subscribe(response => {
+    let response = this.chronicle.post(this.chronicle.getUrl() + "create_stream", this.createStreamBody)
+    response.subscribe(response => {
       this.chronicle.addStreamToList(response);
     });
+    return response;
   }
 
   changeStreamProperties(message: any) {

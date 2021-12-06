@@ -37,6 +37,10 @@ export class ChronicleService {
   existsStream(): boolean {
     return this.selectedStream != null;
   }
+  
+  selectStream(stream: ChronicleStream) {
+    this.selectedStream.next(stream);
+  }
 
   post(url: string, body: any) {
     return this.http.post(url, body, {responseType: "text"});

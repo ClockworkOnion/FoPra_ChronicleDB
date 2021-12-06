@@ -11,8 +11,8 @@ import {
   ComponentRef,
   AfterViewInit,
 } from '@angular/core';
-import { StreamEventPropertyComponent } from 'src/app/page-home/card-stream-event-properties/stream-event-property.component';
 import { CreateStreamService } from 'src/app/services/rest services/create-stream.service';
+import { StreamEventPropertyComponent } from '../stream-event-property.component';
 
 @Component({
   selector: 'app-eventgenerator',

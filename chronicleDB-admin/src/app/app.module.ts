@@ -1,4 +1,4 @@
-import { StreamPropertiesComponent } from './page-home/card-stream-properties/stream-properties.component';
+import { StreamPropertiesComponent } from './page-create-stream/card-stream-properties/stream-properties.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -28,11 +28,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { ChronicleService } from './services/chronicle.service';
 import { HttpClientModule } from '@angular/common/http';
-import { StreamEventPropertyComponent } from './page-home/card-stream-event-properties/stream-event-property.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReactiveFormsModule } from '@angular/forms';
-import { EventgeneratorComponent } from './page-home/card-stream-event-properties/eventgenerator/eventgenerator.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -49,6 +47,9 @@ import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.
 import { CreateStreamService } from './services/rest services/create-stream.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
+import { CreateStreamComponent } from './page-create-stream/create-stream/create-stream.component';
+import { StreamEventPropertyComponent } from './page-create-stream/card-stream-event-properties/stream-event-property.component';
+import { EventgeneratorComponent } from './page-create-stream/card-stream-event-properties/eventgenerator/eventgenerator.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { ShowRightFlankComponent } from './components/show-right-flank/show-righ
     SystemInfoComponent,
     StreamListComponent,
     UploadDataComponent,
-    ShowRightFlankComponent
+    ShowRightFlankComponent,
+    CreateStreamComponent
   ],
   imports: [
     BrowserModule,

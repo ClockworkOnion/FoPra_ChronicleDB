@@ -29,10 +29,4 @@ export class GeneralStreamComponent implements OnInit {
     this.urlPlaceholder=sessionStorage.getItem("chronicleURL")
     this.updateURL(this.urlPlaceholder)
   }
-
-  onCreateStreamClicked() {
-    if (this.createService.checkInput()) {
-      this.createService.createStream();
-    }
-  }
 }
