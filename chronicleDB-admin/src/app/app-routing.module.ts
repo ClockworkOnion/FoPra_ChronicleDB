@@ -10,7 +10,7 @@ import { CreateStreamComponent } from './page-create-stream/create-stream/create
 const routes: Routes = [
   {path:"home",component:DashboardComponent},
   {path:"settings",component:TabMenuComponent},
-  {path:"insertData",component:InsertDataTabMenuComponent},
+  // {path:"insertData",component:InsertDataTabMenuComponent},
   {path:"systemInfo",component:SystemInfoComponent},
   {path:"show_right_flank", component:ShowRightFlankComponent},
   {path:"create_stream", component:CreateStreamComponent},

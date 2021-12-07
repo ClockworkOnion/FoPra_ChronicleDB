@@ -12,7 +12,7 @@
       </button>
       <mat-menu #menu="matMenu">
 
-        <button mat-menu-item>
+        <button mat-menu-item (click)="insertData(stream)" [disabled]="!stream.online">
           <mat-icon>add</mat-icon>
           <span>Insert Data</span>
         </button>
@@ -31,11 +31,6 @@
         <button mat-menu-item (click)="shutDown(stream.id)" [disabled]="!stream.online">
           <mat-icon>close</mat-icon>
           <span>Shutdown Stream</span>
-        </button>
-
-        <button mat-menu-item (click)="open()">
-          <mat-icon>help</mat-icon>
-          <span>test</span>
         </button>
 
       </mat-menu>

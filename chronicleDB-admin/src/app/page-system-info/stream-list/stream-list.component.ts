@@ -49,7 +49,8 @@ export class StreamListComponent implements OnInit {
     this.chronicleService.shutdownStream(id)
   }
 
-  open(){
+  insertData(stream: ChronicleStream) {
+    this.chronicleService.selectStream(stream);
     this.dialog.openDialog(InsertDataTabMenuComponent);
   }
  
