@@ -50,7 +50,7 @@ import { ShowRightFlankComponent } from './components/show-right-flank/show-righ
 import { CreateStreamComponent } from './page-create-stream/create-stream/create-stream.component';
 import { StreamEventPropertyComponent } from './page-create-stream/card-stream-event-properties/stream-event-property.component';
 import { EventgeneratorComponent } from './page-create-stream/card-stream-event-properties/eventgenerator/eventgenerator.component';
-
+import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -80,6 +80,7 @@ import { EventgeneratorComponent } from './page-create-stream/card-stream-event-
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule,

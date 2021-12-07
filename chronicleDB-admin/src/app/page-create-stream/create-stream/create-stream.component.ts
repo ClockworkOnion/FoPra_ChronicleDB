@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { CreateStreamService } from 'src/app/services/rest services/create-stream.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-stream',
@@ -10,8 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./create-stream.component.css']
 })
 export class CreateStreamComponent {
-
-  constructor(private chronicleService: ChronicleService, private createService: CreateStreamService, private snackBar: SnackBarService, private router: Router) {
+  constructor(private chronicleService: ChronicleService, private createService: CreateStreamService, private snackBar: SnackBarService) {
     chronicleService.getHttp();
   }
 
@@ -22,11 +20,7 @@ export class CreateStreamComponent {
 
   onCreateStreamClicked() {
     if (this.createService.checkInput()) {
-      let response = this.createService.createStream();
-      response.subscribe(response => {
-        this.snackBar.openSnackBar("Successfully created a new Stream!");
-        this.router.navigateByUrl("/home");
-      })
+      this.createService.createStream();
     }
   }
 }
