@@ -60,6 +60,14 @@ export class ChronicleService {
         this.getStreamsFromChronicle();
       } )
   }
+  //from snapshot
+  recoverStream(id:number){
+    this.http.get(this.url +"recover_stream_snapshot/" +id,{responseType:"text"}).subscribe(response =>{
+      console.log("Sucessfully recovered Stream: " + id);
+      this.getStreamsFromChronicle();
+    })
+
+  }
 
   getStreamsFromChronicle(){
     this.http.get(this.url + "show_streams", {responseType: "json"}).subscribe(response => {

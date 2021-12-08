@@ -46,7 +46,11 @@ export class StreamListComponent implements OnInit {
   }
 
   shutDown(id :number){
-    this.chronicleService.shutdownStream(id)
+    this.chronicleService.shutdownStream(id);
+  }
+
+  recover(id:number){
+    this.chronicleService.recoverStream(id);
   }
 
   open(){

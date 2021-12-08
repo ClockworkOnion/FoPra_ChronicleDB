@@ -12,15 +12,15 @@
       </button>
       <mat-menu #menu="matMenu">
 
-        <button mat-menu-item>
+        <button mat-menu-item [disabled]="!stream.online">
           <mat-icon>add</mat-icon>
           <span>Insert Data</span>
         </button>       
-        <button mat-menu-item [matMenuTriggerFor]="keys">
+        <button mat-menu-item [matMenuTriggerFor]="keys" [disabled]="!stream.online">
           <mat-icon>key</mat-icon>
           <span>Get Key </span>
         </button>
-        <button mat-menu-item  (click)="showInfo(stream.id)">
+        <button mat-menu-item  (click)="showInfo(stream.id)" [disabled]="!stream.online">
           <mat-icon>info</mat-icon>
           <span>Stream Info</span>
         </button>
@@ -36,6 +36,11 @@
           <mat-icon>close</mat-icon>
           <span>Shutdown Stream</span>
         </button>
+        <button mat-menu-item (click)="recover(stream.id)" [disabled]="stream.online">
+          <mat-icon>restore</mat-icon>
+          <span>Recover Stream</span>
+        </button>
+
 
 
 
