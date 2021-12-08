@@ -15,6 +15,10 @@
         <button mat-menu-item>
           <mat-icon>add</mat-icon>
           <span>Insert Data</span>
+        </button>       
+        <button mat-menu-item [matMenuTriggerFor]="keys">
+          <mat-icon>key</mat-icon>
+          <span>Get Key </span>
         </button>
         <button mat-menu-item  (click)="showInfo(stream.id)">
           <mat-icon>info</mat-icon>
@@ -33,11 +37,22 @@
           <span>Shutdown Stream</span>
         </button>
 
+
+
         <button mat-menu-item (click)="open()">
           <mat-icon>help</mat-icon>
           <span>test</span>
         </button>
 
+      </mat-menu>
+      
+      <mat-menu #keys="matMenu">
+        <button mat-menu-item (click)="showMaxKey(stream.id)">
+          Maximum Key
+        </button>
+        <button mat-menu-item (click)="showMinKey(stream.id)">
+          Minimum Key
+        </button>
       </mat-menu>
     </ng-container>
   </div>

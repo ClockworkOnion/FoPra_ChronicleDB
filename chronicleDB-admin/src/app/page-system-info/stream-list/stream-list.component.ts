@@ -52,6 +52,15 @@ export class StreamListComponent implements OnInit {
   open(){
     this.dialog.openDialog(InsertDataTabMenuComponent);
   }
+
+ async showMaxKey(id:number){
+    console.log( await this.chronicleService.getMaxKey(id))
+
+
+  }
+ async showMinKey(id :number){
+    console.log( await this.chronicleService.getMinKey(id))
+  }
  
 }
 

@@ -73,7 +73,7 @@ export class ChronicleService {
         const stream = (response as any)[index];
         
         if(stream[1]=="Online"){
-          this.getHttp().get(this.getUrl() +"stream_info/"+stream[0],{responseType:"text"}).subscribe(info =>{ 
+          this.http.get(this.url +"stream_info/"+stream[0],{responseType:"text"}).subscribe(info =>{ 
             let newStream: ChronicleStream = {  
               id:parseInt(stream[0]),
               event:EventParser.parseResponseEvent(info),
@@ -119,4 +119,13 @@ export class ChronicleService {
     console.log(response);
     this.streamListBS.next(this.streamList);
   }
+  async getMaxKey(id :number){
+   return   await this.http.get(this.url +"max_key/"+id,{responseType:"text"}).toPromise();
+
+  }
+  async getMinKey(id:number){
+    return   await this.http.get(this.url +"min_key/"+id,{responseType:"text"}).toPromise();
+
+  }
+
 }
