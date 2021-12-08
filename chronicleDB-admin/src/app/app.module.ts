@@ -43,7 +43,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { StreamListComponent } from './page-system-info/stream-list/stream-list.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
-
 import { CreateStreamService } from './services/rest services/create-stream.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
