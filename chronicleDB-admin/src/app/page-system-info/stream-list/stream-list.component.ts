@@ -3,7 +3,6 @@ import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import { Subscription } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog.service';
 import { InsertDataTabMenuComponent } from 'src/app/page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
 
@@ -51,7 +50,7 @@ export class StreamListComponent implements OnInit {
 
   insertData(stream: ChronicleStream) {
     this.chronicleService.selectStream(stream);
-    this.dialog.openDialog(InsertDataTabMenuComponent);
+    this.dialog.openDialog(InsertDataTabMenuComponent, {maxHeight: "600px"});
   }
  
 }
