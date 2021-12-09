@@ -63,7 +63,17 @@ export class StreamListComponent implements OnInit {
 
   }
  async showMinKey(id :number){
-    console.log( await this.chronicleService.getMinKey(id))
+   let res =await this.chronicleService.getMinKey(id);
+   console.log( res)
+  //var output = document.getElementById("output");
+    
+   //output!.innerHTML = res;
+  }
+
+  async showTreeHeight(id:number){
+    console.log( await this.chronicleService.getTreeHeight(id))
+
+
   }
  
 }

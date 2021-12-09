@@ -20,6 +20,12 @@
           <mat-icon>key</mat-icon>
           <span>Get Key </span>
         </button>
+
+        <button mat-menu-item (click)="showTreeHeight(stream.id)" [disabled]="!stream.online">
+          <mat-icon>height</mat-icon>
+          <span>Get Tree Height</span>
+        </button>   
+
         <button mat-menu-item  (click)="showInfo(stream.id)" [disabled]="!stream.online">
           <mat-icon>info</mat-icon>
           <span>Stream Info</span>
@@ -38,12 +44,8 @@
         </button>
         <button mat-menu-item (click)="recover(stream.id)" [disabled]="stream.online">
           <mat-icon>restore</mat-icon>
-          <span>Recover Stream</span>
+          <span>*CAUTION* Recover Stream</span>
         </button>
-
-
-
-
       </mat-menu>
       
       <mat-menu #keys="matMenu">
@@ -57,5 +59,7 @@
     </ng-container>
   </div>
 </div>
+<div id="output"></div>
+
 
   

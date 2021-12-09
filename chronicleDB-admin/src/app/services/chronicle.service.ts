@@ -60,10 +60,10 @@ export class ChronicleService {
         this.getStreamsFromChronicle();
       } )
   }
-  //from snapshot
+  //from snapshot (still needs to pass down a body for correct implementation)
   recoverStream(id:number){
     this.http.get(this.url +"recover_stream_snapshot/" +id,{responseType:"text"}).subscribe(response =>{
-      console.log("Sucessfully recovered Stream: " + id);
+      console.log("Sucessfully recovered Stream: " + id +" " + response);
       this.getStreamsFromChronicle();
     })
 
@@ -133,6 +133,10 @@ export class ChronicleService {
   }
   async getMinKey(id:number){
     return   await this.http.get(this.url +"min_key/"+id,{responseType:"text"}).toPromise();
+
+  }
+  async getTreeHeight(id:number){
+    return   await this.http.get(this.url +"tree_height/"+id,{responseType:"text"}).toPromise();
 
   }
 
