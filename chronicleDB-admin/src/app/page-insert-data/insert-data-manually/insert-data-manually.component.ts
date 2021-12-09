@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { ChronicleEventElement, EventCompoundType } from 'src/app/model/ChronicleEvent';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { InsertDataService } from 'src/app/services/rest services/insert-data.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { IDValidators } from './id.validators';
 
 @Component({
   selector: 'app-insert-data-manually',
@@ -16,17 +18,26 @@ export class InsertDataManuallyComponent implements OnInit {
 
   // Values of the input fields
   eventElementValues!: string[];
-  timestamp!: number;
+  timestampFormControl: FormControl = new FormControl("", [
+    Validators.required,
+    Validators.pattern(/\d+/),
+    Validators.min(0)
+  ]);
 
   constructor(private chronicle: ChronicleService,
     private insertService: InsertDataService, 
-    private snackBar: SnackBarService) {}
+    private snackBar: SnackBarService,
+    private idValidator: IDValidators) {}
 
   ngOnInit(): void {
     // subscribe to selected Stream
     this.chronicle.selectedStream$.subscribe(stream => {
       if (stream && stream.event && stream.compoundType) {        
         this.selectedStream = stream;
+
+        // update ID validator with new stream ID
+        this.timestampFormControl.setAsyncValidators(this.idValidator.largerThanPreviousId(this.selectedStream!.id));
+
         this.eventElements = stream.event;
         this.eventElementValues = new Array<string>(this.eventElements.length);
         for (let i = 0; i < this.eventElementValues.length; i++) { // defaultwert benutzen, damit es nicht undefined ist
@@ -34,6 +45,7 @@ export class InsertDataManuallyComponent implements OnInit {
         }
       } else {
         this.selectedStream = null;
+        this.timestampFormControl.setAsyncValidators(null);
       }
     });
   }
@@ -42,9 +54,9 @@ export class InsertDataManuallyComponent implements OnInit {
     this.eventElementValues[index] = newValue;    
   }
 
-  onInsertEventClicked() {      
-    if (this.timestamp == null) {
-      this.snackBar.openSnackBar("Please enter a timestamp!");
+  onInsertEventClicked() {
+    if (!this.timestampFormControl.valid) {
+      this.snackBar.openSnackBar("Please enter a correct timestamp!");
       return;
     }
     if (!this.checkNoErrorsOnElements()) {
@@ -53,7 +65,8 @@ export class InsertDataManuallyComponent implements OnInit {
     }
     if (this.checkElementsFilled() 
     || this.selectedStream!.compoundType == EventCompoundType.varCompound)  {
-      this.insertService.insertEvent(this.eventElementValues, this.timestamp);
+      this.insertService.insertEvent(this.eventElementValues, this.timestampFormControl.value);
+      this.timestampFormControl.setValue(""); // Reset ID
     } else {
       this.snackBar.openSnackBar("Please enter all needed Data!");
       return;
