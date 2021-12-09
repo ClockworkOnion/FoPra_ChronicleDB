@@ -24,6 +24,15 @@ export class ShowRightFlankComponent implements OnInit {
     })
   }
 
+  newRightFlank() {
+    this.getFlankService.basicRightFlank().subscribe(response =>{
+      this.flankInfo = response;
+      let json = JSON.parse(this.flankInfo);
+      this.outputInfo = this.getFlankService.rightFlankFromJSON(json);
+    });
+  }
+
+  /*
   showRightFlank(){
     this.getFlankService.basicRightFlank().subscribe(response =>{
       this.flankInfo = response;
@@ -50,25 +59,6 @@ export class ShowRightFlankComponent implements OnInit {
         this.outputInfo += "\n"
       }
     });
-  }
-
-
-  debugGetStreamInfo() { 
-    console.log("Stream Info:");
-    console.log(this.selectedStream);
-    console.log(this.selectedStream.event);
-    this.selectedStream.event!.forEach(element => {
-      console.log(element);
-    });
-    console.log(this.selectedStream.compoundType)
-
-
-    console.log("Payload Type:")
-    this.selectedStream.event!.forEach(e => {
-      console.log(e.subtype)
-      console.log(e.type)
-    });
-    console.log("Payload (stream 0, event 0) nach Methode: "+ this.getPayloadTypeFromEvent(0,0)); 
   }
 
   getPayloadFromJSON(json: any, streamNo: number, ValueNodeNo: number, payloadType: string, eventNo: number) : string {
@@ -109,5 +99,26 @@ export class ShowRightFlankComponent implements OnInit {
     console.log("Payload type in stream no " + streamNo + ", event no " + eventNo + " is: " + prefix + this.selectedStream.event![eventNo].subtype)
   return prefix + this.selectedStream.event![eventNo].subtype;
   }
+
+  */
+
+  debugGetStreamInfo() { 
+    console.log("Stream Info:");
+    console.log(this.selectedStream);
+    console.log(this.selectedStream.event);
+    this.selectedStream.event!.forEach(element => {
+      console.log(element);
+    });
+    console.log(this.selectedStream.compoundType)
+
+
+    console.log("Payload Type:")
+    this.selectedStream.event!.forEach(e => {
+      console.log(e.subtype)
+      console.log(e.type)
+    });
+    console.log("Payload (stream 0, event 0) nach Methode: "+ this.getFlankService.getPayloadTypeFromEvent(0,0)); 
+  }
+
 
 }
