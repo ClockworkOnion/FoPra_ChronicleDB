@@ -1,0 +1,23 @@
+<div class="padded">
+    <h1>Time Travel</h1>
+
+    <mat-form-field appearance="fill"  matTooltip="Please enter the starting timestamp">
+        <mat-label>From</mat-label>
+        <input value ="" matInput required (change)="valueChange()" ngModel #url="ngModel"  [(ngModel)] ="timeStamp1"/>
+      </mat-form-field>
+
+    <mat-form-field appearance="fill"  matTooltip="Please enter the goal timestamp">
+        <mat-label>To</mat-label>
+        <input value ="" matInput required (change)="valueChange()" ngModel #url="ngModel"  [(ngModel)] ="timeStamp2"/>
+      </mat-form-field>
+
+    <br><br>
+    <button mat-raised-button color="primary" style="float: left; bottom: 20pt" (click)="timeTravel()">
+        Go!
+    </button>
+    <br><br>
+
+    <div class="newlines">
+        {{ outputInfo }}
+    </div>
+</div>

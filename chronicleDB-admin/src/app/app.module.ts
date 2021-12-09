@@ -50,6 +50,7 @@ import { CreateStreamComponent } from './page-create-stream/create-stream/create
 import { StreamEventPropertyComponent } from './page-create-stream/card-stream-event-properties/stream-event-property.component';
 import { EventgeneratorComponent } from './page-create-stream/card-stream-event-properties/eventgenerator/eventgenerator.component';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { TimeTravelComponent } from './time-travel/time-travel.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     StreamListComponent,
     UploadDataComponent,
     ShowRightFlankComponent,
-    CreateStreamComponent
+    CreateStreamComponent,
+    TimeTravelComponent
   ],
   imports: [
     BrowserModule,

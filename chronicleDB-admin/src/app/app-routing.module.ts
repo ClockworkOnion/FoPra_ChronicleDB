@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { InsertDataTabMenuComponent } from './page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
 import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
 import { CreateStreamComponent } from './page-create-stream/create-stream/create-stream.component';
+import { TimeTravelComponent } from './time-travel/time-travel.component';
 
 const routes: Routes = [
   {path:"home",component:DashboardComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   // {path:"insertData",component:InsertDataTabMenuComponent},
   {path:"systemInfo",component:SystemInfoComponent},
   {path:"show_right_flank", component:ShowRightFlankComponent},
+  {path:"time_travel", component:TimeTravelComponent},
   {path:"create_stream", component:CreateStreamComponent},
   {path: '**', redirectTo: 'home'} // als letztes wird alles andere zu home weitergeleitet...
   
