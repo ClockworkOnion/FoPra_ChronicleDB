@@ -41,7 +41,7 @@ export class ShowRightFlankComponent implements OnInit {
       this.outputInfo += "Brother left: " + brotherLeft + "\nBrother right: " + brotherRight + "\n";
       // Output Index, Timestamp and Payload
       for (let i = 0; i < json[this.selectedStream.id].node_variant.ValueNode.data_array.length; i++) { // iterate through data array
-        for (let e = 0; e < this.selectedStream.event!.length; e++) {
+        for (let e = 0; e < this.selectedStream.event!.length; e++) { // iterate through events inside data node
           this.outputInfo += "\n Index: " + i
             + " Timestamp: " + this.getTimeStampFromJSON(json, this.selectedStream.id, i)
             + " Payload: " + this.getPayloadFromJSON(json, this.selectedStream.id, i, this.getPayloadTypeFromEvent(this.selectedStream.id, e), e) 
@@ -71,18 +71,20 @@ export class ShowRightFlankComponent implements OnInit {
     console.log("Payload (stream 0, event 0) nach Methode: "+ this.getPayloadTypeFromEvent(0,0)); 
   }
 
-  getPayloadFromJSON(json: any, streamNo: number, ValueNodeNo: number, payloadType: string, eventNo?: number) : string {
+  getPayloadFromJSON(json: any, streamNo: number, ValueNodeNo: number, payloadType: string, eventNo: number) : string {
     // (Var)Compound Types:
-    if (typeof eventNo != 'undefined') {
-        if (this.selectedStream.compoundType == EventCompoundType.varCompound) {
-          return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.VarCompound[eventNo][this.getPayloadTypeFromEvent(this.selectedStream.id, eventNo)];
-        } else { // must be compound then
-          return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.Compound[eventNo][this.getPayloadTypeFromEvent(this.selectedStream.id, eventNo)];
-        } // TODO: Refactor by inserting Compound Type as String? .payload[compoundType][eventNo] ...?
-    }
+    if (this.selectedStream.compoundType == EventCompoundType.varCompound) {
+      return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.VarCompound[eventNo][this.getPayloadTypeFromEvent(this.selectedStream.id, eventNo)];
+    } 
+    if (this.selectedStream.compoundType == EventCompoundType.compound) {
+      return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.Compound[eventNo][this.getPayloadTypeFromEvent(this.selectedStream.id, eventNo)];
+    }  // TODO (maybe): Refactor to single if-Statement by getting Compound or VarCompound as string and using that as JSONarray index
 
     // Single Type:
-    return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload[payloadType];
+    if (this.selectedStream.compoundType == EventCompoundType.single) {
+      return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload[payloadType];
+    }
+    return "No data retrieved!";
   }
 
   getTimeStampFromJSON(json: any, streamNo: number, ValueNodeNo: number) : string {
