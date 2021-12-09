@@ -38,12 +38,8 @@
         </button>
         <button mat-menu-item (click)="recover(stream.id)" [disabled]="stream.online">
           <mat-icon>restore</mat-icon>
-          <span>Recover Stream</span>
+          <span>*CAUTION* Recover Stream</span>
         </button>
-
-
-
-
       </mat-menu>
       
       <mat-menu #keys="matMenu">
@@ -57,5 +53,7 @@
     </ng-container>
   </div>
 </div>
+<div id="output"></div>
+
 
   
