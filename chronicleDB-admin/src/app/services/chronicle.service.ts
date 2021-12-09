@@ -135,5 +135,9 @@ export class ChronicleService {
     return   await this.http.get(this.url +"min_key/"+id,{responseType:"text"}).toPromise();
 
   }
+  async getTreeHeight(id:number){
+    return   await this.http.get(this.url +"tree_height/"+id,{responseType:"text"}).toPromise();
+
+  }
 
 }

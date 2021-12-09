@@ -20,6 +20,12 @@
           <mat-icon>key</mat-icon>
           <span>Get Key </span>
         </button>
+
+        <button mat-menu-item (click)="showTreeHeight(stream.id)" [disabled]="!stream.online">
+          <mat-icon>height</mat-icon>
+          <span>Get Tree Height</span>
+        </button>   
+
         <button mat-menu-item  (click)="showInfo(stream.id)" [disabled]="!stream.online">
           <mat-icon>info</mat-icon>
           <span>Stream Info</span>

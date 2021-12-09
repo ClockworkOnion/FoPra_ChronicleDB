@@ -69,6 +69,12 @@ export class StreamListComponent implements OnInit {
     
    //output!.innerHTML = res;
   }
+
+  async showTreeHeight(id:number){
+    console.log( await this.chronicleService.getTreeHeight(id))
+
+
+  }
  
 }
 
