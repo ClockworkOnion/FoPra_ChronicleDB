@@ -42,3 +42,7 @@
   .mat-toolbar{
     background-color: #23396e;
   }
+
+  table {
+    width: 100%;
+  }

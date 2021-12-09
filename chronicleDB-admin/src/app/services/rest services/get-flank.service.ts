@@ -58,6 +58,7 @@ export class GetFlankService {
     if (this.currentStream.compoundType == EventCompoundType.compound) {
       return json[streamNo].node_variant.ValueNode.data_array[ValueNodeNo].payload.Compound[eventNo][this.getPayloadTypeFromEvent(this.currentStream.id, eventNo)];
     }  // TODO (maybe): Refactor to single if-Statement by getting Compound or VarCompound as string and using that as JSONarray index
+    // TODO replace streamNo with 0 because it's always 0
 
     // Single Type:
     if (this.currentStream.compoundType == EventCompoundType.single) {

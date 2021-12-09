@@ -51,6 +51,7 @@ import { StreamEventPropertyComponent } from './page-create-stream/card-stream-e
 import { EventgeneratorComponent } from './page-create-stream/card-stream-event-properties/eventgenerator/eventgenerator.component';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TimeTravelComponent } from './time-travel/time-travel.component';
+import { MatTableModule } from '@angular/material/table'
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { TimeTravelComponent } from './time-travel/time-travel.component';
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
+    MatTableModule,
     MatExpansionModule,
     MatSnackBarModule,
     MatTabsModule,
