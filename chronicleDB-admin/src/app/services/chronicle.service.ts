@@ -63,7 +63,7 @@ export class ChronicleService {
   //from snapshot (still needs to pass down a body for correct implementation)
   recoverStream(id:number){
     this.http.get(this.url +"recover_stream_snapshot/" +id,{responseType:"text"}).subscribe(response =>{
-      console.log("Sucessfully recovered Stream: " + id);
+      console.log("Sucessfully recovered Stream: " + id +" " + response);
       this.getStreamsFromChronicle();
     })
 
