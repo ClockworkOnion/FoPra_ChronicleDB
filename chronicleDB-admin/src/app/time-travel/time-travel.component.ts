@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ChronicleStream } from '../model/ChronicleStream';
 import { ChronicleService } from '../services/chronicle.service';
 import { GetFlankService } from '../services/rest services/get-flank.service';
@@ -16,19 +17,26 @@ export class TimeTravelComponent implements OnInit {
   outputInfo : string = "Awaiting data..."
   flankInfo : any;
   private currentStream!: ChronicleStream|null;
+  toggleControl = new FormControl(false);
+  useInclusive : boolean = false;
 
   constructor(private chronicleService: ChronicleService, private snackBar: SnackBarService, private flankService: GetFlankService) {
     this.chronicleService.selectedStream$.subscribe(stream => {
       this.currentStream = stream;      
     });
   }
-  ngOnInit(): void {
+  ngOnInit():void{
+    this.toggleControl.valueChanges.subscribe(val =>{
+      console.log("Toggled useInclusive to " + val);
+      this.useInclusive = val;
+    })
   }
 
   timeTravel(){
     this.snackBar.openSnackBar("Travelling from t" + this.timeStamp1 + " to t" + this.timeStamp2);
     console.log("Travelling from t" + this.timeStamp1 + " to t" + this.timeStamp2);
-    let requestBody = '{"Exclusive":{"start":'+this.timeStamp1+',"end":'+this.timeStamp2+'}}';
+    let inOrEx : string = this.useInclusive ? "Inclusive" : "Exclusive";
+    let requestBody = '{"'+inOrEx+'":{"start":'+this.timeStamp1+',"end":'+this.timeStamp2+'}}';
     this.doTimeTravel(requestBody);
   }
 
