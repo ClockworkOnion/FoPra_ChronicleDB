@@ -2,7 +2,12 @@
     <div>
         <mat-form-field appearance="fill">
             <mat-label>Timestamp</mat-label>
-            <input [(ngModel)]="timestamp" type="number"  min="0" matInput required pattern="\d+" matTooltip="Define the timestamp needed for the event in ChronicleDB."/>
+            <input [formControl]="timestampFormControl" type="number" matInput min = 0 matTooltip="Define the timestamp needed for the event in ChronicleDB."/>
+            <mat-error>{{timestampFormControl.errors?.error}}</mat-error>
+            <mat-error *ngIf="timestampFormControl.errors?.required">Timestamp required</mat-error>
+            <mat-error *ngIf="timestampFormControl.errors?.pattern">Timestamp is no valid number</mat-error>
+            <mat-error *ngIf="timestampFormControl.errors?.min">Timestamp is no valid number</mat-error>
+            <mat-error *ngIf="timestampFormControl.errors?.chronicleMaxIndex">Timestamp must be larger than {{timestampFormControl.errors?.chronicleMaxIndex}}</mat-error>
         </mat-form-field>
     </div>
     

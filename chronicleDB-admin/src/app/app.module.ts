@@ -52,6 +52,7 @@ import { EventgeneratorComponent } from './page-create-stream/card-stream-event-
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TimeTravelComponent } from './time-travel/time-travel.component';
 import { MatTableModule } from '@angular/material/table'
+import { IDValidators } from './page-insert-data/insert-data-manually/id.validators';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,7 @@ import { MatTableModule } from '@angular/material/table'
     MatDialogModule
 
   ],
-  providers: [ChronicleService, CreateStreamService, InsertDataService],
+  providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
