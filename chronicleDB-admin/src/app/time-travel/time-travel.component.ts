@@ -1,10 +1,13 @@
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
+import { EventCompoundType } from '../model/ChronicleEvent';
 import { ChronicleStream } from '../model/ChronicleStream';
 import { ChronicleService } from '../services/chronicle.service';
 import { GetFlankService } from '../services/rest services/get-flank.service';
 import { SnackBarService } from '../services/snack-bar.service';
+import { PipeTransform, Pipe } from '@angular/core';
 
 @Component({
   selector: 'app-time-travel',
@@ -14,13 +17,15 @@ import { SnackBarService } from '../services/snack-bar.service';
 export class TimeTravelComponent implements OnInit {
 
   @ViewChild(MatTable) datatable!: MatTable<any>;
+  columnNames : string[] = [] // table headers
+  dataSource : any[] = []; // table row data
 
-  timeStamp1 : number = 0;
-  timeStamp2 : number = 50;
-  outputInfo : string = "Awaiting data..."
-  flankInfo : any;
+  timeStamp1 : number = 0; // timeTravel lower bound
+  timeStamp2 : number = 50; // timeTravel upper bound
+  outputInfo : string = "Awaiting data..." // string to be displayed inside HTML
+  flankInfo : any; // for saving the REST HTTP response
   private currentStream!: ChronicleStream|null;
-  toggleControl = new FormControl(false);
+  toggleInclusive = new FormControl(false);
   useInclusive : boolean = false;
 
   constructor(private chronicleService: ChronicleService, private snackBar: SnackBarService, private flankService: GetFlankService) {
@@ -28,8 +33,9 @@ export class TimeTravelComponent implements OnInit {
       this.currentStream = stream;      
     });
   }
+
   ngOnInit():void{
-    this.toggleControl.valueChanges.subscribe(val =>{
+    this.toggleInclusive.valueChanges.subscribe(val =>{
       console.log("Toggled useInclusive to " + val);
       this.useInclusive = val;
     })
@@ -55,108 +61,72 @@ export class TimeTravelComponent implements OnInit {
         this.flankInfo = response;
         let json = JSON.parse(this.flankInfo);
 
-        console.log(response);
+        console.log("Response as text: " + response);
         console.log(json);
-        this.outputInfo = "Received: \n" + this.makeResponsePretty(response) + " ...";
-        console.log("JSON Drill\n");
 
-        let payloadTypes : string[] = ["I8", "U8", "U16", "I16", "U32", "I32", "F32", "U64", "Compound"]; // Types to check for
-        let typesToDisplay = new Set<string>(); // Remember which types have been seen
-        let displayRows : tableRow[] = [];
+        this.outputInfo = "Response:\n"
+        if (this.currentStream?.compoundType != EventCompoundType.single) { // Compound or VarCompound cases
+          let comptype : string = "Compound"
+          if (this.currentStream?.compoundType == EventCompoundType.varCompound) {
+            comptype = "VarCompound";
+          }
 
-        for (let i = 0; i < json.length; i++) {
-          console.log(json[i].t1);
-          let newRow : tableRow = new tableRow();
+          this.createColumnHeaders(json, comptype);
 
-          payloadTypes.forEach(t => {
-            if (json[i].payload[t] != undefined && t != "Compound") {
-              console.log(t + " found!");
-              typesToDisplay.add(t);
-              newRow.timestamp = json[i].t1;
-              switch (t) {
-                case "I8":
-                  newRow.i8 = json[i].payload[t];
-                  console.log("Added " + json[i].payload[t] + " into new row");
-                  break;
-                case "I16":
-                  newRow.i16 = json[i].payload[t];
-                  break;
-                case "F32":
-                  newRow.f32 = json[i].payload[t];
-                  break;
-                case "Compound":
-                  // TODO !!
-                  break;
-              
-                default:
-                  break;
+          // Loop through JSON to create the output string
+          for (let ts = 0; ts < json.length; ts++) { // Outer loop -- timestamps
+            this.outputInfo += "Timestamp: " + json[ts].t1 + "\n"; // STRING: prepend timestamp
+
+            let obj : any = {}; // TABLES : prepare empty object to fill
+            obj["Timestamp"] = json[ts].t1; // TABLE : Insert timestamp
+
+            for (let i = 0; i < json[ts].payload[comptype].length; i++) { // Inner loop -- compound data
+              this.outputInfo += this.getValuePairsFromJSON(json[ts].payload[comptype][i]);
+              for (var key in json[ts].payload[comptype][i]) { // TABLE: Create object for table
+                obj[key] = json[ts].payload[comptype][i][key];
               }
             }
-          });
+            this.dataSource.push(obj); // TABLE : Push the object to datasource
+            this.outputInfo += "\n"
+          }
 
-          displayRows.push(newRow);
+        } else { //  cases where Compound type is single
+          for (let ts = 0; ts < json.length; ts++) { // Outer loop -- timestamps
+            this.outputInfo += "Timestamp: " + json[ts].t1 + "\n";
+            for (let i = 0; i < json[0].payload.length; i++) { // Inner loop -- compound data
+              this.outputInfo += this.getValuePairsFromJSON(json[ts].payload[i]);
+            }
+            this.outputInfo += "\n"
+          }
+          // TODO: Table display for non-compound
         }
-
-        this.tableTest2(displayRows, typesToDisplay);
-        
+        this.datatable.renderRows();
       });
   }
 
-  makeResponsePretty(r: string) {
-    let pretty: string = r;
-    pretty = pretty.substring(1, pretty.length-1);
-    pretty =  pretty.replace(/,/g, "\n");
-    pretty =  pretty.replace(/t/g, "T");
-    pretty =  pretty.replace(/}}/g, "\n");
-    pretty =  pretty.replace(/{/g, "");
-    pretty =  pretty.replace(/"/g, "");
-    pretty =  pretty.replace(/:/g, " : ");
-    pretty =  pretty.replace(/payload/g, "Payload Type/Value");
-    return pretty;
+  createColumnHeaders(json : any, comptype : string) {
+          this.columnNames.push("Timestamp");
+          for (let l = 0; l < json[0].payload[comptype].length; l++) {
+            for (var key in json[0].payload[comptype][l]) {
+              if (!this.columnNames.includes(key)) {
+                this.columnNames.push(key);
+              }
+            }
+          }
+  }
+
+  getValuePairsFromJSON(obj: any) : string {
+    let returnString : string = "";
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        returnString +=  key + " : " + obj[key] + "\n";
+      }
+    }
+    return returnString;
   }
 
   valueChange() {
     console.log("Timestamp changed");
   }
-
-  dataSource : tableRow[] = [
-    {timestamp:"1", value:"23", type:"I8"},
-    {timestamp:"2", value:"43", type:"I8"},
-    {timestamp:"4", value:"63", type:"I8"},
-  ];
-
-  testData : tableRow[] = [
-    {timestamp:"2", value:"2", type:"I8"},
-    {timestamp:"4", value:"433", type:"I8"},
-    {timestamp:"6", value:"634", type:"I8"},
-  ];
-
-  columnNames : string[] = ['timestamp', 'value', 'type', 'type'];
-
-  tableTest() {
-    this.columnNames = ['timestamp', 'value', 'type', 'type']
-    this.datatable.renderRows();
-  }
-
-  tableTest2(rows : tableRow[], types : Set<string>) {
-    this.dataSource = rows;
-    this.columnNames = ["timestamp"]
-    types.forEach(t => {
-      this.columnNames.push(t);
-    });
-    this.datatable.renderRows();
-  }
-
 }
 
-export class tableRow {
-
-  "timestamp" : string;
-  type? : string;
-  value?: string;
-  i8?: string;
-  i16?: string;
-  f32?: string;
-  f64?: string;
-  // etc etc (TODO)
-}
