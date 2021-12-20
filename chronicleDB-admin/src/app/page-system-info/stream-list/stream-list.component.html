@@ -34,7 +34,7 @@
           <mat-icon>visibility</mat-icon>
           <span>Show right Flank</span>
         </button>
-        <button mat-menu-item disabled>
+        <button mat-menu-item disabled (click)="timeTravel(stream)" [disabled]="!stream.online">
           <mat-icon>analytics</mat-icon>
           <span>Query Time travel</span>
         </button>

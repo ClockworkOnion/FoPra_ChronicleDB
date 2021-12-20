@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { DialogService } from 'src/app/services/dialog.service';
 import { InsertDataTabMenuComponent } from 'src/app/page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
+import { TimeTravelComponent } from 'src/app/time-travel/time-travel.component';
 
 @Component({
   selector: 'app-stream-list',
@@ -55,6 +56,11 @@ export class StreamListComponent implements OnInit {
   insertData(stream: ChronicleStream) {
     this.chronicleService.selectStream(stream);
     this.dialog.openDialog(InsertDataTabMenuComponent, {maxHeight: "600px"});
+  }
+
+  timeTravel(stream: ChronicleStream) {
+    this.chronicleService.selectStream(stream);
+    this.dialog.openDialog(TimeTravelComponent, {maxHeight: "800px"});
   }
 
  async showMaxKey(id:number){

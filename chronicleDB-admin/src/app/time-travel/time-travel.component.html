@@ -1,5 +1,11 @@
 <div class="padded">
-    <h1>Time Travel</h1>
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>Query Time Travel</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="card-content">
+
 
     <mat-form-field appearance="fill"  matTooltip="Please enter the starting timestamp">
         <mat-label>From</mat-label>
@@ -37,4 +43,7 @@
         <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
         <tr mat-row *matRowDef="let row; columns: columnNames;"></tr>
         </table>
+
+        </mat-card-content>
+    </mat-card>
 </div>
