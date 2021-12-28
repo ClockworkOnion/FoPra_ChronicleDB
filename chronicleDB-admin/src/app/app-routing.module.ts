@@ -10,9 +10,10 @@ import { PageLoginComponent } from './page-login/page-login.component';
 import { NoAccessComponent } from './no-access/no-access.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
 import { CreateAuthGuard } from './services/guards/create-auth-guard.service';
+import { MasterGuard } from './services/guards/master-guard.service';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: '', component: DashboardComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard]} },
   { path: 'login', component: PageLoginComponent },
   { path: 'no-access', component: NoAccessComponent },
   { path: 'settings', component: TabMenuComponent },
@@ -20,7 +21,7 @@ const routes: Routes = [
   { path: 'systemInfo', component: SystemInfoComponent },
   { path: 'show_right_flank', component: ShowRightFlankComponent },
   { path: 'time_travel', component: TimeTravelComponent },
-  { path: 'create_stream', component: CreateStreamComponent, canActivate: [AuthGuard, CreateAuthGuard] },
+  { path: 'create_stream', component: CreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, CreateAuthGuard]} },
   { path: '**', redirectTo: '' }, // als letztes wird alles andere zu home weitergeleitet...
 ];
 

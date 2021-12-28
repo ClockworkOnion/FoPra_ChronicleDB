@@ -119,7 +119,7 @@ import { NoAccessComponent } from './no-access/no-access.component';
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
   
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // Logout bei HTML Fehler...
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
     // provider used to create fake backend

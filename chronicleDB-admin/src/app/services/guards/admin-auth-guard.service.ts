@@ -12,14 +12,14 @@ export class AdminAuthGuard implements CanActivate {
     private authService: AuthService
   ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Promise<boolean> {
     // Wenn Nutzer nicht eingeloggt haben wir hier ein Problem, aber wir testen in app module erst, ob eingeloggt
     // besser aber trotzdem ein Test
     let user = this.authService.currentUser;
-    if (user && user.admin) return true;
+    if (user && user.admin) return Promise.resolve(true);
 
     this.router.navigate(['/no-access']);
-    return false;
+    return Promise.reject(false);
   }
 
 }

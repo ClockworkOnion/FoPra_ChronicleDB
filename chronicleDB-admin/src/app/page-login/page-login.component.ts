@@ -28,8 +28,4 @@ export class PageLoginComponent {
           this.invalidLogin = true; 
       });
   }
-
-  logout() {
-    this.authService.logout();
-  }
 }
