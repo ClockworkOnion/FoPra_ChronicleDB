@@ -1,7 +1,6 @@
 import { HttpClient} from '@angular/common/http';
 import { Injectable} from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { EventCompoundType, EventElementSingleOrList, EventElementSubtype, EventElementType } from '../model/ChronicleEvent';
+import { BehaviorSubject } from 'rxjs';
 import { ChronicleStream } from '../model/ChronicleStream';
 import { EventParser } from './event-parser';
 import { SnackBarService } from './snack-bar.service';
@@ -16,9 +15,13 @@ export class ChronicleService {
   private selectedStream = new BehaviorSubject<ChronicleStream|null>(null);
   selectedStream$ = this.selectedStream.asObservable();
 
+  private streamList : Array<ChronicleStream>=[];
   private streamListBS = new BehaviorSubject<ChronicleStream[]|null>(null);
   currentStreamList = this.streamListBS.asObservable();
-  private streamList : Array<ChronicleStream>=[];
+
+  get snapshot() {
+    return this.streamList;
+  }
 
   constructor(private http: HttpClient, private snackBar: SnackBarService) {}
 
@@ -127,17 +130,18 @@ export class ChronicleService {
     console.log(response);
     this.streamListBS.next(this.streamList);
   }
+
   async getMaxKey(id :number){
    return   await this.http.get(this.url +"max_key/"+id,{responseType:"text"}).toPromise();
 
   }
+
   async getMinKey(id:number){
     return   await this.http.get(this.url +"min_key/"+id,{responseType:"text"}).toPromise();
-
   }
+
   async getTreeHeight(id:number){
     return   await this.http.get(this.url +"tree_height/"+id,{responseType:"text"}).toPromise();
-
   }
 
 }
