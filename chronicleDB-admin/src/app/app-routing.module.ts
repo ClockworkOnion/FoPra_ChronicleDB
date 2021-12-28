@@ -3,7 +3,6 @@ import { TabMenuComponent } from './components/tab-menu/tab-menu.component';
 import { DashboardComponent } from './page-home/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InsertDataTabMenuComponent } from './page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
 import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
 import { CreateStreamComponent } from './page-create-stream/create-stream/create-stream.component';
 import { TimeTravelComponent } from './time-travel/time-travel.component';

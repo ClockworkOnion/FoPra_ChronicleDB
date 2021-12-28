@@ -27,7 +27,7 @@ import { GeneralStreamComponent } from './page-home/card-general-stream/general-
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { ChronicleService } from './services/chronicle.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -53,6 +53,10 @@ import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TimeTravelComponent } from './time-travel/time-travel.component';
 import { MatTableModule } from '@angular/material/table'
 import { IDValidators } from './page-insert-data/insert-data-manually/id.validators';
+import { PageLoginComponent } from './page-login/page-login.component';
+import { ErrorInterceptor } from './backend/error.interceptor';
+import { fakeBackendProvider } from './backend/fake-backend';
+import { JwtInterceptor } from './backend';
 
 @NgModule({
   declarations: [
@@ -74,7 +78,8 @@ import { IDValidators } from './page-insert-data/insert-data-manually/id.validat
     UploadDataComponent,
     ShowRightFlankComponent,
     CreateStreamComponent,
-    TimeTravelComponent
+    TimeTravelComponent,
+    PageLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +115,14 @@ import { IDValidators } from './page-insert-data/insert-data-manually/id.validat
     MatDialogModule
 
   ],
-  providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators],
+  providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
+  
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+    // provider used to create fake backend
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
