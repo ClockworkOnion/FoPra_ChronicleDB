@@ -5,32 +5,32 @@ import { Observable } from 'rxjs';
 import { LoginCredentials } from '../model/LoginCredentials';
 import { map } from 'rxjs/operators';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {
-  }
-
-  login(credentials: LoginCredentials) : Observable<boolean> {    
-   return this.http.post<string>('/users/authenticate', JSON.stringify(credentials))
-      .pipe(map(response => {
-        if (response) {
-          localStorage.setItem("token", response);
-          return true;
-        } else {
-          return false;
-        }
-      }));
+  login(credentials: LoginCredentials): Observable<boolean> {
+    return this.http
+      .post<string>('/users/authenticate', JSON.stringify(credentials))
+      .pipe(
+        map((response) => {
+          if (response) {
+            localStorage.setItem('token', response);
+            return true;
+          } else {
+            return false;
+          }
+        })
+      );
   }
 
   logout() {
     localStorage.removeItem('token');
   }
 
-  isLoggedIn() { 
+  isLoggedIn() {
     let jwtHelper = new JwtHelperService();
     let token = localStorage.getItem('token');
 

@@ -6,16 +6,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
 import { CreateStreamComponent } from './page-create-stream/create-stream/create-stream.component';
 import { TimeTravelComponent } from './time-travel/time-travel.component';
+import { PageLoginComponent } from './page-login/page-login.component';
 
 const routes: Routes = [
-  {path:"home",component:DashboardComponent},
+  {path:"",component:DashboardComponent},
+  {path:"login",component:PageLoginComponent},
   {path:"settings",component:TabMenuComponent},
   // {path:"insertData",component:InsertDataTabMenuComponent},
   {path:"systemInfo",component:SystemInfoComponent},
   {path:"show_right_flank", component:ShowRightFlankComponent},
   {path:"time_travel", component:TimeTravelComponent},
   {path:"create_stream", component:CreateStreamComponent},
-  {path: '**', redirectTo: 'home'} // als letztes wird alles andere zu home weitergeleitet...
+  {path: '**', redirectTo: ''} // als letztes wird alles andere zu home weitergeleitet...
   
 ];
 
