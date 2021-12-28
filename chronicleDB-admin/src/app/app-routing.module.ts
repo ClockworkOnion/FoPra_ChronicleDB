@@ -7,22 +7,25 @@ import { ShowRightFlankComponent } from './components/show-right-flank/show-righ
 import { CreateStreamComponent } from './page-create-stream/create-stream/create-stream.component';
 import { TimeTravelComponent } from './time-travel/time-travel.component';
 import { PageLoginComponent } from './page-login/page-login.component';
+import { NoAccessComponent } from './no-access/no-access.component';
+import { AuthGuard } from './services/guards/auth-guard.service';
+import { CreateAuthGuard } from './services/guards/create-auth-guard.service';
 
 const routes: Routes = [
-  {path:"",component:DashboardComponent},
-  {path:"login",component:PageLoginComponent},
-  {path:"settings",component:TabMenuComponent},
+  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: PageLoginComponent },
+  { path: 'no-access', component: NoAccessComponent },
+  { path: 'settings', component: TabMenuComponent },
   // {path:"insertData",component:InsertDataTabMenuComponent},
-  {path:"systemInfo",component:SystemInfoComponent},
-  {path:"show_right_flank", component:ShowRightFlankComponent},
-  {path:"time_travel", component:TimeTravelComponent},
-  {path:"create_stream", component:CreateStreamComponent},
-  {path: '**', redirectTo: ''} // als letztes wird alles andere zu home weitergeleitet...
-  
+  { path: 'systemInfo', component: SystemInfoComponent },
+  { path: 'show_right_flank', component: ShowRightFlankComponent },
+  { path: 'time_travel', component: TimeTravelComponent },
+  { path: 'create_stream', component: CreateStreamComponent, canActivate: [AuthGuard, CreateAuthGuard] },
+  { path: '**', redirectTo: '' }, // als letztes wird alles andere zu home weitergeleitet...
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

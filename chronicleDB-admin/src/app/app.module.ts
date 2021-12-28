@@ -57,6 +57,7 @@ import { PageLoginComponent } from './page-login/page-login.component';
 import { ErrorInterceptor } from './backend/error.interceptor';
 import { fakeBackendProvider } from './backend/fake-backend';
 import { JwtInterceptor } from './backend';
+import { NoAccessComponent } from './no-access/no-access.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { JwtInterceptor } from './backend';
     ShowRightFlankComponent,
     CreateStreamComponent,
     TimeTravelComponent,
-    PageLoginComponent
+    PageLoginComponent,
+    NoAccessComponent
   ],
   imports: [
     BrowserModule,

@@ -23,6 +23,17 @@ export class UserAuthenticator {
         allStreams: true,
       },
     ],
+    [
+      'User',
+      {
+        username: 'User',
+        password: '1234',
+        isAdmin: false,
+        canCreateStreams: false,
+        allStreams: false,
+        allowedStreams: [0, 1]
+      },
+    ],
   ]);
 
   constructor() {}
