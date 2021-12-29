@@ -11,6 +11,7 @@ import { SnackBarService } from './snack-bar.service';
 })
 export class ChronicleService {
   private url!: string;
+  isUrlReachable : boolean = true;
 
   private selectedStream = new BehaviorSubject<ChronicleStream|null>(null);
   selectedStream$ = this.selectedStream.asObservable();
@@ -23,18 +24,21 @@ export class ChronicleService {
     return this.streamList;
   }
 
-  constructor(private http: HttpClient, private snackBar: SnackBarService) {}
+  constructor(private http: HttpClient, private snackBar: SnackBarService) {
+    this.url = localStorage.getItem("serverUrl") || "";
+  }
 
-  getHttp(){
+  getHttp() : HttpClient {
     return this.http;
   }
 
-  getUrl() {
+  getUrl() : string {
     return this.url;
   }
 
   setUrl(url: string) {
     this.url = url;
+    localStorage.setItem("serverUrl", url);
   }
 
   existsStream(): boolean {
@@ -75,6 +79,9 @@ export class ChronicleService {
   getStreamsFromChronicle(){
     this.http.get(this.url + "show_streams", {responseType: "json"}).subscribe(response => {
 
+      // Update ob URL richtig
+      this.isUrlReachable = true;
+
       // reset current data
       this.streamList = new Array<ChronicleStream>((response as any).length);
       this.selectedStream.next(null);
@@ -108,6 +115,13 @@ export class ChronicleService {
       
       this.saveUpdatedStreamList(JSON.stringify(this.streamList));
       return response;
+    }, error => {
+      if (error.statusText === "Unknown Error") {
+        // Update ob URL richtig
+        this.isUrlReachable = false;
+        console.log(error);
+      }
+      
     });
   }
 

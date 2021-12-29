@@ -18,9 +18,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                 console.log("Logout erzwungen, da Fehler!");
             }
 
-            const error = err.error?.message || err.statusText;
+            // const error = err.error?.message || err.statusText;
             console.error(err);
-            return throwError(error);
+            return throwError(err);
         }))
     }
 }
