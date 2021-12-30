@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { LoginCredentials } from '../model/LoginCredentials';
 import * as CryptoJS from 'crypto-js';
+import { User } from '../model/User';
 
 interface UserBackend {
   username: string;
   password: string;
   isAdmin: boolean;
   canCreateStreams: boolean;
-  allStreams: boolean;
+  allStreamsAllowed: boolean;
   allowedStreams?: Array<number>;
 }
 
@@ -20,7 +21,7 @@ export class UserAuthenticator {
         password: '1234',
         isAdmin: true,
         canCreateStreams: true,
-        allStreams: true,
+        allStreamsAllowed: true,
       },
     ],
     [
@@ -30,8 +31,8 @@ export class UserAuthenticator {
         password: '1234',
         isAdmin: false,
         canCreateStreams: false,
-        allStreams: false,
-        allowedStreams: [0, 1]
+        allStreamsAllowed: false,
+        allowedStreams: [0, 2, 4, 5]
       },
     ],
   ]);
@@ -46,11 +47,12 @@ export class UserAuthenticator {
   public static authenticate(credentials: LoginCredentials) {
     let user = UserAuthenticator.userMap.get(credentials.username);
     if (user && user?.password === credentials.password) {
-      let payload = {
+      
+      let payload : User = {
         username: user.username,
         isAdmin: user.isAdmin,
         canCreateStreams: user.canCreateStreams,
-        allStreams: user.allStreams,
+        allStreamsAllowed: user.allStreamsAllowed,
         allowedStreams: user.allowedStreams
       };
 

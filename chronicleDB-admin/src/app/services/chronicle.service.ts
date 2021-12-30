@@ -2,6 +2,7 @@ import { HttpClient} from '@angular/common/http';
 import { Injectable} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ChronicleStream } from '../model/ChronicleStream';
+import { AuthService } from './auth.service';
 import { EventParser } from './event-parser';
 import { SnackBarService } from './snack-bar.service';
 
@@ -24,7 +25,7 @@ export class ChronicleService {
     return this.streamList;
   }
 
-  constructor(private http: HttpClient, private snackBar: SnackBarService) {
+  constructor(private http: HttpClient, private snackBar: SnackBarService, private authService : AuthService) {
     this.url = localStorage.getItem("serverUrl") || "";
   }
 
@@ -83,11 +84,15 @@ export class ChronicleService {
       this.isUrlReachable = true;
 
       // reset current data
-      this.streamList = new Array<ChronicleStream>((response as any).length);
+      this.streamList = new Array<ChronicleStream>();
       this.selectedStream.next(null);
 
       // refill data
       for (let index = 0; index < (response as any).length; index++) {
+        if (!this.authService.canUserAccessStream(index)) {
+          continue;
+        }
+
         const stream = (response as any)[index];
         
         if(stream[1]=="Online"){
@@ -99,7 +104,8 @@ export class ChronicleService {
               online: true
             }
 
-            this.streamList[index] = newStream;
+            this.streamList.push(newStream);
+            this.streamList.sort((a, b) => a.id - b.id);  // sortieren nach id, da offline früher eingefügt wird als online, da HTTP
             this.streamListBS.next(this.streamList);
             this.selectedStream.next(newStream); // put most recent stream as selected
           });
@@ -108,7 +114,7 @@ export class ChronicleService {
             id:parseInt(stream[0]),
             online: false
           }
-          this.streamList[index]=newStream;
+          this.streamList.push(newStream);
           this.streamListBS.next(this.streamList);
         }
       }

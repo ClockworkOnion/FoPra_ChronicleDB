@@ -2,6 +2,6 @@ export interface User {
   username: string;
   isAdmin: boolean;
   canCreateStreams: boolean;
-  allStreams: boolean;
+  allStreamsAllowed: boolean;
   allowedStreams?: Array<number>;
 }

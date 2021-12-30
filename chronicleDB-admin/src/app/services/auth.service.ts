@@ -58,4 +58,8 @@ export class AuthService {
   canUserCreateStreams() : boolean {
     return this.currentUser?.canCreateStreams || false;
   }
+
+  canUserAccessStream(id : number) {
+    return this.currentUser?.allStreamsAllowed || this.currentUser?.allowedStreams?.includes(id) || false;
+  }
 }
