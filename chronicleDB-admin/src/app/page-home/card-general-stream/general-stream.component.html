@@ -1,13 +1,14 @@
 <div>
-    <mat-form-field appearance="fill" class="urlInput" matTooltip="Insert the URL of ChronicleDB.">
-      <mat-label>ChronicleDB Server URL</mat-label>
-      <input matInput (change)="updateURL(chronicleUrl.value)"  [formControl] ="chronicleUrl" type="url"/>
-    </mat-form-field>
-    <span *ngIf="!chronicleService.isUrlReachable" style="margin: 8px; color: orangered;">URL not reachable!</span>
-    <!-- <mat-label class="shadowLabel" matTooltip="Displays the currently selected Stream.">{{ currentStreamText }}</mat-label> -->
-    <button mat-raised-button color="primary" style="float: right; top: 8px;" [routerLink]="['/create_stream']" >
-      Create A New Stream
-    </button>
+  <mat-form-field appearance="fill" class="urlInput" matTooltip="Insert the URL of ChronicleDB.">
+    <mat-label>ChronicleDB Server URL</mat-label>
+    <input matInput (change)="updateURL(chronicleUrl.value)" [formControl]="chronicleUrl" type="url" />
+  </mat-form-field>
+  <span *ngIf="!chronicleService.isUrlReachable" style="margin: 8px; color: orangered">URL not reachable!</span>
+  <!-- <mat-label class="shadowLabel" matTooltip="Displays the currently selected Stream.">{{ currentStreamText }}</mat-label> -->
+  <button *ngIf="authService.canUserCreateStreams()" mat-raised-button color="primary" style="float: right; top: 8px"
+    [routerLink]="['/create_stream']">
+    Create A New Stream
+  </button>
 </div>
 
 <!-- Anzeige des CreateStream Body

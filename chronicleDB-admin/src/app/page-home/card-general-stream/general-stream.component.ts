@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { CreateStreamService } from 'src/app/services/rest services/create-stream.service';
 
@@ -20,7 +21,8 @@ export class GeneralStreamComponent implements OnInit {
 
   constructor(
     public chronicleService: ChronicleService,
-    private createService: CreateStreamService
+    private createService: CreateStreamService,
+    public authService: AuthService
   ) { }
 
   updateURL(url: string) {

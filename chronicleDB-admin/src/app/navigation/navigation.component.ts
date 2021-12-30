@@ -8,28 +8,26 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css']
+  styleUrls: ['./navigation.component.css'],
 })
 export class NavigationComponent {
-
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
     .pipe(
-      map(result => result.matches),
+      map((result) => result.matches),
       shareReplay()
     );
-    @HostBinding('class') className = '';
+  @HostBinding('class') className = '';
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    public authService: AuthService
+  ) {}
   toggleControl = new FormControl(false);
 
-  ngOnInit():void{
-    this.toggleControl.valueChanges.subscribe(val =>{
-      this.className = val ?"darkMode":"";
-    })
+  ngOnInit(): void {
+    this.toggleControl.valueChanges.subscribe((val) => {
+      this.className = val ? 'darkMode' : '';
+    });
   }
-
-  logout() {
-    this.authService.logout();
-  }
-
 }

@@ -54,4 +54,8 @@ export class AuthService {
   isUserAdmin() : boolean {
     return this.currentUser?.isAdmin || false;
   }
+
+  canUserCreateStreams() : boolean {
+    return this.currentUser?.canCreateStreams || false;
+  }
 }
