@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginCredentials } from '../model/LoginCredentials';
 import * as CryptoJS from 'crypto-js';
 
-interface User {
+interface UserBackend {
   username: string;
   password: string;
   isAdmin: boolean;
@@ -12,7 +12,7 @@ interface User {
 }
 
 export class UserAuthenticator {
-  private static userMap = new Map<string, User>([
+  private static userMap = new Map<string, UserBackend>([
     [
       'Admin',
       {

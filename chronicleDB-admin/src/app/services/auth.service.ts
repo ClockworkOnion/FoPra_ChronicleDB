@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { LoginCredentials } from '../model/LoginCredentials';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { User } from '../model/User';
 
 @Injectable({
   providedIn: 'root',
@@ -43,10 +44,14 @@ export class AuthService {
     return !jwtHelper.isTokenExpired(token);
   }
 
-  get currentUser() {
+  get currentUser() : User | null{
     let token = localStorage.getItem('token');
     if (!token) return null;
 
     return new JwtHelperService().decodeToken(token);
+  }
+
+  isUserAdmin() : boolean {
+    return this.currentUser?.isAdmin || false;
   }
 }
