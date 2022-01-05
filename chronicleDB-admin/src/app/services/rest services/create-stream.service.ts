@@ -10,8 +10,10 @@ import { SnackBarService } from '../snack-bar.service';
   providedIn: 'root'
 })
 export class CreateStreamService {
-  private isHttpRequestPending = new BehaviorSubject<boolean>(false);
-  isHttpRequestPending$ = this.isHttpRequestPending.asObservable();
+  private _isHttpRequestPending : boolean = false;
+  get isHttpRequestPending() {
+    return this._isHttpRequestPending;
+  }
 
   private streamProperties = new BehaviorSubject<any>('undefined');
   private eventProperties = new BehaviorSubject<any>('undefined');
@@ -47,17 +49,16 @@ export class CreateStreamService {
   }
 
   createStream() {
-    this.isHttpRequestPending.next(true);
-    sessionStorage.setItem("chronicleURL",this.chronicle.getUrl())
-    let response = this.chronicle.post(this.chronicle.getUrl() + "create_stream", this.createStreamBody)
+    this._isHttpRequestPending = true;
+    sessionStorage.setItem("chronicleURL",this.chronicle.getUrl());
+    let response = this.chronicle.post(this.chronicle.getUrl() + "create_stream", this.createStreamBody);
     response.subscribe(response => {
-      this.chronicle.addStreamToList(response);
       this.snackBar.openSnackBar("Successfully created a new Stream!");
-      this.isHttpRequestPending.next(false);
+      this._isHttpRequestPending = false;
       this.navigateBackToHome();
     }, error => {
       this.snackBar.openSnackBar("Failed creating a new Stream!");
-      this.isHttpRequestPending.next(false);
+      this._isHttpRequestPending = false;
     });
   }
 

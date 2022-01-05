@@ -27,7 +27,8 @@
             <span style="color: gray">ChronicleDB Server URL: {{ getUrlString() }}</span>
             <button mat-raised-button color="primary" style="display: block; margin: auto"
                 matTooltip="Create a new stream with the given URL, the event definition and the defined properties."
-                (click)="onCreateStreamClicked()">
+                (click)="onCreateStreamClicked()"
+                [disabled]="createService.isHttpRequestPending" [class.spinner]="createService.isHttpRequestPending">
                 Create A New Stream
             </button>
         </mat-card-content>

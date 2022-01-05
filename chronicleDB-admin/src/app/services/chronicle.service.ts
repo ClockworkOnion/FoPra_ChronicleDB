@@ -131,26 +131,6 @@ export class ChronicleService {
     });
   }
 
-  addStreamToList(response: any) {
-    //get the posisiton of the StreamID in the response string
-    let streamid = response.indexOf("StreamID:");
-    let id = response.slice(streamid+9,response.indexOf("StreamConfig"));
-    
-
-    //push our created stream into our streams array  
-    this.streamList.push({  
-      id:parseInt(id),
-      //the response event list is beeing parsed here
-      event:EventParser.parseResponseEvent(response),
-      compoundType: EventParser.parseCompoundType(response),
-      online: true
-    });
-    
-    this.getStreamsFromChronicle();
-    console.log(response);
-    this.streamListBS.next(this.streamList);
-  }
-
   async getMaxKey(id :number){
    return   await this.http.get(this.url +"max_key/"+id,{responseType:"text"}).toPromise();
 
