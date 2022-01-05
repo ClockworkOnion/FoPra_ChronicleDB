@@ -6,6 +6,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { DialogService } from 'src/app/services/dialog.service';
 import { InsertDataTabMenuComponent } from 'src/app/page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
 import { TimeTravelComponent } from 'src/app/time-travel/time-travel.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-stream-list',
@@ -15,7 +16,7 @@ import { TimeTravelComponent } from 'src/app/time-travel/time-travel.component';
 export class StreamListComponent implements OnInit {
   streamList :Array<ChronicleStream>=[];
 
-  constructor(private chronicleService : ChronicleService, private infoService:StreamInfoService , private dialog : DialogService) { 
+  constructor(private chronicleService : ChronicleService, private infoService:StreamInfoService , private dialog : DialogService, public authService : AuthService) { 
     
   }
 

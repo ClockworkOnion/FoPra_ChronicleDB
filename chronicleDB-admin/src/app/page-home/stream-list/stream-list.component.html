@@ -12,7 +12,7 @@
       </button>
       <mat-menu #menu="matMenu">
 
-        <button mat-menu-item (click)="insertData(stream)" [disabled]="!stream.online">
+        <button mat-menu-item (click)="insertData(stream)" [disabled]="!stream.online" *ngIf="authService.canUserInsertToStream(stream.id)">
           <mat-icon>add</mat-icon>
           <span>Insert Data</span>
         </button>       
@@ -38,11 +38,11 @@
           <mat-icon>analytics</mat-icon>
           <span>Query Time travel</span>
         </button>
-        <button mat-menu-item (click)="shutDown(stream.id)" [disabled]="!stream.online">
+        <button mat-menu-item (click)="shutDown(stream.id)" *ngIf="stream.online && authService.isUserAdmin()">
           <mat-icon>close</mat-icon>
           <span>Shutdown Stream</span>
         </button>
-        <button mat-menu-item (click)="recover(stream.id)" [disabled]="stream.online">
+        <button mat-menu-item (click)="recover(stream.id)" *ngIf="!stream.online && authService.isUserAdmin()">
           <mat-icon>restore</mat-icon>
           <span>*CAUTION* Recover Stream</span>
         </button>

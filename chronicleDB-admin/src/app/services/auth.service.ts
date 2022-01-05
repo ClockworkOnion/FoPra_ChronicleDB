@@ -62,4 +62,8 @@ export class AuthService {
   canUserAccessStream(id : number) {
     return this.currentUser?.allStreamsAllowed || this.currentUser?.allowedStreams?.includes(id) || false;
   }
+
+  canUserInsertToStream(id : number) {
+    return this.currentUser?.canInsertAll || this.currentUser?.allowedInsertStreams?.includes(id) || false;
+  }
 }

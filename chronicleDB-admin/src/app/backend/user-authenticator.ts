@@ -10,6 +10,8 @@ interface UserBackend {
   canCreateStreams: boolean;
   allStreamsAllowed: boolean;
   allowedStreams?: Array<number>;
+  canInsertAll?: boolean;
+  allowedInsertStreams?: Array<number>;
 }
 
 export class UserAuthenticator {
@@ -22,6 +24,7 @@ export class UserAuthenticator {
         isAdmin: true,
         canCreateStreams: true,
         allStreamsAllowed: true,
+        canInsertAll: true
       },
     ],
     [
@@ -32,7 +35,9 @@ export class UserAuthenticator {
         isAdmin: false,
         canCreateStreams: false,
         allStreamsAllowed: false,
-        allowedStreams: [0, 2, 4, 5]
+        allowedStreams: [0, 2, 4, 5],
+        canInsertAll: false,
+        allowedInsertStreams: [0, 1, 4]
       },
     ],
   ]);
@@ -53,7 +58,9 @@ export class UserAuthenticator {
         isAdmin: user.isAdmin,
         canCreateStreams: user.canCreateStreams,
         allStreamsAllowed: user.allStreamsAllowed,
-        allowedStreams: user.allowedStreams
+        allowedStreams: user.allowedStreams,
+        canInsertAll: user.canInsertAll,
+        allowedInsertStreams: user.allowedInsertStreams
       };
 
       return this.signToken(payload, "Passwort");
