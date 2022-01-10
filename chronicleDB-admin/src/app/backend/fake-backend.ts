@@ -3,6 +3,7 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, dematerialize, materialize } from 'rxjs/operators';
 import { UserAuthenticator } from './user-authenticator';
+import { UserManager } from './user-manager';
 
 // array in local storage for registered users
 const usersKey = 'angular-10-registration-login-example-users';
@@ -23,12 +24,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
-                // case url.endsWith('/users/register') && method === 'POST':
-                //     return register();
-                // case url.endsWith('/users') && method === 'GET':
-                //     return getUsers();
-                // case url.match(/\/users\/\d+$/) && method === 'GET':
-                //     return getUserById();
+                case url.endsWith('/users/register') && method === 'POST':
+                    return register();
+                case url.endsWith('/users') && method === 'GET':
+                    return getUsers();
+                case url.match(/\/users\/\w+$/) && method === 'GET':
+                    return getUserByUsername();
                 // case url.match(/\/users\/\d+$/) && method === 'PUT':
                 //     return updateUser();
                 // case url.match(/\/users\/\d+$/) && method === 'DELETE':
@@ -42,7 +43,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // route functions
 
         function authenticate() {            
-            let token = UserAuthenticator.authenticate(JSON.parse(body));
+            let token = UserManager.authenticate(JSON.parse(body));
             if (token) {
                 return ok(token);
             } else {
@@ -59,7 +60,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             // })
         }
 
-        // function register() {
+        function register() {
         //     const user = body
 
         //     if (users.find(x => x.username === user.username)) {
@@ -69,20 +70,29 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         //     user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
         //     users.push(user);
         //     localStorage.setItem(usersKey, JSON.stringify(users));
-        //     return ok();
-        // }
+            // return ok();
+            UserManager.register(JSON.parse(body))
+            return ok();
+        }
 
-        // function getUsers() {
+        function getUsers() {
         //     if (!isLoggedIn()) return unauthorized();
         //     return ok(users.map(x => basicDetails(x)));
-        // }
+            return ok(JSON.stringify(UserManager.getUsers()));
+        }
 
-        // function getUserById() {
+        function getUserByUsername() {
         //     if (!isLoggedIn()) return unauthorized();
 
         //     const user = users.find(x => x.id === idFromUrl());
         //     return ok(basicDetails(user));
-        // }
+            let user = UserManager.getUserByName(nameFromUrl());
+            if (user) {
+                return ok(JSON.stringify(user));
+            } else {
+                return userNotFound();
+            }
+        }
 
         // function updateUser() {
         //     if (!isLoggedIn()) return unauthorized();
@@ -102,13 +112,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         //     return ok();
         // }
 
-        // function deleteUser() {
+        function deleteUser() {
         //     if (!isLoggedIn()) return unauthorized();
 
         //     users = users.filter(x => x.id !== idFromUrl());
         //     localStorage.setItem(usersKey, JSON.stringify(users));
         //     return ok();
-        // }
+            if (UserManager.deleteUser(nameFromUrl())) {
+                return ok();
+            } else {
+                return deleteUserFailed();
+            }
+        }
 
         // // helper functions
 
@@ -127,6 +142,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 .pipe(materialize(), delay(500), dematerialize());
         }
 
+        function userNotFound() {
+            return throwError({ status: 404, error: { message: 'User Not found!' } })
+                .pipe(materialize(), delay(500), dematerialize());
+        }
+
+        function deleteUserFailed() {
+            return throwError({ status: 403, error: { message: 'Not Allowed!' } })
+                .pipe(materialize(), delay(500), dematerialize());
+        }
+
         // function basicDetails(user) {
         //     const { id, username, firstName, lastName } = user;
         //     return { id, username, firstName, lastName };
@@ -136,10 +161,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         //     return headers.get('Authorization') === 'Bearer fake-jwt-token';
         // }
 
-        // function idFromUrl() {
-        //     const urlParts = url.split('/');
-        //     return parseInt(urlParts[urlParts.length - 1]);
-        // }
+        function nameFromUrl() {
+            const urlParts = url.split('/');
+            return urlParts[urlParts.length - 1];
+        }
     }
 }
 
