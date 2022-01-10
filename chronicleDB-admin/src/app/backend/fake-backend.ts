@@ -71,8 +71,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         //     users.push(user);
         //     localStorage.setItem(usersKey, JSON.stringify(users));
             // return ok();
-            UserManager.register(JSON.parse(body))
-            return ok();
+            
+            let successful : boolean = UserManager.register(JSON.parse(body));            
+            if (successful) {
+                return ok("Successfully created new User!");
+            } else {
+                return registerFailed();
+            }
         }
 
         function getUsers() {
@@ -139,6 +144,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function loginFailed() {
             return throwError({ status: 401, error: { message: 'Login failed!' } })
+                .pipe(materialize(), delay(500), dematerialize());
+        }
+
+        function registerFailed() {
+            return throwError({ status: 401, error: { message: 'Register failed!' } })
                 .pipe(materialize(), delay(500), dematerialize());
         }
 
