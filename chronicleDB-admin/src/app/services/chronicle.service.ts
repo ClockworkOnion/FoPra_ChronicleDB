@@ -125,9 +125,10 @@ export class ChronicleService {
       if (error.statusText === "Unknown Error") {
         // Update ob URL richtig
         this.isUrlReachable = false;
-        console.log(error);
+        console.log("The entered URL is not reachable!");
+      } else {
+        console.error(error);
       }
-      
     });
   }
 
