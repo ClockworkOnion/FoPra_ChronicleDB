@@ -58,6 +58,7 @@ import { ErrorInterceptor } from './backend/error.interceptor';
 import { fakeBackendProvider } from './backend/fake-backend';
 import { JwtInterceptor } from './backend';
 import { NoAccessComponent } from './no-access/no-access.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -114,8 +115,8 @@ import { NoAccessComponent } from './no-access/no-access.component';
     MatBadgeModule,
     MatSlideToggleModule,
     DragDropModule,
-    MatDialogModule
-
+    MatDialogModule,
+    OverlayModule
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
   

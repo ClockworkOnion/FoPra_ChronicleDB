@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -11,6 +12,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./navigation.component.css'],
 })
 export class NavigationComponent {
+  isOpen = false;
+
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -21,7 +24,9 @@ export class NavigationComponent {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    public authService: AuthService
+    public authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
   toggleControl = new FormControl(false);
 
@@ -29,5 +34,21 @@ export class NavigationComponent {
     this.toggleControl.valueChanges.subscribe((val) => {
       this.className = val ? 'darkMode' : '';
     });
+  }
+
+  onAccountIconClicked() {
+    if (!this.authService.isLoggedIn()) {
+      let url = this.router.routerState.snapshot.url;
+      let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+      if (url == "/" || url == "/login") {
+        this.router.navigate(['/login']);
+      } else if (returnUrl) {
+        this.router.navigate(['/login'], {queryParams:  {returnUrl: returnUrl}});
+      } else {
+        this.router.navigate(['/login'], {queryParams:  {returnUrl: url}});
+      }
+    } else {
+      this.isOpen = !this.isOpen;
+    }
   }
 }

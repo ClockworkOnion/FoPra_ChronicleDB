@@ -45,29 +45,69 @@
       
 
       <mat-icon class="mr-8">brightness_5</mat-icon>
-      <mat-slide-toggle class="mr-8" [formControl]="toggleControl" >
+      <mat-slide-toggle class="mr-8" [formControl]="toggleControl" matTooltip="Toggle Darkmode">
       </mat-slide-toggle>
       <mat-icon>bedtime</mat-icon>
       &nbsp;
       &nbsp;
       &nbsp;
       
-
-      <button type="button" mat-icon-button>
-        <span class="material-icons" routerLink="/login">
-          account_circle
-        </span>
-      </button>
-
-      <button type="button" mat-icon-button>
+      <button type="button" mat-icon-button *ngIf="authService.isLoggedIn()">
         <span class="material-icons" matBadge="99+" matBadgeColor="warn" matBadgeSize="small">
           email
         </span>
       </button>
 
-      <button type="button" mat-icon-button (click)="authService.logout();">
-        <span class="material-icons"> logout </span>
+      <button type="button" mat-icon-button matTooltip="Account Info"  cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+        <span class="material-icons" (click)="onAccountIconClicked()">
+          account_circle
+        </span>
       </button>
+
+      <!-- This template displays the overlay content and is connected to the button -->
+      <ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayOpen]="isOpen && authService.isLoggedIn()" cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+        [cdkConnectedOverlayHasBackdrop]="true" (detach)="isOpen = false" (backdropClick)="isOpen = false">
+        <!-- wenn geöffnet soll alles andere nicht ausgegraut werden, wenn außerhalb geklicked, soll es wieder false werden -->
+
+        <div class="overlaybox">
+
+          <div style="padding-bottom: 16px; border-bottom: solid 1px #ccc;">
+            <span class="material-icons" style="font-size: 50px; color: gray;">
+              perm_identity
+            </span>
+            <p>{{authService.username}}</p>
+          </div>
+
+          <!-- <mat-list role="list">
+            <mat-list-item role="listitem">
+              <button mat-button color="primary" disabled *ngIf="authService.isUserAdmin()">View Profile</button>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <button mat-button color="primary" disabled *ngIf="authService.isUserAdmin()">Manage Users</button>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <button mat-stroked-button color="primary" (click)="authService.logout();">Logout</button>
+            </mat-list-item>
+          </mat-list> -->
+          
+          <div><button mat-button color="primary" disabled class="overlayelement">View Profile</button></div>
+          <div><button mat-button color="primary" disabled *ngIf="authService.isUserAdmin()" class="overlayelement">Manage Users</button></div>
+
+          <div style="border-top: solid 1px #ccc;">
+            <button mat-stroked-button color="primary" (click)="authService.logout();" style="margin-top: 32px;">Logout</button>
+          </div>
+
+        </div>
+
+      </ng-template>
+
+      <!-- <button type="button" mat-icon-button (click)="authService.logout();" *ngIf="authService.isLoggedIn()"
+        matTooltip="Logout">
+        <span class="material-icons"> logout </span>
+      </button> -->
     </mat-toolbar>
 
     <router-outlet></router-outlet>

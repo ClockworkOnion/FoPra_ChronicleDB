@@ -51,6 +51,10 @@ export class AuthService {
     return new JwtHelperService().decodeToken(token);
   }
 
+  get username() : string | null {
+    return this.currentUser?.username || null;
+  }
+
   isUserAdmin() : boolean {
     return this.currentUser?.isAdmin || false;
   }
