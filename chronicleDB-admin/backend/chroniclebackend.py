@@ -1,14 +1,18 @@
+#!/usr/bin/env python3
 from flask import Flask, request
 from flask import jsonify
 from flask_restful import Api, Resource
 from flask_cors import CORS, cross_origin
 import requests
-
+import jwt, json
+import helper
 
 app = Flask(__name__)
 api = Api(app)
 cors = CORS(app) # Adding CORS header
 app.config['CORS_HEADERS'] = 'Content-Type' # Adding CORS header
+
+USERFILE = "users.dat"
 
 class showRightFlank(Resource):
     def get(self):
@@ -33,5 +37,31 @@ class createStream(Resource):
 
 api.add_resource(createStream, "/create_stream")
 
+def JWTcreateToken(user_name):
+    print("Creating a web token for user " + user_name)
+    key = "secret"
+    user_data = JSONread(USERFILE)
+    for user in user_data["users"]:
+        if (user["username"] == user_name):
+            print("Found user in database")
+            payload = user
+            return jwt.encode(user, key, algorithm="HS256")
+    return ""
+
+def JSONread(filename):
+    with open(filename) as json_file:
+        data = json.load(json_file)
+        return data
+
+def checkPassword(user_name, pwd):
+    user_data = JSONread(USERFILE)
+    for user in user_data["users"]:
+        if user["username"] == user_name:
+            return True if (user["password"] == pwd) else False
+    return False # returns "none" if there is no return
+
+
 if __name__ == "__main__":
-    app.run(port=5002, debug=True)
+    # app.run(port=5002, debug=True) # For starting the backend process
+    helper.testUserPwd()
+    
