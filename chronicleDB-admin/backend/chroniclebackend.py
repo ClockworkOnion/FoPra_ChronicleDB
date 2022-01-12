@@ -14,6 +14,15 @@ app.config['CORS_HEADERS'] = 'Content-Type' # Adding CORS header
 
 USERFILE = "users.dat"
 
+class userLogin(Resource):
+    def get(self):
+        return "Not defined!"
+    
+    def post(self):
+        print("userLogin post request received. Printing request:")
+        print(request.data)
+        print(" --- End of request ---")
+
 class showRightFlank(Resource):
     def get(self):
         print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/0 ... ")
@@ -44,7 +53,6 @@ def JWTcreateToken(user_name):
     for user in user_data["users"]:
         if (user["username"] == user_name):
             print("Found user in database")
-            payload = user
             return jwt.encode(user, key, algorithm="HS256")
     return ""
 
@@ -59,7 +67,6 @@ def checkPassword(user_name, pwd):
         if user["username"] == user_name:
             return True if (user["password"] == pwd) else False
     return False # returns "none" if there is no return
-
 
 if __name__ == "__main__":
     # app.run(port=5002, debug=True) # For starting the backend process
