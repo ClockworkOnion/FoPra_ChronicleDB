@@ -118,3 +118,11 @@ dass die Logik und die entsprechende Anzeige funktioniert.
 Wir wollen direkt in der Streamliste den Max und Min key anzeigen lassen.
 
 
+
+
+## Minib-Besprechung vom 12.01.21
+Awensend: Johannes Buder, Lars Happel
+
+### Login
+Wir wollen auf ein Python-Backend umsteigen. Da wir bisher schon mit einer REST-API gearbeitet haben, sollte der Austausch problemlos.
+Da die oben erwähnte Logik schon funktioniert, wollen wir nun eine Admin-Verwaltungsseite erstellen und die Login-Seite aufhübschen :)
