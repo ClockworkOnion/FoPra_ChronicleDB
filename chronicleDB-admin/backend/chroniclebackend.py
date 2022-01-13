@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask, request
-from flask import jsonify
+from flask import jsonify, make_response
 from flask_restful import Api, Resource
 from flask_cors import CORS, cross_origin
 import requests
@@ -48,8 +48,12 @@ class userLogin(Resource):
         print(jsonObject)
         print(" --- End of request ---")
         if (checkPassword(jsonObject["username"], jsonObject["password"])):
-            response = make_response()
-            return JWTcreateToken(jsonObject["username"])
+            res_body = JWTcreateToken(jsonObject["username"])
+            response = make_response(res_body, 200)
+            response.headers["Content-Type"] = "text"
+            print("Response created:")
+            print(response)
+            return response
 
 
 class showRightFlank(Resource):
