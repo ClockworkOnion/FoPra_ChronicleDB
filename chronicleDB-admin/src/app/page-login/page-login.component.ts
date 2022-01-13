@@ -20,6 +20,7 @@ export class PageLoginComponent {
     this.authService.login(credentials)
       .subscribe(result => { 
         if (result) {
+          this.invalidLogin = false; 
           let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
           // Navigiere entweder zu returnUrl oder zu der Homepage falls es null ist
           this.router.navigate([returnUrl || '/']);

@@ -143,8 +143,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // }
 
         function loginFailed() {
-            return throwError({ status: 401, error: { message: 'Login failed!' } })
-                .pipe(materialize(), delay(500), dematerialize());
+            return of(new HttpResponse({ status: 401 }))
+            .pipe(delay(500));
         }
 
         function registerFailed() {
