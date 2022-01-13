@@ -15,11 +15,11 @@ export class AuthService {
 
   login(credentials: LoginCredentials): Observable<boolean> {
     return this.http
-      .post<string>('/users/authenticate', JSON.stringify(credentials))
+      .post<string>('/users/authenticate', JSON.stringify(credentials), {observe: 'response'})
       .pipe(
-        map((response) => {
-          if (response) {
-            localStorage.setItem('token', response);
+        map((httpResponse) => {
+          if (httpResponse.status == 200 && httpResponse.body) {
+            localStorage.setItem('token', httpResponse.body);
             return true;
           } else {
             return false;
