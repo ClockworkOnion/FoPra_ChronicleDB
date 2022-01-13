@@ -14,6 +14,28 @@ app.config['CORS_HEADERS'] = 'Content-Type' # Adding CORS header
 
 USERFILE = "users.dat"
 
+def JWTcreateToken(user_name):
+    print("Creating a web token for user " + user_name)
+    key = "secret"
+    user_data = JSONread(USERFILE)
+    for user in user_data["users"]:
+        if (user["username"] == user_name):
+            print("Found user in database")
+            return jwt.encode(user, key, algorithm="HS256")
+    return ""
+
+def JSONread(filename):
+    with open(filename) as json_file:
+        data = json.load(json_file)
+        return data
+
+def checkPassword(user_name, pwd):
+    user_data = JSONread(USERFILE)
+    for user in user_data["users"]:
+        if user["username"] == user_name:
+            return True if (user["password"] == pwd) else False
+    return False # returns "none" if there is no return
+
 class userLogin(Resource):
     def get(self):
         return "Not defined!"
@@ -21,7 +43,14 @@ class userLogin(Resource):
     def post(self):
         print("userLogin post request received. Printing request:")
         print(request.data)
+        jsonObject = json.loads(request.data)
+        print("-----")
+        print(jsonObject)
         print(" --- End of request ---")
+        if (checkPassword(jsonObject["username"], jsonObject["password"])):
+            response = make_response()
+            return JWTcreateToken(jsonObject["username"])
+
 
 class showRightFlank(Resource):
     def get(self):
@@ -46,29 +75,13 @@ class createStream(Resource):
 
 api.add_resource(createStream, "/create_stream")
 
-def JWTcreateToken(user_name):
-    print("Creating a web token for user " + user_name)
-    key = "secret"
-    user_data = JSONread(USERFILE)
-    for user in user_data["users"]:
-        if (user["username"] == user_name):
-            print("Found user in database")
-            return jwt.encode(user, key, algorithm="HS256")
-    return ""
+api.add_resource(showRightFlank, "/show_right_flank")
+api.add_resource(userLogin, "/user_login")
 
-def JSONread(filename):
-    with open(filename) as json_file:
-        data = json.load(json_file)
-        return data
 
-def checkPassword(user_name, pwd):
-    user_data = JSONread(USERFILE)
-    for user in user_data["users"]:
-        if user["username"] == user_name:
-            return True if (user["password"] == pwd) else False
-    return False # returns "none" if there is no return
+
 
 if __name__ == "__main__":
-    # app.run(port=5002, debug=True) # For starting the backend process
-    helper.testUserPwd()
+    app.run(port=5002, debug=True) # For starting the backend process
+    # helper.testUserPwd()
     
