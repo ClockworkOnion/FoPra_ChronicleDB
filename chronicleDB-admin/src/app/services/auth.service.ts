@@ -18,12 +18,12 @@ export class AuthService {
 
   login(credentials: LoginCredentials): Observable<boolean> {
     return this.http
-      .post<string>(BACKEND_URL + 'user_login', JSON.stringify(credentials))
+      .post<{token : string}>(BACKEND_URL + 'user_login', JSON.stringify(credentials))
       .pipe(
         map((response) => {
-          console.log(response)
+          console.log(response.token)
           if (response) {
-            localStorage.setItem('token', response);
+            localStorage.setItem('token', response.token);
             return true;
           } else {
             return false;

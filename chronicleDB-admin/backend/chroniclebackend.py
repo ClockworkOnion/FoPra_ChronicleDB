@@ -49,43 +49,39 @@ class userLogin(Resource):
         print(" --- End of request ---")
         if (checkPassword(jsonObject["username"], jsonObject["password"])):
             res_body = JWTcreateToken(jsonObject["username"])
-            response = make_response(res_body, 200)
-            response.headers["Content-Type"] = "text"
+            response = make_response({"token" : res_body}, 200)
+            response.headers["Content-Type"] = "json"
             print("Response created:")
             print(response)
             return response
 
 
-class showRightFlank(Resource):
-    def get(self):
-        print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/0 ... ")
-        response = requests.get("http://127.0.0.1:8000/show_right_flank/0")
-        print("Response from ChronicleDB: "+ str(response))
-        return jsonify(response.json())
+# class showRightFlank(Resource):
+#     def get(self):
+#         print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/0 ... ")
+#         response = requests.get("http://127.0.0.1:8000/show_right_flank/0")
+#         print("Response from ChronicleDB: "+ str(response))
+#         return jsonify(response.json())
 
-    def post(self):
-        return "Not defined!"
+#     def post(self):
+#         return "Not defined!"
 
-class createStream(Resource):
-    def get(self):
-        return "Not defined!"
+# class createStream(Resource):
+#     def get(self):
+#         return "Not defined!"
 
-    def post(self):
-        print("Trying to create stream...")
-        print(request.data)
-        response = requests.post("http://127.0.0.1:8000/create_stream", request.data)
-        print("Response from ChronicleDB: " + str(response))
-        return {"response from ChronicleDB": str(response) } 
+#     def post(self):
+#         print("Trying to create stream...")
+#         print(request.data)
+#         response = requests.post("http://127.0.0.1:8000/create_stream", request.data)
+#         print("Response from ChronicleDB: " + str(response))
+#         return {"response from ChronicleDB": str(response) } 
 
-api.add_resource(createStream, "/create_stream")
+# api.add_resource(createStream, "/create_stream")
+# api.add_resource(showRightFlank, "/show_right_flank")
 
-api.add_resource(showRightFlank, "/show_right_flank")
 api.add_resource(userLogin, "/user_login")
-
-
-
 
 if __name__ == "__main__":
     app.run(port=5002, debug=True) # For starting the backend process
     # helper.testUserPwd()
-    
