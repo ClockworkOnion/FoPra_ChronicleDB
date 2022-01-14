@@ -21,7 +21,15 @@ def JWTcreateToken(user_name):
     for user in user_data["users"]:
         if (user["username"] == user_name):
             print("Found user in database")
-            return jwt.encode(user, key, algorithm="HS256")
+            user_as_object = getUserByName(user_name)
+            user_for_jwt = {} # JWT.encode expects a "mapping"! 
+            for field in dir(user_as_object):
+                if (not field.startswith("__")):
+                    user_for_jwt[str(field)] = getattr(user_as_object, str(field))
+                    print(field + " : " + str(getattr(user_as_object, str(field))))
+            print("Created mapping:" + str(user_for_jwt))
+
+            return jwt.encode(user_for_jwt, key, algorithm="HS256")
     return ""
 
 def JSONread(filename):
@@ -29,12 +37,36 @@ def JSONread(filename):
         data = json.load(json_file)
         return data
 
+def getUserByName(user_name):
+    user_data = JSONread(USERFILE)
+    for u in user_data["users"]:
+        if (u["username"] == user_name):
+            return user(u["username"],
+             u["isAdmin"],
+             u["canCreateStreams"],
+             u["allStreamsAllowed"],
+             (u["allowedStreams"] if (u["allowedStreams"]) else [0]),
+             u["canInsertAll"],
+             (u["allowedInsertStreams"] if (u["allowedStreams"]) else []))
+
+
 def checkPassword(user_name, pwd):
     user_data = JSONread(USERFILE)
     for user in user_data["users"]:
         if user["username"] == user_name:
             return True if (user["password"] == pwd) else False
     return False # returns "none" if there is no return
+
+class user():
+    def __init__(self, username, is_admin, can_create_streams, all_streams_allowed, allowed_streams, can_insert_all, allowed_insert_streams):
+        self.username = username
+        self.is_admin = is_admin
+        self.can_create_streams = can_create_streams
+        self.all_streams_allowed = all_streams_allowed
+        self.allowed_streams = allowed_streams
+        self.can_insert_all = can_insert_all
+        self.allowed_insert_streams = allowed_insert_streams
+
 
 class userLogin(Resource):
     def get(self):
@@ -83,5 +115,5 @@ class userLogin(Resource):
 api.add_resource(userLogin, "/user_login")
 
 if __name__ == "__main__":
-    app.run(port=5002, debug=True) # For starting the backend process
-    # helper.testUserPwd()
+    # app.run(port=5002, debug=True) # For starting the backend process
+    helper.testUserPwd()

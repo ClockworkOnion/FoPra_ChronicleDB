@@ -18,6 +18,8 @@ def createUsers():
         "password" : "1234",
         "isAdmin" : True,
         "canCreateStreams":True,
+        "allowedStreams": [],
+        "allowedInsertStreams": [],
         "allStreamsAllowed":True,
         "canInsertAll":True
     })
