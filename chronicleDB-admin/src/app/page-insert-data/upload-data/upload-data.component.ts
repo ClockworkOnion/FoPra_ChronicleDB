@@ -37,9 +37,10 @@ export class UploadDataComponent implements OnInit {
   }
 
   onInsertEventClicked() {
-    let lines:string[] = this.fileContent.split("\n").map(line => line.trim());
-    lines.forEach(line => {
-      this.insertService.insertEventString(line);
+    let lines : string = this.fileContent.split("\n").map(line => line.trim()).join("");
+    let events : Array<any> = JSON.parse(lines);
+    events.forEach(event => {
+      this.insertService.insertEventString(JSON.stringify(event));
     })
   }
 }

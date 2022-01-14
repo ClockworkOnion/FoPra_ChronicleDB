@@ -23,6 +23,9 @@ export class InsertDataService {
     }
     let body = this.parseInputToBody(event, timestamp);
 
+    console.log(body);
+    
+
     this.chronicleService.getHttp()
       .post(url + "insert_ordered/" + this.currentStream!.id, body)
       .subscribe(response => this.snackBar.openSnackBar("Event successfully inserted!"));
