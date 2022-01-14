@@ -13,23 +13,22 @@ cors = CORS(app) # Adding CORS header
 app.config['CORS_HEADERS'] = 'Content-Type' # Adding CORS header
 
 USERFILE = "users.dat"
+SECRET = "secret"
 
 def JWTcreateToken(user_name):
-    print("Creating a web token for user " + user_name)
-    key = "secret"
+    print("Creating a web token for user " + user_name + " ...")
     user_data = JSONread(USERFILE)
     for user in user_data["users"]:
         if (user["username"] == user_name):
-            print("Found user in database")
+            print("Found user in database:")
             user_as_object = getUserByName(user_name)
-            user_for_jwt = {} # JWT.encode expects a "mapping"! 
+            user_for_jwt = {} # JWT.encode expects a "mapping"! (for loop can't be refactored to a method...)
             for field in dir(user_as_object):
                 if (not field.startswith("__")):
                     user_for_jwt[str(field)] = getattr(user_as_object, str(field))
-                    print(field + " : " + str(getattr(user_as_object, str(field))))
             print("Created mapping:" + str(user_for_jwt))
 
-            return jwt.encode(user_for_jwt, key, algorithm="HS256")
+            return jwt.encode(user_for_jwt, SECRET, algorithm="HS256")
     return ""
 
 def JSONread(filename):
@@ -45,10 +44,9 @@ def getUserByName(user_name):
              u["isAdmin"],
              u["canCreateStreams"],
              u["allStreamsAllowed"],
-             (u["allowedStreams"] if (u["allowedStreams"]) else [0]),
+             (u["allowedStreams"] if (u["allowedStreams"]) else []),
              u["canInsertAll"],
              (u["allowedInsertStreams"] if (u["allowedStreams"]) else []))
-
 
 def checkPassword(user_name, pwd):
     user_data = JSONread(USERFILE)
@@ -66,7 +64,6 @@ class user():
         self.allowed_streams = allowed_streams
         self.can_insert_all = can_insert_all
         self.allowed_insert_streams = allowed_insert_streams
-
 
 class userLogin(Resource):
     def get(self):
@@ -88,32 +85,33 @@ class userLogin(Resource):
             return response
 
 
-# class showRightFlank(Resource):
-#     def get(self):
-#         print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/0 ... ")
-#         response = requests.get("http://127.0.0.1:8000/show_right_flank/0")
-#         print("Response from ChronicleDB: "+ str(response))
-#         return jsonify(response.json())
+class showRightFlank(Resource):
+    def get(self):
+        print("Received request for 'show_right_flank', printing headers: " + str(request.headers))
+        # TODO: Verify web token against the password
+        print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/0 ... ")
+        response = requests.get("http://127.0.0.1:8000/show_right_flank/0")
+        print("Response from ChronicleDB: "+ str(response))
+        return jsonify(response.json())
 
-#     def post(self):
-#         return "Not defined!"
+    def post(self):
+        return "Not defined!"
 
-# class createStream(Resource):
-#     def get(self):
-#         return "Not defined!"
+class createStream(Resource):
+    def get(self):
+        return "Not defined!"
 
-#     def post(self):
-#         print("Trying to create stream...")
-#         print(request.data)
-#         response = requests.post("http://127.0.0.1:8000/create_stream", request.data)
-#         print("Response from ChronicleDB: " + str(response))
-#         return {"response from ChronicleDB": str(response) } 
+    def post(self):
+        print("Trying to create stream...")
+        print(request.data)
+        response = requests.post("http://127.0.0.1:8000/create_stream", request.data)
+        print("Response from ChronicleDB: " + str(response))
+        return {"response from ChronicleDB": str(response) } 
 
-# api.add_resource(createStream, "/create_stream")
-# api.add_resource(showRightFlank, "/show_right_flank")
-
+api.add_resource(createStream, "/create_stream")
+api.add_resource(showRightFlank, "/show_right_flank")
 api.add_resource(userLogin, "/user_login")
 
 if __name__ == "__main__":
-    # app.run(port=5002, debug=True) # For starting the backend process
-    helper.testUserPwd()
+    app.run(port=5002, debug=True) # For starting the backend process
+    # helper.testUserPwd()
