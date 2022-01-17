@@ -7,6 +7,9 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../model/User';
 
+
+const BACKEND_URL : string = "http://127.0.0.1:5002/"
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,11 +18,12 @@ export class AuthService {
 
   login(credentials: LoginCredentials): Observable<boolean> {
     return this.http
-      .post<string>('/users/authenticate', JSON.stringify(credentials), {observe: 'response'})
+      .post<{token : string}>(BACKEND_URL + 'user_login', JSON.stringify(credentials), {observe: 'response'})
       .pipe(
         map((httpResponse) => {
+          console.log(httpResponse.body)
           if (httpResponse.status == 200 && httpResponse.body) {
-            localStorage.setItem('token', httpResponse.body);
+            localStorage.setItem('token', httpResponse.body.token);
             return true;
           } else {
             return false;
