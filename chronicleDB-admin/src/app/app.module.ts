@@ -27,7 +27,7 @@ import { GeneralStreamComponent } from './page-home/card-general-stream/general-
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { ChronicleService } from './services/chronicle.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -40,7 +40,7 @@ import { InsertDataEventElementComponent } from './page-insert-data/insert-data-
 import { InsertDataService } from './services/rest services/insert-data.service';
 import { SystemInfoComponent } from './page-system-info/system-info/system-info.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { StreamListComponent } from './page-system-info/stream-list/stream-list.component';
+import { StreamListComponent } from './page-home/stream-list/stream-list.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
 import { CreateStreamService } from './services/rest services/create-stream.service';
@@ -53,6 +53,12 @@ import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TimeTravelComponent } from './time-travel/time-travel.component';
 import { MatTableModule } from '@angular/material/table'
 import { IDValidators } from './page-insert-data/insert-data-manually/id.validators';
+import { PageLoginComponent } from './page-login/page-login.component';
+import { ErrorInterceptor } from './backend/error.interceptor';
+import { fakeBackendProvider } from './backend/fake-backend';
+import { JwtInterceptor } from './backend';
+import { NoAccessComponent } from './no-access/no-access.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -74,7 +80,9 @@ import { IDValidators } from './page-insert-data/insert-data-manually/id.validat
     UploadDataComponent,
     ShowRightFlankComponent,
     CreateStreamComponent,
-    TimeTravelComponent
+    TimeTravelComponent,
+    PageLoginComponent,
+    NoAccessComponent
   ],
   imports: [
     BrowserModule,
@@ -107,10 +115,17 @@ import { IDValidators } from './page-insert-data/insert-data-manually/id.validat
     MatBadgeModule,
     MatSlideToggleModule,
     DragDropModule,
-    MatDialogModule
-
+    MatDialogModule,
+    OverlayModule
   ],
-  providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators],
+  providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
+  
+    // Logout bei HTML Fehler...
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+    // provider used to create fake backend
+    // fakeBackendProvider
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

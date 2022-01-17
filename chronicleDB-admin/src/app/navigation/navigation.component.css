@@ -28,3 +28,16 @@
 .mat-toolbar{
   background-color: #23396e;
 }
+
+.overlaybox {
+  width: 250px;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #fff;
+  text-align: center;
+  padding: 32px;
+}
+.overlayelement {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

@@ -2,6 +2,7 @@ import { HttpClient} from '@angular/common/http';
 import { Injectable} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ChronicleStream } from '../model/ChronicleStream';
+import { AuthService } from './auth.service';
 import { EventParser } from './event-parser';
 import { SnackBarService } from './snack-bar.service';
 
@@ -11,6 +12,7 @@ import { SnackBarService } from './snack-bar.service';
 })
 export class ChronicleService {
   private url!: string;
+  isUrlReachable : boolean = true;
 
   private selectedStream = new BehaviorSubject<ChronicleStream|null>(null);
   selectedStream$ = this.selectedStream.asObservable();
@@ -23,18 +25,21 @@ export class ChronicleService {
     return this.streamList;
   }
 
-  constructor(private http: HttpClient, private snackBar: SnackBarService) {}
+  constructor(private http: HttpClient, private snackBar: SnackBarService, private authService : AuthService) {
+    this.url = localStorage.getItem("serverUrl") || "";
+  }
 
-  getHttp(){
+  getHttp() : HttpClient {
     return this.http;
   }
 
-  getUrl() {
+  getUrl() : string {
     return this.url;
   }
 
   setUrl(url: string) {
     this.url = url;
+    localStorage.setItem("serverUrl", url);
   }
 
   existsStream(): boolean {
@@ -75,12 +80,19 @@ export class ChronicleService {
   getStreamsFromChronicle(){
     this.http.get(this.url + "show_streams", {responseType: "json"}).subscribe(response => {
 
+      // Update ob URL richtig
+      this.isUrlReachable = true;
+
       // reset current data
-      this.streamList = new Array<ChronicleStream>((response as any).length);
+      this.streamList = new Array<ChronicleStream>();
       this.selectedStream.next(null);
 
       // refill data
       for (let index = 0; index < (response as any).length; index++) {
+        if (!this.authService.canUserAccessStream(index)) {
+          continue;
+        }
+
         const stream = (response as any)[index];
         
         if(stream[1]=="Online"){
@@ -92,7 +104,8 @@ export class ChronicleService {
               online: true
             }
 
-            this.streamList[index] = newStream;
+            this.streamList.push(newStream);
+            this.streamList.sort((a, b) => a.id - b.id);  // sortieren nach id, da offline früher eingefügt wird als online, da HTTP
             this.streamListBS.next(this.streamList);
             this.selectedStream.next(newStream); // put most recent stream as selected
           });
@@ -101,34 +114,22 @@ export class ChronicleService {
             id:parseInt(stream[0]),
             online: false
           }
-          this.streamList[index]=newStream;
+          this.streamList.push(newStream);
           this.streamListBS.next(this.streamList);
         }
       }
       
       this.saveUpdatedStreamList(JSON.stringify(this.streamList));
       return response;
+    }, error => {
+      if (error.statusText === "Unknown Error") {
+        // Update ob URL richtig
+        this.isUrlReachable = false;
+        console.log("The entered URL is not reachable!");
+      } else {
+        console.error(error);
+      }
     });
-  }
-
-  addStreamToList(response: any) {
-    //get the posisiton of the StreamID in the response string
-    let streamid = response.indexOf("StreamID:");
-    let id = response.slice(streamid+9,response.indexOf("StreamConfig"));
-    
-
-    //push our created stream into our streams array  
-    this.streamList.push({  
-      id:parseInt(id),
-      //the response event list is beeing parsed here
-      event:EventParser.parseResponseEvent(response),
-      compoundType: EventParser.parseCompoundType(response),
-      online: true
-    });
-    
-    this.getStreamsFromChronicle();
-    console.log(response);
-    this.streamListBS.next(this.streamList);
   }
 
   async getMaxKey(id :number){

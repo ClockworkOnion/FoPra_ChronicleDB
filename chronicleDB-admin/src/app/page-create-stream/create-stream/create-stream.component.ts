@@ -9,7 +9,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['./create-stream.component.css']
 })
 export class CreateStreamComponent {
-  constructor(private chronicleService: ChronicleService, private createService: CreateStreamService, private snackBar: SnackBarService) {
+  constructor(private chronicleService: ChronicleService, public createService: CreateStreamService, private snackBar: SnackBarService) {
     chronicleService.getHttp();
   }
 

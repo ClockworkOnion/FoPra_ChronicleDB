@@ -108,22 +108,26 @@ Ebenso wollen wir schon anfangen, die Komponenten für die anderen Operationen z
 ## Besprechung vom 06.12.21
 Awensend: Johannes Buder, Davit Davtyan, Lars Happel
 
-## REST-API
-Wir wollen die reslichen get und post anfragen fertig machen. (`/recover_stream(snapshot)`, `/insert_orderedArray`, `/min_key/StreamID`, `/max_key/StreamID`, `/tree_height/StreamID`, `query_time_travel`)
+### Login
+Zunächst wollen wir ein eigenes Backend erstellen, welches wir mittels einer REST-API ansprechen. Dies wollen wir in den Ferien fertig gestellt haben.
+Für die User legen wir dann jeweils ihre Rollen, Berechtigungen und sonstige Daten an. Den Login wollen wir mittels JWT umsetzen und verifizieren.  
+Wir planen eine Seite, auf der ein Admin dann die Berechtigungen der Benutzer verwalten und modifizieren kann. Jedoch hat für uns erst mal Priorität, 
+dass die Logik und die entsprechende Anzeige funktioniert.
 
-## UI
-Wir wollen die Home-Seite übersichtlicher machen, indem wir einige Einstellungen in Dialoge oder andere routing Seiten packen.
-
-## Weitere Planung
-Johannes kümmert sich um die Übersichtlichkeit von `/create_Stream` und `/insert_ordered_array`.
-Lars kümmert sich um `/query_time_travel/StreamID` und `/show_right_flank/StreamID`. Davit schreibt die get methoden für min und max_key.
-
-## Weiteren To-Dos für die Zukunft:
-- VarCompound anpassen
-- Lightweight Index
-- Compressor
-- Upload File validation
-- mehrere Data files erlauben
-- Fehlerbehandlung bei http Sachen
+### Max/Min Key
+Wir wollen direkt in der Streamliste den Max und Min key anzeigen lassen.
 
 
+
+
+## Minib-Besprechung vom 12.01.21
+Awensend: Johannes Buder, Lars Happel
+
+### Login
+Wir wollen auf ein Python-Backend umsteigen. Da wir bisher schon mit einer REST-API gearbeitet haben, sollte der Austausch problemlos.
+Da die oben erwähnte Logik schon funktioniert, wollen wir nun eine Admin-Verwaltungsseite erstellen und die Login-Seite aufhübschen :)
+
+## Besprechung 13.01.21
+
+### Login/Backend
+Ein bisscchen Bugfixing betrieben beim Backend. Das Login funktioniert nun via Backend. Wir haben uns entschlossen auch für die anderen Requests das Backend zu nutzen, damit der Token verifiziert werden kann. Ansonsten wäre die Sicherheitslücke zu groß, da man selbst Web Token generieren könnte und somit die Nutzerverwaltung aushebeln.
