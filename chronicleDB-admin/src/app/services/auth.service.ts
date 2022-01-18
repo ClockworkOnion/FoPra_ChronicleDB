@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { User } from '../model/User';
 
 
-const BACKEND_URL : string = "http://127.0.0.1:5002/"
+export const BACKEND_URL : string = "http://127.0.0.1:5002/";
 
 @Injectable({
   providedIn: 'root',
