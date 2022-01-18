@@ -1,5 +1,6 @@
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { Injectable } from '@angular/core';
+import { BACKEND_URL } from '../auth.service';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ export class StreamInfoService {
   }
  
  async  getStreamInfo(id: number){     
-    const res =  await this.chronicleService.getHttp().get(this.chronicleService.getUrl() +"stream_info/"+id,{responseType:"text"}).toPromise();
+    const res =  await this.chronicleService.getHttp().get(BACKEND_URL +"stream_info/"+id,{responseType:"text"}).toPromise();
      this.info=res;
      return res;
     }

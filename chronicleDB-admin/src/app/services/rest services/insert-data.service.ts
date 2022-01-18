@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { ChronicleEventElement, EventCompoundType, EventElementSingleOrList, EventElementType } from 'src/app/model/ChronicleEvent';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
+import { BACKEND_URL } from '../auth.service';
 import { ChronicleService } from '../chronicle.service';
 import { SnackBarService } from '../snack-bar.service';
 
@@ -17,8 +18,7 @@ export class InsertDataService {
   }
 
   insertEvent(event:string[], timestamp: number) {
-    let url = this.chronicleService.getUrl();
-    if (!url || !this.currentStream) {
+    if (!this.currentStream) {
       return; 
     }
     let body = this.parseInputToBody(event, timestamp);
@@ -27,18 +27,17 @@ export class InsertDataService {
     
 
     this.chronicleService.getHttp()
-      .post(url + "insert_ordered/" + this.currentStream!.id, body)
+      .post(BACKEND_URL + "insert_ordered/" + this.currentStream!.id, body)
       .subscribe(response => this.snackBar.openSnackBar("Event successfully inserted!"));
   }
 
   insertEventString(event:string) {
-    let url = this.chronicleService.getUrl();
-    if (!url || !this.currentStream) {
+    if (!this.currentStream) {
       return; 
     }
 
     this.chronicleService.getHttp()
-      .post(url + "insert_ordered/" + this.currentStream!.id, event)
+      .post(BACKEND_URL + "insert_ordered/" + this.currentStream!.id, event)
       .subscribe(response => this.snackBar.openSnackBar("Event successfully inserted!"));
   }
 

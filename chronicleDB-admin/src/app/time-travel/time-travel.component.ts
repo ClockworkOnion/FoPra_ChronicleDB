@@ -8,6 +8,7 @@ import { ChronicleService } from '../services/chronicle.service';
 import { GetFlankService } from '../services/rest services/get-flank.service';
 import { SnackBarService } from '../services/snack-bar.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { BACKEND_URL } from '../services/auth.service';
 
 @Component({
   selector: 'app-time-travel',
@@ -57,7 +58,7 @@ export class TimeTravelComponent implements OnInit {
     }
 
     this.chronicleService.getHttp()
-      .post(url + "query_time_travel/" + this.currentStream!.id, event, {responseType:"text"})
+      .post(BACKEND_URL + "query_time_travel/" + this.currentStream!.id, event, {responseType:"text"})
       .subscribe(response => {
         this.flankInfo = response;
         let json = JSON.parse(this.flankInfo);

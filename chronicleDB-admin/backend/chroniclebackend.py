@@ -15,6 +15,96 @@ app.config['CORS_HEADERS'] = 'Content-Type' # Adding CORS header
 USERFILE = "users.dat"
 SECRET = "secret"
 
+# CHRONICLE METHODEN ############################################################################################
+
+@app.route('/show_right_flank/<stream_id>', methods=['GET'])
+def showRightFlank(stream_id):
+    print("Stream ID: " + stream_id)
+    print("Received request for 'show_right_flank', printing headers:\n" + str(request.headers))
+    # TODO: Verify web token against the password
+    print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/" + stream_id + " ... ")
+    response = requests.get("http://127.0.0.1:8000/show_right_flank/" + stream_id)
+    print("Response from ChronicleDB: "+ str(response))
+    return jsonify(response.json())
+
+@app.route('/stream_info/<stream_id>', methods=['GET'])
+def streamInfo(stream_id):
+    print("Stream ID: " + stream_id)
+    print("Received request for 'stream_info', printing headers:\n" + str(request.headers))
+    # TODO: Verify web token against the password
+    print("Trying to get stream info from ChronicleDB at localhost:8000/stream_info/" + stream_id + " ... ")
+    response = requests.get("http://127.0.0.1:8000/stream_info/" + stream_id)
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
+@app.route('/create_stream', methods=['POST'])
+def createStream():
+    print("Received request for 'create_stream', printing headers:\n" + str(request.headers))
+    print(request.data)
+    response = requests.post("http://127.0.0.1:8000/create_stream", request.data)
+    print("Response from ChronicleDB: " + str(response))
+    return {"response from ChronicleDB": str(response) } 
+
+@app.route('/insert_ordered/<stream_id>', methods=['POST'])
+def insertOrdered(stream_id):
+    print("Stream ID: " + stream_id)
+    print("Received request for 'insert_ordered', printing headers:\n" + str(request.headers))
+    # TODO: Verify web token against the password
+    response = requests.post("http://127.0.0.1:8000/insert_ordered/" + stream_id, request.data)
+    print("Response from ChronicleDB: "+ str(response))
+    return {}
+
+@app.route('/query_time_travel/<stream_id>', methods=['POST'])
+def queryTimeTravel(stream_id):
+    print("Stream ID: " + stream_id)
+    print("Received request for 'query_time_travel', printing headers:\n" + str(request.headers))
+    # TODO: Verify web token against the password
+    response = requests.post("http://127.0.0.1:8000/query_time_travel/" + stream_id, request.data)
+    print("Response from ChronicleDB: "+ str(response))
+    return jsonify(response.json())
+
+@app.route('/show_streams', methods=['GET'])
+def showStreams():
+    print("Received request for 'show_streams', printing headers:\n" + str(request.headers))
+    # TODO: Verify web token against the password
+    response = requests.get("http://127.0.0.1:8000/show_streams", request.data)
+    print("Response from ChronicleDB: "+ str(response))
+    return jsonify(response.json())
+
+@app.route('/max_key/<stream_id>', methods=['GET'])
+def maxKey(stream_id):
+    print("Received request for 'max_key', printing headers:\n" + str(request.headers))
+    # TODO: Verify web token against the password
+    response = requests.get("http://127.0.0.1:8000/max_key/" + stream_id, request.data)
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
+@app.route('/min_key/<stream_id>', methods=['GET'])
+def minKey(stream_id):
+    print("Received request for 'min_key', printing headers:\n" + str(request.headers))
+    # TODO: Verify web token against the password
+    response = requests.get("http://127.0.0.1:8000/min_key/" + stream_id, request.data)
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
+@app.route('/tree_height/<stream_id>', methods=['GET'])
+def treeHeight(stream_id):
+    print("Received request for 'tree_height', printing headers:\n" + str(request.headers))
+    # TODO: Verify web token against the password
+    response = requests.get("http://127.0.0.1:8000/tree_height/" + stream_id, request.data)
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
+@app.route('/system_info', methods=['GET'])
+def systemInfo():
+    print("Received request for 'system_info', printing headers:\n" + str(request.headers))
+    # TODO: Verify web token against the password
+    response = requests.get("http://127.0.0.1:8000/system_info", request.data)
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
+# TOKEN METHODEN ################################################################################################
+
 def JWTcreateToken(user_name):
     print("Creating a web token for user " + user_name + " ...")
     user_data = JSONread(USERFILE)
@@ -84,33 +174,6 @@ class userLogin(Resource):
             print(response)
             return response
 
-class showRightFlank(Resource):
-    @app.route('/show_right_flank/<stream_id>')
-    def get(stream_id):
-        print("Stream ID: " + stream_id)
-        print("Received request for 'show_right_flank', printing headers:\n" + str(request.headers))
-        # TODO: Verify web token against the password
-        print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/" + stream_id + " ... ")
-        response = requests.get("http://127.0.0.1:8000/show_right_flank/" + stream_id)
-        print("Response from ChronicleDB: "+ str(response))
-        return jsonify(response.json())
-
-    def post(self):
-        return "Not defined!"
-
-class createStream(Resource):
-    def get(self):
-        return "Not defined!"
-
-    def post(self):
-        print("Trying to create stream...")
-        print(request.data)
-        response = requests.post("http://127.0.0.1:8000/create_stream", request.data)
-        print("Response from ChronicleDB: " + str(response))
-        return {"response from ChronicleDB": str(response) } 
-
-api.add_resource(createStream, "/create_stream")
-# api.add_resource(showRightFlank, "/show_right_flank")
 api.add_resource(userLogin, "/user_login")
 
 if __name__ == "__main__":

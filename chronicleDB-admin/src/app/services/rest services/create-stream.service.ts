@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { EventCompoundType } from 'src/app/model/ChronicleEvent';
+import { BACKEND_URL } from '../auth.service';
 import { ChronicleService } from '../chronicle.service';
 import { EventParser } from '../event-parser';
 import { SnackBarService } from '../snack-bar.service';
@@ -51,7 +52,7 @@ export class CreateStreamService {
   createStream() {
     this._isHttpRequestPending = true;
     sessionStorage.setItem("chronicleURL",this.chronicle.getUrl());
-    let response = this.chronicle.post(this.chronicle.getUrl() + "create_stream", this.createStreamBody);
+    let response = this.chronicle.post(BACKEND_URL + "create_stream", this.createStreamBody);
     response.subscribe(response => {
       this.snackBar.openSnackBar("Successfully created a new Stream!");
       this._isHttpRequestPending = false;

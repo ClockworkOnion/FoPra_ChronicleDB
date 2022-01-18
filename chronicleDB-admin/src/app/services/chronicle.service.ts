@@ -2,7 +2,7 @@ import { HttpClient} from '@angular/common/http';
 import { Injectable} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ChronicleStream } from '../model/ChronicleStream';
-import { AuthService } from './auth.service';
+import { AuthService, BACKEND_URL } from './auth.service';
 import { EventParser } from './event-parser';
 import { SnackBarService } from './snack-bar.service';
 
@@ -78,7 +78,7 @@ export class ChronicleService {
   }
 
   getStreamsFromChronicle(){
-    this.http.get(this.url + "show_streams", {responseType: "json"}).subscribe(response => {
+    this.http.get(BACKEND_URL + "show_streams", {responseType: "json"}).subscribe(response => {
 
       // Update ob URL richtig
       this.isUrlReachable = true;
@@ -96,7 +96,7 @@ export class ChronicleService {
         const stream = (response as any)[index];
         
         if(stream[1]=="Online"){
-          this.http.get(this.url +"stream_info/"+stream[0],{responseType:"text"}).subscribe(info =>{ 
+          this.http.get(BACKEND_URL +"stream_info/"+stream[0],{responseType:"text"}).subscribe(info =>{ 
             let newStream: ChronicleStream = {  
               id:parseInt(stream[0]),
               event:EventParser.parseResponseEvent(info),
@@ -133,16 +133,15 @@ export class ChronicleService {
   }
 
   async getMaxKey(id :number){
-   return   await this.http.get(this.url +"max_key/"+id,{responseType:"text"}).toPromise();
+   return   await this.http.get(BACKEND_URL +"max_key/"+id,{responseType:"text"}).toPromise();
 
   }
 
   async getMinKey(id:number){
-    return   await this.http.get(this.url +"min_key/"+id,{responseType:"text"}).toPromise();
+    return   await this.http.get(BACKEND_URL +"min_key/"+id,{responseType:"text"}).toPromise();
   }
 
   async getTreeHeight(id:number){
-    return   await this.http.get(this.url +"tree_height/"+id,{responseType:"text"}).toPromise();
+    return   await this.http.get(BACKEND_URL +"tree_height/"+id,{responseType:"text"}).toPromise();
   }
-
 }
