@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService, BACKEND_URL } from '../services/auth.service';
+import { SnackBarService } from '../services/snack-bar.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(private accountService: AuthService) { }
+    constructor(private accountService: AuthService, private snackBar: SnackBarService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const isLoggedIn:  boolean = this.accountService.isLoggedIn();
@@ -20,6 +21,11 @@ export class JwtInterceptor implements HttpInterceptor {
                 //     Authorization: `Bearer ${localStorage.getItem('token')}`
                 // }
             });
+        }
+
+        if (request.url.includes("localhost:8000")) {
+            this.snackBar.openSnackBar("Warning! Directly addressed Chronicle!");
+            console.log("Warning! Directly addressed Chronicle!");
         }
 
         return next.handle(request);
