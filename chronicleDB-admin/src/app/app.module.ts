@@ -44,7 +44,7 @@ import { StreamListComponent } from './page-home/stream-list/stream-list.compone
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
 import { CreateStreamService } from './services/rest services/create-stream.service';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
 import { CreateStreamComponent } from './page-create-stream/create-stream/create-stream.component';
 import { StreamEventPropertyComponent } from './page-create-stream/card-stream-event-properties/stream-event-property.component';
@@ -118,7 +118,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MatDialogModule,
     OverlayModule
   ],
-  providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
+  providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators
   
     // Logout bei HTML Fehler...
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

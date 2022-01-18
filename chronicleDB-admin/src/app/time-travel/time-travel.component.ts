@@ -7,7 +7,7 @@ import { ChronicleStream } from '../model/ChronicleStream';
 import { ChronicleService } from '../services/chronicle.service';
 import { GetFlankService } from '../services/rest services/get-flank.service';
 import { SnackBarService } from '../services/snack-bar.service';
-import { PipeTransform, Pipe } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-time-travel',
@@ -22,13 +22,14 @@ export class TimeTravelComponent implements OnInit {
 
   timeStamp1 : number = 0; // timeTravel lower bound
   timeStamp2 : number = 50; // timeTravel upper bound
-  outputInfo : string = "Awaiting data..." // string to be displayed inside HTML
+  outputInfo : string|null = null // string to be displayed inside HTML: if null, not displayed at all
   flankInfo : any; // for saving the REST HTTP response
   private currentStream!: ChronicleStream|null;
   toggleInclusive = new FormControl(false);
   useInclusive : boolean = false;
 
-  constructor(private chronicleService: ChronicleService, private snackBar: SnackBarService, private flankService: GetFlankService) {
+  constructor(private chronicleService: ChronicleService, private snackBar: SnackBarService, 
+    private flankService: GetFlankService, public dialogRef: MatDialogRef<TimeTravelComponent>) {
     this.chronicleService.selectedStream$.subscribe(stream => {
       this.currentStream = stream;      
     });
@@ -127,6 +128,10 @@ export class TimeTravelComponent implements OnInit {
 
   valueChange() {
     console.log("Timestamp changed");
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }
 

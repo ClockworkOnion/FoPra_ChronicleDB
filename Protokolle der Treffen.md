@@ -120,7 +120,7 @@ Wir wollen direkt in der Streamliste den Max und Min key anzeigen lassen.
 
 
 
-## Minib-Besprechung vom 12.01.21
+## Mini-Besprechung vom 12.01.21
 Awensend: Johannes Buder, Lars Happel
 
 ### Login
@@ -131,3 +131,18 @@ Da die oben erwähnte Logik schon funktioniert, wollen wir nun eine Admin-Verwal
 
 ### Login/Backend
 Ein bisscchen Bugfixing betrieben beim Backend. Das Login funktioniert nun via Backend. Wir haben uns entschlossen auch für die anderen Requests das Backend zu nutzen, damit der Token verifiziert werden kann. Ansonsten wäre die Sicherheitslücke zu groß, da man selbst Web Token generieren könnte und somit die Nutzerverwaltung aushebeln.
+
+
+
+
+## Mini-Besprechung vom 17.01.21
+Awensend: Johannes Buder, Davit Davtyan
+
+### Dialoge
+Wir wollen verhindern, dass manche Dialoge (TimeTravel) geschlossen werden, wenn man weg klickt.
+
+#### Time Travel
+- neues UI machen und anpassen
+
+#### Show Right Flank
+- UI hinzufügen (bisher nur Konsole)

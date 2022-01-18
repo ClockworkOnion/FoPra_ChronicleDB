@@ -46,3 +46,17 @@
   table {
     width: 100%;
   }
+
+  .card {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    margin-bottom: 20px;
+    margin-right: 32px;
+    border-radius: 25px;
+  }
+  
+  .card-content {
+    padding: 20pt;
+  }

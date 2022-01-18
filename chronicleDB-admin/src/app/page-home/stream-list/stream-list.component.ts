@@ -61,7 +61,7 @@ export class StreamListComponent implements OnInit {
 
   timeTravel(stream: ChronicleStream) {
     this.chronicleService.selectStream(stream);
-    this.dialog.openDialog(TimeTravelComponent, {maxHeight: "800px"});
+    this.dialog.openDialog(TimeTravelComponent, {maxHeight: "800px", disableClose: true});
   }
 
  async showMaxKey(id:number){

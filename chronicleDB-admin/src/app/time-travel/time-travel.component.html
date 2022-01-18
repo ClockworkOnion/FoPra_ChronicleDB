@@ -1,55 +1,52 @@
-<div class="padded">
-    <mat-card class="card">
-        <mat-card-header>
-            <mat-card-title>Query Time Travel</mat-card-title>
-        </mat-card-header>
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title>Query Time Travel</mat-card-title>
+    </mat-card-header>
 
-        <mat-card-content class="card-content">
+    <mat-card-content class="card-content">
+        <mat-form-field appearance="fill" matTooltip="Please enter the starting timestamp">
+            <mat-label>From</mat-label>
+            <input value="" matInput required (change)="valueChange()" ngModel #url="ngModel"
+                [(ngModel)]="timeStamp1" />
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="fill" matTooltip="Please enter the goal timestamp">
+            <mat-label>To</mat-label>
+            <input value="" matInput required (change)="valueChange()" ngModel #url="ngModel"
+                [(ngModel)]="timeStamp2" />
+        </mat-form-field>
+        <div style="text-align: center;">
+            Exclusive
+            <mat-slide-toggle [formControl]="toggleInclusive"> </mat-slide-toggle>
+            Inclusive
+        </div>
 
+        <div style="text-align: center; margin-top: 16px;">
+            <button mat-raised-button color="primary" (click)="timeTravel()" cdkFocusInitial>
+                Go!
+            </button>
+            &nbsp;
+            <button mat-stroked-button color="accent" (click)="closeDialog()">Close</button>
+        </div>
 
-    <mat-form-field appearance="fill"  matTooltip="Please enter the starting timestamp">
-        <mat-label>From</mat-label>
-        <input value ="" matInput required (change)="valueChange()" ngModel #url="ngModel"  [(ngModel)] ="timeStamp1"/>
-    </mat-form-field>
+        <mat-tab-group dynamicHeight *ngIf="outputInfo" style="margin-top: 32px;">
+            <mat-tab label="String View">
+                <div class="newlines">
+                    {{ outputInfo }}
+                </div>
+            </mat-tab>
+            <br /><br />
 
-    <mat-form-field appearance="fill"  matTooltip="Please enter the goal timestamp">
-        <mat-label>To</mat-label>
-        <input value ="" matInput required (change)="valueChange()" ngModel #url="ngModel"  [(ngModel)] ="timeStamp2"/>
-    </mat-form-field>
-    <br>
-    Exclusive
-    <mat-slide-toggle [formControl]="toggleInclusive" >
-    </mat-slide-toggle>
-    Inclusive
-    <br><br><br>
-    <button mat-raised-button color="primary" style="float: left; bottom: 20pt" (click)="timeTravel()">
-        Go!
-    </button>
-    <br><br>
-
-    <mat-tab-group>
-        <mat-tab label="String View">
-
-            <div class="newlines">
-                {{ outputInfo }}
-            </div>
-        </mat-tab>
-        <br><br>
-        
-        <mat-tab label="Table view">
-
-        <table #datatable mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container *ngFor="let disCol of columnNames; let colIndex = index" matColumnDef="{{disCol}}">
-                <th mat-header-cell *matHeaderCellDef> {{disCol}} </th>
-                <td mat-cell *matCellDef="let element"> {{element[disCol]}} </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnNames;"></tr>
-        </table>
-        </mat-tab>
-
-    </mat-tab-group>
-
-        </mat-card-content>
-    </mat-card>
-</div>
+            <mat-tab label="Table view">
+                <table #datatable mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container *ngFor="let disCol of columnNames; let colIndex = index" matColumnDef="{{ disCol }}">
+                        <th mat-header-cell *matHeaderCellDef>{{ disCol }}</th>
+                        <td mat-cell *matCellDef="let element">{{ element[disCol] }}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnNames"></tr>
+                </table>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>
