@@ -59,6 +59,7 @@ import { fakeBackendProvider } from './backend/fake-backend';
 import { JwtInterceptor } from './backend';
 import { NoAccessComponent } from './no-access/no-access.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { StreamInfoComponent } from './stream-info/stream-info.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     CreateStreamComponent,
     TimeTravelComponent,
     PageLoginComponent,
-    NoAccessComponent
+    NoAccessComponent,
+    StreamInfoComponent
   ],
   imports: [
     BrowserModule,

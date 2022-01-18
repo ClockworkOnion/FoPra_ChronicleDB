@@ -7,6 +7,7 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { InsertDataTabMenuComponent } from 'src/app/page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
 import { TimeTravelComponent } from 'src/app/time-travel/time-travel.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { StreamInfoComponent } from 'src/app/stream-info/stream-info.component';
 
 @Component({
   selector: 'app-stream-list',
@@ -43,7 +44,7 @@ export class StreamListComponent implements OnInit {
   }
   async showInfo(id : number){
     let res =await this.infoService.getStreamInfo(id);
-    console.log(res)
+    this.dialog.openDialog(StreamInfoComponent, {data: {streamId: id, streamInfo: res}, maxHeight: "900px"});
   }
 
   shutDown(id :number){
