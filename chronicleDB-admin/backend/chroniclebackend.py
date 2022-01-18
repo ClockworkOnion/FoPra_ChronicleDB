@@ -84,13 +84,14 @@ class userLogin(Resource):
             print(response)
             return response
 
-
 class showRightFlank(Resource):
-    def get(self):
-        print("Received request for 'show_right_flank', printing headers: " + str(request.headers))
+    @app.route('/show_right_flank/<stream_id>')
+    def get(stream_id):
+        print("Stream ID: " + stream_id)
+        print("Received request for 'show_right_flank', printing headers:\n" + str(request.headers))
         # TODO: Verify web token against the password
-        print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/0 ... ")
-        response = requests.get("http://127.0.0.1:8000/show_right_flank/0")
+        print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/" + stream_id + " ... ")
+        response = requests.get("http://127.0.0.1:8000/show_right_flank/" + stream_id)
         print("Response from ChronicleDB: "+ str(response))
         return jsonify(response.json())
 
@@ -109,7 +110,7 @@ class createStream(Resource):
         return {"response from ChronicleDB": str(response) } 
 
 api.add_resource(createStream, "/create_stream")
-api.add_resource(showRightFlank, "/show_right_flank")
+# api.add_resource(showRightFlank, "/show_right_flank")
 api.add_resource(userLogin, "/user_login")
 
 if __name__ == "__main__":
