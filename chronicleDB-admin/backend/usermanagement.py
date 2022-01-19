@@ -17,14 +17,14 @@ class User():
         self.canInsertAll = can_insert_all
         self.allowedInsertStreams = allowed_insert_streams
 
-    # def toJSON(self):
-    #     return json.dumps(self, default=lambda o: o.__dict__, 
-    #         sort_keys=True, indent=0)
-
 def JSONread(filename):
     with open(filename) as json_file:
         data = json.load(json_file)
         return data
+
+def JWTverifyToken(token):
+    print("Call to verify token was made. WIP --  not yet implented!!")
+    return True
 
 def JWTcreateToken(user_name):
     print("Creating a web token for user " + user_name + " ...")

@@ -106,6 +106,7 @@ def systemInfo():
 
 # LOGIN METHODEN ################################################################################################
 
+
 @app.route('/user_login', methods=['POST'])
 def logMeIn():
         print("userLogin post request received. Printing request:")
@@ -121,6 +122,27 @@ def logMeIn():
             print("Response created:")
             print(response)
             return response
+
+@app.route('/user', methods=['GET'])
+def getUsers():
+    if not um.JWTverifyToken("dummy_token"): return make_response({"Access" : "denied!!"}, 403)
+    print("User IDs request received. Printing request:\n" + str(request.data))
+    res_body = um.getUserIds()
+    response = make_response({"ids" : res_body}, 200)
+    response.headers["Content-Type"] = "json"
+    print("Response created:\n" + str(response) + "\nEnd of response. Sending response...")
+    return response
+
+@app.route('/user/<user_id>', methods=['GET'])
+def getInfoById(user_id):
+    if not um.JWTverifyToken("dummy_token"): return make_response({"Access" : "denied!!"}, 403)
+    print("User " + user_id + " request received. Printing request:\n" + str(request.data))
+    res_body = um.getUserAsMap(user_id)
+    response = make_response({"ids" : res_body}, 200)
+    response.headers["Content-Type"] = "json"
+    print("Response created:\n" + str(response) + "\nEnd of response. Sending response...")
+    return response
+
 
 if __name__ == "__main__":
     app.run(port=5002, debug=True) # For starting the backend process
