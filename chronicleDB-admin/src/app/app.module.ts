@@ -60,6 +60,8 @@ import { JwtInterceptor } from './backend';
 import { NoAccessComponent } from './no-access/no-access.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { StreamInfoComponent } from './stream-info/stream-info.component';
+import { UserManagementComponent } from './page-user-management/user-management/user-management.component';
+import {  MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,8 @@ import { StreamInfoComponent } from './stream-info/stream-info.component';
     TimeTravelComponent,
     PageLoginComponent,
     NoAccessComponent,
-    StreamInfoComponent
+    StreamInfoComponent,
+    UserManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +121,8 @@ import { StreamInfoComponent } from './stream-info/stream-info.component';
     MatSlideToggleModule,
     DragDropModule,
     MatDialogModule,
-    OverlayModule
+    OverlayModule,
+    MatPaginatorModule
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
   

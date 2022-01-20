@@ -74,4 +74,8 @@ export class AuthService {
   canUserInsertToStream(id : number) {
     return this.currentUser?.canInsertAll || this.currentUser?.allowedInsertStreams?.includes(id) || false;
   }
+  getUsers():any{
+    console.log("calling backend")
+    let myResponse = this.http.get("http://127.0.0.1:5002/getUsers")
+  }
 }

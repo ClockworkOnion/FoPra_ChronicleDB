@@ -4,5 +4,7 @@ export interface ChronicleStream {
   id: number,
   online: boolean,
   event?: ChronicleEventElement[],
-  compoundType?: EventCompoundType
+  compoundType?: EventCompoundType,
+  minKey:string;
+  maxKey:string;
 }

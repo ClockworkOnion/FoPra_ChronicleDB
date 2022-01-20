@@ -28,6 +28,10 @@
         <mat-icon class="sidenav-icon"> info </mat-icon>
         &nbsp; System Info
       </a>
+      <a mat-list-item routerLink="/user_management"  *ngIf="authService.isUserAdmin()">
+        <mat-icon class="user"> manage_accounts </mat-icon>
+        &nbsp; User Management
+      </a>
       <app-expansion-panel> </app-expansion-panel>
     </mat-nav-list>
   </mat-sidenav>
