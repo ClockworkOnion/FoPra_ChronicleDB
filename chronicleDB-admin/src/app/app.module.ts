@@ -61,6 +61,8 @@ import { NoAccessComponent } from './no-access/no-access.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { StreamInfoComponent } from './stream-info/stream-info.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -120,7 +122,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatSlideToggleModule,
     DragDropModule,
     MatDialogModule,
-    OverlayModule
+    OverlayModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
   
