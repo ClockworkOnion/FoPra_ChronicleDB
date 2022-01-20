@@ -143,6 +143,10 @@ def getInfoById(user_id):
     print("Response created:\n" + str(response) + "\nEnd of response. Sending response...")
     return response
 
+@app.route('/allusers', methods=['GET'])
+def getAllUsers():
+    return make_response(getAllUsers(), 200)
+
 
 if __name__ == "__main__":
     app.run(port=5002, debug=True) # For starting the backend process

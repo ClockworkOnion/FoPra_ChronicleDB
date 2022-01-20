@@ -74,6 +74,9 @@ def getUserIds():
         users_list.append(u["username"])
     return users_list
 
+def getAllUsers(): 
+    return JSONread(USERFILE)
+
 def registerNewUser(user_name, password, is_admin, can_create_streams, allowed_streams,
  allowed_insert_streams, all_streams_allowed, can_insert_all):
     user_data = JSONread(USERFILE)
