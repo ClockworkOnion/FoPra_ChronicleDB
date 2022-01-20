@@ -2,7 +2,16 @@
   <div class="streamListElement-box" *ngFor="let stream of streamList" cdkDrag>
     <ng-container *ngIf="stream">
       <span [ngClass]="{'online' : stream['online'], 'offline': !stream['online']}" class="statusPoint">●</span>
-      Stream ID : {{stream.id}}   
+      Stream ID : {{stream.id}} 
+      <div class= "filler"></div>
+      |
+      <div class= "filler"></div>
+      MinKey : {{stream.minKey}} 
+      <div class= "filler"></div>
+      |
+      <div class= "filler"></div> 
+      MaxKey : {{stream.maxKey}}
+      
 
       <div class= "filler"></div>
       <span class="example-spacer"></span>

@@ -11,6 +11,7 @@ import { NoAccessComponent } from './no-access/no-access.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
 import { CreateAuthGuard } from './services/guards/create-auth-guard.service';
 import { MasterGuard } from './services/guards/master-guard.service';
+import { UserManagementComponent } from './page-user-management/user-management/user-management.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard]} },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'settings', component: TabMenuComponent },
   // {path:"insertData",component:InsertDataTabMenuComponent},
   { path: 'systemInfo', component: SystemInfoComponent },
+  { path: 'user_management', component: UserManagementComponent },
   { path: 'show_right_flank', component: ShowRightFlankComponent },
   { path: 'time_travel', component: TimeTravelComponent },
   { path: 'create_stream', component: CreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, CreateAuthGuard]} },

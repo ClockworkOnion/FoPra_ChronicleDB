@@ -96,12 +96,14 @@ export class ChronicleService {
         const stream = (response as any)[index];
         
         if(stream[1]=="Online"){
-          this.http.get(BACKEND_URL +"stream_info/"+stream[0],{responseType:"text"}).subscribe(info =>{ 
+          this.http.get(BACKEND_URL +"stream_info/"+stream[0],{responseType:"text"}).subscribe(async info =>{ 
             let newStream: ChronicleStream = {  
               id:parseInt(stream[0]),
               event:EventParser.parseResponseEvent(info),
               compoundType: EventParser.parseCompoundType(info),
-              online: true
+              online: true,
+              minKey:  await this.getMinKey(parseInt(stream[0])),
+              maxKey:  await this.getMaxKey(parseInt(stream[0]))
             }
 
             this.streamList.push(newStream);
@@ -110,9 +112,11 @@ export class ChronicleService {
             this.selectedStream.next(newStream); // put most recent stream as selected
           });
         } else {
-          let newStream: ChronicleStream = {  
-            id:parseInt(stream[0]),
-            online: false
+          let newStream: ChronicleStream = {
+            id: parseInt(stream[0]),
+            online: false,
+            minKey: '',
+            maxKey:""
           }
           this.streamList.push(newStream);
           this.streamListBS.next(this.streamList);
