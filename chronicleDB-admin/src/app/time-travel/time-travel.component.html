@@ -4,32 +4,39 @@
     </mat-card-header>
 
     <mat-card-content class="card-content">
-        <mat-form-field appearance="fill" matTooltip="Please enter the starting timestamp">
-            <mat-label>From</mat-label>
-            <input value="" matInput required (change)="valueChange()" ngModel #url="ngModel"
-                [(ngModel)]="timeStamp1" />
-        </mat-form-field>
-        &nbsp;
-        <mat-form-field appearance="fill" matTooltip="Please enter the goal timestamp">
-            <mat-label>To</mat-label>
-            <input value="" matInput required (change)="valueChange()" ngModel #url="ngModel"
-                [(ngModel)]="timeStamp2" />
-        </mat-form-field>
-        <div style="text-align: center;">
-            Exclusive
-            <mat-slide-toggle [formControl]="toggleInclusive"> </mat-slide-toggle>
-            Inclusive
-        </div>
+        <form (ngSubmit)="timeTravel()" [formGroup]="intervalFormControl">
+            <div style="text-align: center;">
+                <mat-button-toggle-group formControlName="typeSelector" id="exclusiveSwitchInput" name="exclusiveSwitch">
+                    <mat-button-toggle value="Exclusive">Exclusive</mat-button-toggle>
+                    <mat-button-toggle value="Inclusive">Inclusive</mat-button-toggle>
+                </mat-button-toggle-group>
+                
+                <div style="margin-top: 16px;">
+                    <mat-form-field appearance="fill" matTooltip="Please enter the starting timestamp">
+                        <mat-label  for="lowerBound">From</mat-label>
+                        <input matInput formControlName="lowerBound" type="number" id="lowerBoundInput" name="lowerBound"/>
+                    </mat-form-field>
+                    &nbsp;
+                    <mat-form-field appearance="fill" matTooltip="Please enter the goal timestamp">
+                        <mat-label  for="upperBound">To</mat-label>
+                        <input matInput formControlName="upperBound" type="number" id="upperBoundInput" name="upperBound"/>
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-error *ngIf="intervalFormControl.errors?.interval">
+                This intervall is not possible!
+            </mat-error>
+            
+            <div style="text-align: center; margin-top: 16px;">
+                <button mat-raised-button color="primary" type="submit" cdkFocusInitial [disabled]="!intervalFormControl.valid">
+                    Go!
+                </button>
+                &nbsp;
+                <button mat-stroked-button color="accent" (click)="closeDialog()">Close</button>
+            </div>
+        </form>
 
-        <div style="text-align: center; margin-top: 16px;">
-            <button mat-raised-button color="primary" (click)="timeTravel()" cdkFocusInitial>
-                Go!
-            </button>
-            &nbsp;
-            <button mat-stroked-button color="accent" (click)="closeDialog()">Close</button>
-        </div>
-
-        <mat-tab-group dynamicHeight *ngIf="outputInfo" style="margin-top: 32px;">
+        <mat-tab-group dynamicHeight dynamicWidth *ngIf="columnNamesForTable.length > 0" style="margin-top: 32px;">
             <mat-tab label="String View">
                 <div class="newlines">
                     {{ outputInfo }}
@@ -38,13 +45,13 @@
             <br /><br />
 
             <mat-tab label="Table view">
-                <table #datatable mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                    <ng-container *ngFor="let disCol of columnNames; let colIndex = index" matColumnDef="{{ disCol }}">
+                <table #datatable mat-table [dataSource]="data" class="mat-elevation-z8">
+                    <ng-container *ngFor="let disCol of columnNamesForTable; let colIndex = index" matColumnDef="{{ disCol }}">
                         <th mat-header-cell *matHeaderCellDef>{{ disCol }}</th>
-                        <td mat-cell *matCellDef="let element">{{ element[disCol] }}</td>
+                        <td mat-cell *matCellDef="let element">{{ element[colIndex] }}</td>
                     </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="columnNames"></tr>
-                    <tr mat-row *matRowDef="let row; columns: columnNames"></tr>
+                    <tr mat-header-row *matHeaderRowDef="columnNamesForTable"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnNamesForTable"></tr>
                 </table>
             </mat-tab>
         </mat-tab-group>

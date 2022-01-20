@@ -2,6 +2,7 @@ import { HttpClient} from '@angular/common/http';
 import { Injectable} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ChronicleStream } from '../model/ChronicleStream';
+import { inclusiveString, TimeTravelData } from '../time-travel/time-travel.component';
 import { AuthService, BACKEND_URL } from './auth.service';
 import { EventParser } from './event-parser';
 import { SnackBarService } from './snack-bar.service';
@@ -143,5 +144,18 @@ export class ChronicleService {
 
   async getTreeHeight(id:number){
     return   await this.http.get(BACKEND_URL +"tree_height/"+id,{responseType:"text"}).toPromise();
+  }
+
+  timeTravel(data : TimeTravelData) {
+    let timeStamp1 = data.lowerBound;
+    let timeStamp2 = data.upperBound;
+    let useInclusive : boolean = (data.typeSelector == inclusiveString);
+
+    this.snackBar.openSnackBar("Travelling "+ (useInclusive?"incl.":"excl.") + " from " + timeStamp1 + " to " + timeStamp2);
+    console.log("Travelling from " + timeStamp1 + " to " + timeStamp2);
+    let inOrEx : string = useInclusive ? "Inclusive" : "Exclusive";
+    let requestBody = '{"'+inOrEx+'":{"start":'+timeStamp1+',"end":'+timeStamp2+'}}';
+
+    return this.http.post(BACKEND_URL +"query_time_travel/"+this.selectedStream.value!.id, requestBody, {responseType:"text"});
   }
 }

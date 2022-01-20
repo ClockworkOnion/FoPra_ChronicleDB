@@ -60,6 +60,7 @@ import { JwtInterceptor } from './backend';
 import { NoAccessComponent } from './no-access/no-access.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { StreamInfoComponent } from './stream-info/stream-info.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { StreamInfoComponent } from './stream-info/stream-info.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatButtonToggleModule,
     FormsModule,
     HttpClientModule,
     MatDividerModule,
