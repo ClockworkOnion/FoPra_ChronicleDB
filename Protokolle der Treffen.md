@@ -146,3 +146,10 @@ Wir wollen verhindern, dass manche Dialoge (TimeTravel) geschlossen werden, wenn
 
 #### Show Right Flank
 - UI hinzufügen (bisher nur Konsole)
+
+
+## Besprechung vom 20.01.21
+Awensend: Johannes Buder, Davit Davtyan, Lars Happel
+
+- Gemeinsames Betrachten der Tabellendarstellung in Time-Travel.
+- Erörterung des weiteren Vorgehens zum Verbinden des Backend mit dem Frontend
