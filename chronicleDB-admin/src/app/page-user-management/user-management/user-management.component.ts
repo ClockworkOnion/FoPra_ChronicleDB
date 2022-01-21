@@ -1,3 +1,4 @@
+import { AddUserComponent } from './../add-user/add-user/add-user.component';
 import { HttpClient } from '@angular/common/http';
 import { BACKEND_URL } from './../../services/auth.service';
 import { ChronicleService } from './../../services/chronicle.service';
@@ -8,6 +9,7 @@ import { MatTableDataSource} from '@angular/material/table';
 import{MatSort} from '@angular/material/sort';
 import {MatPaginator}from "@angular/material/paginator"
 import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'app-user-management',
@@ -27,7 +29,7 @@ export class UserManagementComponent  {
   @ViewChild(MatPaginator)paginator!: MatPaginator;
   @ViewChild(MatSort)sort!: MatSort;
 
-  constructor(private authservice: AuthService,private chronicleService:ChronicleService) {
+  constructor(private authservice: AuthService,private chronicleService:ChronicleService,private dialog : DialogService) {
     this.chronicleService.getHttp().get(BACKEND_URL+"/allusers").subscribe((users:any) => {
       this.dataSource = new MatTableDataSource(users);
      });
@@ -63,16 +65,8 @@ export class UserManagementComponent  {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  test(){
-    console.log(this.userArray)
-    
-    
-
-    
-  
-   
-    
-    
+  addUser(){
+    this.dialog.openDialog(AddUserComponent, {maxHeight: "600px"});
   }
 
 }

@@ -62,6 +62,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { StreamInfoComponent } from './stream-info/stream-info.component';
 import { UserManagementComponent } from './page-user-management/user-management/user-management.component';
 import {  MatPaginatorModule } from '@angular/material/paginator';
+import { AddUserComponent } from './page-user-management/add-user/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import {  MatPaginatorModule } from '@angular/material/paginator';
     PageLoginComponent,
     NoAccessComponent,
     StreamInfoComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,

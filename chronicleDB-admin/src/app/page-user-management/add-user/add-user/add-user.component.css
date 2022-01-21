@@ -1,0 +1,13 @@
+.example-button-row {
+    display: table-cell;
+    width: 490px;
+  }
+
+  .form-group{
+     
+  }
+  .mat-form-field{
+      width: 300px;
+      margin-top: auto;
+      margin-bottom: auto;
+  }
