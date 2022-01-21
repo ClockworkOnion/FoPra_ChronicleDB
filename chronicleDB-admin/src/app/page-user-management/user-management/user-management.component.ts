@@ -1,3 +1,5 @@
+import { BACKEND_URL } from './../../services/auth.service';
+import { ChronicleService } from './../../services/chronicle.service';
 import { User } from './../../model/User';
 import { AuthService } from 'src/app/services/auth.service';
 import {Component, ViewChild} from '@angular/core';
@@ -17,9 +19,11 @@ export class UserManagementComponent {
   @ViewChild(MatPaginator)paginator!: MatPaginator;
   @ViewChild(MatSort)sort!: MatSort;
 
-  constructor(private authservice: AuthService) {
-    //this.authservice.getUsers().subscribe((user: User[] | undefined) => {
-    this.dataSource = new MatTableDataSource();
+  constructor(private authservice: AuthService,private chronicleService:ChronicleService) {
+    this.chronicleService.getHttp().get(BACKEND_URL+"/allusers").subscribe((users:any) => {
+      this.dataSource = new MatTableDataSource(users);
+     });
+    
     //});
   }
 
@@ -27,6 +31,10 @@ export class UserManagementComponent {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+  test(){
+    let res = (this.chronicleService.getHttp().get(BACKEND_URL+"/allusers").subscribe(response => console.log(response)))
+    
   }
 }
 

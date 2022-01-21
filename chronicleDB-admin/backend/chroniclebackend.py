@@ -145,7 +145,7 @@ def getInfoById(user_id):
 
 @app.route('/allusers', methods=['GET'])
 def getAllUsers():
-    return make_response(getAllUsers(), 200)
+    return make_response(um.getAllUsers(), 200)
 
 
 if __name__ == "__main__":
