@@ -1,8 +1,8 @@
-
+<mat-card class="dashboard-card">
+  <mat-card-content class="card-content">
 <div class="example-header">
     <mat-form-field>
-      <input matInput  placeholder="Filter">
-      <!-- keyup)="applyFilter($event.target.value)" -->
+      <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filter" #input>
     </mat-form-field>
   </div>
   
@@ -16,45 +16,41 @@
         <mat-cell *matCellDef="let row"> {{row.username}} </mat-cell>
       </ng-container>
       
-      <!-- vorname Column -->
-      <ng-container matColumnDef="vorname">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Vorname </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.vorname}} </mat-cell>
-      </ng-container>
-  
-      <!-- name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
-      </ng-container>
-
       <!-- Allowed Streams Column -->
-      <ng-container matColumnDef="allowed_streams">
+      <ng-container matColumnDef="allowedStreams">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Allowed Streams </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.allowed_streams}} </mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.allowedStreams}} </mat-cell>
       </ng-container>
   
       <!-- aloowed insert  Column -->
       <ng-container matColumnDef="allowed_insert_streams">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Allowed Insert Streams </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.allowed_insert_streams}} </mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.allowedInsertStreams}} </mat-cell>
       </ng-container>
        <!-- created  Column -->
-       <ng-container matColumnDef="created">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Created at</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.created}} </mat-cell>
+       <ng-container matColumnDef="isAdmin">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> isAdmin</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.isAdmin}} </mat-cell>
       </ng-container>
        <!-- last logged in insert  Column -->
-       <ng-container matColumnDef="last_logged_in">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Last logged in at </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.last_logged_in}} </mat-cell>
+       <ng-container matColumnDef="canCreateStreams">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Can create Streams </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.canCreateStreams}} </mat-cell>
       </ng-container>
   
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;">
       </mat-row>
+       <!-- Row shown when there is no matching data. -->
+   <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No User matching the filter "{{input.value}}"</td>
+  </tr>
     </mat-table>
+    
   
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
   <button mat-button color="accent" (click)="test()" >test</button>
+  
+</mat-card-content>
+</mat-card>

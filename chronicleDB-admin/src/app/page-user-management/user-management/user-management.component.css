@@ -1,0 +1,41 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+  .dashboard-card {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    margin-bottom: 20px;
+    margin-right: 32px;
+    border-radius: 25px;
+  }
+  
+  .card-content {
+    padding: 20pt;
+  }
+  .mat-row:hover .mat-cell {
+    border-color: currentColor;
+  }
+  .mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
