@@ -1,4 +1,5 @@
 <mat-card class="dashboard-card">
+  <mat-card-title> User Management </mat-card-title>
   <mat-card-content class="card-content">
 <div class="example-header">
     <mat-form-field>
@@ -13,13 +14,17 @@
       <!-- Username Column -->
       <ng-container matColumnDef="username">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.username}} </mat-cell>
+        <mat-cell *matCellDef="let row"> 
+          <img class="avatar" src="/assets/avatars/avatar3.png" width="200" height="60" /> &nbsp;
+          {{row.username}} 
+        </mat-cell>
       </ng-container>
       
       <!-- Allowed Streams Column -->
       <ng-container matColumnDef="allowedStreams">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Allowed Streams </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.allowedStreams}} </mat-cell>
+        <mat-cell *matCellDef="let row">
+           {{row.allowedStreams}} </mat-cell>
       </ng-container>
   
       <!-- aloowed insert  Column -->
@@ -50,7 +55,11 @@
   
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
-  <button mat-button color="accent" (click)="test()" >test</button>
+  
+<button mat-raised-button color="primary" style="display: block; margin: auto">
+  Add a New User
+</button>
+
   
 </mat-card-content>
 </mat-card>

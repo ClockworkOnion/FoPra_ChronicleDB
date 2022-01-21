@@ -7,7 +7,7 @@ import {Component, ViewChild} from '@angular/core';
 import { MatTableDataSource} from '@angular/material/table';
 import{MatSort} from '@angular/material/sort';
 import {MatPaginator}from "@angular/material/paginator"
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user-management',
@@ -20,6 +20,7 @@ export class UserManagementComponent  {
   form!: FormGroup;
   users :any;
   userArray:User[]=[];
+  allowedStreamsFC = new FormControl;
   
   
 
@@ -34,12 +35,6 @@ export class UserManagementComponent  {
     //});
   }
   ngOnInit() {
-    // this.form = this.formBuilder.group({
-    //   albums: this.formBuilder.array([])
-    // });
-    // this._albumService.getAllAsFormArray().subscribe(albums => {
-    //   this.form.setControl('albums', albums);
-    // });
     this.chronicleService.getHttp().get(BACKEND_URL+"/allusers",{responseType:"json"}).subscribe((response:any) => {
       this.users = response;
       for (let index = 0; index < (response.users).length; index++) {

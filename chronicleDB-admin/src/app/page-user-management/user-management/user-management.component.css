@@ -1,7 +1,11 @@
 .example-container {
+    margin: 20px;
+  padding-bottom: 16px;
     display: flex;
     flex-direction: column;
     min-width: 300px;
+    margin-bottom: 2cm;
+    
   }
   
   .example-header {
@@ -9,10 +13,7 @@
     padding: 8px 24px 0;
   }
   
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
+
   
   .mat-table {
     overflow: auto;
@@ -38,4 +39,11 @@
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
     cursor: pointer;
+  }
+  .avatar {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid black;
   }
