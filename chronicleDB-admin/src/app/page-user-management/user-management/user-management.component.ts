@@ -4,7 +4,7 @@ import { BACKEND_URL } from './../../services/auth.service';
 import { ChronicleService } from './../../services/chronicle.service';
 import { User } from './../../model/User';
 import { AuthService } from 'src/app/services/auth.service';
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import { MatTableDataSource} from '@angular/material/table';
 import{MatSort} from '@angular/material/sort';
 import {MatPaginator}from "@angular/material/paginator"
@@ -25,16 +25,14 @@ export class UserManagementComponent  {
   allowedStreamsFC = new FormControl;
   
   
+  
 
   @ViewChild(MatPaginator)paginator!: MatPaginator;
   @ViewChild(MatSort)sort!: MatSort;
 
   constructor(private authservice: AuthService,private chronicleService:ChronicleService,private dialog : DialogService) {
-    this.chronicleService.getHttp().get(BACKEND_URL+"/allusers").subscribe((users:any) => {
-      this.dataSource = new MatTableDataSource(users);
-     });
     
-    //});
+    
   }
   ngOnInit() {
     this.chronicleService.getStreamsFromChronicle();
@@ -57,8 +55,11 @@ export class UserManagementComponent  {
       }
       this.dataSource = new MatTableDataSource<User>(this.userArray);
      })
+
      
   }
+ 
+  
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -68,7 +69,9 @@ export class UserManagementComponent  {
   addUser(){
     this.dialog.openDialog(AddUserComponent, {maxHeight: "600px"});
   }
-
+  test(){
+    this.dataSource.sort = this.sort;
+  }
 }
 
 

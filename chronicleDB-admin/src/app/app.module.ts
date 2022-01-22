@@ -63,6 +63,7 @@ import { StreamInfoComponent } from './stream-info/stream-info.component';
 import { UserManagementComponent } from './page-user-management/user-management/user-management.component';
 import {  MatPaginatorModule } from '@angular/material/paginator';
 import { AddUserComponent } from './page-user-management/add-user/add-user/add-user.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -124,7 +125,8 @@ import { AddUserComponent } from './page-user-management/add-user/add-user/add-u
     DragDropModule,
     MatDialogModule,
     OverlayModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
   

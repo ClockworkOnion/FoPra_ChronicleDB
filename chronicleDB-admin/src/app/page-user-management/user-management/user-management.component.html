@@ -9,13 +9,16 @@
   
   <div class="example-container mat-elevation-z8">
   
-    <mat-table [dataSource]="dataSource" matSort>
+    <mat-table [dataSource]="dataSource" matSort >
   
       <!-- Username Column -->
       <ng-container matColumnDef="username">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header > 
+          Username 
+        </mat-header-cell>
         <mat-cell *matCellDef="let row"> 
-          <img class="avatar" src="/assets/avatars/avatar3.png" width="200" height="60" /> &nbsp;
+          <img class="avatar"  *ngIf="row.isAdmin" src="/assets/avatars/avatar1.png"  width="200" height="60" /> 
+          <img class="avatar"  *ngIf="!row.isAdmin" src="/assets/avatars/avatar3.png"  width="200" height="60" /> &nbsp;
           {{row.username}} 
         </mat-cell>
       </ng-container>
@@ -52,9 +55,6 @@
       </mat-cell>
       </ng-container>
 
-      
-
-
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;">
       </mat-row>
@@ -66,11 +66,15 @@
     </mat-table>
     
   
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
   
 <button mat-raised-button color="primary" style="display: block; margin: auto" (click)="addUser()">
   Add a New User
+</button>
+
+<button mat-button style="display: block; margin: auto" (click)="test()">
+  test
 </button>
 
   
