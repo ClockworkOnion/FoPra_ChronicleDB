@@ -47,3 +47,8 @@
     border-radius: 50%;
     border: 2px solid black;
   }
+ .mat-column-edit{
+  
+   max-width: 50px;
+   
+ }

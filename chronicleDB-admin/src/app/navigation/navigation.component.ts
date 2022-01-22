@@ -5,6 +5,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-navigation',
@@ -26,13 +27,20 @@ export class NavigationComponent {
     private breakpointObserver: BreakpointObserver,
     public authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private overlay: OverlayContainer
   ) {}
   toggleControl = new FormControl(false);
 
   ngOnInit(): void {
-    this.toggleControl.valueChanges.subscribe((val) => {
-      this.className = val ? 'darkMode' : '';
+    this.toggleControl.valueChanges.subscribe((darkMode) => {
+      const darkClassName =  'darkMode';
+      this.className = darkMode? darkClassName : '';
+      if (darkMode) {
+        this.overlay.getContainerElement().classList.add(darkClassName);
+      } else {
+        this.overlay.getContainerElement().classList.remove(darkClassName);
+      }
     });
   }
 

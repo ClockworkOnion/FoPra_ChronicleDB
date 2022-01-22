@@ -17,7 +17,7 @@ import { DialogService } from 'src/app/services/dialog.service';
   styleUrls: ['./user-management.component.css']
 })
 export class UserManagementComponent  {
-  displayedColumns = ['username','isAdmin','allowedStreams',"canCreateStreams"];
+  displayedColumns = ['username','isAdmin','allowedStreams',"canCreateStreams","edit"];
   dataSource!: MatTableDataSource<User>;
   form!: FormGroup;
   users :any;
@@ -37,6 +37,7 @@ export class UserManagementComponent  {
     //});
   }
   ngOnInit() {
+    this.chronicleService.getStreamsFromChronicle();
     this.chronicleService.getHttp().get(BACKEND_URL+"/allusers",{responseType:"json"}).subscribe((response:any) => {
       this.users = response;
       for (let index = 0; index < (response.users).length; index++) {
