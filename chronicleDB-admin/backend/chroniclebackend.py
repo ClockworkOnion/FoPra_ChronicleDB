@@ -147,6 +147,13 @@ def getInfoById(user_id):
 def getAllUsers():
     return make_response(um.getAllUsers(), 200)
 
+@app.route('/create_user',methods=['POST'])
+def createUser():
+    response=json.loads(request.data)
+    um.
+    print(response)
+    return make_response(response,200)
+
 
 if __name__ == "__main__":
     app.run(port=5002, debug=True) # For starting the backend process

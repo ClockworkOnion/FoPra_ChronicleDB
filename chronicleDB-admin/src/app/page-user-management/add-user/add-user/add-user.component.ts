@@ -2,6 +2,7 @@ import { ChronicleService } from './../../../services/chronicle.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
+import { BACKEND_URL } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-add-user',
@@ -25,10 +26,15 @@ export class AddUserComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       username:['', Validators.required],
-      isAdmin:[false, Validators.required],
       password:['',Validators.required],
-      allowedStreams:[],
-      canCreateStream:[false]
+      isAdmin:[false, Validators.required],
+      canCreateStream:[false],
+      allowedStreams:[[]],
+      allowedInsertStreams:[[]],
+      allStreamsAllowed:[false],
+      canInsertAll:[false],
+      
+      
       
     })
     
@@ -54,12 +60,16 @@ export class AddUserComponent implements OnInit {
     //TODO save the user to the backend
 }
 test(){
+  console.log(this.form.value)
+  let tmp = JSON.stringify(this.form.value)
 
-  this.chronicleService.getStreamsFromChronicle()
-  this.currentStreamList = this.chronicleService.snapshot;
-  for(let i of this.currentStreamList){
-    this.arrayID.push(i.id)
-  }
-  console.log(this.form.controls.username.value)
+  console.log(tmp)
+
+
+  this.chronicleService.getHttp().post(BACKEND_URL+"/create_user",JSON.parse(tmp)).subscribe((response:any) => {
+    console.log(response)
+    
+  })
 }
+
 }
