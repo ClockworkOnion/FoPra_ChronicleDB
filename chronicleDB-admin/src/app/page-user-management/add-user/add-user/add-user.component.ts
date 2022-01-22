@@ -1,5 +1,5 @@
 import { ChronicleService } from './../../../services/chronicle.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { BACKEND_URL } from 'src/app/services/auth.service';
@@ -16,9 +16,11 @@ export class AddUserComponent implements OnInit {
   hide = true;
   private currentStreamList : Array<ChronicleStream>=[];
   arrayID :number[]=[];
+  disableSelect  =false ;
+ 
   
   isAdmin :any;
-
+  
 
   constructor(private formBuilder:FormBuilder,private chronicleService:ChronicleService){
    }
@@ -36,6 +38,7 @@ export class AddUserComponent implements OnInit {
       
       
       
+      
     })
     
     this.chronicleService.getStreamsFromChronicle()
@@ -45,6 +48,26 @@ export class AddUserComponent implements OnInit {
     }
     console.log(this.arrayID)
   
+}
+
+  updateCB(){
+    this.form.controls['canCreateStream'].setValue(true);
+    this.form.controls['canInsertAll'].setValue(true);
+    this.form.controls['allStreamsAllowed'].setValue(true); 
+    
+    
+    if (this.form.controls["isAdmin"].value) {
+      this.form.controls.allowedStreams.reset();
+      this.form.controls.allowedInsertStreams.reset();
+      this.form.controls.allowedStreams.disable();
+      this.form.controls.allowedInsertStreams.disable();
+      this.form.controls.allowedStreams.setValue([]);
+      this.form.controls.allowedInsertStreams.setValue([]);
+  }else{
+    this.form.controls.allowedStreams.enable();
+    this.form.controls.allowedInsertStreams.enable();
+
+  }
 }
   get f() { return this.form.controls; }
 
@@ -56,19 +79,19 @@ export class AddUserComponent implements OnInit {
     if (this.form.invalid) {
         return;
     }
+    this.form.controls.allowedStreams.enable();
+    this.form.controls.allowedInsertStreams.enable();
+    console.log(this.form.controls.allowedInsertStreams.value)
+    console.log(this.form.controls.allowedStreams.value)
+    let tmp = JSON.stringify(this.form.value)
+    console.log(tmp)
 
-    //TODO save the user to the backend
-}
-test(){
-  console.log(this.form.value)
-  let tmp = JSON.stringify(this.form.value)
-
-  console.log(tmp)
-
-//funktioniert nur müssen zuerst ein paar einschränkungen gemacht werden
+    //funktioniert nur müssen zuerst ein paar einschränkungen gemacht werden
 //  this.chronicleService.getHttp().post(BACKEND_URL+"/create_user",JSON.parse(tmp)).subscribe((response:any) => {
 //    console.log(response)  
 //  })
+
 }
+
 
 }
