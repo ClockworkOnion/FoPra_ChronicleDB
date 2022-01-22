@@ -65,11 +65,10 @@ test(){
 
   console.log(tmp)
 
-
-  this.chronicleService.getHttp().post(BACKEND_URL+"/create_user",JSON.parse(tmp)).subscribe((response:any) => {
-    console.log(response)
-    
-  })
+//funktioniert nur müssen zuerst ein paar einschränkungen gemacht werden
+//  this.chronicleService.getHttp().post(BACKEND_URL+"/create_user",JSON.parse(tmp)).subscribe((response:any) => {
+//    console.log(response)  
+//  })
 }
 
 }

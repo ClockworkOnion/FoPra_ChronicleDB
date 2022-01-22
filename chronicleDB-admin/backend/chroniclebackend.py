@@ -150,7 +150,8 @@ def getAllUsers():
 @app.route('/create_user',methods=['POST'])
 def createUser():
     response=json.loads(request.data)
-    um.
+    um.registerNewUser(response["username"],response["password"],response["isAdmin"],response["canCreateStream"],
+    response["allowedStreams"],response["allowedInsertStreams"],response["allStreamsAllowed"],response["canInsertAll"])
     print(response)
     return make_response(response,200)
 

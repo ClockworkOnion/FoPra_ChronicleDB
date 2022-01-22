@@ -40,8 +40,7 @@ export class UserManagementComponent  {
     this.chronicleService.getHttp().get(BACKEND_URL+"/allusers",{responseType:"json"}).subscribe((response:any) => {
       this.users = response;
       for (let index = 0; index < (response.users).length; index++) {
-      console.log(response.users[index])
-      let newUser: User={
+        let newUser: User={
         username:response.users[index].username,
         isAdmin:response.users[index].isAdmin,
         canCreateStreams:response.users[index].canCreateStreams,
