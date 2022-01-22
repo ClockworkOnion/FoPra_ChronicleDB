@@ -81,8 +81,6 @@ export class AddUserComponent implements OnInit {
     }
     this.form.controls.allowedStreams.enable();
     this.form.controls.allowedInsertStreams.enable();
-    console.log(this.form.controls.allowedInsertStreams.value)
-    console.log(this.form.controls.allowedStreams.value)
     let tmp = JSON.stringify(this.form.value)
     console.log(tmp)
 
