@@ -60,7 +60,7 @@ import { JwtInterceptor } from './backend';
 import { NoAccessComponent } from './no-access/no-access.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { StreamInfoComponent } from './stream-info/stream-info.component';
-import { UserManagementComponent } from './page-user-management/user-management/user-management.component';
+import { DoubleCheckDialog, UserManagementComponent } from './page-user-management/user-management/user-management.component';
 import {  MatPaginatorModule } from '@angular/material/paginator';
 import { AddUserComponent } from './page-user-management/add-user/add-user/add-user.component';
 import { MatSortModule } from '@angular/material/sort';
@@ -90,7 +90,8 @@ import { MatSortModule } from '@angular/material/sort';
     NoAccessComponent,
     StreamInfoComponent,
     UserManagementComponent,
-    AddUserComponent
+    AddUserComponent,
+    DoubleCheckDialog
   ],
   imports: [
     BrowserModule,

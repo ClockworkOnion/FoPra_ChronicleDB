@@ -4,12 +4,14 @@ import { BACKEND_URL } from './../../services/auth.service';
 import { ChronicleService } from './../../services/chronicle.service';
 import { User } from './../../model/User';
 import { AuthService } from 'src/app/services/auth.service';
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component,Inject, ViewChild} from '@angular/core';
 import { MatTableDataSource} from '@angular/material/table';
 import{MatSort} from '@angular/material/sort';
 import {MatPaginator}from "@angular/material/paginator"
 import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { DialogService } from 'src/app/services/dialog.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-user-management',
@@ -30,7 +32,7 @@ export class UserManagementComponent  {
   @ViewChild(MatPaginator)paginator!: MatPaginator;
   @ViewChild(MatSort)sort!: MatSort;
 
-  constructor(private authservice: AuthService,private chronicleService:ChronicleService,private dialog : DialogService) {
+  constructor(private authservice: AuthService,private chronicleService:ChronicleService,private dialogService : DialogService,public dialog:MatDialog) {
     
     
   }
@@ -67,19 +69,36 @@ export class UserManagementComponent  {
     this.dataSource.filter = filterValue;
   }
   addUser(){
-    this.dialog.openDialog(AddUserComponent, {maxHeight: "600px"});
+    this.dialogService.openDialog(AddUserComponent, {maxHeight: "600px"});
   }
   test(){
     this.dataSource.sort = this.sort;
   }
 
   deleteUser(user:string){
-    let tmp = JSON.stringify(user)
-   this.chronicleService.getHttp().post(BACKEND_URL+"delete_user",tmp).subscribe((response:any) => {
+    const dialogRef= this.dialog.open(DoubleCheckDialog)
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if(result){
+        let tmp = JSON.stringify(user)
+    this.chronicleService.getHttp().post(BACKEND_URL+"delete_user",tmp).subscribe((response:any) => {
      console.log(response)
-   })
+    })
+      }else{
+      }
+    });
   }
 }
 
+
+
+
+
+@Component({
+  selector: 'double-check-dialog',
+  templateUrl: 'double-check-dialog.html',
+})
+export class DoubleCheckDialog {
+}
 
 
