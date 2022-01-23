@@ -72,6 +72,13 @@ export class UserManagementComponent  {
   test(){
     this.dataSource.sort = this.sort;
   }
+
+  deleteUser(user:string){
+    let tmp = JSON.stringify(user)
+   this.chronicleService.getHttp().post(BACKEND_URL+"delete_user",tmp).subscribe((response:any) => {
+     console.log(response)
+   })
+  }
 }
 
 

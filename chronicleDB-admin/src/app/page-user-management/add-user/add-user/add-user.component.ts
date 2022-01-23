@@ -27,6 +27,7 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      //we should add validator so no username is used twice
       username:['', Validators.required],
       password:['',Validators.required],
       isAdmin:[false, Validators.required],
@@ -46,7 +47,6 @@ export class AddUserComponent implements OnInit {
     for(let i of this.currentStreamList){
       this.arrayID.push(i.id)
     }
-    console.log(this.arrayID)
   
 }
 
@@ -54,8 +54,7 @@ export class AddUserComponent implements OnInit {
     this.form.controls['canCreateStream'].setValue(true);
     this.form.controls['canInsertAll'].setValue(true);
     this.form.controls['allStreamsAllowed'].setValue(true); 
-    
-    
+      
     if (this.form.controls["isAdmin"].value) {
       this.form.controls.allowedStreams.reset();
       this.form.controls.allowedInsertStreams.reset();
@@ -82,12 +81,10 @@ export class AddUserComponent implements OnInit {
     this.form.controls.allowedStreams.enable();
     this.form.controls.allowedInsertStreams.enable();
     let tmp = JSON.stringify(this.form.value)
-    console.log(tmp)
-
-    //funktioniert nur müssen zuerst ein paar einschränkungen gemacht werden
-//  this.chronicleService.getHttp().post(BACKEND_URL+"/create_user",JSON.parse(tmp)).subscribe((response:any) => {
-//    console.log(response)  
-//  })
+    
+    this.chronicleService.getHttp().post(BACKEND_URL+"create_user",JSON.parse(tmp)).subscribe((response:any) => {
+    console.log(response)  
+  })
 
 }
 

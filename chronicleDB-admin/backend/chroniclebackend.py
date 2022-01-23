@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from urllib import response
 from flask import Flask, request
 from flask import jsonify, make_response
 from flask_restful import Api, Resource
@@ -154,6 +155,13 @@ def createUser():
     response["allowedStreams"],response["allowedInsertStreams"],response["allStreamsAllowed"],response["canInsertAll"])
     print(response)
     return make_response(response,200)
+
+@app.route('/delete_user', methods=['POST'])
+def deleteUser():
+    response=json.loads(request.data)
+    um.deleteUser(response)
+    return{}
+
 
 
 if __name__ == "__main__":

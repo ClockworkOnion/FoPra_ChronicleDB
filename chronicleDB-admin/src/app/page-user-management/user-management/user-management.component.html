@@ -49,9 +49,19 @@
       <ng-container matColumnDef="edit" >
         <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
         <mat-cell *matCellDef="let row" class="edit"> 
-          <button mat-icon-button  aria-label="Example icon-button with a menu">
+         
+          <button mat-icon-button  aria-label="Example icon-button with a menu" [matMenuTriggerFor]="menu" >
             <mat-icon class="more-button">more_vert</mat-icon>
         </button> 
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="deleteUser(row.username)" >
+            <mat-icon>delete</mat-icon>
+            <span>Delete User</span>
+          </button>       
+        </mat-menu>
+
+
       </mat-cell>
       </ng-container>
 
