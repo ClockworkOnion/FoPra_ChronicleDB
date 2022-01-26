@@ -47,8 +47,20 @@
     border-radius: 50%;
     border: 2px solid black;
   }
- .mat-column-edit{
-  
-   max-width: 50px;
+ .mat-column-edit{ 
+   max-width: 50px; 
+ }
+
+ .true{
+   color: green;
+ }
+ .false{
+   color: red;
+ }
+ .mat-column-username{
    
  }
+ .mat-column-canCreateStreams{
+  font-style: italic;
+ }
+

@@ -19,7 +19,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   styleUrls: ['./user-management.component.css']
 })
 export class UserManagementComponent  {
-  displayedColumns = ['username','isAdmin','allowedStreams',"canCreateStreams","edit"];
+  displayedColumns = ['username','isAdmin','allowedStreams',"canCreateStreams","canInsertAll","edit"];
   dataSource!: MatTableDataSource<User>;
   form!: FormGroup;
   users :any;
@@ -55,16 +55,14 @@ export class UserManagementComponent  {
       }
      
       this.dataSource = new MatTableDataSource<User>(this.userArray);
+      this.dataSource.paginator=this.paginator;
       
      })
 
      
   }
  
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    
-  }
+ 
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace

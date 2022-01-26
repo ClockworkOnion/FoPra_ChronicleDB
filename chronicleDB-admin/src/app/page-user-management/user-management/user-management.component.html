@@ -31,19 +31,33 @@
       </ng-container>
   
       <!-- allowed insert  Column -->
-      <ng-container matColumnDef="allowed_insert_streams">
+      <ng-container matColumnDef="allowedInsertStreams">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Allowed Insert Streams </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.allowedInsertStreams}} </mat-cell>
       </ng-container>
        <!-- isadmin  Column -->
        <ng-container matColumnDef="isAdmin">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> isAdmin</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.isAdmin}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Admin</mat-header-cell>
+        <mat-cell *matCellDef="let row"> 
+         <mat-icon aria-hidden="false" class ="true"  *ngIf="row.isAdmin" >done</mat-icon>
+         <mat-icon aria-hidden="false" class ="false" *ngIf="!row.isAdmin">close</mat-icon> 
+        </mat-cell>
       </ng-container>
        <!-- can create streams  Column -->
        <ng-container matColumnDef="canCreateStreams">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Can create Streams </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.canCreateStreams}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Create Streams </mat-header-cell>
+        <mat-cell *matCellDef="let row"> 
+          <mat-icon aria-hidden="false" class ="true"  *ngIf="row.canCreateStreams" >done</mat-icon>
+         <mat-icon aria-hidden="false" class ="false" *ngIf="!row.canCreateStreams">close</mat-icon> 
+         </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="canInsertAll">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Insert Streams </mat-header-cell>
+        <mat-cell *matCellDef="let row"> 
+          <mat-icon aria-hidden="false" class ="true"  *ngIf="row.canInsertAll" >done</mat-icon>
+         <mat-icon aria-hidden="false" class ="false" *ngIf="!row.canInsertAll">close</mat-icon> 
+         </mat-cell>
       </ng-container>
       <!--Edit menu Column-->
       <ng-container matColumnDef="edit" >
