@@ -4,20 +4,20 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .green-snackbar {
-    background: rgb(65, 252, 134);
+    background: rgb(27, 172, 80);
     color: white;
 }
 .green-snackbar button {
-    background-color: rgb(65, 252, 134);
+    background-color: rgb(27, 172, 80);
     color: white;
     border: none;
 }
 .red-snackbar {
-    background: #F44336;
+    background: #ff3123;
     color: white;
 }
 .red-snackbar button {
-    background-color: #F44336;
+    background-color: #ff3123;
     color: white !important;
     border: none;
 }

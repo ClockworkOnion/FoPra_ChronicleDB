@@ -1,3 +1,4 @@
+import { DialogService } from './../../../services/dialog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarService } from './../../../services/snack-bar.service';
 import { ChronicleService } from './../../../services/chronicle.service';
@@ -25,7 +26,7 @@ export class AddUserComponent implements OnInit {
   isAdmin :any;
   
 
-  constructor(private formBuilder:FormBuilder,private chronicleService:ChronicleService, private snackBar:MatSnackBar){
+  constructor(private formBuilder:FormBuilder,private chronicleService:ChronicleService, private snackBar:MatSnackBar , private dialog : DialogService){
    }
 
   ngOnInit(): void {
@@ -99,16 +100,24 @@ async userAlreadyExists(username:string){
 }
 
 openSuccessSnackBar(){
-  this.snackBar.open("Creating User was  Successful", "OK", {
-    duration: 3000,
+  let snackBarRef = this.snackBar.open("Creating User was  Successful", "OK", {
+    duration: 6000,
     panelClass: ['green-snackbar'],
    });
+   
   }
 openFailureSnackBar(){
-    this.snackBar.open("Username Already Taken", "Try again!", {
-      duration: 3000,
+  let snackBarRef =this.snackBar.open("Username Already Taken", "Try again!", {
+      duration: 6000,
       panelClass: ['red-snackbar'],
       });
+      snackBarRef.afterDismissed().subscribe(() => {
+        console.log('The snackbar was dismissed');
+      });
+      snackBarRef.onAction().subscribe(() => {
+        this.dialog.openDialog(AddUserComponent)
+      });
      }
+     
 
 }
