@@ -5,6 +5,30 @@ export interface ChronicleEventElement {
     size?: number
 }
 
+export let getShortEventString = (event : ChronicleEventElement) : string => {
+    let text : string = "";
+
+    if (event.singleOrList == EventElementSingleOrList.single) {
+        if (event.type == EventElementType.string) {
+            text = "" + event.subtype;
+        } else {
+            text += event.type.charAt(0);
+            text += event.subtype;
+        }
+    } else {
+        text = (event.singleOrList == EventElementSingleOrList.constList) ? "Const" : "Var";
+        if (event.type == EventElementType.string) {
+            text += "String";
+        } else {
+            text += event.type.charAt(0);
+            text += event.subtype;
+        }
+        text += "List"
+    }
+
+    return text;
+}
+
 export enum EventElementSingleOrList {
     single="single", constList="constList", varList="varList"
 }

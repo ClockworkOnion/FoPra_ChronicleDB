@@ -63,6 +63,7 @@ import { StreamInfoComponent } from './stream-info/stream-info.component';
 import { DoubleCheckDialog, UserManagementComponent } from './page-user-management/user-management/user-management.component';
 import {  MatPaginatorModule } from '@angular/material/paginator';
 import { AddUserComponent } from './page-user-management/add-user/add-user/add-user.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
@@ -114,6 +115,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatButtonToggleModule,
     FormsModule,
     HttpClientModule,
     MatDividerModule,

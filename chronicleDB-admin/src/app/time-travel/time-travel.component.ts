@@ -1,138 +1,268 @@
-import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatTable } from '@angular/material/table';
-import { EventCompoundType } from '../model/ChronicleEvent';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { getShortEventString } from '../model/ChronicleEvent';
 import { ChronicleStream } from '../model/ChronicleStream';
 import { ChronicleService } from '../services/chronicle.service';
 import { GetFlankService } from '../services/rest services/get-flank.service';
 import { SnackBarService } from '../services/snack-bar.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { BACKEND_URL } from '../services/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
+export interface TimeTravelData {
+  lowerBound: number;
+  upperBound: number;
+  typeSelector: string;
+}
+export const inclusiveString = 'Inclusive';
 @Component({
   selector: 'app-time-travel',
   templateUrl: './time-travel.component.html',
-  styleUrls: ['./time-travel.component.css']
+  styleUrls: ['./time-travel.component.css'],
 })
-export class TimeTravelComponent implements OnInit {
+export class TimeTravelComponent implements AfterViewInit {
+  // @ViewChild(MatTable) datatable!: MatTable<any>;
+  columnNames: string[] = []; // table headers
+  columnNamesForTable: string[] = []; // table headers
+  data: string[][] = [];
+  dataSource = new MatTableDataSource();
 
-  @ViewChild(MatTable) datatable!: MatTable<any>;
-  columnNames : string[] = [] // table headers
-  dataSource : any[] = []; // table row data
+  outputInfo: string | null = null; // string to be displayed inside HTML: if null, not displayed at all
 
-  timeStamp1 : number = 0; // timeTravel lower bound
-  timeStamp2 : number = 50; // timeTravel upper bound
-  outputInfo : string|null = null // string to be displayed inside HTML: if null, not displayed at all
-  flankInfo : any; // for saving the REST HTTP response
-  private currentStream!: ChronicleStream|null;
-  toggleInclusive = new FormControl(false);
-  useInclusive : boolean = false;
+  private currentStream!: ChronicleStream | null;
 
-  constructor(private chronicleService: ChronicleService, private snackBar: SnackBarService, 
-    private flankService: GetFlankService, public dialogRef: MatDialogRef<TimeTravelComponent>) {
-    this.chronicleService.selectedStream$.subscribe(stream => {
-      this.currentStream = stream;      
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.detectPageAndSort();
+  }
+
+  //////////////////////////////////////////////////////////
+  ///////////////////// Validator //////////////////////////
+  intervalFormControl = new FormGroup(
+    {
+      lowerBound: new FormControl(0, [Validators.required, Validators.min(0)]),
+      upperBound: new FormControl(50, [Validators.required, Validators.min(0)]),
+      typeSelector: new FormControl('Exclusive'),
+    },
+    { validators: this.validateIntervalInput }
+  );
+
+  validateIntervalInput(control: AbstractControl) {
+    const min = control.get('lowerBound');
+    const max = control.get('upperBound');
+    const type = control.get('typeSelector');
+
+    if (
+      min == null ||
+      min.value == null ||
+      max == null ||
+      max.value == null ||
+      type == null ||
+      type.value == null
+    ) {
+      console.error('Fehler bei TimeTravel Intervallvalidation');
+      return null;
+    }
+    if (max.value < min.value + (type.value == inclusiveString ? 0 : 1)) {
+      // wenn exclusiv muss +1 aufs minimum
+      return { interval: 'Interval not correct!' };
+    } else {
+      return null;
+    }
+  }
+  //////////////////////////////////////////////////////////
+
+  constructor(
+    private chronicleService: ChronicleService,
+    private snackBar: SnackBarService,
+    private flankService: GetFlankService,
+    public dialogRef: MatDialogRef<TimeTravelComponent>,
+    private changeDetector: ChangeDetectorRef // ViewChild aktualisieren gegen ngIf
+  ) {
+    this.chronicleService.selectedStream$.subscribe((stream) => {
+      this.currentStream = stream;
     });
   }
 
-  ngOnInit():void{
-    this.toggleInclusive.valueChanges.subscribe(val =>{
-      console.log("Toggled useInclusive to " + val);
-      this.useInclusive = val;
-    })
-  }
+  timeTravel() {
+    this.chronicleService
+      .timeTravel(this.intervalFormControl.value as TimeTravelData)
+      .subscribe((response) => {
+        this.resetData();
+        this.createColumnHeaders();
+        this.createTableHeaders();
 
-  timeTravel(){
-    this.snackBar.openSnackBar("Travelling from t" + this.timeStamp1 + " to t" + this.timeStamp2);
-    console.log("Travelling from t" + this.timeStamp1 + " to t" + this.timeStamp2);
-    let inOrEx : string = this.useInclusive ? "Inclusive" : "Exclusive";
-    let requestBody = '{"'+inOrEx+'":{"start":'+this.timeStamp1+',"end":'+this.timeStamp2+'}}';
-    this.doTimeTravel(requestBody);
-  }
+        let json: any[] = JSON.parse(response);
+        json.forEach((entry) => {
+          this.data.push(this.adaptEntryToColumnDefinition(entry));
+        });
 
-  doTimeTravel(event:string) {
-    let url = this.chronicleService.getUrl();
-    if (!url || !this.currentStream) {
-      return; 
-    }
+        this.generateStringView();
+        this.dataSource.data = this.data;
 
-    this.chronicleService.getHttp()
-      .post(BACKEND_URL + "query_time_travel/" + this.currentStream!.id, event, {responseType:"text"})
-      .subscribe(response => {
-        this.flankInfo = response;
-        let json = JSON.parse(this.flankInfo);
-
-        console.log("Response as text: " + response);
-        console.log(json);
-
-        this.outputInfo = "Response:\n"
-        if (this.currentStream?.compoundType != EventCompoundType.single) { // Compound or VarCompound cases
-          let comptype : string = "Compound"
-          if (this.currentStream?.compoundType == EventCompoundType.varCompound) {
-            comptype = "VarCompound";
-          }
-
-          this.createColumnHeaders(json, comptype);
-
-          // Loop through JSON to create the output string
-          for (let ts = 0; ts < json.length; ts++) { // Outer loop -- timestamps
-            this.outputInfo += "Timestamp: " + json[ts].t1 + "\n"; // STRING: prepend timestamp
-
-            let obj : any = {}; // TABLES : prepare empty object to fill
-            obj["Timestamp"] = json[ts].t1; // TABLE : Insert timestamp
-
-            for (let i = 0; i < json[ts].payload[comptype].length; i++) { // Inner loop -- compound data
-              this.outputInfo += this.getValuePairsFromJSON(json[ts].payload[comptype][i]);
-              for (var key in json[ts].payload[comptype][i]) { // TABLE: Create object for table
-                obj[key] = json[ts].payload[comptype][i][key];
-              }
-            }
-            this.dataSource.push(obj); // TABLE : Push the object to datasource
-            this.outputInfo += "\n"
-          }
-
-        } else { //  cases where Compound type is single
-          for (let ts = 0; ts < json.length; ts++) { // Outer loop -- timestamps
-            this.outputInfo += "Timestamp: " + json[ts].t1 + "\n";
-            for (let i = 0; i < json[0].payload.length; i++) { // Inner loop -- compound data
-              this.outputInfo += this.getValuePairsFromJSON(json[ts].payload[i]);
-            }
-            this.outputInfo += "\n"
-          }
-          // TODO: Table display for non-compound
-        }
-        this.datatable.renderRows();
+        this.detectPageAndSort();
       });
   }
 
-  createColumnHeaders(json : any, comptype : string) {
-          this.columnNames.push("Timestamp");
-          for (let l = 0; l < json[0].payload[comptype].length; l++) {
-            for (var key in json[0].payload[comptype][l]) {
-              if (!this.columnNames.includes(key)) {
-                this.columnNames.push(key);
-              }
-            }
-          }
+  private detectPageAndSort() {
+    this.changeDetector.detectChanges();
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
-  getValuePairsFromJSON(obj: any) : string {
-    let returnString : string = "";
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        returnString +=  key + " : " + obj[key] + "\n";
+  createColumnHeaders() {
+    this.columnNames.push('Timestamp');
+
+    // if (this.currentStream!.compoundType == EventCompoundType.single) {
+    //   let text : string = "";
+    //   switch (this.currentStream!.event![0].singleOrList) {
+    //     case EventElementSingleOrList.constList:
+    //       text = "Const List of "
+    //       break;
+    //     case EventElementSingleOrList.varList:
+    //       text = "Var List of "
+    //       break;
+    //     default:
+    //       break;
+    //   }
+
+    //   text += this.currentStream!.event![0].type;
+    //   this.columnNames.push(text);
+    // } else {
+    this.currentStream?.event?.forEach((event) =>
+      this.columnNames.push(getShortEventString(event))
+    );
+
+    // }
+
+    // for (let l = 0; l < json[0].payload[comptype].length; l++) {
+    //   for (var key in json[0].payload[comptype][l]) {
+    //     if (!this.columnNames.includes(key)) {
+    //       this.columnNames.push(key);
+    //     }
+    //   }
+    // }
+    // ha lol ein Fehler
+  }
+
+  createTableHeaders() {
+    this.columnNames.forEach((column) => {
+      let amount = this.getNumberOfOccurences(column);
+      this.columnNamesForTable.push(
+        column + (amount > 0 ? ' (' + amount + ')' : '')
+      );
+    });
+  }
+
+  private getNumberOfOccurences(name: string): number {
+    let counter = 0;
+    this.columnNamesForTable.forEach((column) => {
+      if (column.startsWith(name)) {
+        counter++;
+      }
+    });
+    return counter;
+  }
+
+  adaptEntryToColumnDefinition(entry: { payload: any; t1: number }): string[] {
+    let entryKeys: string[];
+    let entryValues: string[];
+    if (entry.payload['Compound'] || entry.payload['VarCompound']) {
+      entryKeys = this.getKeysOfCompoundPayload(entry.payload);
+      entryValues = this.getValuesOfCompoundPayload(entry.payload);
+    } else {
+      entryKeys = Object.keys(entry.payload);
+      entryValues = [entry.payload[Object.keys(entry.payload)[0]]];
+    }
+
+    let rowValues: string[] = [];
+    rowValues.push('' + entry.t1);
+
+    let entryIndex = 0;
+    for (let index = 1; index < this.columnNames.length; index++) {
+      // Wir starten column bei 1, weil wir den Timestamp ja schon haben, daher length-1
+      const currentColumn: string = this.columnNames[index];
+
+      if (currentColumn == entryKeys[entryIndex]) {
+        rowValues.push(entryValues[entryIndex]);
+        entryIndex++;
+      } else {
+        rowValues.push('-');
       }
     }
-    return returnString;
+
+    return rowValues;
   }
 
-  valueChange() {
-    console.log("Timestamp changed");
+  /**
+   * Nimmt den Payload eines Component-Eintrags und gibt die Typen der Komponenten zurück.
+   * Z.B. Ein Eintrag hat einen I8 und einen ConstString,
+   * dann bekommt man folgendes zurück ["I8", "ConstString"].
+   *
+   * {"payload": {"Compound": [{"I8": 5}, {"U8": 9}]}} -> ["I8", "U8"]
+   */
+  getKeysOfCompoundPayload(payload: any): string[] {
+    let result: string[] = [];
+    (payload[Object.keys(payload)[0]] as any[]).forEach((component: any) =>
+      result.push(Object.keys(component)[0])
+    );
+    return result;
+  }
+
+  /**
+   * Nimmt den Payload eines Component-Eintrags und gibt die Verte der Komponenten zurück.
+   * Z.B. Ein Eintrag hat einen I8 und einen ConstString,
+   * dann bekommt man folgendes zurück ["I8", "ConstString"].
+   *
+   * {"payload": {"Compound": [{"I8": 5}, {"U8": 9}]}} -> [5, 9]
+   */
+  getValuesOfCompoundPayload(payload: any): string[] {
+    let result: string[] = [];
+    (payload[Object.keys(payload)[0]] as any[]).forEach((component: any) =>
+      result.push(component[Object.keys(component)[0]])
+    );
+    return result;
+  }
+
+  generateStringView() {
+    this.outputInfo = `Received ${this.data.length} entries\n`;
+    this.data.forEach((entry) => {
+      this.outputInfo += '\n';
+      for (let index = 0; index < entry.length; index++) {
+        const value = entry[index];
+        this.outputInfo += `${this.columnNames[index]}: ${value}\n`;
+      }
+    });
+  }
+
+  resetData() {
+    this.outputInfo = '';
+    this.columnNames = [];
+    this.columnNamesForTable = [];
+    this.data = [];
   }
 
   closeDialog() {
     this.dialogRef.close();
   }
-}
 
+  applyFilter(event: Event) {
+    let filterValue = (event.target as HTMLInputElement).value;
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+}
