@@ -162,6 +162,13 @@ def deleteUser():
     um.deleteUser(response)
     return{}
 
+@app.route('/exists_user', methods =['POST'])
+def existsUser():
+    response=json.loads(request.data)
+    tmp=um.userAlreadyExists(response)
+    return make_response(jsonify(tmp),200)
+
+
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 import json, jwt
+from operator import truediv
 from flask import Flask, request
 from flask import jsonify, make_response
 from flask_restful import Api, Resource
@@ -59,6 +60,14 @@ def getUserByName(user_name):
              (u["allowedStreams"] if (u["allowedStreams"]) else []),
              u["canInsertAll"],
              (u["allowedInsertStreams"] if (u["allowedStreams"]) else []))
+
+def userAlreadyExists(user_name):
+    user_data=JSONread(USERFILE)
+    for u in user_data["users"]:
+        if(u["username"]== user_name):
+            return True
+        else: return False
+                
 
 def checkPassword(user_name, pwd):
     user_data = JSONread(USERFILE)

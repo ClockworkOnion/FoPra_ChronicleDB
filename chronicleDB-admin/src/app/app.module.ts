@@ -65,6 +65,7 @@ import {  MatPaginatorModule } from '@angular/material/paginator';
 import { AddUserComponent } from './page-user-management/add-user/add-user/add-user.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatSortModule } from '@angular/material/sort';
+import { EditUserComponent } from './page-user-management/edit-user/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { MatSortModule } from '@angular/material/sort';
     StreamInfoComponent,
     UserManagementComponent,
     AddUserComponent,
-    DoubleCheckDialog
+    DoubleCheckDialog,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
