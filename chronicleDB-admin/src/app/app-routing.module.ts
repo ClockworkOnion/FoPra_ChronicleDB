@@ -17,7 +17,6 @@ const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard]} },
   { path: 'login', component: PageLoginComponent },
   { path: 'no-access', component: NoAccessComponent },
-  { path: 'settings', component: TabMenuComponent },
   // {path:"insertData",component:InsertDataTabMenuComponent},
   { path: 'systemInfo', component: SystemInfoComponent },
   { path: 'user_management', component: UserManagementComponent },
