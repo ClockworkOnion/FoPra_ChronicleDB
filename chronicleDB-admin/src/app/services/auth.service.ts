@@ -21,7 +21,7 @@ export class AuthService {
       .post<{token : string}>(BACKEND_URL + 'user_login', JSON.stringify(credentials), {observe: 'response'})
       .pipe(
         map((httpResponse) => {
-          console.log(httpResponse.body)
+          // console.log(httpResponse.body)
           if (httpResponse.status == 200 && httpResponse.body) {
             localStorage.setItem('token', httpResponse.body.token);
             return true;

@@ -1,4 +1,6 @@
 import json, jwt
+from jwt.exceptions import ExpiredSignatureError
+from jwt.exceptions import InvalidSignatureError
 from operator import truediv
 from flask import Flask, request
 from flask import jsonify, make_response
@@ -6,7 +8,7 @@ from flask_restful import Api, Resource
 import helper
 
 USERFILE = "users.dat"
-SECRET = "secret"
+SECRET = "secretf"
 
 class User():
     def __init__(self, username, is_admin, can_create_streams, all_streams_allowed, allowed_streams, can_insert_all, allowed_insert_streams):
@@ -22,10 +24,6 @@ def JSONread(filename):
     with open(filename) as json_file:
         data = json.load(json_file)
         return data
-
-def JWTverifyToken(token):
-    print("Call to verify token was made. WIP --  not yet implented!!")
-    return True
 
 def JWTcreateToken(user_name):
     print("Creating a web token for user " + user_name + " ...")
@@ -60,6 +58,10 @@ def getUserByName(user_name):
              (u["allowedStreams"] if (u["allowedStreams"]) else []),
              u["canInsertAll"],
              (u["allowedInsertStreams"] if (u["allowedStreams"]) else []))
+
+def getUserByToken(token):
+    payload = jwt.decode(token, key=SECRET, algorithms=['HS256', ])
+    return getUserAsMap(str(payload["username"]))
 
 def userAlreadyExists(user_name):
     user_data=JSONread(USERFILE)
