@@ -63,10 +63,12 @@ def getUserByName(user_name):
 
 def userAlreadyExists(user_name):
     user_data=JSONread(USERFILE)
+    tmp=False;
     for u in user_data["users"]:
-        if(u["username"]== user_name):
-            return True
-        else: return False
+        if(u["username"] == user_name):
+            tmp=True
+            return tmp
+    return tmp
                 
 
 def checkPassword(user_name, pwd):

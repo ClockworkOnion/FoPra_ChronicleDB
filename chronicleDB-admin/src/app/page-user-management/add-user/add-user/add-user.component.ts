@@ -1,8 +1,11 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarService } from './../../../services/snack-bar.service';
 import { ChronicleService } from './../../../services/chronicle.service';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { BACKEND_URL } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-add-user',
@@ -22,7 +25,7 @@ export class AddUserComponent implements OnInit {
   isAdmin :any;
   
 
-  constructor(private formBuilder:FormBuilder,private chronicleService:ChronicleService){
+  constructor(private formBuilder:FormBuilder,private chronicleService:ChronicleService, private snackBar:MatSnackBar){
    }
 
   ngOnInit(): void {
@@ -35,11 +38,7 @@ export class AddUserComponent implements OnInit {
       allowedStreams:[[]],
       allowedInsertStreams:[[]],
       allStreamsAllowed:[false],
-      canInsertAll:[false],
-      
-      
-      
-      
+      canInsertAll:[false],   
     })
     
     this.chronicleService.getStreamsFromChronicle()
@@ -70,23 +69,46 @@ export class AddUserComponent implements OnInit {
 }
   get f() { return this.form.controls; }
 
-  onSubmit() {
-    this.submitted = true;
+  async onSubmit() {
+    
     // reset alerts on submit
-
+    const bol = await this.userAlreadyExists(this.form.controls.username.value)
     // stop here if form is invalid
     if (this.form.invalid) {
         return;
+    }
+    if(bol){
+      this.openFailureSnackBar();
+      return
     }
     this.form.controls.allowedStreams.enable();
     this.form.controls.allowedInsertStreams.enable();
     let tmp = JSON.stringify(this.form.value)
     
     this.chronicleService.getHttp().post(BACKEND_URL+"create_user",JSON.parse(tmp)).subscribe((response:any) => {
-    console.log(response)  
+   
   })
+  this.openSuccessSnackBar();
 
 }
+async userAlreadyExists(username:string){
+  let tmp = JSON.stringify(username)
+   const t = await this.chronicleService.getHttp().post(BACKEND_URL+"exists_user",tmp).toPromise();
+    return t
+    
+}
 
+openSuccessSnackBar(){
+  this.snackBar.open("Creating User was  Successful", "OK", {
+    duration: 3000,
+    panelClass: ['green-snackbar'],
+   });
+  }
+openFailureSnackBar(){
+    this.snackBar.open("Username Already Taken", "Try again!", {
+      duration: 3000,
+      panelClass: ['red-snackbar'],
+      });
+     }
 
 }

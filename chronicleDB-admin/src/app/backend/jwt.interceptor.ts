@@ -13,7 +13,7 @@ export class JwtInterceptor implements HttpInterceptor {
         const token: string | null = localStorage.getItem('token');
         // const isApiUrl = request.url.startsWith(environment.apiUrl);
         if (isLoggedIn && request.url.includes(BACKEND_URL)) {
-            console.log("Token der HTTP Anfrage hinzugefügt.");
+            //console.log("Token der HTTP Anfrage hinzugefügt.");
             
             request = request.clone({
                 headers: request.headers.append('Authorization', `Bearer ${token!}`)
