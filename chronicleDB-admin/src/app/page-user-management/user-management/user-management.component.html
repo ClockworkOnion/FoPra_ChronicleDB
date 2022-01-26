@@ -69,10 +69,16 @@
         </button> 
 
         <mat-menu #menu="matMenu">
+          
+          <button mat-menu-item (click)="editUser(row.username)" >
+            <mat-icon>edit</mat-icon>
+            <span>Edit User</span>
+          </button>  
+          
           <button mat-menu-item (click)="deleteUser(row.username)" >
             <mat-icon>delete</mat-icon>
             <span>Delete User</span>
-          </button>       
+          </button>
         </mat-menu>
 
 

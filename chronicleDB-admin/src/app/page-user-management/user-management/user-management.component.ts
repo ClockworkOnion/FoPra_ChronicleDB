@@ -1,3 +1,4 @@
+import { EditUserComponent } from './../edit-user/edit-user/edit-user.component';
 import { AddUserComponent } from './../add-user/add-user/add-user.component';
 import { HttpClient } from '@angular/common/http';
 import { BACKEND_URL } from './../../services/auth.service';
@@ -92,6 +93,14 @@ export class UserManagementComponent  {
       }else{}
     });
     
+  }
+  editUser(user:string){
+    const dialogRef= this.dialog.open(EditUserComponent)
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.ngOnInit();
+      }
+    });
   }
 }
 
