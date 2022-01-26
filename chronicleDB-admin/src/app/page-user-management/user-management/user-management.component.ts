@@ -38,6 +38,7 @@ export class UserManagementComponent  {
   }
   ngOnInit() {
     this.chronicleService.getStreamsFromChronicle();
+    this.userArray=[];
     this.chronicleService.getHttp().get(BACKEND_URL+"/allusers",{responseType:"json"}).subscribe((response:any) => {
       this.users = response;
       for (let index = 0; index < (response.users).length; index++) {
@@ -49,44 +50,50 @@ export class UserManagementComponent  {
         allowedStreams:response.users[index].allowedStreams,
         canInsertAll:response.users[index].canInsertAll,
         allowedInsertStreams:response.users[index].allowedInsertStreams
-
-
-
       }
       this.userArray.push(newUser)
       }
+     
       this.dataSource = new MatTableDataSource<User>(this.userArray);
+      
      })
 
      
   }
  
-  
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    
+  }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
+  
   addUser(){
-    this.dialogService.openDialog(AddUserComponent, {maxHeight: "600px"});
+    const dialogRef= this.dialog.open(AddUserComponent)
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.ngOnInit();
+      }
+    });
   }
-  test(){
-    this.dataSource.sort = this.sort;
-  }
+ 
 
   deleteUser(user:string){
     const dialogRef= this.dialog.open(DoubleCheckDialog)
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
       if(result){
         let tmp = JSON.stringify(user)
-    this.chronicleService.getHttp().post(BACKEND_URL+"delete_user",tmp).subscribe((response:any) => {
-     console.log(response)
-    })
-      }else{
-      }
+        this.chronicleService.getHttp().post(BACKEND_URL+"delete_user",tmp).subscribe((response:any) => {
+        console.log(response)
+        })
+        this.ngOnInit()
+      }else{}
     });
+    
   }
 }
 

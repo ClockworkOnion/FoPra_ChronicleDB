@@ -47,11 +47,11 @@
           </mat-form-field>
       </div>
 
-      <button  [disabled]="this.form.invalid" mat-dialog-close  mat-raised-button color="primary"  (click)="onSubmit()" >
+      <button  [disabled]="this.form.invalid" mat-dialog-close  mat-raised-button color="primary"  (click)="onSubmit()" [mat-dialog-close]="true">
         Add a New User
             </button> 
       &nbsp;
-      <button  mat-dialog-close mat-raised-button color="warn"  >
+      <button  mat-dialog-close mat-raised-button color="warn"  [mat-dialog-close]="false">
            Cancel
            </button>
     
