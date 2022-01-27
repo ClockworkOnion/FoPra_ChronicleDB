@@ -67,10 +67,10 @@
         <div class="overlaybox">
 
           <div style="padding-bottom: 16px; border-bottom: solid 1px #ccc;">
-            <span class="material-icons" style="font-size: 50px; color: gray;">
-              perm_identity
-            </span>
-            <p>{{authService.username}}</p>
+            <img class="avatar"  *ngIf="authService.isUserAdmin()" src="/assets/avatars/avatar1.png"  width="200" height="60" /> 
+            <img class="avatar"  *ngIf="!authService.isUserAdmin()" src="/assets/avatars/avatar3.png"  width="200" height="60" /> 
+            <p></p>
+            <p><strong>{{authService.username}}</strong></p>
           </div>
 
           <!-- <mat-list role="list">
@@ -86,10 +86,10 @@
           </mat-list> -->
           
           <div><button mat-button color="primary" disabled class="overlayelement">View Profile</button></div>
-          <div><button mat-button color="primary" disabled *ngIf="authService.isUserAdmin()" class="overlayelement">Manage Users</button></div>
+          <div><button mat-button color="primary"  *ngIf="authService.isUserAdmin()" class="overlayelement" [routerLink]="'user_management'">Manage Users</button></div>
 
           <div style="border-top: solid 1px #ccc;">
-            <button mat-stroked-button color="primary" (click)="authService.logout();drawer.toggle()" style="margin-top: 32px;">Logout</button>
+            <button mat-stroked-button color="primary" (click)="authService.logout()" style="margin-top: 32px;">Logout</button>
           </div>
 
         </div>
