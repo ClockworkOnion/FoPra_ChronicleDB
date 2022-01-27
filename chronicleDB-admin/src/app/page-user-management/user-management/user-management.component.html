@@ -22,42 +22,37 @@
           {{row.username}} 
         </mat-cell>
       </ng-container>
-      
-      <!-- Allowed Streams Column -->
-      <ng-container matColumnDef="allowedStreams">
-        <mat-header-cell *matHeaderCellDef > Allowed Streams </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <p *ngIf="row.isAdmin">All</p>
-           {{row.allowedStreams}} </mat-cell>
-      </ng-container>
-  
-      <!-- allowed insert  Column -->
-      <ng-container matColumnDef="allowedInsertStreams">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Allowed Insert Streams </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.allowedInsertStreams}} </mat-cell>
-      </ng-container>
-       <!-- isadmin  Column -->
-       <ng-container matColumnDef="isAdmin">
+
+      <!-- isadmin  Column -->
+      <ng-container matColumnDef="isAdmin">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Admin</mat-header-cell>
         <mat-cell *matCellDef="let row"> 
-         <mat-icon aria-hidden="false" class ="true"  *ngIf="row.isAdmin" >done</mat-icon>
+         <mat-icon aria-hidden="true" class ="true"  *ngIf="row.isAdmin" >done</mat-icon>
          <mat-icon aria-hidden="false" class ="false" *ngIf="!row.isAdmin">close</mat-icon> 
         </mat-cell>
       </ng-container>
-       <!-- can create streams  Column -->
-       <ng-container matColumnDef="canCreateStreams">
+      
+      <!-- Reading Rights Column -->
+      <ng-container matColumnDef="readingRights">
+        <mat-header-cell *matHeaderCellDef > Reading Rights </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <p *ngIf="row.allStreamsAllowed"><mat-icon aria-hidden="true" class ="true">done</mat-icon> </p>
+          <p *ngIf="row.allowedStreams.length == 0 && !row.allStreamsAllowed"><mat-icon aria-hidden="false" class ="false">close</mat-icon> </p>
+           {{row.allowedStreams}} </mat-cell>
+      </ng-container>
+       <!-- Writing Rights Column -->
+      <ng-container matColumnDef="writingRights">
+        <mat-header-cell *matHeaderCellDef > Writing Rights </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <p *ngIf="row.canInsertAll"><mat-icon aria-hidden="true" class ="true">done</mat-icon> </p>
+          <p *ngIf="row.allowedInsertStreams.length == 0 && !row.canInsertAll"><mat-icon aria-hidden="false" class ="false">close</mat-icon> </p>
+           {{row.allowedInsertStreams}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="canCreateStreams">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Create Streams </mat-header-cell>
         <mat-cell *matCellDef="let row"> 
-          <mat-icon aria-hidden="false" class ="true"  *ngIf="row.canCreateStreams" >done</mat-icon>
+          <mat-icon aria-hidden="true" class ="true"  *ngIf="row.canCreateStreams" >done</mat-icon>
          <mat-icon aria-hidden="false" class ="false" *ngIf="!row.canCreateStreams">close</mat-icon> 
-         </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="canInsertAll">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Insert Streams </mat-header-cell>
-        <mat-cell *matCellDef="let row"> 
-          <mat-icon aria-hidden="false" class ="true"  *ngIf="row.canInsertAll" >done</mat-icon>
-         <mat-icon aria-hidden="false" class ="false" *ngIf="!row.canInsertAll">close</mat-icon> 
          </mat-cell>
       </ng-container>
       <!--Edit menu Column-->

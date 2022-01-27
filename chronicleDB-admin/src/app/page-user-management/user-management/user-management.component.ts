@@ -20,7 +20,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   styleUrls: ['./user-management.component.css']
 })
 export class UserManagementComponent  {
-  displayedColumns = ['username','isAdmin','allowedStreams',"canCreateStreams","canInsertAll","edit"];
+  displayedColumns = ['username','isAdmin','readingRights','writingRights',"canCreateStreams","edit"];
   dataSource!: MatTableDataSource<User>;
   form!: FormGroup;
   users :any;

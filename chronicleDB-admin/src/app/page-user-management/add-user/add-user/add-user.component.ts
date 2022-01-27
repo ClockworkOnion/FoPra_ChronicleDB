@@ -49,7 +49,7 @@ export class AddUserComponent implements OnInit {
     }
   
 }
-
+//TODO MAKE THIS WAY BETTER 
   updateCB(){
     this.form.controls['canCreateStream'].setValue(true);
     this.form.controls['canInsertAll'].setValue(true);
@@ -65,9 +65,27 @@ export class AddUserComponent implements OnInit {
   }else{
     this.form.controls.allowedStreams.enable();
     this.form.controls.allowedInsertStreams.enable();
-
   }
-}
+  }
+  updateReadingSelection(){
+    if(this.form.controls["allStreamsAllowed"].value){
+      this.form.controls.allowedStreams.reset();
+      this.form.controls.allowedStreams.disable();
+      this.form.controls.allowedStreams.setValue([]);
+    }else{
+      this.form.controls.allowedStreams.enable();
+    }
+  }
+  updateWritingSelection(){
+    if(this.form.controls["canInsertAll"].value){
+      this.form.controls.allowedInsertStreams.reset();
+      this.form.controls.allowedInsertStreams.disable();
+      this.form.controls.allowedInsertStreams.setValue([]);
+    }else{
+      this.form.controls.allowedInsertStreams.enable();
+    }
+  }
+
   get f() { return this.form.controls; }
 
   async onSubmit() {
