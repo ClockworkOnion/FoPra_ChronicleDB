@@ -40,12 +40,12 @@
           <ng-container matColumnDef="readingRights">
             <mat-header-cell *matHeaderCellDef> Reading Rights </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <p *ngIf="row.allStreamsAllowed">
+              <div *ngIf="row.allStreamsAllowed">
                 <mat-icon aria-hidden="true" class="true">done</mat-icon>
-              </p>
-              <p *ngIf="row.allowedStreams.length == 0 && !row.allStreamsAllowed">
+              </div>
+              <div *ngIf="row.allowedStreams.length == 0 && !row.allStreamsAllowed">
                 <mat-icon aria-hidden="false" class="false">close</mat-icon>
-              </p>
+              </div>
               {{row.allowedStreams}}
             </mat-cell>
           </ng-container>
@@ -53,12 +53,12 @@
           <ng-container matColumnDef="writingRights">
             <mat-header-cell *matHeaderCellDef> Writing Rights </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <p *ngIf="row.canInsertAll">
+              <div *ngIf="row.canInsertAll">
                 <mat-icon aria-hidden="true" class="true">done</mat-icon>
-              </p>
-              <p *ngIf="row.allowedInsertStreams.length == 0 && !row.canInsertAll">
+              </div>
+              <div *ngIf="row.allowedInsertStreams.length == 0 && !row.canInsertAll">
                 <mat-icon aria-hidden="false" class="false">close</mat-icon>
-              </p>
+              </div>
               {{row.allowedInsertStreams}}
             </mat-cell>
           </ng-container>
