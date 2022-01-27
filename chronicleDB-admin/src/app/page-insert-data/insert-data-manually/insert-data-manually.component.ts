@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ChronicleEventElement, EventCompoundType } from 'src/app/model/ChronicleEvent';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
@@ -13,7 +14,6 @@ import { IDValidators } from './id.validators';
   styleUrls: ['./insert-data-manually.component.css']
 })
 export class InsertDataManuallyComponent implements OnInit {
-  selectedStream!: ChronicleStream | null;
   eventElements!: ChronicleEventElement[];
 
   // Values of the input fields
@@ -27,27 +27,23 @@ export class InsertDataManuallyComponent implements OnInit {
   constructor(private chronicle: ChronicleService,
     private insertService: InsertDataService, 
     private snackBar: SnackBarService,
-    private idValidator: IDValidators) {}
+    private idValidator: IDValidators,
+    @Inject(MAT_DIALOG_DATA) public data: {stream: ChronicleStream}) {}
 
   ngOnInit(): void {
-    // subscribe to selected Stream
-    this.chronicle.selectedStream$.subscribe(stream => {
-      if (stream && stream.event && stream.compoundType) {        
-        this.selectedStream = stream;
+    // set initial Value as maxkey+1
+    this.chronicle.getMaxKey(this.data.stream.id).then(text => {
+      this.timestampFormControl.setValue(parseInt(text) ? (parseInt(text) + 1) : 0);
+    })
+    
+    // update ID validator with new stream ID
+    this.timestampFormControl.setAsyncValidators(this.idValidator.largerThanPreviousId(this.data.stream.id!));
 
-        // update ID validator with new stream ID
-        this.timestampFormControl.setAsyncValidators(this.idValidator.largerThanPreviousId(this.selectedStream!.id));
-
-        this.eventElements = stream.event;
-        this.eventElementValues = new Array<string>(this.eventElements.length);
-        for (let i = 0; i < this.eventElementValues.length; i++) { // defaultwert benutzen, damit es nicht undefined ist
-          this.eventElementValues[i] = "";
-        }
-      } else {
-        this.selectedStream = null;
-        this.timestampFormControl.setAsyncValidators(null);
-      }
-    });
+    this.eventElements = this.data.stream.event!;
+    this.eventElementValues = new Array<string>(this.eventElements.length);
+    for (let i = 0; i < this.eventElementValues.length; i++) { // defaultwert benutzen, damit es nicht undefined ist
+      this.eventElementValues[i] = "";
+    }    
   }
 
   elementValueChanged(index: number, newValue:string) {
@@ -64,9 +60,9 @@ export class InsertDataManuallyComponent implements OnInit {
       return;
     }
     if (this.checkElementsFilled() 
-    || this.selectedStream!.compoundType == EventCompoundType.varCompound)  {
+      || this.data.stream.compoundType == EventCompoundType.varCompound)  {
       this.insertService.insertEvent(this.eventElementValues, this.timestampFormControl.value);
-      this.timestampFormControl.setValue(""); // Reset ID
+      this.timestampFormControl.setValue(this.timestampFormControl.value + 1); // increment ID
     } else {
       this.snackBar.openSnackBarwithStyle("Please enter all needed Data!","red-snackbar");
       return;

@@ -56,8 +56,7 @@ export class StreamListComponent implements OnInit {
   }
 
   insertData(stream: ChronicleStream) {
-    this.chronicleService.selectStream(stream);
-    this.dialog.openDialog(InsertDataTabMenuComponent, {maxHeight: "600px"});
+    this.dialog.openDialog(InsertDataTabMenuComponent, {maxHeight: "600px", data: {stream: stream}});
   }
 
   timeTravel(stream: ChronicleStream) {
