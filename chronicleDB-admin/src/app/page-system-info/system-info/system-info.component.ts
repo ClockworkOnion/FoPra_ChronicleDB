@@ -13,6 +13,10 @@ export class SystemInfoComponent implements OnInit {
   constructor(private service:SystemInfoService) { }
   
   ngOnInit(): void {
+    this.service.getSystemInfo().subscribe(response =>{
+      this.systemInfo = response;
+      // console.log(this.systemInfo)
+    });
   }
   onSystemInfoClicked(){
     this.service.getSystemInfo().subscribe(response =>{

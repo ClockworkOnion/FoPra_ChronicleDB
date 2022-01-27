@@ -57,6 +57,7 @@ export class UserManagementComponent  {
      
       this.dataSource = new MatTableDataSource<User>(this.userArray);
       this.dataSource.paginator=this.paginator;
+      this.dataSource.sort = this.sort;
       
      })
 

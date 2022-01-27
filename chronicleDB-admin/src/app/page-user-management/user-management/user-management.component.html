@@ -25,8 +25,9 @@
       
       <!-- Allowed Streams Column -->
       <ng-container matColumnDef="allowedStreams">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Allowed Streams </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef > Allowed Streams </mat-header-cell>
         <mat-cell *matCellDef="let row">
+          <p *ngIf="row.isAdmin">All</p>
            {{row.allowedStreams}} </mat-cell>
       </ng-container>
   
