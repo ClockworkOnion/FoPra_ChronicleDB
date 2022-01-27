@@ -287,7 +287,7 @@ def deleteUser():
 
     response=json.loads(request.data)
     um.deleteUser(response)
-    return{}
+    return make_response({"Deleting" : "Sucess"},200)
 
 @app.route('/exists_user', methods =['POST'])
 def existsUser():

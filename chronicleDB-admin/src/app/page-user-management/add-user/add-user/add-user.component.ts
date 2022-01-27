@@ -103,7 +103,6 @@ export class AddUserComponent implements OnInit {
     this.form.controls.allowedStreams.enable();
     this.form.controls.allowedInsertStreams.enable();
     let tmp = JSON.stringify(this.form.value)
-    
     this.chronicleService.getHttp().post(BACKEND_URL+"create_user",JSON.parse(tmp)).subscribe((response:any) => {
    
   })
