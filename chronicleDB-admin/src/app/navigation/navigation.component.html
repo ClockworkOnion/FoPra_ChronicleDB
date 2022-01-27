@@ -86,11 +86,11 @@
                 </mat-list-item>
               </mat-list> -->
               
-              <div><button mat-button color="primary" disabled class="overlayelement">View Profile</button></div>
-              <div><button mat-button color="primary"  *ngIf="authService.isUserAdmin()" class="overlayelement" [routerLink]="'user_management'">Manage Users</button></div>
+              <div><button mat-button color="accent" disabled class="overlayelement">View Profile</button></div>
+              <div><button mat-button color="accent"  *ngIf="authService.isUserAdmin()" class="overlayelement" [routerLink]="'user_management'">Manage Users</button></div>
     
               <div style="border-top: solid 1px #ccc;">
-                <button mat-stroked-button color="primary" (click)="authService.logout()" style="margin-top: 32px;">Logout</button>
+                <button mat-stroked-button color="accent" (click)="authService.logout()" style="margin-top: 32px;">Logout</button>
               </div>
     
             </div>
