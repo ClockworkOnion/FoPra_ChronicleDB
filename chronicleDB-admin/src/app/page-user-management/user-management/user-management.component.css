@@ -1,15 +1,7 @@
 .example-container {
-  margin: 20px;
-  padding-bottom: 16px;
   display: flex;
   flex-direction: column;
   min-width: 300px;
-  margin-bottom: 2cm;
-}
-
-.example-header {
-  min-height: 64px;
-  padding: 8px 24px 0;
 }
 
 .mat-table {

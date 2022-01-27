@@ -73,7 +73,7 @@ export class UserManagementComponent  {
   }
   
   addUser(){
-    const dialogRef= this.dialog.open(AddUserComponent)
+    const dialogRef= this.dialog.open(AddUserComponent, {disableClose: true})
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         this.ngOnInit();

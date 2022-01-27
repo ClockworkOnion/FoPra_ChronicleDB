@@ -4,7 +4,7 @@
       <mat-card-title> User Management </mat-card-title>
     </mat-card-header>
     <mat-card-content class="card-content">
-      <div class="example-header">
+      <div>
         <mat-form-field>
           <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filter" #input>
         </mat-form-field>
@@ -109,9 +109,11 @@
         <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </div>
 
-      <button mat-raised-button color="primary" style="display: block; margin: auto" (click)="addUser()">
-        Add a New User
-      </button>
+      <div style="text-align: center; margin-top: 32px;">
+        <button mat-raised-button color="primary" (click)="addUser()">
+          Add a New User
+        </button>
+      </div>
 
 
     </mat-card-content>
