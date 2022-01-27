@@ -56,11 +56,11 @@ export class InsertDataManuallyComponent implements OnInit {
 
   onInsertEventClicked() {
     if (!this.timestampFormControl.valid) {
-      this.snackBar.openSnackBar("Please enter a correct timestamp!");
+      this.snackBar.openSnackBarwithStyle("Please enter a correct timestamp!","red-snackbar");
       return;
     }
     if (!this.checkNoErrorsOnElements()) {
-      this.snackBar.openSnackBar("Please fix the displayed errors first!");
+      this.snackBar.openSnackBarwithStyle("Please fix the displayed errors first!","red-snackbar");
       return;
     }
     if (this.checkElementsFilled() 
@@ -68,7 +68,7 @@ export class InsertDataManuallyComponent implements OnInit {
       this.insertService.insertEvent(this.eventElementValues, this.timestampFormControl.value);
       this.timestampFormControl.setValue(""); // Reset ID
     } else {
-      this.snackBar.openSnackBar("Please enter all needed Data!");
+      this.snackBar.openSnackBarwithStyle("Please enter all needed Data!","red-snackbar");
       return;
     }
   }

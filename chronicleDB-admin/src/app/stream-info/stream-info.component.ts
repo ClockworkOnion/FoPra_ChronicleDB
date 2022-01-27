@@ -20,7 +20,7 @@ export class StreamInfoComponent {
     inputElement.select();
     document.execCommand("copy");
     inputElement.setSelectionRange(0, 0);
-    this.snackBar.openSnackBar("Copied Stream Info!");
+    this.snackBar.openSnackBarwithStyle("Copied Stream Info!","green-snackbar");
   }
 
 }

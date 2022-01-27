@@ -28,7 +28,7 @@ export class InsertDataService {
 
     this.chronicleService.getHttp()
       .post(BACKEND_URL + "insert_ordered/" + this.currentStream!.id, body)
-      .subscribe(response => this.snackBar.openSnackBar("Event successfully inserted!"));
+      .subscribe(response => this.snackBar.openSnackBarwithStyle("Event successfully inserted!","green-snackbar"));
   }
 
   insertEventString(event:string) {
@@ -38,7 +38,7 @@ export class InsertDataService {
 
     this.chronicleService.getHttp()
       .post(BACKEND_URL + "insert_ordered/" + this.currentStream!.id, event)
-      .subscribe(response => this.snackBar.openSnackBar("Event successfully inserted!"));
+      .subscribe(response => this.snackBar.openSnackBarwithStyle("Event successfully inserted!","green-snackbar"));
   }
 
   parseInputToBody(eventInput:string[], timestamp: number) {

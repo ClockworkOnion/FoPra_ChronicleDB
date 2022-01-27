@@ -119,7 +119,7 @@ export class EventgeneratorComponent implements OnInit, AfterViewInit {
     "Can't add more Event properties! Please select Compound or VarCompound";
 
   openSnackBar(message: string) {
-    this.snackbar.openSnackBar(message);
+    this.snackbar.openSnackBarwithStyle(message,"red-snackbar");
   }
   setObjectCompoundType(){
     switch(this.selectedCompoundOrSingle){
