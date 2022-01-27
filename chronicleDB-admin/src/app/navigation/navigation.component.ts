@@ -28,7 +28,7 @@ export class NavigationComponent {
     public authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private overlay: OverlayContainer
+    private overlay: OverlayContainer,
   ) {}
   toggleControl = new FormControl(false);
 

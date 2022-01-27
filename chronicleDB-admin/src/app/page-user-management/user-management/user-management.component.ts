@@ -90,7 +90,10 @@ export class UserManagementComponent  {
         this.chronicleService.getHttp().post(BACKEND_URL+"delete_user",tmp).subscribe((response:any) => {
         console.log(response)
         })
-        this.ngOnInit()
+        setTimeout(()=>{
+          this.ngOnInit();
+        },500)
+     
       }else{}
     });
     

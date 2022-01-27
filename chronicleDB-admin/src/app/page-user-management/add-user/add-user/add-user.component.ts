@@ -1,11 +1,7 @@
 import { DialogService } from './../../../services/dialog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChronicleService } from './../../../services/chronicle.service';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { BACKEND_URL } from 'src/app/services/auth.service';
@@ -104,7 +100,6 @@ export class AddUserComponent implements OnInit {
     this.form.controls.allowedStreams.enable();
     this.form.controls.allowedInsertStreams.enable();
     let tmp = JSON.stringify(this.form.value);
-
     this.chronicleService
       .getHttp()
       .post(BACKEND_URL + 'create_user', JSON.parse(tmp))
@@ -143,7 +138,7 @@ export class AddUserComponent implements OnInit {
       console.log('The snackbar was dismissed');
     });
     snackBarRef.onAction().subscribe(() => {
-      this.dialog.openDialog(AddUserComponent, {disableClose: true});
+      this.dialog.openDialog(AddUserComponent, { disableClose: true });
     });
   }
 }

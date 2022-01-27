@@ -62,37 +62,44 @@
         [cdkConnectedOverlayOrigin]="trigger"
         [cdkConnectedOverlayOpen]="isOpen && authService.isLoggedIn()" cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
         [cdkConnectedOverlayHasBackdrop]="true" (detach)="isOpen = false" (backdropClick)="isOpen = false">
+
+        <mat-card class="account-card">
+          <mat-card-content class="card-content">
+            <div class="overlaybox">
+
+              <div style="padding-bottom: 16px; border-bottom: solid 1px #ccc;">
+                <img class="avatar"  *ngIf="authService.isUserAdmin()" src="/assets/avatars/avatar1.png"  width="200" height="60" /> 
+                <img class="avatar"  *ngIf="!authService.isUserAdmin()" src="/assets/avatars/avatar3.png"  width="200" height="60" /> 
+                <p></p>
+                <p><strong>{{authService.username}}</strong></p>
+              </div>
+    
+              <!-- <mat-list role="list">
+                <mat-list-item role="listitem">
+                  <button mat-button color="primary" disabled *ngIf="authService.isUserAdmin()">View Profile</button>
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                  <button mat-button color="primary" disabled *ngIf="authService.isUserAdmin()">Manage Users</button>
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                  <button mat-stroked-button color="primary" (click)="authService.logout();">Logout</button>
+                </mat-list-item>
+              </mat-list> -->
+              
+              <div><button mat-button color="accent" disabled class="overlayelement">View Profile</button></div>
+              <div><button mat-button color="accent"  *ngIf="authService.isUserAdmin()" class="overlayelement" [routerLink]="'user_management'">Manage Users</button></div>
+    
+              <div style="border-top: solid 1px #ccc;">
+                <button mat-stroked-button color="accent" (click)="authService.logout()" style="margin-top: 32px;">Logout</button>
+              </div>
+    
+            </div>
+      
+          </mat-card-content>
+      </mat-card>
         <!-- wenn geöffnet soll alles andere nicht ausgegraut werden, wenn außerhalb geklicked, soll es wieder false werden -->
 
-        <div class="overlaybox">
-
-          <div style="padding-bottom: 16px; border-bottom: solid 1px #ccc;">
-            <img class="avatar"  *ngIf="authService.isUserAdmin()" src="/assets/avatars/avatar1.png"  width="200" height="60" /> 
-            <img class="avatar"  *ngIf="!authService.isUserAdmin()" src="/assets/avatars/avatar3.png"  width="200" height="60" /> 
-            <p></p>
-            <p><strong>{{authService.username}}</strong></p>
-          </div>
-
-          <!-- <mat-list role="list">
-            <mat-list-item role="listitem">
-              <button mat-button color="primary" disabled *ngIf="authService.isUserAdmin()">View Profile</button>
-            </mat-list-item>
-            <mat-list-item role="listitem">
-              <button mat-button color="primary" disabled *ngIf="authService.isUserAdmin()">Manage Users</button>
-            </mat-list-item>
-            <mat-list-item role="listitem">
-              <button mat-stroked-button color="primary" (click)="authService.logout();">Logout</button>
-            </mat-list-item>
-          </mat-list> -->
-          
-          <div><button mat-button color="primary" disabled class="overlayelement">View Profile</button></div>
-          <div><button mat-button color="primary"  *ngIf="authService.isUserAdmin()" class="overlayelement" [routerLink]="'user_management'">Manage Users</button></div>
-
-          <div style="border-top: solid 1px #ccc;">
-            <button mat-stroked-button color="primary" (click)="authService.logout()" style="margin-top: 32px;">Logout</button>
-          </div>
-
-        </div>
+        
 
       </ng-template>
 
