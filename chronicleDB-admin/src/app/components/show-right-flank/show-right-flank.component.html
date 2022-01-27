@@ -1,4 +1,4 @@
-<div class="padded">
+<!-- <div class="padded">
     <h1>Show Right Flank</h1>
     <br>
     <button mat-raised-button color="secondary" style="float: left; bottom: 20pt" (click)="debugGetStreamInfo()">Get Stream Info</button>
@@ -11,4 +11,15 @@
     <div class="newlines">
         {{ outputInfo }}
     </div>
+</div> -->
+
+<mat-form-field class="preview" appearance="fill" style="width: 900px;">
+    <mat-label>Right Flank of Stream with ID {{data.stream.id}}</mat-label>
+    <textarea [readonly]="true" matInput type="text" cdkTextareaAutosize #area class="previewTextArea">{{outputInfo}}</textarea>
+</mat-form-field>
+<div style="text-align: end;">
+    <button mat-stroked-button color="accent" (click)="copyInputMessage(area)">
+        <mat-icon>content_copy</mat-icon>
+        Copy to Clipboard
+    </button>
 </div>

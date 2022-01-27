@@ -8,6 +8,7 @@ import { InsertDataTabMenuComponent } from 'src/app/page-insert-data/insert-data
 import { TimeTravelComponent } from 'src/app/time-travel/time-travel.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { StreamInfoComponent } from 'src/app/stream-info/stream-info.component';
+import { ShowRightFlankComponent } from 'src/app/components/show-right-flank/show-right-flank.component';
 
 @Component({
   selector: 'app-stream-list',
@@ -62,6 +63,10 @@ export class StreamListComponent implements OnInit {
   timeTravel(stream: ChronicleStream) {
     this.chronicleService.selectStream(stream);
     this.dialog.openDialog(TimeTravelComponent, {maxHeight: "800px", disableClose: true});
+  }
+  
+  showRightFlank(stream:ChronicleStream){
+    this.dialog.openDialog(ShowRightFlankComponent, {data: {stream: stream}});
   }
 
  async showMaxKey(id:number){

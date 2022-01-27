@@ -39,7 +39,7 @@
           <mat-icon>info</mat-icon>
           <span>Stream Info</span>
         </button>
-        <button mat-menu-item disabled>
+        <button mat-menu-item  (click)="showRightFlank(stream)" [disabled]="!stream.online">
           <mat-icon>visibility</mat-icon>
           <span>Show right Flank</span>
         </button>
