@@ -33,7 +33,7 @@ export class InsertDataManuallyComponent implements OnInit {
   ngOnInit(): void {
     // set initial Value as maxkey+1
     this.chronicle.getMaxKey(this.data.stream.id).then(text => {
-      this.timestampFormControl.setValue(parseInt(text) ? (parseInt(text) + 1) : 0);
+      this.timestampFormControl.setValue((parseInt(text) >= 0) ? (parseInt(text) + 1) : 0);
     })
     
     // update ID validator with new stream ID
@@ -61,8 +61,15 @@ export class InsertDataManuallyComponent implements OnInit {
     }
     if (this.checkElementsFilled() 
       || this.data.stream.compoundType == EventCompoundType.varCompound)  {
-      this.insertService.insertEvent(this.eventElementValues, this.timestampFormControl.value);
-      this.timestampFormControl.setValue(this.timestampFormControl.value + 1); // increment ID
+      this.insertService.insertEvent(this.eventElementValues, this.timestampFormControl.value, this.data.stream)
+        .then(response => {
+          if (response.status==200){
+            this.snackBar.openSnackBarwithStyle("Event successfully inserted!","green-snackbar");
+            this.timestampFormControl.setValue(this.timestampFormControl.value + 1); // increment ID
+          } else {
+            this.snackBar.openSnackBarwithStyle("Insertion failed!","red-snackbar");
+          }
+        })
     } else {
       this.snackBar.openSnackBarwithStyle("Please enter all needed Data!","red-snackbar");
       return;
