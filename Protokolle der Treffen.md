@@ -148,8 +148,30 @@ Wir wollen verhindern, dass manche Dialoge (TimeTravel) geschlossen werden, wenn
 - UI hinzufügen (bisher nur Konsole)
 
 
+
+
 ## Besprechung vom 20.01.21
 Awensend: Johannes Buder, Davit Davtyan, Lars Happel
 
 - Gemeinsames Betrachten der Tabellendarstellung in Time-Travel.
 - Erörterung des weiteren Vorgehens zum Verbinden des Backend mit dem Frontend
+
+
+
+
+## Besprechung vom 27.01.21
+Awensend: Johannes Buder, Davit Davtyan, Lars Happel
+
+### Show Right Flank
+Da Show Right Flank noch nicht fertig im Kontextmenü der Streams ist, wollen wir dies aktuell angehen. 
+Dann können wir auch links das Menü "aufrüumen", dass da nicht mehr viel Debug-Zeug angezeigt werden muss.
+
+### Darkmode
+Wir haben ebenso nochmal den Darkmode für alle Bereiche umgesetzt und besprochen (Dialoge etc)
+
+### Insert
+Wir haben gemerkt, dass zu schnelles einfügen Chronicle überlastet und wir da anhand des Codes noch 
+mehr überprüfen müssen. Dies wollen wir nun noch weiter anpassen.
+
+### User Management
+Wir haben das Menü bei der Login-Seite aufgeräumt, weitere Beschränkungen eingefügt und weitere Änderungen vorgenommen.
