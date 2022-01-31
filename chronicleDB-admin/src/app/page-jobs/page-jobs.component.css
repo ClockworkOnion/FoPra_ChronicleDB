@@ -1,0 +1,40 @@
+.grid-container {
+  margin: 20px;
+  padding-bottom: 16px;
+}
+
+.dashboard-card {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  margin-bottom: 20px;
+  margin-right: 32px;
+  border-radius: 25px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.card-content {
+  padding: 20pt;
+}
+
+.iconButtonInTitle {
+  margin-left: 8px;
+  top: -3px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-column-options {
+  max-width: 100px;
+}
+.mat-column-interval {
+  max-width: 150px;
+}

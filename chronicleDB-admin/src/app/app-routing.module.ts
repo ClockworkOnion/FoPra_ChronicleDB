@@ -12,9 +12,11 @@ import { CreateAuthGuard } from './services/guards/create-auth-guard.service';
 import { MasterGuard } from './services/guards/master-guard.service';
 import { UserManagementComponent } from './page-user-management/user-management/user-management.component';
 import { AdminAuthGuard } from './services/guards/admin-auth-guard.service';
+import { PageJobsComponent } from './page-jobs/page-jobs.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard]} },
+  { path: 'jobs', component: PageJobsComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard]} },
   { path: 'login', component: PageLoginComponent },
   { path: 'no-access', component: NoAccessComponent },
   // {path:"insertData",component:InsertDataTabMenuComponent},

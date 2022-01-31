@@ -8,6 +8,10 @@
         <mat-icon class="sidenav-icon"> home </mat-icon>
         &nbsp; Home
       </a>
+      <a mat-list-item routerLink="/jobs"  *ngIf="authService.isLoggedIn()">
+        <mat-icon class="sidenav-icon"> event </mat-icon>
+        &nbsp; Jobs
+      </a>
       <a mat-list-item routerLink="/create_stream" *ngIf="authService.canUserCreateStreams()">
         <mat-icon class="sidenav-icon"> add_circle_outline </mat-icon>
         &nbsp; Create New Stream

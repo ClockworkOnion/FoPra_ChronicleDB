@@ -1,0 +1,72 @@
+<div class="grid-container">
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <mat-card-title> Jobs </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <div>
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filter" #input>
+        </mat-form-field>
+      </div>
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Info Column -->
+        <ng-container matColumnDef="info">
+          <mat-header-cell *matHeaderCellDef> Info </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.info || element.requestType}} </mat-cell>
+        </ng-container>
+
+        <!-- Time Column -->
+        <ng-container matColumnDef="time">
+          <mat-header-cell *matHeaderCellDef> Starting Point </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
+        </ng-container>
+
+        <!-- Interval Column -->
+        <ng-container matColumnDef="interval">
+          <mat-header-cell *matHeaderCellDef> Interval </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.interval.text}} </mat-cell>
+        </ng-container>
+
+        <!-- Options column -->
+        <ng-container matColumnDef="options">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let row, let element">
+
+            <button mat-icon-button (click)="executeJob(element)">
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteJob(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <!-- <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon class="more-button">more_vert</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item >
+                <mat-icon>edit</mat-icon>
+                <span>Edit User</span>
+              </button>
+
+              <button mat-menu-item>
+                <mat-icon>delete</mat-icon>
+                <span>Delete User</span>
+              </button>
+            </mat-menu> -->
+          </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No Job found!</td>
+        </tr>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of Jobs" #paginator>
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>
