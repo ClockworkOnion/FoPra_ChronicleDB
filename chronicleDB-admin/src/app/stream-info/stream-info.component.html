@@ -1,10 +1,10 @@
 
 <mat-form-field class="preview" appearance="fill" style="width: 900px;">
     <mat-label>Stream Info with ID {{data.streamId}}</mat-label>
-    <textarea [readonly]="true" matInput type="text" cdkTextareaAutosize class="previewTextArea" #streamInfo>{{data.streamInfo}}</textarea>
+    <textarea [readonly]="true" matInput type="text" cdkTextareaAutosize class="previewTextArea" #textAreaInfo>{{streamInfo}}</textarea>
 </mat-form-field>
 <div style="text-align: end;">
-    <button mat-stroked-button color="accent" (click)="copyInputMessage(streamInfo)">
+    <button mat-stroked-button color="accent" (click)="copyInputMessage(textAreaInfo)">
         <mat-icon>content_copy</mat-icon>
         Copy to Clipboard
     </button>

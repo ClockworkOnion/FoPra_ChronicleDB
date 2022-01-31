@@ -1,4 +1,3 @@
-import { StreamInfoService } from 'src/app/services/rest services/stream-info.service';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +17,7 @@ import { ShowRightFlankComponent } from 'src/app/components/show-right-flank/sho
 export class StreamListComponent implements OnInit {
   streamList :Array<ChronicleStream>=[];
 
-  constructor(private chronicleService : ChronicleService, private infoService:StreamInfoService , private dialog : DialogService, public authService : AuthService) { 
+  constructor(private chronicleService : ChronicleService, private dialog : DialogService, public authService : AuthService) { 
     
   }
 
@@ -43,9 +42,9 @@ export class StreamListComponent implements OnInit {
       this.streamList.length=0;
     }
   }
-  async showInfo(id : number){
-    let res =await this.infoService.getStreamInfo(id);
-    this.dialog.openDialog(StreamInfoComponent, {data: {streamId: id, streamInfo: res}, maxHeight: "900px"});
+
+  showInfo(id : number){
+    this.dialog.openDialog(StreamInfoComponent, {data: {streamId: id}, maxHeight: "900px"});
   }
 
   shutDown(id :number){

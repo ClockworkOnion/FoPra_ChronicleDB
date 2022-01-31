@@ -162,4 +162,8 @@ export class ChronicleService {
 
     return this.http.post(BACKEND_URL +"query_time_travel/"+this.selectedStream.value!.id, requestBody, {responseType:"text"});
   }
+
+  async getStreamInfo(id: number) {     
+    return await this.getHttp().get(BACKEND_URL +"stream_info/"+id,{responseType:"text"}).toPromise();
+  }
 }
