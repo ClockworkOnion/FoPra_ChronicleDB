@@ -9,11 +9,22 @@ import jwt, json
 import helper
 import usermanagement as um
 import validation
+from apscheduler.schedulers.background import BackgroundScheduler
+import atexit
 
 app = Flask(__name__)
 api = Api(app)
 cors = CORS(app) # Adding CORS header
 app.config['CORS_HEADERS'] = 'Content-Type' # Adding CORS header
+scheduler = BackgroundScheduler()
+
+
+def do_periodid_tasks():
+    print("Executing periodic tasks...")
+    # Perdiodic tasks here
+    print("Finished periodic tasks.")
+
+# a change
 
 USERFILE = "users.dat"
 SECRET = "secret"
@@ -308,5 +319,11 @@ def existsUser():
 
 
 if __name__ == "__main__":
-    app.run(port=5002, debug=True) # For starting the backend process
+    # Set up scheduler
+    scheduler.add_job(func=do_periodid_tasks, trigger="interval", seconds=30)
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown())
+
+    # Start backend process (use_reloader must be false or it will mess with scheduler)
+    app.run(port=5002, debug=True, use_reloader=False) 
     # helper.testUserPwd()
