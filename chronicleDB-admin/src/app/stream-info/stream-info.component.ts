@@ -18,7 +18,7 @@ export class StreamInfoComponent implements OnInit{
     public dialogRef: MatDialogRef<StreamInfoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {streamId: number, disableCreateJob?: boolean},
     private snackBar: SnackBarService, private chronicle: ChronicleService,
-    private jobService: JobService, private dialog: DialogService
+    private jobService: JobService
   ) {}
 
   ngOnInit(): void {
@@ -38,9 +38,5 @@ export class StreamInfoComponent implements OnInit{
   createJob() {
     this.dialogRef.close();
     this.jobService.createJob(ChronicleRequest.STREAM_INFO, {data: {streamId: this.data.streamId, disableCreateJob: true}, maxHeight: "900px"})
-      
-    //   () => {
-    //   this.dialog.openDialog(StreamInfoComponent, {data: {streamId: this.data.streamId, disableCreateJob: true}, maxHeight: "900px"});
-    // })
   }
 }

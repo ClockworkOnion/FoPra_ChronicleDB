@@ -18,6 +18,10 @@
     <textarea [readonly]="true" matInput type="text" cdkTextareaAutosize #area class="previewTextArea">{{outputInfo}}</textarea>
 </mat-form-field>
 <div style="text-align: end;">
+    <button mat-stroked-button color="accent" (click)="createJob()" *ngIf="!data.disableCreateJob" style="margin-right: 16px;">
+        <mat-icon>event_available</mat-icon>
+        Create A Job
+    </button>
     <button mat-stroked-button color="accent" (click)="copyInputMessage(area)">
         <mat-icon>content_copy</mat-icon>
         Copy to Clipboard

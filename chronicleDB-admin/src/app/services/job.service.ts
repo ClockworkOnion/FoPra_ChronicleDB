@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { ShowRightFlankComponent } from '../components/show-right-flank/show-right-flank.component';
 import { ChronicleJob, ChronicleRequest } from '../model/ChronicleJob';
 import { AddJobComponent } from '../page-jobs/add-job/add-job.component';
 import { StreamInfoComponent } from '../stream-info/stream-info.component';
@@ -19,7 +22,8 @@ export class JobService {
   constructor(
     private chronicle: ChronicleService,
     private dialog: DialogService,
-    private snackBar: SnackBarService
+    private snackBar: MatSnackBar, 
+    private router: Router
   ) {
     this.userJobs = [
       {
@@ -65,7 +69,8 @@ export class JobService {
           info: res.info,
         });
 
-        this.snackBar.openGreenSnackBar('Successfully Created Job');
+        // this.snackBar.openGreenSnackBar('Successfully Created Job');
+        this.openSucceccfullSnackBar();
       }
     );
   }
@@ -76,6 +81,9 @@ export class JobService {
     switch (job.requestType) {
       case ChronicleRequest.STREAM_INFO:
         this.dialog.openDialog(StreamInfoComponent, job.config); // data: {streamId: id}
+        break;
+      case ChronicleRequest.RIGHT_FLANK:
+        this.dialog.openDialog(ShowRightFlankComponent, job.config); // data: {streamId: id}
         break;
       default:
         console.error(job.requestType + ' noch nicht implementiert!');
@@ -89,5 +97,19 @@ export class JobService {
       if (value == job) this.userJobs.splice(index, 1);
     });
     this.userJobsBS.next(this.userJobs);
+  }
+
+  openSucceccfullSnackBar() {
+    let snackBarRef = this.snackBar.open(
+      'Successfully Created a new Job',
+      'View',
+      {
+        duration: 4000,
+        panelClass: ['green-snackbar'],
+      }
+    );
+    snackBarRef.onAction().subscribe(() => {
+      this.router.navigateByUrl("/jobs");
+    });
   }
 }
