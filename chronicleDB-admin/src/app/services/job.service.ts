@@ -7,6 +7,7 @@ import { ShowRightFlankComponent } from '../components/show-right-flank/show-rig
 import { ChronicleJob, ChronicleRequest } from '../model/ChronicleJob';
 import { AddJobComponent } from '../page-jobs/add-job/add-job.component';
 import { StreamInfoComponent } from '../stream-info/stream-info.component';
+import { TimeTravelComponent } from '../time-travel/time-travel.component';
 import { ChronicleService } from './chronicle.service';
 import { DialogService } from './dialog.service';
 import { SnackBarService } from './snack-bar.service';
@@ -84,6 +85,9 @@ export class JobService {
         break;
       case ChronicleRequest.RIGHT_FLANK:
         this.dialog.openDialog(ShowRightFlankComponent, job.config); // data: {streamId: id}
+        break;
+      case ChronicleRequest.TIME_TRAVEL:
+        this.dialog.openDialog(TimeTravelComponent, job.config); // data: {streamId: id}
         break;
       default:
         console.error(job.requestType + ' noch nicht implementiert!');

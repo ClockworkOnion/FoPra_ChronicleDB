@@ -2,6 +2,8 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  Inject,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import {
@@ -15,10 +17,12 @@ import { ChronicleStream } from '../model/ChronicleStream';
 import { ChronicleService } from '../services/chronicle.service';
 import { GetFlankService } from '../services/rest services/get-flank.service';
 import { SnackBarService } from '../services/snack-bar.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { JobService } from '../services/job.service';
+import { ChronicleRequest } from '../model/ChronicleJob';
 
 export interface TimeTravelData {
   lowerBound: number;
@@ -31,11 +35,11 @@ export const inclusiveString = 'Inclusive';
   templateUrl: './time-travel.component.html',
   styleUrls: ['./time-travel.component.css'],
 })
-export class TimeTravelComponent implements AfterViewInit {
+export class TimeTravelComponent implements OnInit, AfterViewInit {
   // @ViewChild(MatTable) datatable!: MatTable<any>;
   columnNames: string[] = []; // table headers
   columnNamesForTable: string[] = []; // table headers
-  data: string[][] = [];
+  resultData: string[][] = [];
   dataSource = new MatTableDataSource();
 
   outputInfo: string | null = null; // string to be displayed inside HTML: if null, not displayed at all
@@ -90,11 +94,23 @@ export class TimeTravelComponent implements AfterViewInit {
     private snackBar: SnackBarService,
     private flankService: GetFlankService,
     public dialogRef: MatDialogRef<TimeTravelComponent>,
-    private changeDetector: ChangeDetectorRef // ViewChild aktualisieren gegen ngIf
+    @Inject(MAT_DIALOG_DATA) public data: {disableCreateJob?: boolean, from?: Number, to?: Number, type?: string},
+    private changeDetector: ChangeDetectorRef, // ViewChild aktualisieren gegen ngIf
+    private jobService: JobService
   ) {
     this.chronicleService.selectedStream$.subscribe((stream) => {
       this.currentStream = stream;
     });
+  }
+
+  ngOnInit(): void {
+    if (this.data && this.data.disableCreateJob) {
+      this.intervalFormControl.get("lowerBound")?.setValue(this.data.from);
+      this.intervalFormControl.get("upperBound")?.setValue(this.data.to);
+      this.intervalFormControl.get("typeSelector")?.setValue(this.data.type);
+
+      this.timeTravel();
+    }
   }
 
   timeTravel() {
@@ -107,11 +123,11 @@ export class TimeTravelComponent implements AfterViewInit {
 
         let json: any[] = JSON.parse(response);
         json.forEach((entry) => {
-          this.data.push(this.adaptEntryToColumnDefinition(entry));
+          this.resultData.push(this.adaptEntryToColumnDefinition(entry));
         });
 
         this.generateStringView();
-        this.dataSource.data = this.data;
+        this.dataSource.data = this.resultData;
 
         this.detectPageAndSort();
       });
@@ -238,8 +254,8 @@ export class TimeTravelComponent implements AfterViewInit {
   }
 
   generateStringView() {
-    this.outputInfo = `Received ${this.data.length} entries\n`;
-    this.data.forEach((entry) => {
+    this.outputInfo = `Received ${this.resultData.length} entries\n`;
+    this.resultData.forEach((entry) => {
       this.outputInfo += '\n';
       for (let index = 0; index < entry.length; index++) {
         const value = entry[index];
@@ -252,7 +268,7 @@ export class TimeTravelComponent implements AfterViewInit {
     this.outputInfo = '';
     this.columnNames = [];
     this.columnNamesForTable = [];
-    this.data = [];
+    this.resultData = [];
   }
 
   closeDialog() {
@@ -264,5 +280,11 @@ export class TimeTravelComponent implements AfterViewInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  createJob() {
+    this.dialogRef.close();
+    let currentValue : {lowerBound: Number, typeSelector: string, upperBound: number} = this.intervalFormControl.value;
+    this.jobService.createJob(ChronicleRequest.TIME_TRAVEL, {maxHeight: "800px", disableClose: true, data: {disableCreateJob: true, from: currentValue.lowerBound, to: currentValue.upperBound, type: currentValue.typeSelector}})
   }
 }
