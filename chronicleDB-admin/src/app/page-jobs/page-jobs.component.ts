@@ -11,7 +11,7 @@ import { JobService } from '../services/job.service';
 })
 export class PageJobsComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<ChronicleJob> = new MatTableDataSource();
-  displayedColumns: string[] = ['info', "time", "interval", "options"];
+  displayedColumns: string[] = ['info', "time", "nextRun", "interval", "options"];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private jobService: JobService) { }

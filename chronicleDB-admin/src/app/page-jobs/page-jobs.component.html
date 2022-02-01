@@ -22,6 +22,12 @@
           <mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
         </ng-container>
 
+        <!-- NextRun Column -->
+        <ng-container matColumnDef="nextRun">
+          <mat-header-cell *matHeaderCellDef> Next Execution </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nextRun}} </mat-cell>
+        </ng-container>
+
         <!-- Interval Column -->
         <ng-container matColumnDef="interval">
           <mat-header-cell *matHeaderCellDef> Interval </mat-header-cell>

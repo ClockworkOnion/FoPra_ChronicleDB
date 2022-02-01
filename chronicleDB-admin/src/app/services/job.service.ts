@@ -10,7 +10,6 @@ import { StreamInfoComponent } from '../stream-info/stream-info.component';
 import { TimeTravelComponent } from '../time-travel/time-travel.component';
 import { ChronicleService } from './chronicle.service';
 import { DialogService } from './dialog.service';
-import { SnackBarService } from './snack-bar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,13 +29,15 @@ export class JobService {
       {
         requestType: ChronicleRequest.MAX_KEY,
         startDate: new Date(),
-        interval: { value: 60, text: '60s' },
+        nextRun: new Date(new Date().getTime() + (60*60*1000)),
+        interval: { value: 60*60, text: '1 Hour' },
         info: 'hallo hier ist max key',
       },
       {
         requestType: ChronicleRequest.STREAM_INFO,
         startDate: new Date(),
-        interval: { value: 60, text: '60s' },
+        nextRun: new Date(new Date().getTime() + (86400*1000)),
+        interval: { value: 86400, text: '1 Day' },
         config: {
           data: { streamId: 0, disableCreateJob: true },
           maxHeight: '900px',
@@ -62,8 +63,10 @@ export class JobService {
         interval: { value: number; text: string };
         info?: string;
       }) => {
+        let nextDate = new Date(res.timeStamp.getTime() + (res.interval.value*1000));
         this.userJobs.push({
           startDate: res.timeStamp,
+          nextRun: nextDate,
           interval: res.interval,
           requestType: requestType,
           config: config,
@@ -78,6 +81,7 @@ export class JobService {
 
   executeJob(job: ChronicleJob) {
     console.log(job);
+    console.log(JSON.stringify(job));
 
     switch (job.requestType) {
       case ChronicleRequest.STREAM_INFO:
