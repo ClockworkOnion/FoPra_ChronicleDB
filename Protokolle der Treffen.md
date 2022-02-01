@@ -181,6 +181,7 @@ Awensend: Johannes Buder, Lars Happel
 
 ### Jobs
 Jobs werden parallel durch das Frontend und Backend verwaltet. Das Backend führt periodisch Anfragen an die Datenbank aus und sammelt diese, so dass der User diese in Form einer Log Datei abrufen kann.
+
 Wir haben besprochen in welcher Form die Anfragen an das Backend stattfinden sollen, und welche Informationen bzgl. der Jobs festgehalten werden müssen:
 - Startzeitpunkt des Jobs
 - Nächster Ausführungszeitpunkt
@@ -189,5 +190,6 @@ Wir haben besprochen in welcher Form die Anfragen an das Backend stattfinden sol
 - Typ der auszuführenden Anfrage
 - Info Text (Name des Jobs, den der User vergeben kann)
 
-Zusätzlich ist ggfs. festzuhalten wieviele der neu geloggten Anfragen der User bereits betrachtet hat, um die Zahl der neuen Nachrichten rechts-oben am Brief Icon anpassen zu können
+Zusätzlich ist ggfs. festzuhalten wieviele der neu geloggten Anfragen der User bereits betrachtet hat, um die Zahl der neuen Nachrichten rechts-oben am Brief Icon anpassen zu können.
+
 Die Ergebnisse der Anfragen sollen bis auf weiteres 1:1 als Text in einer separaten Log Datei für jeden User gespeichert werden. Später kann dann evtl. das Format angepasst werden um die Logs schöner darzustellen.
