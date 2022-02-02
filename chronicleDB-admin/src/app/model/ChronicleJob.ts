@@ -23,4 +23,5 @@ export interface JobResult {
   timeStamp: Date;
   payload: string;
   requestType: ChronicleRequest;
+  info?: string;
 }

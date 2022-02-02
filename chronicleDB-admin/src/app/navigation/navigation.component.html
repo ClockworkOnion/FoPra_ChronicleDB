@@ -48,8 +48,8 @@
       &nbsp;
       &nbsp;
       
-      <button type="button" mat-icon-button *ngIf="authService.isLoggedIn()">
-        <span class="material-icons" matBadge="99+" matBadgeColor="warn" matBadgeSize="small">
+      <button type="button" mat-icon-button *ngIf="authService.isLoggedIn()" routerLink="/messages">
+        <span class="material-icons" matBadge="{{jobService.numberOfUnreadMessages}}" matBadgeColor="warn" matBadgeSize="small" [matBadgeHidden]="jobService.numberOfUnreadMessages == 0">
           email
         </span>
       </button>

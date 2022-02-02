@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { ShowRightFlankComponent } from '../components/show-right-flank/show-right-flank.component';
-import { ChronicleJob, ChronicleRequest } from '../model/ChronicleJob';
+import { ChronicleJob, ChronicleRequest, JobResult } from '../model/ChronicleJob';
 import { AddJobComponent } from '../page-jobs/add-job/add-job.component';
 import { StreamInfoComponent } from '../stream-info/stream-info.component';
 import { TimeTravelComponent } from '../time-travel/time-travel.component';
@@ -18,6 +18,12 @@ export class JobService {
   private userJobs: Array<ChronicleJob> = [];
   private userJobsBS = new BehaviorSubject<Array<ChronicleJob>>(this.userJobs);
   userJobsBS$ = this.userJobsBS.asObservable();
+  
+  private jobResults: Array<JobResult> = [];
+  private jobResultsBS = new BehaviorSubject<Array<JobResult>>(this.jobResults);
+  jobResultsBS$ = this.jobResultsBS.asObservable();
+
+  numberOfUnreadMessages: number = 0;
 
   constructor(
     private chronicle: ChronicleService,
@@ -45,11 +51,22 @@ export class JobService {
       },
     ];
     this.userJobsBS.next(this.userJobs);
-  }
 
-  public test = () => {
-    this.chronicle.getMaxKey(0).then((text) => console.log(text));
-  };
+    this.jobResults = [
+      {
+        payload: "Haha der MaxKey ist 1.",
+        requestType: ChronicleRequest.MAX_KEY,
+        timeStamp: new Date(2022, 1, 12, 11, 59),
+        info: "Ich hab voll krass Max Key Job"
+      }, 
+      {
+        payload: '[{"id":1, "brother_left":0, "brother_right":0, "node_variant":{"ValueNode":{"data_array":[{"t1":0,"payload":{"I8":6}},{"t1":1,"payload":{"I8":66}}], "allocated_units":3639}}}]',
+        requestType: ChronicleRequest.RIGHT_FLANK,
+        timeStamp: new Date(2022, 1, 13, 19, 20)
+      }
+    ];
+    this.jobResultsBS.next(this.jobResults);
+  }
 
   get snapshot(): Array<ChronicleJob> {
     return this.userJobs;
@@ -100,11 +117,24 @@ export class JobService {
   }
 
   deleteJob(job: ChronicleJob) {
-    console.error('TODO deleteJob');
+    console.error('TODO delete Job in Backend');
     this.userJobs.forEach((value, index) => {
       if (value == job) this.userJobs.splice(index, 1);
     });
     this.userJobsBS.next(this.userJobs);
+  }
+
+  deleteResult(jobResult: JobResult) {
+    console.error("TODO delete JobResult in Backend");
+    this.jobResults.forEach((value, index) => {
+      if (value == jobResult) this.jobResults.splice(index, 1);
+    });
+    this.jobResultsBS.next(this.jobResults);
+  }
+
+  markResultsAsRead() {
+    console.error("TODO Backend als gelesen markieren!");
+    this.numberOfUnreadMessages = 0;
   }
 
   openSucceccfullSnackBar() {

@@ -70,6 +70,8 @@ import { PageJobsComponent } from './page-jobs/page-jobs.component';
 import { AddJobComponent } from './page-jobs/add-job/add-job.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { PageMessagesComponent } from './page-messages/page-messages.component';
+import { JobResultComponent } from './page-messages/job-result/job-result.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +102,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     DoubleCheckDialog,
     EditUserComponent,
     PageJobsComponent,
-    AddJobComponent
+    AddJobComponent,
+    PageMessagesComponent,
+    JobResultComponent
   ],
   imports: [
     BrowserModule,

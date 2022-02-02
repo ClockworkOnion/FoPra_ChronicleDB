@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { JobService } from '../services/job.service';
 
 @Component({
   selector: 'app-navigation',
@@ -29,6 +30,7 @@ export class NavigationComponent {
     private router: Router,
     private route: ActivatedRoute,
     private overlay: OverlayContainer,
+    public jobService: JobService
   ) {}
   toggleControl = new FormControl(false);
 
