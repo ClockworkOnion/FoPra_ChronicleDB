@@ -9,28 +9,28 @@
           <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filter" #input>
         </mat-form-field>
       </div>
-      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
         <!-- Info Column -->
         <ng-container matColumnDef="info">
-          <mat-header-cell *matHeaderCellDef> Info </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Info </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.info || element.requestType}} </mat-cell>
         </ng-container>
 
         <!-- Time Column -->
-        <ng-container matColumnDef="time">
-          <mat-header-cell *matHeaderCellDef> Starting Point </mat-header-cell>
+        <ng-container matColumnDef="startDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Starting Point </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
         </ng-container>
 
         <!-- NextRun Column -->
         <ng-container matColumnDef="nextRun">
-          <mat-header-cell *matHeaderCellDef> Next Execution </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Next Execution </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.nextRun}} </mat-cell>
         </ng-container>
 
         <!-- Interval Column -->
         <ng-container matColumnDef="interval">
-          <mat-header-cell *matHeaderCellDef> Interval </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Interval </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.interval.text}} </mat-cell>
         </ng-container>
 
