@@ -94,16 +94,14 @@ export class TimeTravelComponent implements OnInit, AfterViewInit {
     private snackBar: SnackBarService,
     private flankService: GetFlankService,
     public dialogRef: MatDialogRef<TimeTravelComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {disableCreateJob?: boolean, from?: Number, to?: Number, type?: string},
+    @Inject(MAT_DIALOG_DATA) public data: {streamId: number, disableCreateJob?: boolean, from?: number, to?: number, type?: string},
     private changeDetector: ChangeDetectorRef, // ViewChild aktualisieren gegen ngIf
     private jobService: JobService
-  ) {
-    this.chronicleService.selectedStream$.subscribe((stream) => {
-      this.currentStream = stream;
-    });
-  }
+  ) { }
 
   ngOnInit(): void {
+    this.currentStream = this.chronicleService.getStream(this.data.streamId);
+
     if (this.data && this.data.disableCreateJob) {
       this.intervalFormControl.get("lowerBound")?.setValue(this.data.from);
       this.intervalFormControl.get("upperBound")?.setValue(this.data.to);
@@ -285,6 +283,6 @@ export class TimeTravelComponent implements OnInit, AfterViewInit {
   createJob() {
     this.dialogRef.close();
     let currentValue : {lowerBound: Number, typeSelector: string, upperBound: number} = this.intervalFormControl.value;
-    this.jobService.createJob(ChronicleRequest.TIME_TRAVEL, {maxHeight: "800px", disableClose: true, data: {disableCreateJob: true, from: currentValue.lowerBound, to: currentValue.upperBound, type: currentValue.typeSelector}})
+    this.jobService.createJob(ChronicleRequest.TIME_TRAVEL, {maxHeight: "800px", disableClose: true, data: {streamId: this.data.streamId, disableCreateJob: true, from: currentValue.lowerBound, to: currentValue.upperBound, type: currentValue.typeSelector}})
   }
 }

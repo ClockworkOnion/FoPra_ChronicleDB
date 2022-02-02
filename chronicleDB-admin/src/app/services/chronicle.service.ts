@@ -26,6 +26,16 @@ export class ChronicleService {
     return this.streamList;
   }
 
+  getStream(id: number) : ChronicleStream | null {
+    let result: ChronicleStream|null = null;
+    this.streamList.forEach(stream => {
+      if (stream.id == id) {
+        result = stream;
+      }
+    });
+    return result;
+  }
+
   constructor(private http: HttpClient, private snackBar: SnackBarService, private authService : AuthService) {
     this.url = localStorage.getItem("serverUrl") || "";
   }
