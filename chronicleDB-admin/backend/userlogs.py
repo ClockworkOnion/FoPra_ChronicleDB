@@ -1,11 +1,12 @@
 import datetime, json, pytz
-from chroniclebackend import USERFILE
 from dateutil import parser
+
 
 from usermanagement import JSONread
 
 TESTSTRING2 = '{"requestType":"Stream Info","startDate":"2022-02-01T17:26:43.192Z","interval":{"value":60,"text":"60s"},"config":{"data":{"streamId":0,"disableCreateJob":true},"maxHeight":"900px"}}'
 TESTSTRING = '{"requestType":"Stream Info","startDate":"2022-02-02T11:56:22.359Z","nextRun":"2022-02-03T11:56:22.359Z","interval":{"value":86400,"text":"1 Day"},"config":{"data":{"streamId":0,"disableCreateJob":true},"maxHeight":"900px"}}'
+USERFILE = "users.dat"
 
 
 def appendToLog(user_id, data):
@@ -81,7 +82,7 @@ def JobIsDue(job):
     dueDate = parser.parse(job["nextRun"])
     return dueDate < currentTimeLocalized()
 
-def getDueJobs():
+def getAllDueJobs():
     job_list = []
     user_data = JSONread(USERFILE)
     for user in user_data["users"]:
@@ -89,6 +90,16 @@ def getDueJobs():
             for job in user["jobs"]:
                 if JobIsDue(job):
                     job_list.append(job)
+    return job_list
+
+def getUserDueJobs(user_id):
+    job_list = []
+    user_data = JSONread(USERFILE)
+    u = getUserById(user_id)
+    if "jobs" in u.keys():
+        for job in u["jobs"]:
+            if JobIsDue(job):
+                job_list.append(job)
     return job_list
     
 def dateTesting():
@@ -127,9 +138,8 @@ if __name__ == "__main__":
     # clearUserJobs("hans")
     addScheduledJob("User", test_job_data)
     print("Due Jobs")
-    print(getDueJobs())
+    print(getAllDueJobs())
     addToNextRunTimestamp("User", test_job_data, 883960)
     print("Now due Jobs")
-    print(getDueJobs())
-    clearUserJobs("User")
+    print(getAllDueJobs())
     

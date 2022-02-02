@@ -8,6 +8,7 @@ import requests
 import jwt, json
 import helper
 import usermanagement as um
+import userlogs
 import validation
 from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
@@ -30,6 +31,13 @@ USERFILE = "users.dat"
 SECRET = "secret"
 
 # CHRONICLE METHODEN ############################################################################################
+
+@app.route('/get_due_jobs/<user_id>', methods=['GET'])
+def getDueJobs(user_id):
+    if not validateToken(request.headers["Authorization"]):
+        return make_response({"Access" : "denied!!"}, 403)
+    logs = userlogs.getUserDueJobs(user_id)
+    return make_response({"Logs" : str(logs)})
 
 @app.route('/show_right_flank/<stream_id>', methods=['GET'])
 def showRightFlank(stream_id):
@@ -316,7 +324,12 @@ def existsUser():
     return make_response(jsonify(tmp),200)
 
 
-
+def validateToken(token):
+    print("Validating Token:")
+    if (token): print("Found Header")
+    if not (validation.verifyJWT(token)):  
+        return False
+    return True
 
 if __name__ == "__main__":
     # Set up scheduler

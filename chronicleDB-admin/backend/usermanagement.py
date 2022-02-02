@@ -5,7 +5,7 @@ from operator import truediv
 from flask import Flask, request
 from flask import jsonify, make_response
 from flask_restful import Api, Resource
-import helper, userlogs
+# import helper
 
 USERFILE = "users.dat"
 SECRET = "secretf"
@@ -173,7 +173,7 @@ class userLogin(Resource):
 # api.add_resource(userLogin, "/user_login")
 
 def runTests():
-    helper.createUsers()
+    # helper.createUsers()
     u = getUserByName("User")
     print("Before: User allowed streams:" + str(u.allowedStreams) + " insert streams: " + str(u.allowedInsertStreams))
     addVisibleStream("User", 1)
