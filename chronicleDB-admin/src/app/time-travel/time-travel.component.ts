@@ -113,7 +113,7 @@ export class TimeTravelComponent implements OnInit, AfterViewInit {
 
   timeTravel() {
     this.chronicleService
-      .timeTravel(this.intervalFormControl.value as TimeTravelData)
+      .timeTravel(this.intervalFormControl.value as TimeTravelData, this.data.streamId)
       .subscribe((response) => {
         this.resetData();
         this.createColumnHeaders();

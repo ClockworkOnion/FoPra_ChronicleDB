@@ -10,20 +10,13 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   templateUrl: './upload-data.component.html',
   styleUrls: ['./upload-data.component.css'],
 })
-export class UploadDataComponent implements OnInit {
+export class UploadDataComponent {
   fileName!: string;
   fileContent!: string;
-  steamAvailable!: boolean;
 
   constructor(private insertService: InsertDataService, private chronicle: ChronicleService,
     @Inject(MAT_DIALOG_DATA) public data: {stream: ChronicleStream},
     private snackBar: SnackBarService) {}
-
-  ngOnInit() {
-    this.chronicle.selectedStream$.subscribe(stream => {
-      this.steamAvailable = stream != null;
-    })
-  }
 
   onFileSelected(event: any) {
     if (!event.target) return;

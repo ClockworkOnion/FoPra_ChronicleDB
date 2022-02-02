@@ -15,9 +15,6 @@ export class ChronicleService {
   private url!: string;
   isUrlReachable : boolean = true;
 
-  private selectedStream = new BehaviorSubject<ChronicleStream|null>(null);
-  selectedStream$ = this.selectedStream.asObservable();
-
   private streamList : Array<ChronicleStream>=[];
   private streamListBS = new BehaviorSubject<ChronicleStream[]|null>(null);
   currentStreamList = this.streamListBS.asObservable();
@@ -53,20 +50,8 @@ export class ChronicleService {
     localStorage.setItem("serverUrl", url);
   }
 
-  existsStream(): boolean {
-    return this.selectedStream != null;
-  }
-  
-  selectStream(stream: ChronicleStream) {
-    this.selectedStream.next(stream);
-  }
-
   post(url: string, body: any) {
     return this.http.post(url, body, {responseType: "text"});
-  }
-  
-  loadLastSelection(){
-    //tbd
   }
 
   saveUpdatedStreamList(data :string){
@@ -96,7 +81,6 @@ export class ChronicleService {
 
       // reset current data
       this.streamList = new Array<ChronicleStream>();
-      this.selectedStream.next(null);
 
       // refill data
       for (let index = 0; index < (response as any).length; index++) {
@@ -120,7 +104,6 @@ export class ChronicleService {
             this.streamList.push(newStream);
             this.streamList.sort((a, b) => a.id - b.id);  // sortieren nach id, da offline früher eingefügt wird als online, da HTTP
             this.streamListBS.next(this.streamList);
-            this.selectedStream.next(newStream); // put most recent stream as selected
           });
         } else {
           let newStream: ChronicleStream = {
@@ -160,7 +143,7 @@ export class ChronicleService {
     return   await this.http.get(BACKEND_URL +"tree_height/"+id,{responseType:"text"}).toPromise();
   }
 
-  timeTravel(data : TimeTravelData) {
+  timeTravel(data : TimeTravelData, streamId: number) {
     let timeStamp1 = data.lowerBound;
     let timeStamp2 = data.upperBound;
     let useInclusive : boolean = (data.typeSelector == inclusiveString);
@@ -170,7 +153,7 @@ export class ChronicleService {
     let inOrEx : string = useInclusive ? "Inclusive" : "Exclusive";
     let requestBody = '{"'+inOrEx+'":{"start":'+timeStamp1+',"end":'+timeStamp2+'}}';
 
-    return this.http.post(BACKEND_URL +"query_time_travel/"+this.selectedStream.value!.id, requestBody, {responseType:"text"});
+    return this.http.post(BACKEND_URL +"query_time_travel/" + streamId, requestBody, {responseType:"text"});
   }
 
   async getStreamInfo(id: number) {     
