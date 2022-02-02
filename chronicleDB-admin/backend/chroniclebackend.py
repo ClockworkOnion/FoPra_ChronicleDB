@@ -75,6 +75,42 @@ def streamInfo(stream_id):
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
+@app.route('/shutdown_stream/<stream_id>', methods=['GET'])
+def shutdownStream(stream_id):
+    print("Stream ID: " + stream_id)
+    print("Received request for 'shutdown_stream':")
+
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    if not (validation.verifyJWT(token) and validation.canUserWrite(token, stream_id)):  
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################
+
+    print("Trying to get stream info from ChronicleDB at localhost:8000/shutdown_stream/" + stream_id + " ... ")
+    response = requests.get("http://127.0.0.1:8000/shutdown_stream/" + stream_id)
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
+@app.route('/recover_stream_snapshot/<stream_id>', methods=['GET'])
+def recoverStreamSnapshot(stream_id):
+    print("Stream ID: " + stream_id)
+    print("Received request for 'recover_stream_snapshot':")
+
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    if not (validation.verifyJWT(token) and validation.canUserWrite(token, stream_id)):  
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################
+
+    print("Trying to get stream info from ChronicleDB at localhost:8000/recover_stream_snapshot/" + stream_id + " ... ")
+    response = requests.get("http://127.0.0.1:8000/recover_stream_snapshot/" + stream_id)
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
 @app.route('/create_stream', methods=['POST'])
 def createStream():
     print("Received request for 'create_stream':")

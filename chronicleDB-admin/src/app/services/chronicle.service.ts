@@ -64,14 +64,14 @@ export class ChronicleService {
   }
 
   shutdownStream(id: number){
-      this.http.get(this.url +"shutdown_stream/" + id,{responseType:"text"}).subscribe(response =>{
+      this.http.get(BACKEND_URL +"shutdown_stream/" + id,{responseType:"text"}).subscribe(response =>{
         console.log("Sucessfully shut down Stream: " + id);
         this.getStreamsFromChronicle();
       } )
   }
   //from snapshot (still needs to pass down a body for correct implementation)
   recoverStream(id:number){
-    this.http.get(this.url +"recover_stream_snapshot/" +id,{responseType:"text"}).subscribe(response =>{
+    this.http.get(BACKEND_URL +"recover_stream_snapshot/" +id,{responseType:"text"}).subscribe(response =>{
       console.log("Sucessfully recovered Stream: " + id +" " + response);
       this.getStreamsFromChronicle();
     })
