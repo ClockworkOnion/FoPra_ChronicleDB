@@ -5,7 +5,7 @@ from operator import truediv
 from flask import Flask, request
 from flask import jsonify, make_response
 from flask_restful import Api, Resource
-import helper
+import helper, userlogs
 
 USERFILE = "users.dat"
 SECRET = "secretf"
@@ -65,7 +65,7 @@ def getUserByToken(token):
 
 def userAlreadyExists(user_name):
     user_data=JSONread(USERFILE)
-    tmp=False;
+    tmp=False
     for u in user_data["users"]:
         if(u["username"] == user_name):
             tmp=True

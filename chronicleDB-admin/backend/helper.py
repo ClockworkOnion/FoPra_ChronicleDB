@@ -37,3 +37,6 @@ def createUsers():
 
     with open("users.dat", "w")as outfile:
         json.dump(data, outfile)
+
+if __name__ == "__main__":
+    createUsers()
