@@ -91,6 +91,7 @@
               </mat-list> -->
               
               <div><button mat-button color="accent" disabled class="overlayelement">View Profile</button></div>
+              <div><button mat-button color="accent" class="overlayelement" [routerLink]="'jobs'">My Jobs</button></div>
               <div><button mat-button color="accent"  *ngIf="authService.isUserAdmin()" class="overlayelement" [routerLink]="'user_management'">Manage Users</button></div>
     
               <div style="border-top: solid 1px #ccc;">
