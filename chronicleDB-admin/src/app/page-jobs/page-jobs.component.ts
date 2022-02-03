@@ -24,6 +24,7 @@ export class PageJobsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.jobService.getJobsFromBackend();
     this.jobService.userJobsBS$.subscribe(jobs => {
       this.jobs = jobs;
       this.dataSource.data = jobs;

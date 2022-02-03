@@ -96,11 +96,20 @@ def getAllDueJobs():
 def getUserDueJobs(user_id):
     job_list = []
     user_data = JSONread(USERFILE)
-    u = getUserById(user_id)
+    u = getUserById(user_id, user_data)
     if "jobs" in u.keys():
         for job in u["jobs"]:
             if JobIsDue(job):
                 job_list.append(job)
+    return job_list
+
+def getAllUserJobs(user_id):
+    job_list = []
+    user_data = JSONread(USERFILE)
+    u = getUserById(user_id, user_data)
+    if "jobs" in u.keys():
+        for job in u["jobs"]:
+            job_list.append(job)
     return job_list
     
 def dateTesting():

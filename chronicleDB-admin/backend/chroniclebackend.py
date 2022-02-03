@@ -37,7 +37,14 @@ def getDueJobs(user_id):
     if not validateToken(request.headers["Authorization"]):
         return make_response({"Access" : "denied!!"}, 403)
     logs = userlogs.getUserDueJobs(user_id)
-    return make_response({"Logs" : str(logs)})
+    return make_response({"logs" : logs})
+
+@app.route('/get_all_jobs/<user_id>', methods=['GET'])
+def getAllJobs(user_id):
+    if not validateToken(request.headers["Authorization"]):
+        return make_response({"Access" : "denied!!"}, 403)
+    logs = userlogs.getAllUserJobs(user_id)
+    return make_response({"logs" : logs})
 
 # CHRONICLE METHODEN ############################################################################################
 

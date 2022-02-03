@@ -8,6 +8,7 @@ import { ChronicleJob, ChronicleRequest, JobResult } from '../model/ChronicleJob
 import { AddJobComponent } from '../page-jobs/add-job/add-job.component';
 import { StreamInfoComponent } from '../stream-info/stream-info.component';
 import { TimeTravelComponent } from '../time-travel/time-travel.component';
+import { AuthService, BACKEND_URL } from './auth.service';
 import { ChronicleService } from './chronicle.service';
 import { DialogService } from './dialog.service';
 
@@ -29,7 +30,8 @@ export class JobService {
     private chronicle: ChronicleService,
     private dialog: DialogService,
     private snackBar: MatSnackBar, 
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.userJobs = [
       {
@@ -70,6 +72,13 @@ export class JobService {
 
   get snapshot(): Array<ChronicleJob> {
     return this.userJobs;
+  }
+
+  getJobsFromBackend() {
+    this.chronicle.getHttp().get(BACKEND_URL + `get_all_jobs/${this.authService.username}`, {responseType: "json"}).subscribe(jobs => {
+        console.log(jobs);
+        console.error("Jobs müssen noch gespeichert werden!");        
+      });
   }
 
   createJob(requestType: ChronicleRequest, config?: MatDialogConfig<any>) {
