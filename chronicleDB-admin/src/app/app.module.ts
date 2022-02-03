@@ -66,6 +66,12 @@ import { AddUserComponent } from './page-user-management/add-user/add-user/add-u
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { EditUserComponent } from './page-user-management/edit-user/edit-user/edit-user.component';
+import { PageJobsComponent } from './page-jobs/page-jobs.component';
+import { AddJobComponent } from './page-jobs/add-job/add-job.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { PageMessagesComponent } from './page-messages/page-messages.component';
+import { JobResultComponent } from './page-messages/job-result/job-result.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +100,11 @@ import { EditUserComponent } from './page-user-management/edit-user/edit-user/ed
     UserManagementComponent,
     AddUserComponent,
     DoubleCheckDialog,
-    EditUserComponent
+    EditUserComponent,
+    PageJobsComponent,
+    AddJobComponent,
+    PageMessagesComponent,
+    JobResultComponent
   ],
   imports: [
     BrowserModule,
@@ -131,7 +141,9 @@ import { EditUserComponent } from './page-user-management/edit-user/edit-user/ed
     MatDialogModule,
     OverlayModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
   

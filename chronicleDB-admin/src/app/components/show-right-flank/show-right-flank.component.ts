@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ChronicleRequest } from 'src/app/model/ChronicleJob';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
+import { JobService } from 'src/app/services/job.service';
 import { GetFlankService } from 'src/app/services/rest services/get-flank.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 
@@ -11,24 +13,23 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['./show-right-flank.component.css']
 })
 export class ShowRightFlankComponent implements OnInit {
-  selectedStream!: ChronicleStream;
 
   constructor(
     private getFlankService:GetFlankService, 
     private chronicle:ChronicleService,
-    @Inject(MAT_DIALOG_DATA) public data: {stream: ChronicleStream},
-    private snackBar: SnackBarService) { }
+    @Inject(MAT_DIALOG_DATA) public data: {stream: ChronicleStream, disableCreateJob?: boolean},
+    private snackBar: SnackBarService, private jobService: JobService,
+    public dialogRef: MatDialogRef<ShowRightFlankComponent>,) { }
   
   flankInfo: any;
   outputInfo: string = "";
 
   ngOnInit(): void {
-    this.selectedStream = this.data.stream;
     this.newRightFlank();
   }
 
   newRightFlank() {
-    this.getFlankService.basicRightFlank(this.selectedStream.id).subscribe(response =>{
+    this.getFlankService.basicRightFlank(this.data.stream.id).subscribe(response =>{
       this.flankInfo = response;
       let json = JSON.parse(this.flankInfo);
       this.outputInfo = this.getFlankService.rightFlankFromJSON(json, this.data.stream);
@@ -128,5 +129,10 @@ export class ShowRightFlankComponent implements OnInit {
     document.execCommand("copy");
     inputElement.setSelectionRange(0, 0);
     this.snackBar.openSnackBarwithStyle("Copied Stream Info!","green-snackbar");
+  }
+
+  createJob() {
+    this.dialogRef.close();
+    this.jobService.createJob(ChronicleRequest.RIGHT_FLANK, {data: {stream: this.data.stream, disableCreateJob: true}})
   }
 }

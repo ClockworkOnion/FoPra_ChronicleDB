@@ -26,12 +26,16 @@
 
         <div style="text-align: center; margin-top: 16px">
             <button mat-raised-button color="primary" type="submit" cdkFocusInitial
-                [disabled]="!intervalFormControl.valid">
+                [disabled]="!intervalFormControl.valid" style="margin-right: 8px;">
                 Go!
             </button>
-            &nbsp;
             <button mat-stroked-button color="accent" (click)="closeDialog()">
                 Close
+            </button>
+            <button mat-stroked-button color="accent" (click)="createJob()" 
+                *ngIf="!(data && data.disableCreateJob)" style="margin-left: 8px;">
+                <mat-icon>event_available</mat-icon>
+                Create A Job
             </button>
         </div>
     </form>
