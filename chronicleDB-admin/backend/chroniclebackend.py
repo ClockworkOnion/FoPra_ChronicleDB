@@ -32,34 +32,33 @@ SECRET = "secret"
 
 # JOB METHODEN ##################################################################################################
 
-
 @app.route('/delete_job', methods=['POST'])
 def delete_job():
     if not validateToken(request.headers["Authorization"]):
         return make_response({"Access" : "denied!!"}, 403)
     print(request.data)
-    return make_response({"Mission" : "Complete"})
+    return make_response({"mission" : "Complete"})
 
 @app.route('/add_scheduled_job', methods=['POST'])
 def add_scheduled_job():
     if not validateToken(request.headers["Authorization"]):
         return make_response({"Access" : "denied!!"}, 403)
     print(request.data)
-    return make_response({"Mission" : "Complete"})
+    return make_response({"mission" : "Complete"})
 
 @app.route('/get_due_jobs/<user_id>', methods=['GET'])
 def getDueJobs(user_id):
     if not validateToken(request.headers["Authorization"]):
         return make_response({"Access" : "denied!!"}, 403)
     logs = userlogs.getUserDueJobs(user_id)
-    return make_response({"logs" : logs})
+    return make_response({"jobs" : logs})
 
 @app.route('/get_all_jobs/<user_id>', methods=['GET'])
 def getAllJobs(user_id):
     if not validateToken(request.headers["Authorization"]):
         return make_response({"Access" : "denied!!"}, 403)
     logs = userlogs.getAllUserJobs(user_id)
-    return make_response({"logs" : logs})
+    return make_response({"jobs" : logs})
 
 # CHRONICLE METHODEN ############################################################################################
 

@@ -25,7 +25,8 @@
 
 .iconButtonInTitle {
   margin-left: 8px;
-  top: -3px;
+  top: -12px;
+  float: right;
 }
 
 table {
@@ -37,4 +38,7 @@ table {
 }
 .mat-column-interval {
   max-width: 150px;
+}
+.mat-column-info {
+  max-width: 40%;
 }

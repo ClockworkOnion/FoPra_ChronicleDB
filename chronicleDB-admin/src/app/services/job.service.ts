@@ -75,10 +75,24 @@ export class JobService {
   }
 
   getJobsFromBackend() {
-    this.chronicle.getHttp().get(BACKEND_URL + `get_all_jobs/${this.authService.username}`, {responseType: "json"}).subscribe(jobs => {
-        console.log(jobs);
-        console.error("Jobs müssen noch gespeichert werden!");        
-      });
+    this.chronicle.getHttp().get<{jobs: any[]}>(BACKEND_URL + `get_all_jobs/${this.authService.username}`, {responseType: "json"}).subscribe(jobs => {
+      this.userJobs = [];
+      jobs.jobs.forEach(job => {
+        this.userJobs.push(this.parseJobFromBackend(job));
+      })
+      this.userJobsBS.next(this.userJobs);      
+    });
+  }
+
+  private parseJobFromBackend(job: any) : ChronicleJob{
+    return {
+      interval: job.interval,
+      config: job.config,
+      info: job.info,
+      requestType: job.requestType,
+      startDate: new Date(job.startDate),
+      nextRun: new Date(job.nextRun)
+    }
   }
 
   createJob(requestType: ChronicleRequest, config?: MatDialogConfig<any>) {
@@ -89,18 +103,21 @@ export class JobService {
         interval: { value: number; text: string };
         info?: string;
       }) => {
+        
         let nextDate = new Date(res.timeStamp.getTime() + (res.interval.value*1000));
-        this.userJobs.push({
+        let newJob: ChronicleJob = {
           startDate: res.timeStamp,
           nextRun: nextDate,
           interval: res.interval,
           requestType: requestType,
           config: config,
           info: res.info,
-        });
+        };
 
-        // this.snackBar.openGreenSnackBar('Successfully Created Job');
-        this.openSucceccfullSnackBar();
+        this.chronicle.getHttp().post(BACKEND_URL + `add_scheduled_job`, newJob).subscribe(res => {          
+          this.userJobs.push(newJob);
+          this.openSucceccfullSnackBar();
+        })
       }
     );
   }
@@ -126,11 +143,12 @@ export class JobService {
   }
 
   deleteJob(job: ChronicleJob) {
-    console.error('TODO delete Job in Backend');
-    this.userJobs.forEach((value, index) => {
-      if (value == job) this.userJobs.splice(index, 1);
-    });
-    this.userJobsBS.next(this.userJobs);
+    this.chronicle.getHttp().post(BACKEND_URL + "delete_job", job).subscribe(res => {
+      this.userJobs.forEach((value, index) => {
+        if (value == job) this.userJobs.splice(index, 1);
+      });
+      this.userJobsBS.next(this.userJobs);
+    })
   }
 
   deleteResult(jobResult: JobResult) {

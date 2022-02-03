@@ -1,7 +1,12 @@
 <div class="grid-container">
   <mat-card class="dashboard-card">
     <mat-card-header>
-      <mat-card-title> Jobs </mat-card-title>
+      <mat-card-title>
+        Jobs
+        <button mat-icon-button color="accent" (click)="jobService.getJobsFromBackend()" matTooltip="Refresh the stream selection." class="iconButtonInTitle">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </mat-card-title>
     </mat-card-header>
     <mat-card-content class="card-content">
       <div>
@@ -19,13 +24,13 @@
         <!-- Time Column -->
         <ng-container matColumnDef="startDate">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Starting Point </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.startDate}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.startDate | date: 'EEE dd.MM.yyyy HH:mm'}} </mat-cell>
         </ng-container>
 
         <!-- NextRun Column -->
         <ng-container matColumnDef="nextRun">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Next Execution </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nextRun}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.nextRun | date: 'EEE dd.MM.yyyy HH:mm'}} </mat-cell>
         </ng-container>
 
         <!-- Interval Column -->

@@ -17,14 +17,15 @@ export class PageJobsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private jobService: JobService) { }
+  constructor(public jobService: JobService) { }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit(): void {
-    this.jobService.getJobsFromBackend();
+    // this.jobService.getJobsFromBackend();
+    console.error("Automatische Akutalisierung Deaktiviert!")
     this.jobService.userJobsBS$.subscribe(jobs => {
       this.jobs = jobs;
       this.dataSource.data = jobs;
