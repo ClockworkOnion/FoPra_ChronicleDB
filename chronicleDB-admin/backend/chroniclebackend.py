@@ -32,6 +32,21 @@ SECRET = "secret"
 
 # JOB METHODEN ##################################################################################################
 
+
+@app.route('/delete_job', methods=['POST'])
+def delete_job():
+    if not validateToken(request.headers["Authorization"]):
+        return make_response({"Access" : "denied!!"}, 403)
+    print(request.data)
+    return make_response({"Mission" : "Complete"})
+
+@app.route('/add_scheduled_job', methods=['POST'])
+def add_scheduled_job():
+    if not validateToken(request.headers["Authorization"]):
+        return make_response({"Access" : "denied!!"}, 403)
+    print(request.data)
+    return make_response({"Mission" : "Complete"})
+
 @app.route('/get_due_jobs/<user_id>', methods=['GET'])
 def getDueJobs(user_id):
     if not validateToken(request.headers["Authorization"]):
