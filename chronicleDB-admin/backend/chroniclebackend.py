@@ -30,7 +30,7 @@ def do_periodid_tasks():
 USERFILE = "users.dat"
 SECRET = "secret"
 
-# CHRONICLE METHODEN ############################################################################################
+# JOB METHODEN ##################################################################################################
 
 @app.route('/get_due_jobs/<user_id>', methods=['GET'])
 def getDueJobs(user_id):
@@ -38,6 +38,8 @@ def getDueJobs(user_id):
         return make_response({"Access" : "denied!!"}, 403)
     logs = userlogs.getUserDueJobs(user_id)
     return make_response({"Logs" : str(logs)})
+
+# CHRONICLE METHODEN ############################################################################################
 
 @app.route('/show_right_flank/<stream_id>', methods=['GET'])
 def showRightFlank(stream_id):
