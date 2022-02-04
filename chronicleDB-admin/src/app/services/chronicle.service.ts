@@ -1,6 +1,7 @@
 import { HttpClient} from '@angular/common/http';
 import { Injectable} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ChronicleStream } from '../model/ChronicleStream';
 import { inclusiveString, TimeTravelData } from '../time-travel/time-travel.component';
 import { AuthService, BACKEND_URL } from './auth.service';
@@ -12,7 +13,14 @@ import { SnackBarService } from './snack-bar.service';
   providedIn: 'root',
 })
 export class ChronicleService {
-  private url!: string;
+  private _url!: string;
+  private urlBS = new BehaviorSubject<string>("N/A");
+  chronicleURL$ = this.urlBS.asObservable();
+
+  get url() {
+    return this._url;
+  }
+
   isUrlReachable : boolean = true;
 
   private streamList : Array<ChronicleStream>=[];
@@ -34,20 +42,28 @@ export class ChronicleService {
   }
 
   constructor(private http: HttpClient, private snackBar: SnackBarService, private authService : AuthService) {
-    this.url = localStorage.getItem("serverUrl") || "";
+    // this.url = localStorage.getItem("serverUrl") || "";
+    this.getUrl().then(url => {
+      this._url = url;
+      this.urlBS.next(url);
+    })
   }
 
   getHttp() : HttpClient {
     return this.http;
   }
 
-  getUrl() : string {
-    return this.url;
+  getUrl() : Promise<string> {
+    return this.http.get<{url: string}>(BACKEND_URL + "get_server_url").pipe(map(url => url.url)).toPromise()
   }
 
   setUrl(url: string) {
-    this.url = url;
-    localStorage.setItem("serverUrl", url);
+    this._url = url;
+    this.urlBS.next(url);
+    // localStorage.setItem("serverUrl", url);
+    this.http.post<string>(BACKEND_URL + "set_server_url", {url: url}).subscribe(res => {
+      console.log("URL geändert");
+    })
   }
 
   post(url: string, body: any) {

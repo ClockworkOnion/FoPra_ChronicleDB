@@ -37,7 +37,6 @@ export class GeneralStreamComponent implements OnInit {
     this.createService.currentEventProperties.subscribe(
       (message: any) => (this.eventProperties = message)
     );
-
-    this.chronicleUrl.setValue(this.chronicleService.getUrl());
+    this.chronicleService.getUrl().then((url:string) => this.chronicleUrl.setValue(url));
   }
 }

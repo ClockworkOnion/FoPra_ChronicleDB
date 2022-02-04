@@ -29,6 +29,7 @@ def do_periodid_tasks():
 
 USERFILE = "users.dat"
 SECRET = "secret"
+# chronicleUrl wird in der main erstellt
 
 # JOB METHODEN ##################################################################################################
 
@@ -62,6 +63,38 @@ def getAllJobs(user_id):
 
 # CHRONICLE METHODEN ############################################################################################
 
+@app.route('/set_server_url', methods=['POST'])
+def setServerUrl():
+    print("Received request for 'set_server_url'")
+    data = json.loads(request.data)
+    print(data)
+    
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    if not (validation.verifyJWT(token) and validation.isUserAdmin(token)): 
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################
+    global chronicleUrl
+    chronicleUrl = data["url"]
+    with open("config.dat", "w")as outfile:
+        json.dump(data, outfile)
+    print("Changed Server URL to " + chronicleUrl)
+    return make_response({"message": "Successfully changed Server URL"})
+
+@app.route('/get_server_url', methods=['GET'])
+def getServerUrl():
+    print("Received request for 'get_server_url'")
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    if not (validation.verifyJWT(token)): 
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################
+    return make_response({"url": chronicleUrl})
+
 @app.route('/show_right_flank/<stream_id>', methods=['GET'])
 def showRightFlank(stream_id):
     print("Stream ID: " + stream_id)
@@ -75,8 +108,8 @@ def showRightFlank(stream_id):
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    print("Trying to get right flank from ChronicleDB at localhost:8000/show_right_flank/" + stream_id + " ... ")
-    response = requests.get("http://127.0.0.1:8000/show_right_flank/" + stream_id)
+    print("Trying to get right flank from ChronicleDB at " + chronicleUrl + "show_right_flank/" + stream_id + " ... ")
+    response = requests.get(chronicleUrl + "show_right_flank/" + stream_id)
     print("Response from ChronicleDB: "+ str(response))
     return jsonify(response.json())
 
@@ -93,8 +126,8 @@ def streamInfo(stream_id):
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    print("Trying to get stream info from ChronicleDB at localhost:8000/stream_info/" + stream_id + " ... ")
-    response = requests.get("http://127.0.0.1:8000/stream_info/" + stream_id)
+    print("Trying to get stream info from ChronicleDB at "+chronicleUrl+"stream_info/" + stream_id + " ... ")
+    response = requests.get(chronicleUrl + "stream_info/" + stream_id)
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -111,8 +144,8 @@ def shutdownStream(stream_id):
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    print("Trying to get stream info from ChronicleDB at localhost:8000/shutdown_stream/" + stream_id + " ... ")
-    response = requests.get("http://127.0.0.1:8000/shutdown_stream/" + stream_id)
+    print("Trying to get stream info from ChronicleDB at " + chronicleUrl + "shutdown_stream/" + stream_id + " ... ")
+    response = requests.get(chronicleUrl + "shutdown_stream/" + stream_id)
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -129,8 +162,8 @@ def recoverStreamSnapshot(stream_id):
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    print("Trying to get stream info from ChronicleDB at localhost:8000/recover_stream_snapshot/" + stream_id + " ... ")
-    response = requests.get("http://127.0.0.1:8000/recover_stream_snapshot/" + stream_id)
+    print("Trying to get stream info from ChronicleDB at " + chronicleUrl + "recover_stream_snapshot/" + stream_id + " ... ")
+    response = requests.get(chronicleUrl + "recover_stream_snapshot/" + stream_id)
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -147,7 +180,7 @@ def createStream():
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.post("http://127.0.0.1:8000/create_stream", request.data)
+    response = requests.post(chronicleUrl + "create_stream", request.data)
     print("Response from ChronicleDB: " + str(response))
     return {"response from ChronicleDB": str(response) } 
 
@@ -164,7 +197,7 @@ def insertOrdered(stream_id):
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.post("http://127.0.0.1:8000/insert_ordered/" + stream_id, request.data)
+    response = requests.post(chronicleUrl + "insert_ordered/" + stream_id, request.data)
     print("Response from ChronicleDB: "+ str(response))
     return {}
 
@@ -181,7 +214,7 @@ def queryTimeTravel(stream_id):
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.post("http://127.0.0.1:8000/query_time_travel/" + stream_id, request.data)
+    response = requests.post(chronicleUrl + "query_time_travel/" + stream_id, request.data)
     print("Response from ChronicleDB: "+ str(response))
     return jsonify(response.json())
 
@@ -199,7 +232,7 @@ def showStreams():
     # if not validation.isUserAdmin(request.headers["Authorization"]):
     #     return make_response({"Access" : "denied!!"}, 403)
 
-    response = requests.get("http://127.0.0.1:8000/show_streams", request.data)
+    response = requests.get(chronicleUrl + "show_streams", request.data)
     print("Response from ChronicleDB: "+ str(response.text))
     return jsonify(response.json())
 
@@ -215,7 +248,7 @@ def maxKey(stream_id):
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.get("http://127.0.0.1:8000/max_key/" + stream_id, request.data)
+    response = requests.get(chronicleUrl + "max_key/" + stream_id, request.data)
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -231,7 +264,7 @@ def minKey(stream_id):
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.get("http://127.0.0.1:8000/min_key/" + stream_id, request.data)
+    response = requests.get(chronicleUrl + "min_key/" + stream_id, request.data)
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -247,7 +280,7 @@ def treeHeight(stream_id):
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.get("http://127.0.0.1:8000/tree_height/" + stream_id, request.data)
+    response = requests.get(chronicleUrl + "tree_height/" + stream_id, request.data)
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -263,7 +296,7 @@ def systemInfo():
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.get("http://127.0.0.1:8000/system_info", request.data)
+    response = requests.get(chronicleUrl + "system_info", request.data)
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -390,8 +423,16 @@ def validateToken(token):
         return False
     return True
 
+def loadUrl():
+    with open("config.dat") as json_file:
+        data = json.load(json_file)
+    print(data)
+    global chronicleUrl
+    chronicleUrl = data["url"]
+
 if __name__ == "__main__":
     # Set up scheduler
+    loadUrl()
     scheduler.add_job(func=do_periodid_tasks, trigger="interval", seconds=30)
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())

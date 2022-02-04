@@ -26,10 +26,12 @@ export class StreamListComponent implements OnInit {
       if (list)
         this.streamList = list;
     })
-    let url: string = this.chronicleService.getUrl();
-    if (url && url.length > 0) {
-      this.chronicleService.getStreamsFromChronicle();
-    }
+    
+    this.chronicleService.getUrl().then(url => {
+      if (url && url.length > 0) {
+        this.chronicleService.getStreamsFromChronicle();
+      }
+    });
   }
   
   drop(event: CdkDragDrop<string[]>) {

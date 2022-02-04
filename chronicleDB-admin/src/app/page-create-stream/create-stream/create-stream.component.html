@@ -24,7 +24,7 @@
 
     <mat-card class="dashboard-card">
         <mat-card-content class="card-content">
-            <span style="color: gray">ChronicleDB Server URL: {{ getUrlString() }}</span>
+            <span style="color: gray">ChronicleDB Server URL: {{ chronicleService.url }}</span>
             <button mat-raised-button color="primary" style="display: block; margin: auto"
                 matTooltip="Create a new stream with the given URL, the event definition and the defined properties."
                 (click)="onCreateStreamClicked()"

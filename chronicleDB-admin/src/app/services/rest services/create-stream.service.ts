@@ -31,7 +31,7 @@ export class CreateStreamService {
       // undefined in den properties
       this.snackBar.openSnackBarwithStyle("There is a problem with the properties of the stream.","red-snackbar");
       return false;
-    } else if (!this.chronicle.getUrl() || this.chronicle.getUrl().length < 8) {
+    } else if (!this.chronicle.url || this.chronicle.url.length < 8) {
       this.snackBar.openSnackBarwithStyle("No valid URL given!","red-snackbar");
       return false;
     } else if ((this.eventProperties.value as string).match(/.*((undefined)|(\[\])).*/gi) != null) {
@@ -51,7 +51,7 @@ export class CreateStreamService {
 
   createStream() {
     this._isHttpRequestPending = true;
-    sessionStorage.setItem("chronicleURL",this.chronicle.getUrl());
+    // sessionStorage.setItem("chronicleURL",this.chronicle.getUrl());
     let response = this.chronicle.post(BACKEND_URL + "create_stream", this.createStreamBody);
     response.subscribe(response => {
       this.snackBar.openSnackBarwithStyle("Successfully created a new Stream!","green-snackbar");

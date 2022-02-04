@@ -9,13 +9,8 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
   styleUrls: ['./create-stream.component.css']
 })
 export class CreateStreamComponent {
-  constructor(private chronicleService: ChronicleService, public createService: CreateStreamService) {
+  constructor(public chronicleService: ChronicleService, public createService: CreateStreamService) {
     chronicleService.getHttp();
-  }
-
-  getUrlString() {
-    let url = this.chronicleService.getUrl();
-    return (url && url.length > 0) ? url : "N/A";
   }
 
   onCreateStreamClicked() {
