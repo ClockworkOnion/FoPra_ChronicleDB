@@ -12,7 +12,11 @@
         <mat-icon class="sidenav-icon"> event </mat-icon>
         &nbsp; Jobs
       </a>
-      <a mat-list-item routerLink="/create_stream" *ngIf="authService.canUserCreateStreams()">
+      <a mat-list-item routerLink="/rust/create_stream" *ngIf="authService.canUserCreateStreams()&&  !authService.usesJavaVersion">
+        <mat-icon class="sidenav-icon"> add_circle_outline </mat-icon>
+        &nbsp; Create New Stream
+      </a>
+      <a mat-list-item routerLink="/java/create_stream" *ngIf="authService.canUserCreateStreams() && authService.usesJavaVersion">
         <mat-icon class="sidenav-icon"> add_circle_outline </mat-icon>
         &nbsp; Create New Stream
       </a>
