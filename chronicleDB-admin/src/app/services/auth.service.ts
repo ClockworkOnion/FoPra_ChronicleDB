@@ -6,6 +6,7 @@ import { LoginCredentials } from '../model/LoginCredentials';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../model/User';
+import { SnackBarService } from './snack-bar.service';
 
 
 export const BACKEND_URL : string = "http://127.0.0.1:5002/";
@@ -14,7 +15,7 @@ export const BACKEND_URL : string = "http://127.0.0.1:5002/";
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private snackBar: SnackBarService) {}
 
   login(credentials: LoginCredentials): Observable<boolean> {
     return this.http
@@ -57,6 +58,10 @@ export class AuthService {
 
   get username() : string | null {
     return this.currentUser?.username || null;
+  }
+
+  get usesJavaVersion() : boolean {
+    return this.currentUser?.usesJavaVersion || false;
   }
 
   isUserAdmin() : boolean {
