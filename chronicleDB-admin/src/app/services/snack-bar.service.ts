@@ -39,4 +39,8 @@ export class SnackBarService {
   openGreenSnackBar(message: string) {
     this.openSnackBarwithStyle(message, "green-snackbar");
   }
+  
+  openRedSnackBar(message: string) {
+    this.openSnackBarwithStyle(message, "red-snackbar");
+  }
 }

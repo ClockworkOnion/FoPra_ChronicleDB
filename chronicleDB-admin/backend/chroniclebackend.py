@@ -199,6 +199,8 @@ def insertOrdered(stream_id):
 
     response = requests.post(chronicleUrl + "insert_ordered/" + stream_id, request.data)
     print("Response from ChronicleDB: "+ str(response))
+    if (response.status_code != 200):
+        return make_response(response._content, response.status_code)
     return {}
 
 @app.route('/query_time_travel/<stream_id>', methods=['POST'])

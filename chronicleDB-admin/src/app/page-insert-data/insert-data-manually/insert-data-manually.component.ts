@@ -63,12 +63,10 @@ export class InsertDataManuallyComponent implements OnInit {
       || this.data.stream.compoundType == EventCompoundType.varCompound)  {
       this.insertService.insertEvent(this.eventElementValues, this.timestampFormControl.value, this.data.stream)
         .then(response => {
-          if (response.status==200){
-            this.snackBar.openSnackBarwithStyle("Event successfully inserted!","green-snackbar");
-            this.timestampFormControl.setValue(this.timestampFormControl.value + 1); // increment ID
-          } else {
-            this.snackBar.openSnackBarwithStyle("Insertion failed!","red-snackbar");
-          }
+          this.snackBar.openSnackBarwithStyle("Event successfully inserted!","green-snackbar");
+          this.timestampFormControl.setValue(this.timestampFormControl.value + 1); // increment ID
+        }).catch(reason => {
+          this.snackBar.openRedSnackBar("Insertion failed!")
         })
     } else {
       this.snackBar.openSnackBarwithStyle("Please enter all needed Data!","red-snackbar");
