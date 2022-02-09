@@ -23,7 +23,7 @@ export class JwtInterceptor implements HttpInterceptor {
             });
         }
 
-        if (request.url.includes("localhost:8000")) {
+        if (request.url.includes("localhost:8000") || request.url.includes("localhost:8080")) {
             this.snackBar.openSnackBar("Warning! Directly addressed Chronicle!");
             console.log("Warning! Directly addressed Chronicle!");
         }
