@@ -91,7 +91,7 @@ def getAllUsers():
     return JSONread(USERFILE)
 
 def registerNewUser(user_name, password, is_admin, can_create_streams, allowed_streams,
- allowed_insert_streams, all_streams_allowed, can_insert_all):
+ allowed_insert_streams, all_streams_allowed, can_insert_all, uses_java_version):
     user_data = JSONread(USERFILE)
     user_data["users"].append({
         "username" : user_name,
@@ -101,7 +101,8 @@ def registerNewUser(user_name, password, is_admin, can_create_streams, allowed_s
         "allowedStreams": allowed_streams,
         "allowedInsertStreams": allowed_insert_streams,
         "allStreamsAllowed":all_streams_allowed,
-        "canInsertAll": can_insert_all
+        "canInsertAll": can_insert_all,
+        "usesJavaVersion": uses_java_version
     })
     writeUserFile(user_data)
 
@@ -145,6 +146,11 @@ def setSeeAll(user_name, status: bool):
 def setInsertAll(user_name, status: bool):
     u = getUserAsMap(user_name)
     u["canInsertAll"] = status
+    overwriteUser(u)
+
+def set_java_version(user_name, status: bool):
+    u = getUserAsMap(user_name)
+    u["usesJavaVersion"] = status
     overwriteUser(u)
 
 def writeUserFile(data):

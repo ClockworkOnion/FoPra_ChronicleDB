@@ -28,7 +28,7 @@ def do_periodid_tasks():
 # a change
 
 USERFILE = "users.dat"
-SECRET = "secret"
+SECRET = "secretf"
 # chronicleUrl wird in der main erstellt
 
 # JOB METHODEN ##################################################################################################
@@ -44,7 +44,18 @@ def delete_job():
 def add_scheduled_job():
     if not validateToken(request.headers["Authorization"]):
         return make_response({"Access" : "denied!!"}, 403)
+    info = jwt.decode(request.headers["Authorization"], key=SECRET, algorithms=['HS256', ])
+    username = (info["username"])
+    print("Username: " + username)
+    print("Request:")
     print(request.data)
+
+    print("Job INFO Start Date")
+    data = json.loads(request.data) # request is of type "bytes" ??
+    print(data["startDate"])
+    print("Received request:\n" + str(request.data) + "\nCreating job...")
+    userlogs.addScheduledJob(str(username), data)
+
     return make_response({"mission" : "Complete"})
 
 @app.route('/get_due_jobs/<user_id>', methods=['GET'])
@@ -383,7 +394,8 @@ def createUser():
 
     response=json.loads(request.data)
     um.registerNewUser(response["username"],response["password"],response["isAdmin"],response["canCreateStream"],
-    response["allowedStreams"],response["allowedInsertStreams"],response["allStreamsAllowed"],response["canInsertAll"])
+    response["allowedStreams"],response["allowedInsertStreams"],response["allStreamsAllowed"],
+    response["canInsertAll"], response["usesJavaVersion"])
     print(response)
     return make_response(response,200)
 
