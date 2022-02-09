@@ -20,7 +20,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   styleUrls: ['./user-management.component.css']
 })
 export class UserManagementComponent  {
-  displayedColumns = ['username','isAdmin','readingRights','writingRights',"canCreateStreams","edit"];
+  displayedColumns = ['username','isAdmin','usesJava','readingRights','writingRights',"canCreateStreams","edit"];
   dataSource!: MatTableDataSource<User>;
   form!: FormGroup;
   users :any;
@@ -46,6 +46,7 @@ export class UserManagementComponent  {
         let newUser: User={
         username:response.users[index].username,
         isAdmin:response.users[index].isAdmin,
+        usesJavaVersion:response.users[index].usesJavaVersion,
         canCreateStreams:response.users[index].canCreateStreams,
         allStreamsAllowed:response.users[index].allStreamsAllowed,
         allowedStreams:response.users[index].allowedStreams,

@@ -11,9 +11,10 @@ USERFILE = "users.dat"
 SECRET = "secretf"
 
 class User():
-    def __init__(self, username, is_admin, can_create_streams, all_streams_allowed, allowed_streams, can_insert_all, allowed_insert_streams):
+    def __init__(self, username, is_admin, uses_java_version, can_create_streams, all_streams_allowed, allowed_streams, can_insert_all, allowed_insert_streams):
         self.username = username
         self.isAdmin = is_admin
+        self.usesJavaVersion = uses_java_version
         self.canCreateStreams = can_create_streams
         self.allStreamsAllowed = all_streams_allowed
         self.allowedStreams = allowed_streams
@@ -53,6 +54,7 @@ def getUserByName(user_name):
         if (u["username"] == user_name):
             return User(u["username"],
              u["isAdmin"],
+             u["usesJavaVersion"],
              u["canCreateStreams"],
              u["allStreamsAllowed"],
              (u["allowedStreams"] if (u["allowedStreams"]) else []),
@@ -90,19 +92,19 @@ def getUserIds():
 def getAllUsers(): 
     return JSONread(USERFILE)
 
-def registerNewUser(user_name, password, is_admin, can_create_streams, allowed_streams,
- allowed_insert_streams, all_streams_allowed, can_insert_all, uses_java_version):
+def registerNewUser(user_name, password, is_admin, uses_java_version, can_create_streams, allowed_streams,
+ allowed_insert_streams, all_streams_allowed, can_insert_all):
     user_data = JSONread(USERFILE)
     user_data["users"].append({
         "username" : user_name,
         "password" : password,
         "isAdmin" : is_admin,
+        "usesJavaVersion" : uses_java_version,
         "canCreateStreams":can_create_streams,
         "allowedStreams": allowed_streams,
         "allowedInsertStreams": allowed_insert_streams,
         "allStreamsAllowed":all_streams_allowed,
         "canInsertAll": can_insert_all,
-        "usesJavaVersion": uses_java_version
     })
     writeUserFile(user_data)
 

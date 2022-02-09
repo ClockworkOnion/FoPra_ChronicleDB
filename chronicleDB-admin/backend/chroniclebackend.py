@@ -391,11 +391,10 @@ def createUser():
     if not (validation.verifyJWT(token) and validation.isUserAdmin(token)):  
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
-
     response=json.loads(request.data)
-    um.registerNewUser(response["username"],response["password"],response["isAdmin"],response["canCreateStream"],
+    um.registerNewUser(response["username"],response["password"],response["isAdmin"],response["usesJavaVersion"],response["canCreateStream"],
     response["allowedStreams"],response["allowedInsertStreams"],response["allStreamsAllowed"],
-    response["canInsertAll"], response["usesJavaVersion"])
+    response["canInsertAll"])
     print(response)
     return make_response(response,200)
 

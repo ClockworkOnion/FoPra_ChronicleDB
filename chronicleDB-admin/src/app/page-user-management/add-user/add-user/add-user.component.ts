@@ -35,6 +35,7 @@ export class AddUserComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
       isAdmin: [false, Validators.required],
+      usesJavaVersion:[false],
       canCreateStream: [false],
       allowedStreams: [[]],
       allowedInsertStreams: [[]],
@@ -88,12 +89,12 @@ export class AddUserComponent implements OnInit {
 
   async onSubmit() {
     // reset alerts on submit
-    const bol = await this.userAlreadyExists(this.form.controls.username.value);
+    const alreadyExists = await this.userAlreadyExists(this.form.controls.username.value);
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
-    if (bol) {
+    if (alreadyExists) {
       this.openFailureSnackBar();
       return;
     }

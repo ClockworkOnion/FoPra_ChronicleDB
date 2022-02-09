@@ -36,6 +36,14 @@
             </mat-cell>
           </ng-container>
 
+          <ng-container matColumnDef="usesJava">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Java </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-icon aria-hidden="true" class="true" *ngIf="row.usesJavaVersion">done</mat-icon>
+              <mat-icon aria-hidden="false" class="false" *ngIf="!row.usesJavaVersion">close</mat-icon>
+            </mat-cell>
+          </ng-container>
+
           <!-- Reading Rights Column -->
           <ng-container matColumnDef="readingRights">
             <mat-header-cell *matHeaderCellDef> Reading Rights </mat-header-cell>
