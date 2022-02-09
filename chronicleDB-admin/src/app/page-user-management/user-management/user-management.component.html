@@ -54,7 +54,7 @@
               <div *ngIf="row.allowedStreams.length == 0 && !row.allStreamsAllowed">
                 <mat-icon aria-hidden="false" class="false">close</mat-icon>
               </div>
-              {{row.allowedStreams}}
+              <div *ngIf="row.allowedStreams.length != 0">{{row.allowedStreams}}</div>
             </mat-cell>
           </ng-container>
           <!-- Writing Rights Column -->
@@ -67,7 +67,7 @@
               <div *ngIf="row.allowedInsertStreams.length == 0 && !row.canInsertAll">
                 <mat-icon aria-hidden="false" class="false">close</mat-icon>
               </div>
-              {{row.allowedInsertStreams}}
+              <div *ngIf="row.allowedInsertStreams.length != 0">{{row.allowedInsertStreams}}</div>
             </mat-cell>
           </ng-container>
           <ng-container matColumnDef="canCreateStreams">
