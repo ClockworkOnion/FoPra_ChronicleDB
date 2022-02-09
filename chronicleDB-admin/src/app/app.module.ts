@@ -73,6 +73,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { PageMessagesComponent } from './page-messages/page-messages.component';
 import { JobResultComponent } from './page-messages/job-result/job-result.component';
 import { MinMaxTreeHeightComponent } from './page-home/stream-list/min-max-tree-height/min-max-tree-height.component';
+import { JavaCreateStreamComponent } from './java/java-page-create-stream/java-create-stream/java-create-stream.component';
+import { JavaStreamListComponent } from './java/java-stream-list/java-stream-list.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +108,9 @@ import { MinMaxTreeHeightComponent } from './page-home/stream-list/min-max-tree-
     AddJobComponent,
     PageMessagesComponent,
     JobResultComponent,
-    MinMaxTreeHeightComponent
+    MinMaxTreeHeightComponent,
+    JavaCreateStreamComponent,
+    JavaStreamListComponent
   ],
   imports: [
     BrowserModule,
