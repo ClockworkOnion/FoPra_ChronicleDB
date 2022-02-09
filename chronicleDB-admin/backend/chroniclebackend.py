@@ -20,12 +20,47 @@ app.config['CORS_HEADERS'] = 'Content-Type' # Adding CORS header
 scheduler = BackgroundScheduler()
 
 
-def do_periodid_tasks():
-    print("Executing periodic tasks...")
-    # Perdiodic tasks here
-    print("Finished periodic tasks.")
+def do_periodic_tasks():
+    print(30 * "-" + " Executing periodic tasks... " + 30 * "-")
+    jobs = userlogs.getAllDueJobs()
+    for j in jobs:
+        print("\nUser Name: " + str(j["username"] + ", Type: " + str(j["job"]["requestType"])))
+        helper.indentPrint("Job Data", str(j["job"]))
 
-# a change
+        if (j["job"]["requestType"] == "Right Flank"):
+            print("Getting right flank according to job. Response from chronicle:")
+            response = requests.get(chronicleUrl + "show_right_flank/" + str(j["job"]["config"]["data"]["stream"]["id"]))
+            handle_task_response(j, response)
+            # if (response.status_code == 200):
+            #     print(response.json())
+            #     userlogs.appendToLog(j["username"], str(response.json()))
+            #     userlogs.addToNextRunTimestamp(j["username"], j["job"], j["job"]["interval"]["value"])
+            #     print("User " + j["username"] + " log written and done. Next run in " + str(j["job"]["interval"]["value"]) + " seconds.")
+
+        if (j["job"]["requestType"] == "Time Travel"):
+            print("Time Travel according to job. Response from chronicle:")
+            exclusive_or_inclusive = j["job"]["config"]["data"]["type"]
+            from_timestamp = j["job"]["config"]["data"]["from"]
+            to_timestamp = j["job"]["config"]["data"]["to"]
+            request_body = '{"'+exclusive_or_inclusive+'":{"start":'+str(from_timestamp)+',"end":'+str(to_timestamp)+'}'+'}'
+            response = requests.post(chronicleUrl + "query_time_travel/" + str(j["job"]["config"]["data"]["streamId"]), request_body)
+            handle_task_response(j, response)
+            # if (response.status_code == 200):
+            #     print(response.json())
+            #     userlogs.appendToLog(j["username"], str(response.json()))
+            #     userlogs.addToNextRunTimestamp(j["username"], j["job"], j["job"]["interval"]["value"])
+            #     print("User " + j["username"] + " log written and done. Next run in " + str(j["job"]["interval"]["value"]) + " seconds.")
+
+    print(30 * "-" + " Finished periodic tasks. " + 30 * "-")
+
+def handle_task_response(job, response):
+    if (response.status_code != 200):
+        print("Request to chronicleDB unsuccessful!")
+        return
+    print(response.json())
+    userlogs.appendToLog(job["username"], str(response.json()))
+    userlogs.addToNextRunTimestamp(job["username"], job["job"], job["job"]["interval"]["value"])
+    print("User " + job["username"] + " log written and done. Next run in " + str(job["job"]["interval"]["value"]) + " seconds.")
 
 USERFILE = "users.dat"
 SECRET = "secretf"
@@ -46,16 +81,9 @@ def add_scheduled_job():
         return make_response({"Access" : "denied!!"}, 403)
     info = jwt.decode(request.headers["Authorization"], key=SECRET, algorithms=['HS256', ])
     username = (info["username"])
-    print("Username: " + username)
-    print("Request:")
-    print(request.data)
-
-    print("Job INFO Start Date")
-    data = json.loads(request.data) # request is of type "bytes" ??
-    print(data["startDate"])
+    data = json.loads(request.data) 
     print("Received request:\n" + str(request.data) + "\nCreating job...")
     userlogs.addScheduledJob(str(username), data)
-
     return make_response({"mission" : "Complete"})
 
 @app.route('/get_due_jobs/<user_id>', methods=['GET'])
@@ -446,9 +474,10 @@ def loadUrl():
 if __name__ == "__main__":
     # Set up scheduler
     loadUrl()
-    scheduler.add_job(func=do_periodid_tasks, trigger="interval", seconds=30)
+    scheduler.add_job(func=do_periodic_tasks, trigger="interval", seconds=30)
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())
+    do_periodic_tasks()
 
     # Start backend process (use_reloader must be false or it will mess with scheduler)
     app.run(port=5002, debug=True, use_reloader=False) 

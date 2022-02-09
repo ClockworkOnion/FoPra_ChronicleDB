@@ -67,7 +67,7 @@ def addToNextRunTimestamp(user_id, job_data, seconds_to_add):
     for job in jobs:
         if job["nextRun"] == job_data["nextRun"]:
             next_run_date = parser.parse(job["nextRun"])
-            next_run_date = next_run_date + datetime.timedelta(seconds=seconds_to_add)
+            next_run_date = currentTimeLocalized() + datetime.timedelta(seconds=seconds_to_add)
             # job["nextRun"] = str(next_run_date)
             job["nextRun"] = next_run_date.strftime('%Y-%m-%dT%H:%M:%S.000Z')
             print("Found job with nextRun " + str(job_data["nextRun"]) + ", added " + str(seconds_to_add) + " seconds. New nextRun: " + str(job["nextRun"]))
@@ -81,6 +81,7 @@ def currentTimeLocalized():
 
 def JobIsDue(job):
     dueDate = parser.parse(job["nextRun"])
+    print("[Job nextrun info] Due Date: " + str(dueDate) + " Timestamp right now: " + str(currentTimeLocalized()))
     return dueDate < currentTimeLocalized()
 
 def getAllDueJobs():
@@ -90,7 +91,7 @@ def getAllDueJobs():
         if "jobs" in user.keys():
             for job in user["jobs"]:
                 if JobIsDue(job):
-                    job_list.append(job)
+                    job_list.append({"username" : user["username"], "job" : job})
     return job_list
 
 def getUserDueJobs(user_id):

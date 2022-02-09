@@ -1,5 +1,12 @@
 import chroniclebackend as cb
-import json
+import json, textwrap
+
+def indentPrint(title, text):
+    prefix = title + ": "
+    preferredWidth = 70
+    wrapper = textwrap.TextWrapper(initial_indent=prefix, width=preferredWidth, subsequent_indent=' '*len(prefix))
+    print(wrapper.fill(text))
+
 
 def testUserPwd():
     user_name = input("Please enter your username\n")
