@@ -176,8 +176,9 @@ mehr überprüfen müssen. Dies wollen wir nun noch weiter anpassen.
 ### User Management
 Wir haben das Menü bei der Login-Seite aufgeräumt, weitere Beschränkungen eingefügt und weitere Änderungen vorgenommen.
 
+
 ## Spontane Besprechung vom 01.02.22
-Awensend: Johannes Buder, Lars Happel
+Awensend: Johannes Buder, Lars Happel, Davit Davtyan
 
 ### Jobs
 Jobs werden parallel durch das Frontend und Backend verwaltet. Das Backend führt periodisch Anfragen an die Datenbank aus und sammelt diese, so dass der User diese in Form einer Log Datei abrufen kann.
@@ -193,3 +194,20 @@ Wir haben besprochen in welcher Form die Anfragen an das Backend stattfinden sol
 Zusätzlich ist ggfs. festzuhalten wieviele der neu geloggten Anfragen der User bereits betrachtet hat, um die Zahl der neuen Nachrichten rechts-oben am Brief Icon anpassen zu können.
 
 Die Ergebnisse der Anfragen sollen bis auf weiteres 1:1 als Text in einer separaten Log Datei für jeden User gespeichert werden. Später kann dann evtl. das Format angepasst werden um die Logs schöner darzustellen.
+
+
+
+
+## Besprechung vom 09.02.22
+Awensend: Johannes Buder, Lars Happel
+
+### Jobs
+Wir erstellen noch die letzten JobTypen, sodass wir dann Jobs für Stream Info, System Info, Time Travel, Right Flank, Max Key, Min Key und Tree Height haben. 
+Im Frontend wird bereits alles angezeigt, sogar die Messages, von den automatischen Ausführungen der Jobs. Die Kommunikation mit dem Backend besteht auch schon,
+aber die automatische Ausführung muss noch fertig gestellt werden.
+
+### Java-Version
+Wir haben uns dazu entschieden, dass wir in der Nutzerverwaltung für jeden Nutzer festlegen, ob er die Java oder die Rust-Verion benutzt. 
+Dementsprechend soll auch die Website angezeigt werden. Wir wollen die unterschiedlichen Versionen in der URL ebenso anzeigen.
+Wenn wir die anderen Themen abgeschlossen haben (sollte nicht mehr lange dauern), werden wir die einzelnen Komponenten (Create Stream etc) 
+für die Java-Variante duplizieren und anpassen. (Wir haben uns gegen riesige if-else überall entschieden und spalten unser Projekt in sogesagt 2 Teile auf: Rust und Java)

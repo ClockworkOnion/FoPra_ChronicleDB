@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { StreamInfoComponent } from 'src/app/stream-info/stream-info.component';
 import { ShowRightFlankComponent } from 'src/app/components/show-right-flank/show-right-flank.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MinMaxTreeHeightComponent } from './min-max-tree-height/min-max-tree-height.component';
+import { ChronicleRequest } from 'src/app/model/ChronicleJob';
 
 @Component({
   selector: 'app-stream-list',
@@ -70,44 +72,19 @@ export class StreamListComponent implements OnInit {
     this.dialog.openDialog(ShowRightFlankComponent, {data: {stream: stream}});
   }
 
- async showMaxKey(id:number){
-    console.log( await this.chronicleService.getMaxKey(id))
-
-
-  }
- async showKey(id :number){
-
-   let min =await this.chronicleService.getMinKey(id);
-   let max =await this.chronicleService.getMaxKey(id);
-   let th = await this.chronicleService.getTreeHeight(id);
-   this.dialog.openDialog(MinMaxDialog,{data: {minKey: min,maxKey:max,treeHeigth:th}, maxHeight: "900px"})
-   
-  //var output = document.getElementById("output");
-    
-   //output!.innerHTML = res;
+  async showMaxKey(id:number){
+    // console.log( await this.chronicleService.getMaxKey(id))
+    this.dialog.openDialog(MinMaxTreeHeightComponent,{data: {requestType: ChronicleRequest.MAX_KEY, streamId: id}});
   }
 
+  async showMinKey(id:number){
+    // console.log( await this.chronicleService.getMaxKey(id))
+    this.dialog.openDialog(MinMaxTreeHeightComponent,{data: {requestType: ChronicleRequest.MIN_KEY, streamId: id}});
+  }
+  
   async showTreeHeight(id:number){
-    console.log( await this.chronicleService.getTreeHeight(id))
-
-
+    // console.log( await this.chronicleService.getTreeHeight(id))
+    this.dialog.openDialog(MinMaxTreeHeightComponent,{data: {requestType: ChronicleRequest.TREE_HEIGHT, streamId: id}});
   }
  
 }
-@Component({
-  selector: 'min-max-dialog',
-  templateUrl: 'min-max-dialog.html',
-})
-export class MinMaxDialog{
-  minKey!: string;
-  maxKey!: string;
-  treeHeigth!: string;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {minKey: string,maxKey:string,treeHeigth:string}){
-    this.maxKey=data.maxKey;
-    this.minKey=data.minKey;
-    this.treeHeigth=data.treeHeigth;
-
-  }
- 
-}
-

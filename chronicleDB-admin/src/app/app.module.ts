@@ -72,6 +72,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PageMessagesComponent } from './page-messages/page-messages.component';
 import { JobResultComponent } from './page-messages/job-result/job-result.component';
+import { MinMaxTreeHeightComponent } from './page-home/stream-list/min-max-tree-height/min-max-tree-height.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { JobResultComponent } from './page-messages/job-result/job-result.compon
     PageJobsComponent,
     AddJobComponent,
     PageMessagesComponent,
-    JobResultComponent
+    JobResultComponent,
+    MinMaxTreeHeightComponent
   ],
   imports: [
     BrowserModule,

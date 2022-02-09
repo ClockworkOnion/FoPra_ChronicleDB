@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { ShowRightFlankComponent } from '../components/show-right-flank/show-right-flank.component';
 import { ChronicleJob, ChronicleRequest, JobResult } from '../model/ChronicleJob';
+import { MinMaxTreeHeightComponent } from '../page-home/stream-list/min-max-tree-height/min-max-tree-height.component';
 import { AddJobComponent } from '../page-jobs/add-job/add-job.component';
 import { StreamInfoComponent } from '../stream-info/stream-info.component';
 import { TimeTravelComponent } from '../time-travel/time-travel.component';
@@ -39,7 +40,8 @@ export class JobService {
         startDate: new Date(),
         nextRun: new Date(new Date().getTime() + (60*60*1000)),
         interval: { value: 60*60, text: '1 Hour' },
-        info: 'hallo hier ist max key',
+        config: {data:{requestType:"Max Key", streamId:0, disableCreateJob:true}},
+        info: "Mein Max Key Job"
       },
       {
         requestType: ChronicleRequest.STREAM_INFO,
@@ -123,9 +125,8 @@ export class JobService {
   }
 
   executeJob(job: ChronicleJob) {
-    console.log(job);
-    console.log(JSON.stringify(job));
-
+    // console.log(job);
+    // console.log(JSON.stringify(job));
     switch (job.requestType) {
       case ChronicleRequest.STREAM_INFO:
         this.dialog.openDialog(StreamInfoComponent, job.config); // data: {streamId: id}
@@ -135,6 +136,15 @@ export class JobService {
         break;
       case ChronicleRequest.TIME_TRAVEL:
         this.dialog.openDialog(TimeTravelComponent, job.config); // data: {streamId: id}
+        break;
+      case ChronicleRequest.MIN_KEY:
+        this.dialog.openDialog(MinMaxTreeHeightComponent, job.config);
+        break;
+      case ChronicleRequest.MAX_KEY:
+        this.dialog.openDialog(MinMaxTreeHeightComponent, job.config);
+        break;
+      case ChronicleRequest.TREE_HEIGHT:
+        this.dialog.openDialog(MinMaxTreeHeightComponent, job.config);
         break;
       default:
         console.error(job.requestType + ' noch nicht implementiert!');
