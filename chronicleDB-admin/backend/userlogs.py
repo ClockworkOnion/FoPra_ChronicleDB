@@ -8,6 +8,11 @@ TESTSTRING2 = '{"requestType":"Stream Info","startDate":"2022-02-01T17:26:43.192
 TESTSTRING = '{"requestType":"Stream Info","startDate":"2022-02-02T11:56:22.359Z","nextRun":"2022-02-03T11:56:22.359Z","interval":{"value":86400,"text":"1 Day"},"config":{"data":{"streamId":0,"disableCreateJob":true},"maxHeight":"900px"}}'
 USERFILE = "users.dat"
 
+def get_user_log(user_id):
+    contents = ""
+    with open((str(user_id)+".log")) as log:
+        contents = contents + log.read()
+    return contents
 
 def appendToLog(user_id, data):
     with open((str(user_id)+".log"), "a") as outfile:
@@ -145,12 +150,13 @@ def add_delete_testing():
 if __name__ == "__main__":
     print("Running userlogs.py as main...")
 
-    test_job_data = json.loads(TESTSTRING)
+    # test_job_data = json.loads(TESTSTRING)
     # clearUserJobs("hans")
-    addScheduledJob("User", test_job_data)
-    print("Due Jobs")
-    print(getAllDueJobs())
-    addToNextRunTimestamp("User", test_job_data, 883960)
-    print("Now due Jobs")
-    print(getAllDueJobs())
+    # addScheduledJob("User", test_job_data)
+    # print("Due Jobs")
+    # print(getAllDueJobs())
+    # addToNextRunTimestamp("User", test_job_data, 883960)
+    # print("Now due Jobs")
+    # print(getAllDueJobs())
+    print(get_user_log("Admin"))
     

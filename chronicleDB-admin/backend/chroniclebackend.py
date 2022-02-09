@@ -30,12 +30,7 @@ def do_periodic_tasks():
         if (j["job"]["requestType"] == "Right Flank"):
             print("Getting right flank according to job. Response from chronicle:")
             response = requests.get(chronicleUrl + "show_right_flank/" + str(j["job"]["config"]["data"]["stream"]["id"]))
-            handle_task_response(j, response)
-            # if (response.status_code == 200):
-            #     print(response.json())
-            #     userlogs.appendToLog(j["username"], str(response.json()))
-            #     userlogs.addToNextRunTimestamp(j["username"], j["job"], j["job"]["interval"]["value"])
-            #     print("User " + j["username"] + " log written and done. Next run in " + str(j["job"]["interval"]["value"]) + " seconds.")
+            write_task_response_to_log(j, response)
 
         if (j["job"]["requestType"] == "Time Travel"):
             print("Time Travel according to job. Response from chronicle:")
@@ -44,16 +39,11 @@ def do_periodic_tasks():
             to_timestamp = j["job"]["config"]["data"]["to"]
             request_body = '{"'+exclusive_or_inclusive+'":{"start":'+str(from_timestamp)+',"end":'+str(to_timestamp)+'}'+'}'
             response = requests.post(chronicleUrl + "query_time_travel/" + str(j["job"]["config"]["data"]["streamId"]), request_body)
-            handle_task_response(j, response)
-            # if (response.status_code == 200):
-            #     print(response.json())
-            #     userlogs.appendToLog(j["username"], str(response.json()))
-            #     userlogs.addToNextRunTimestamp(j["username"], j["job"], j["job"]["interval"]["value"])
-            #     print("User " + j["username"] + " log written and done. Next run in " + str(j["job"]["interval"]["value"]) + " seconds.")
+            write_task_response_to_log(j, response)
 
     print(30 * "-" + " Finished periodic tasks. " + 30 * "-")
 
-def handle_task_response(job, response):
+def write_task_response_to_log(job, response):
     if (response.status_code != 200):
         print("Request to chronicleDB unsuccessful!")
         return
@@ -99,6 +89,13 @@ def getAllJobs(user_id):
         return make_response({"Access" : "denied!!"}, 403)
     logs = userlogs.getAllUserJobs(user_id)
     return make_response({"jobs" : logs})
+
+@app.route('/get_user_log/<user_id>', methods=['GET'])
+def get_user_log(user_id):
+    if not validateToken(request.headers["Authorization"]):
+        return make_response({"Access" : "denied!!"}, 403)
+    log_as_string = userlogs.get_user_log(user_id)
+    return make_response({"log" : log_as_string})
 
 # CHRONICLE METHODEN ############################################################################################
 
