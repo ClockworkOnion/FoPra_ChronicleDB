@@ -7,4 +7,5 @@ export interface ChronicleStream {
   compoundType?: EventCompoundType,
   minKey:string;
   maxKey:string;
+  treeHeight:string;
 }

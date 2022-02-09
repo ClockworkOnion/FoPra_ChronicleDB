@@ -114,7 +114,8 @@ export class ChronicleService {
               compoundType: EventParser.parseCompoundType(info),
               online: true,
               minKey:  await this.getMinKey(parseInt(stream[0])),
-              maxKey:  await this.getMaxKey(parseInt(stream[0]))
+              maxKey:  await this.getMaxKey(parseInt(stream[0])),
+              treeHeight: await this.getTreeHeight(parseInt(stream[0]))
             }
 
             this.streamList.push(newStream);
@@ -126,7 +127,8 @@ export class ChronicleService {
             id: parseInt(stream[0]),
             online: false,
             minKey: '',
-            maxKey:""
+            maxKey:"",
+            treeHeight:""
           }
           this.streamList.push(newStream);
           this.streamListBS.next(this.streamList);

@@ -1,6 +1,6 @@
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
 import { ChronicleService } from 'src/app/services/chronicle.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { DialogService } from 'src/app/services/dialog.service';
 import { InsertDataTabMenuComponent } from 'src/app/page-insert-data/insert-data-tab-menu/insert-data-tab-menu.component';
@@ -8,6 +8,7 @@ import { TimeTravelComponent } from 'src/app/time-travel/time-travel.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { StreamInfoComponent } from 'src/app/stream-info/stream-info.component';
 import { ShowRightFlankComponent } from 'src/app/components/show-right-flank/show-right-flank.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-stream-list',
@@ -74,9 +75,13 @@ export class StreamListComponent implements OnInit {
 
 
   }
- async showMinKey(id :number){
-   let res =await this.chronicleService.getMinKey(id);
-   console.log( res)
+ async showKey(id :number){
+
+   let min =await this.chronicleService.getMinKey(id);
+   let max =await this.chronicleService.getMaxKey(id);
+   let th = await this.chronicleService.getTreeHeight(id);
+   this.dialog.openDialog(MinMaxDialog,{data: {minKey: min,maxKey:max,treeHeigth:th}, maxHeight: "900px"})
+   
   //var output = document.getElementById("output");
     
    //output!.innerHTML = res;
@@ -85,6 +90,22 @@ export class StreamListComponent implements OnInit {
   async showTreeHeight(id:number){
     console.log( await this.chronicleService.getTreeHeight(id))
 
+
+  }
+ 
+}
+@Component({
+  selector: 'min-max-dialog',
+  templateUrl: 'min-max-dialog.html',
+})
+export class MinMaxDialog{
+  minKey!: string;
+  maxKey!: string;
+  treeHeigth!: string;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {minKey: string,maxKey:string,treeHeigth:string}){
+    this.maxKey=data.maxKey;
+    this.minKey=data.minKey;
+    this.treeHeigth=data.treeHeigth;
 
   }
  

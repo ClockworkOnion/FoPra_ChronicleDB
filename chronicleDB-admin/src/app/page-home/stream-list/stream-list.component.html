@@ -2,7 +2,11 @@
   <div class="streamListElement-box" *ngFor="let stream of streamList" cdkDrag>
     <ng-container *ngIf="stream">
       <span [ngClass]="{'online' : stream['online'], 'offline': !stream['online']}" class="statusPoint">●</span>
-      Stream ID : {{stream.id}} 
+      <u>Stream ID</u> : {{stream.id}} 
+      <div class= "filler"></div>
+      |
+      <div class= "filler"></div>
+      Tree-height : {{stream.treeHeight}}
       <div class= "filler"></div>
       |
       <div class= "filler"></div>
@@ -11,8 +15,6 @@
       |
       <div class= "filler"></div> 
       MaxKey : {{stream.maxKey}}
-      
-
       <div class= "filler"></div>
       <span class="example-spacer"></span>
 
@@ -58,10 +60,10 @@
       </mat-menu>
       
       <mat-menu #keys="matMenu">
-        <button mat-menu-item (click)="showMaxKey(stream.id)">
+        <button mat-menu-item (click)="showKey(stream.id)">
           Maximum Key
         </button>
-        <button mat-menu-item (click)="showMinKey(stream.id)">
+        <button mat-menu-item (click)="showKey(stream.id)">
           Minimum Key
         </button>
       </mat-menu>
