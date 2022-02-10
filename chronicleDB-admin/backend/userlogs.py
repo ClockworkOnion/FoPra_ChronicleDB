@@ -1,4 +1,4 @@
-import datetime, json, pytz
+import datetime, json, pytz, os
 from dateutil import parser
 
 
@@ -14,10 +14,26 @@ def get_user_log(user_id):
         contents = contents + log.read()
     return contents
 
-def appendToLog(user_id, data):
-    with open((str(user_id)+".log"), "a") as outfile:
-        outfile.write("\n**** Entry created: " + str(datetime.datetime.now()) + " ***\n" )
-        outfile.write(data)
+def appendToLog(user_id, new_data):
+    filename = str(user_id)+".log"
+    if not os.path.isfile(filename):
+        print("File " + filename + " didn't exist. Creating new logfile...")
+        make_empty_log(filename)
+    
+    with open(filename, "r+") as json_file:
+        data = json.loads(json_file.read())
+        print("DAta up to now:::")
+        print(data["logs"])
+        json_file.seek(0)
+        data["logs"].append(new_data)
+        json.dump(data, json_file)
+        json_file.truncate()
+
+def make_empty_log(filename):
+    with open(filename, "w") as log:
+        contents = {"logs" : []}
+        json.dump(contents, log)
+        log.flush()
 
 def clearLog(user_id):
     with open((str(user_id)+".log"), "w") as outfile:

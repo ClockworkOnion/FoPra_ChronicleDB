@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from datetime import datetime
 from urllib import response
 from xml.dom import ValidationErr
 from attr import validate
@@ -52,8 +53,15 @@ def write_task_response_to_log(job, response):
     if (response.status_code != 200):
         print("Request to chronicleDB unsuccessful!")
         return
-    print(response.json())
-    userlogs.appendToLog(job["username"], str(response.json()))
+    helper.indentPrint("Chronicle Task Response", str(response.json()))
+    logEntry = {}
+    logEntry["timeStamp"] = str(datetime.now())
+    logEntry["requestType"] = job["job"]["requestType"]
+    if ("info" in job["job"]):
+        logEntry["info"] = job["job"]["info"]
+    logEntry["payload"] = response.json()
+    helper.indentPrint("Created new Log Entry", str(logEntry))
+    userlogs.appendToLog(job["username"], logEntry)
     userlogs.addToNextRunTimestamp(job["username"], job["job"], job["job"]["interval"]["value"])
     print("User " + job["username"] + " log written and done. Next run in " + str(job["job"]["interval"]["value"]) + " seconds.")
 
