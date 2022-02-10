@@ -14,6 +14,7 @@ export class PageMessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.jobService.jobResultsBS$.subscribe(results => this.jobResults = results);
+    this.jobService.getJobResultsFromBackend();
     this.jobService.markResultsAsRead();
   }
 

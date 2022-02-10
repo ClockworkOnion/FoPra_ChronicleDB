@@ -59,7 +59,7 @@ def write_task_response_to_log(job, response):
     logEntry["requestType"] = job["job"]["requestType"]
     if ("info" in job["job"]):
         logEntry["info"] = job["job"]["info"]
-    logEntry["payload"] = response.json()
+    logEntry["payload"] = str(response.json())
     helper.indentPrint("Created new Log Entry", str(logEntry))
     userlogs.appendToLog(job["username"], logEntry)
     userlogs.addToNextRunTimestamp(job["username"], job["job"], job["job"]["interval"]["value"])
@@ -103,8 +103,7 @@ def getAllJobs(user_id):
 def get_user_log(user_id):
     if not validateToken(request, "Get User Log"):
         return make_response({"Access" : "denied!!"}, 403)
-    log_as_string = userlogs.get_user_log(user_id)
-    return make_response({"log" : log_as_string})
+    return make_response(userlogs.get_user_log(user_id))
 
 # CHRONICLE METHODEN ############################################################################################
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, timer } from 'rxjs';
 import { ShowRightFlankComponent } from '../components/show-right-flank/show-right-flank.component';
 import { ChronicleJob, ChronicleRequest, JobResult } from '../model/ChronicleJob';
 import { MinMaxTreeHeightComponent } from '../page-home/stream-list/min-max-tree-height/min-max-tree-height.component';
@@ -25,6 +25,7 @@ export class JobService {
   private jobResultsBS = new BehaviorSubject<Array<JobResult>>(this.jobResults);
   jobResultsBS$ = this.jobResultsBS.asObservable();
 
+
   numberOfUnreadMessages: number = 0;
 
   constructor(
@@ -34,42 +35,12 @@ export class JobService {
     private router: Router,
     private authService: AuthService
   ) {
-    this.userJobs = [
-      {
-        requestType: ChronicleRequest.MAX_KEY,
-        startDate: new Date(),
-        nextRun: new Date(new Date().getTime() + (60*60*1000)),
-        interval: { value: 60*60, text: '1 Hour' },
-        config: {data:{requestType:"Max Key", streamId:0, disableCreateJob:true}},
-        info: "Mein Max Key Job"
-      },
-      {
-        requestType: ChronicleRequest.STREAM_INFO,
-        startDate: new Date(),
-        nextRun: new Date(new Date().getTime() + (86400*1000)),
-        interval: { value: 86400, text: '1 Day' },
-        config: {
-          data: { streamId: 0, disableCreateJob: true },
-          maxHeight: '900px',
-        },
-      },
-    ];
-    this.userJobsBS.next(this.userJobs);
-
-    this.jobResults = [
-      {
-        payload: "Haha der MaxKey ist 1.",
-        requestType: ChronicleRequest.MAX_KEY,
-        timeStamp: new Date(2022, 1, 12, 11, 59),
-        info: "Ich hab voll krass Max Key Job"
-      }, 
-      {
-        payload: '[{"id":1, "brother_left":0, "brother_right":0, "node_variant":{"ValueNode":{"data_array":[{"t1":0,"payload":{"I8":6}},{"t1":1,"payload":{"I8":66}}], "allocated_units":3639}}}]',
-        requestType: ChronicleRequest.RIGHT_FLANK,
-        timeStamp: new Date(2022, 1, 13, 19, 20)
-      }
-    ];
-    this.jobResultsBS.next(this.jobResults);
+    const backendTimer = timer(1000, 10000);
+    backendTimer.subscribe(val => {
+      console.log(val);
+      this.getJobResultsFromBackend()
+      
+    })
   }
 
   get snapshot(): Array<ChronicleJob> {
@@ -86,6 +57,27 @@ export class JobService {
     });
   }
 
+  getJobResultsFromBackend() {
+    this.chronicle.getHttp().get<{logs: Array<JobResult>}>(BACKEND_URL + `get_user_log/${this.authService.username}`, {responseType: "json"}).subscribe(results => {
+      let prevNumber = this.jobResults.length;
+      this.jobResults = []
+      results.logs.forEach(result => {
+        this.jobResults.push(this.parseJobResultFromBackend(result));
+      })
+      console.log(`prev: ${prevNumber} now: ${this.jobResults.length}`);
+      
+      this.numberOfUnreadMessages = Math.max(this.jobResults.length - prevNumber, 0);
+      
+      this.jobResults.sort((a: JobResult, b: JobResult) => this.compare(a.timeStamp.getTime(), b.timeStamp.getTime(), false))
+      this.jobResultsBS.next(this.jobResults);
+    });
+
+  }
+
+  private compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
   private parseJobFromBackend(job: any) : ChronicleJob{
     return {
       interval: job.interval,
@@ -94,6 +86,15 @@ export class JobService {
       requestType: job.requestType,
       startDate: new Date(job.startDate),
       nextRun: new Date(job.nextRun)
+    }
+  }
+
+  private parseJobResultFromBackend(result: any) : JobResult{
+    return {
+      timeStamp: new Date(result.timeStamp),
+      payload: result.payload,
+      requestType: result.requestType,
+      info: result.info
     }
   }
 
@@ -170,7 +171,6 @@ export class JobService {
   }
 
   markResultsAsRead() {
-    console.error("TODO Backend als gelesen markieren!");
     this.numberOfUnreadMessages = 0;
   }
 
