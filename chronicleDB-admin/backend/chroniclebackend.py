@@ -72,7 +72,7 @@ def getAllJobs(user_id):
     logs = userlogs.getAllUserJobs(user_id)
     return make_response({"jobs" : logs})
 
-# CHRONICLE METHODEN ############################################################################################
+# BACKEND METHODEN ############################################################################################
 
 @app.route('/set_server_url', methods=['POST'])
 def setServerUrl():
@@ -105,6 +105,8 @@ def getServerUrl():
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
     return make_response({"url": chronicleUrl})
+
+# CHRONICLE METHODEN ############################################################################################
 
 @app.route('/show_right_flank/<stream_id>', methods=['GET'])
 def showRightFlank(stream_id):
@@ -310,6 +312,44 @@ def systemInfo():
     # Method #########################################
 
     response = requests.get(chronicleUrl + "system_info", request.data)
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
+# JAVA CHRONICLE ###############################################################################################
+
+@app.route('/native/get-streams', methods=['GET'])
+def nativeGetStreams():
+    print("Received request for Java '/native/get-streams'")
+    
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    if not (validation.verifyJWT(token)):  
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################
+    # if not validation.isUserAdmin(request.headers["Authorization"]):
+    #     return make_response({"Access" : "denied!!"}, 403)
+
+    print(chronicleUrl + "native/get-streams")
+    response = requests.get(chronicleUrl + "native/get-streams", request.data)
+    print("Response from ChronicleDB: "+ str(response.text))
+    return jsonify(response.json())
+
+@app.route('/native/stream-info', methods=['POST'])
+def nativeStreamInfo():
+    print("Received request for Java 'native/stream-info':")
+    print("stream name" + json.loads(request.data)["name"])
+
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    if not (validation.verifyJWT(token) and validation.canUserRead(token, json.loads(request.data)["name"])):  
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################
+
+    response = requests.post(chronicleUrl + "native/stream-info/", json=json.loads(request.data))
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 

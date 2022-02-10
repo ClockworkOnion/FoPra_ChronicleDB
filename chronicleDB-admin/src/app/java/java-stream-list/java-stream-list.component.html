@@ -1,1 +1,63 @@
-<p>java-stream-list works!</p>
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div class="streamListElement-box" *ngFor="let stream of streamList" cdkDrag>
+        <ng-container *ngIf="stream">
+            <span class="statusPoint online">●</span>
+            <b>Stream: {{ stream.name }} </b>
+            <div class="filler"></div>
+            <ng-container *ngIf="stream.timeInterval">
+                |
+                <div class="filler"></div>
+                Event Count : {{ stream.eventCount }}
+                <div class="filler"></div>
+                |
+                <div class="filler"></div>
+                Lower : {{ stream.timeInterval?.lower }}
+                <div class="filler"></div>
+                |
+                <div class="filler"></div>
+                Upper : {{ stream.timeInterval?.upper }}
+                <div class="filler"></div>
+            </ng-container>
+            <ng-container *ngIf="!stream.timeInterval">
+                <i style="color: gray;"> empty </i>
+            </ng-container>
+            <span class="example-spacer"></span>
+
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="insertData(stream)">
+                    <mat-icon>add</mat-icon>
+                    <span>Insert Data</span>
+                </button>
+                <!-- <button mat-menu-item [matMenuTriggerFor]="keys">
+                    <mat-icon>key</mat-icon>
+                    <span>Get Key</span>
+                </button> -->
+                <button mat-menu-item (click)="showTreeHeight(stream.name)">
+                    <mat-icon>height</mat-icon>
+                    <span>Get Tree Height</span>
+                </button>
+                <button mat-menu-item (click)="showInfo(stream.name)">
+                    <mat-icon>info</mat-icon>
+                    <span>Stream Info</span>
+                </button>
+                <button mat-menu-item (click)="timeTravel(stream.name)" >
+                    <mat-icon>analytics</mat-icon>
+                    <span>Query Time travel</span>
+                </button>
+            </mat-menu>
+
+            <!-- <mat-menu #keys="matMenu">
+                <button mat-menu-item (click)="showMaxKey(stream.id)">
+                    Maximum Key
+                </button>
+                <button mat-menu-item (click)="showMinKey(stream.id)">
+                    Minimum Key
+                </button>
+            </mat-menu> -->
+        </ng-container>
+    </div>
+</div>
+<div id="output"></div>
