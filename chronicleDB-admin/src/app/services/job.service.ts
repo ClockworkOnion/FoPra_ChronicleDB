@@ -35,11 +35,9 @@ export class JobService {
     private router: Router,
     private authService: AuthService
   ) {
-    const backendTimer = timer(1000, 10000);
+    const backendTimer = timer(1000, 60000); // nach 60s aktualisieren
     backendTimer.subscribe(val => {
-      console.log(val);
       this.getJobResultsFromBackend()
-      
     })
   }
 
@@ -59,12 +57,11 @@ export class JobService {
 
   getJobResultsFromBackend() {
     this.chronicle.getHttp().get<{logs: Array<JobResult>}>(BACKEND_URL + `get_user_log/${this.authService.username}`, {responseType: "json"}).subscribe(results => {
-      let prevNumber = this.jobResults.length;
+      let prevNumber = this.jobResults.length - this.numberOfUnreadMessages;
       this.jobResults = []
       results.logs.forEach(result => {
         this.jobResults.push(this.parseJobResultFromBackend(result));
       })
-      console.log(`prev: ${prevNumber} now: ${this.jobResults.length}`);
       
       this.numberOfUnreadMessages = Math.max(this.jobResults.length - prevNumber, 0);
       
