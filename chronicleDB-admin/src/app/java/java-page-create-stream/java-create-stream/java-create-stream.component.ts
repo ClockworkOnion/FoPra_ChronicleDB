@@ -1,5 +1,5 @@
 import { JavaChronicleService } from './../../services/java-chronicle.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, BACKEND_URL } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -57,12 +57,15 @@ export class JavaCreateStreamComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    
   }
 
   createStreamClicked(){
     let tmp = JSON.stringify(this.form.value);
     console.log(tmp)
+    this.javaChronicleService.getHttp().post(BACKEND_URL + "native/create-stream",tmp).subscribe(result => {
+      console.log(result)
+    })
     /*
     this.javaChronicleService
       .getHttp()

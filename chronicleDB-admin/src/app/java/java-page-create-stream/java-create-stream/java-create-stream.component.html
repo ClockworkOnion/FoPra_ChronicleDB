@@ -14,9 +14,9 @@
                     <mat-label>Stream Name</mat-label>
                     <input matInput maxlength="20" type="text" formControlName="streamName" class="form-control">
                 </mat-form-field>
-
                 <div class="table table-bordered" formArrayName="schema">
                     <div *ngFor="let attribute of schema().controls; let i=index" [formGroupName]="i">
+                        <hr>
                         <button color="warn" mat-mini-fab (click)="removeAttribute(i);"
                             matTooltip="Remove this element">
                             <mat-icon>remove</mat-icon>

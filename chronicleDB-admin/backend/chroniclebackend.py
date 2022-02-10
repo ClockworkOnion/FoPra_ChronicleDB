@@ -316,6 +316,19 @@ def systemInfo():
     return response.text
 
 # JAVA CHRONICLE ###############################################################################################
+@app.route('/native/create-stream', methods=['POST'])
+def nativeCreateStream():
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    if not (validation.verifyJWT(token) and validation.canUserCreateStreams(token)):  
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################   
+    response=json.loads(request.data)
+    tmp =requests.post(chronicleUrl + "native/create-stream/", json=response)
+    print(tmp)
+    return make_response(response,200)
 
 @app.route('/native/get-streams', methods=['GET'])
 def nativeGetStreams():
@@ -352,6 +365,9 @@ def nativeStreamInfo():
     response = requests.post(chronicleUrl + "native/stream-info/", json=json.loads(request.data))
     print("Response from ChronicleDB: "+ str(response))
     return response.text
+
+ 
+ 
 
 # LOGIN METHODEN ################################################################################################
 
