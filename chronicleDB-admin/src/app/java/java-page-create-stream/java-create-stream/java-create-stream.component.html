@@ -46,12 +46,14 @@
 
                     </div>
                 </div>
-                <button type ="submit" *ngIf="auth.canUserCreateStreams()" mat-raised-button color="primary"
+                <div class="vertical-center">
+                    <button type ="submit" *ngIf="auth.canUserCreateStreams()" mat-raised-button color="primary"
                     style="float : right;top: 8px ;" (click)="createStreamClicked()">
                     Create A New Stream</button>
+                </div>
+                
 
-            </form><br />
-            {{this.form.value | json}}
+            </form>
         </mat-card-content>
     </mat-card>
 

@@ -61,20 +61,14 @@ export class JavaCreateStreamComponent implements OnInit {
   }
 
   createStreamClicked(){
+    if (this.form.invalid) {
+      return;
+    }
     let tmp = JSON.stringify(this.form.value);
-    console.log(tmp)
     this.javaChronicleService.getHttp().post(BACKEND_URL + "native/create-stream",tmp).subscribe(result => {
       console.log(result)
     })
-    /*
-    this.javaChronicleService
-      .getHttp()
-      .post("http://localhost:8080/native/create-stream/", JSON.parse(tmp))
-      .subscribe((response: any) => {
-        console.log(response)
-      });
-      */
-    //this.openSuccessSnackBar();
+    this.openSuccessSnackBar();
 
   }
   openSuccessSnackBar() {
@@ -86,6 +80,12 @@ export class JavaCreateStreamComponent implements OnInit {
         panelClass: ['green-snackbar'],
       }
     );
+  }
+  hasDuplicates(){
+    let tmp = this.schema().value;
+  
+ 
+    
   }
 
 
