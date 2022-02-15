@@ -37,6 +37,6 @@ export class StreamInfoComponent implements OnInit{
 
   createJob() {
     this.dialogRef.close();
-    this.jobService.createJob(ChronicleRequest.STREAM_INFO, {data: {streamId: this.data.streamId, disableCreateJob: true}, maxHeight: "900px"})
+    this.jobService.createJob(ChronicleRequest.STREAM_INFO, this.data.streamId, {data: {streamId: this.data.streamId, disableCreateJob: true}, maxHeight: "900px"})
   }
 }

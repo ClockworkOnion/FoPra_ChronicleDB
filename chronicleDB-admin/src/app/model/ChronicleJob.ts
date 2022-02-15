@@ -1,6 +1,7 @@
 import { MatDialogConfig } from '@angular/material/dialog';
 
 export interface ChronicleJob {
+  streamId: number,
   startDate: Date;
   nextRun: Date;
   interval: { value: number; text: string }; // in seconds
@@ -10,6 +11,7 @@ export interface ChronicleJob {
 }
 
 export interface BackendJob {
+  streamId: number,
   startDate: BackendTime;
   nextRun: BackendTime;
   interval: { value: number; text: string }; // in seconds
@@ -38,6 +40,7 @@ export enum ChronicleRequest {
 }
 
 export interface JobResult {
+  streamId: number,
   timeStamp: Date;
   payload: string;
   requestType: ChronicleRequest;
@@ -45,6 +48,7 @@ export interface JobResult {
 }
 
 export interface BackendJobResult {
+  streamId: number,
   timeStamp: BackendTime;
   payload: string;
   requestType: ChronicleRequest;
@@ -64,6 +68,7 @@ export function backendTimeToDate(date: BackendTime) : Date {
 // Jobs umrechnen /////////////////////////////////////////////////////////////////////
 export function chronicleJobToBackendJob(job: ChronicleJob) : BackendJob {
   return {
+    streamId: job.streamId,
     startDate: dateToBackendTime(job.startDate),
     nextRun: dateToBackendTime(job.nextRun),
     interval: job.interval,
@@ -75,6 +80,7 @@ export function chronicleJobToBackendJob(job: ChronicleJob) : BackendJob {
 
 export function backendJobToChronicleJob(job: BackendJob) : ChronicleJob {
   return {
+    streamId: job.streamId,
     startDate: backendTimeToDate(job.startDate),
     nextRun: backendTimeToDate(job.nextRun),
     interval: job.interval,
@@ -85,20 +91,22 @@ export function backendJobToChronicleJob(job: BackendJob) : ChronicleJob {
 }
 
 // Results umrechnen //////////////////////////////////////////////////////////////////
-export function jobResultToBackendJobResult(job: JobResult) : BackendJobResult {
+export function jobResultToBackendJobResult(res: JobResult) : BackendJobResult {
   return {
-    timeStamp: dateToBackendTime(job.timeStamp),
-    payload: job.payload,
-    requestType: job.requestType,
-    info: job.info
+    streamId: res.streamId,
+    timeStamp: dateToBackendTime(res.timeStamp),
+    payload: res.payload,
+    requestType: res.requestType,
+    info: res.info
   };
 }
 
-export function backendJobResultToJobResult(job: BackendJobResult) : JobResult {
+export function backendJobResultToJobResult(res: BackendJobResult) : JobResult {
   return {
-    timeStamp: backendTimeToDate(job.timeStamp),
-    payload: job.payload,
-    requestType: job.requestType,
-    info: job.info
+    streamId: res.streamId,
+    timeStamp: backendTimeToDate(res.timeStamp),
+    payload: res.payload,
+    requestType: res.requestType,
+    info: res.info
   };
 }

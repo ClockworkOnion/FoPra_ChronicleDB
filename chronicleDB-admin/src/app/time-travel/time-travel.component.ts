@@ -283,6 +283,6 @@ export class TimeTravelComponent implements OnInit, AfterViewInit {
   createJob() {
     this.dialogRef.close();
     let currentValue : {lowerBound: Number, typeSelector: string, upperBound: number} = this.intervalFormControl.value;
-    this.jobService.createJob(ChronicleRequest.TIME_TRAVEL, {maxHeight: "800px", disableClose: true, data: {streamId: this.data.streamId, disableCreateJob: true, from: currentValue.lowerBound, to: currentValue.upperBound, type: currentValue.typeSelector}})
+    this.jobService.createJob(ChronicleRequest.TIME_TRAVEL, this.data.streamId, {maxHeight: "800px", disableClose: true, data: {streamId: this.data.streamId, disableCreateJob: true, from: currentValue.lowerBound, to: currentValue.upperBound, type: currentValue.typeSelector}})
   }
 }

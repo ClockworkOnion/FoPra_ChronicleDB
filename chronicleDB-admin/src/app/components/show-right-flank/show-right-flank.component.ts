@@ -133,6 +133,6 @@ export class ShowRightFlankComponent implements OnInit {
 
   createJob() {
     this.dialogRef.close();
-    this.jobService.createJob(ChronicleRequest.RIGHT_FLANK, {data: {stream: this.data.stream, disableCreateJob: true}})
+    this.jobService.createJob(ChronicleRequest.RIGHT_FLANK, this.data.stream.id, {data: {stream: this.data.stream, disableCreateJob: true}})
   }
 }

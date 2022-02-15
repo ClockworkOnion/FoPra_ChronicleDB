@@ -41,6 +41,6 @@ export class MinMaxTreeHeightComponent {
 
   createJob() {
     this.dialogRef.close();
-    this.jobService.createJob(this.data.requestType, {data: {requestType: this.data.requestType, streamId: this.data.streamId, disableCreateJob: true}})
+    this.jobService.createJob(this.data.requestType, this.data.streamId, {data: {requestType: this.data.requestType, streamId: this.data.streamId, disableCreateJob: true}})
   }
 }

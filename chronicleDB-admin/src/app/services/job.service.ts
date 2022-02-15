@@ -58,6 +58,7 @@ export class JobService {
   getJobResultsFromBackend() {
     this.chronicle.getHttp().get<{logs: BackendJobResult[]}>(BACKEND_URL + `get_user_log/${this.authService.username}`, {responseType: "json"}).subscribe(results => {
       let prevNumber = this.jobResults.length - this.numberOfUnreadMessages;
+
       this.jobResults = []
       results.logs.forEach(result => {
         this.jobResults.push(backendJobResultToJobResult(result));
@@ -75,7 +76,7 @@ export class JobService {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
-  createJob(requestType: ChronicleRequest, config?: MatDialogConfig<any>) {
+  createJob(requestType: ChronicleRequest, streamId: number, config?: MatDialogConfig<any>) {
     let result = this.dialog.openDialog(AddJobComponent);
     result.subscribe(
       (res: {
@@ -85,6 +86,7 @@ export class JobService {
       }) => {
         let nextDate = new Date(res.timeStamp.getTime() + (res.interval.value*1000));
         let newChronicleJob: ChronicleJob = {
+          streamId: streamId,
           startDate: res.timeStamp,
           nextRun: nextDate,
           interval: res.interval,
@@ -130,7 +132,7 @@ export class JobService {
   }
 
   deleteJob(job: ChronicleJob) {
-    this.chronicle.getHttp().post(BACKEND_URL + "delete_job", job).subscribe(res => {
+    this.chronicle.getHttp().post(BACKEND_URL + "delete_job", chronicleJobToBackendJob(job)).subscribe(res => {
       this.userJobs.forEach((value, index) => {
         if (value == job) this.userJobs.splice(index, 1);
       });
