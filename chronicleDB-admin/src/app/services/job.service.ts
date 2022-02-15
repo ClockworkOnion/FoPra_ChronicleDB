@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject, timer } from 'rxjs';
 import { ShowRightFlankComponent } from '../components/show-right-flank/show-right-flank.component';
-import { ChronicleJob, ChronicleRequest, JobResult } from '../model/ChronicleJob';
+import { BackendJob, backendJobToChronicleJob, ChronicleJob, chronicleJobToBackendJob, ChronicleRequest, JobResult, backendJobResultToJobResult, BackendJobResult } from '../model/ChronicleJob';
 import { MinMaxTreeHeightComponent } from '../page-home/stream-list/min-max-tree-height/min-max-tree-height.component';
 import { AddJobComponent } from '../page-jobs/add-job/add-job.component';
 import { StreamInfoComponent } from '../stream-info/stream-info.component';
@@ -46,21 +46,21 @@ export class JobService {
   }
 
   getJobsFromBackend() {
-    this.chronicle.getHttp().get<{jobs: any[]}>(BACKEND_URL + `get_all_jobs/${this.authService.username}`, {responseType: "json"}).subscribe(jobs => {
+    this.chronicle.getHttp().get<{jobs: BackendJob[]}>(BACKEND_URL + `get_all_jobs/${this.authService.username}`, {responseType: "json"}).subscribe(jobs => {
       this.userJobs = [];
       jobs.jobs.forEach(job => {
-        this.userJobs.push(this.parseJobFromBackend(job));
+        this.userJobs.push(backendJobToChronicleJob(job));
       })
       this.userJobsBS.next(this.userJobs);      
     });
   }
 
   getJobResultsFromBackend() {
-    this.chronicle.getHttp().get<{logs: Array<JobResult>}>(BACKEND_URL + `get_user_log/${this.authService.username}`, {responseType: "json"}).subscribe(results => {
+    this.chronicle.getHttp().get<{logs: BackendJobResult[]}>(BACKEND_URL + `get_user_log/${this.authService.username}`, {responseType: "json"}).subscribe(results => {
       let prevNumber = this.jobResults.length - this.numberOfUnreadMessages;
       this.jobResults = []
       results.logs.forEach(result => {
-        this.jobResults.push(this.parseJobResultFromBackend(result));
+        this.jobResults.push(backendJobResultToJobResult(result));
       })
       
       this.numberOfUnreadMessages = Math.max(this.jobResults.length - prevNumber, 0);
@@ -75,26 +75,6 @@ export class JobService {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
-  private parseJobFromBackend(job: any) : ChronicleJob{
-    return {
-      interval: job.interval,
-      config: job.config,
-      info: job.info,
-      requestType: job.requestType,
-      startDate: new Date(job.startDate),
-      nextRun: new Date(job.nextRun)
-    }
-  }
-
-  private parseJobResultFromBackend(result: any) : JobResult{
-    return {
-      timeStamp: new Date(result.timeStamp),
-      payload: result.payload,
-      requestType: result.requestType,
-      info: result.info
-    }
-  }
-
   createJob(requestType: ChronicleRequest, config?: MatDialogConfig<any>) {
     let result = this.dialog.openDialog(AddJobComponent);
     result.subscribe(
@@ -103,9 +83,8 @@ export class JobService {
         interval: { value: number; text: string };
         info?: string;
       }) => {
-        
         let nextDate = new Date(res.timeStamp.getTime() + (res.interval.value*1000));
-        let newJob: ChronicleJob = {
+        let newChronicleJob: ChronicleJob = {
           startDate: res.timeStamp,
           nextRun: nextDate,
           interval: res.interval,
@@ -114,8 +93,8 @@ export class JobService {
           info: res.info,
         };
 
-        this.chronicle.getHttp().post(BACKEND_URL + `add_scheduled_job`, newJob).subscribe(res => {          
-          this.userJobs.push(newJob);
+        this.chronicle.getHttp().post(BACKEND_URL + `add_scheduled_job`, chronicleJobToBackendJob(newChronicleJob)).subscribe(res => {          
+          this.userJobs.push(newChronicleJob);
           this.openSucceccfullSnackBar();
         })
       }
