@@ -1,5 +1,6 @@
 import datetime, json, pytz, os
 from dateutil import parser
+from sqlalchemy import JSON
 
 
 from usermanagement import JSONread
@@ -10,7 +11,11 @@ USERFILE = "users.dat"
 
 def get_user_log(user_id):
     contents = ""
-    with open((str(user_id)+".log")) as log:
+    filename = str(user_id)+".log"
+    if not os.path.isfile(filename):
+        print("File " + filename + " didn't exist. Creating new logfile...")
+        make_empty_log(filename)
+    with open(filename, "r") as log:
         contents = contents + log.read()
     return contents
 
@@ -87,12 +92,38 @@ def addToNextRunTimestamp(user_id, job_data, seconds_to_add):
     jobs = u["jobs"]
     for job in jobs:
         if job["nextRun"] == job_data["nextRun"]:
-            next_run_date = parser.parse(job["nextRun"])
+            # next_run_date = parser.parse(job["nextRun"])
             next_run_date = currentTimeLocalized() + datetime.timedelta(seconds=seconds_to_add)
             # job["nextRun"] = str(next_run_date)
-            job["nextRun"] = next_run_date.strftime('%Y-%m-%dT%H:%M:%S.000Z')
+            # job["nextRun"] = next_run_date.strftime('%Y-%m-%dT%H:%M:%S.000Z')
+            job["nextRun"] = JSON_date_from_datetime(next_run_date)
             print("Found job with nextRun " + str(job_data["nextRun"]) + ", added " + str(seconds_to_add) + " seconds. New nextRun: " + str(job["nextRun"]))
     writeUserFile(user_data)
+
+def date_time_from_JSON_date(JSON_date):
+    date = datetime.datetime(JSON_date["year"], JSON_date["month"], JSON_date["day"], JSON_date["hours"], JSON_date["minutes"], JSON_date["seconds"])
+    date = pytz.UTC.localize(date)
+    return date
+
+def JSON_date_from_datetime(date : datetime.datetime):
+    newdate = {}
+    newdate["year"] = date.year
+    newdate["month"] = date.month
+    newdate["day"] = date.day
+    newdate["hours"] = date.hour
+    newdate["minutes"] = date.minute
+    newdate["seconds"] = date.second
+    return newdate
+    
+
+def interpret_time(time):
+    timestamp = datetime.datetime()
+    timestamp.hour = time["hour"]
+
+    return timestamp
+
+def JSON_from_datetime(timestamp):
+    return ""
 
 def currentTimeLocalized():
     now = datetime.datetime.now()
@@ -101,9 +132,24 @@ def currentTimeLocalized():
     return now
 
 def JobIsDue(job):
-    dueDate = parser.parse(job["nextRun"])
-    print("[Job nextrun info] Due Date: " + str(dueDate) + " Timestamp right now: " + str(currentTimeLocalized()))
-    return dueDate < currentTimeLocalized()
+    dueDate = job["nextRun"]
+    date_now = currentTimeLocalized()
+    due_datetime = datetime.datetime(dueDate["year"], dueDate["month"], dueDate["day"], dueDate["hours"], dueDate["minutes"], dueDate["seconds"])
+    due_datetime = pytz.UTC.localize(due_datetime)
+    print("[TIME NOW]: " + str(date_now) + " [NEXT RUN]: " + str(due_datetime) + " [IS DUE?]: " + str(date_now >= due_datetime))
+    # print("DUE INFO:")
+    # print(str(dueDate["year"]) + " vs " +  str(date_now.year))
+    # print(str(dueDate["month"]) + " vs " +  str(date_now.month))
+    # print(str(dueDate["day"]) + " vs " +  str(date_now.day))
+    # print(str(dueDate["hours"]) + " vs " +  str(date_now.hour))
+    # print(str(dueDate["minutes"]) + " vs " +  str(date_now.minute))
+    # print(str(dueDate["seconds"]) + " vs " +  str(date_now.second))
+    # if (int(dueDate["year"]) >= date_now.year and int(dueDate["month"]) >= date_now.month 
+    # and int(dueDate["day"] >= date_now.day and int(dueDate["hours"] >= date_now.hour 
+    # and int(dueDate["minutes"] >= date_now.minute and int(dueDate["seconds"] >= date_now.second))))):
+    #     is_due = True
+    # print("[Job nextrun info] Due Date: " + str(dueDate) + " Timestamp right now: " + str(currentTimeLocalized()) + " is due?: " + str(is_due))
+    return date_now >= due_datetime
 
 def getAllDueJobs():
     job_list = []

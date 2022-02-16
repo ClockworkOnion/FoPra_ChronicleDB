@@ -56,6 +56,7 @@ def write_task_response_to_log(job, response):
     helper.indentPrint("Chronicle Task Response", str(response.json()))
     logEntry = {}
     logEntry["timeStamp"] = str(datetime.now())
+    logEntry["streamId"] = job["job"]["streamId"]
     logEntry["requestType"] = job["job"]["requestType"]
     if ("info" in job["job"]):
         logEntry["info"] = job["job"]["info"]
