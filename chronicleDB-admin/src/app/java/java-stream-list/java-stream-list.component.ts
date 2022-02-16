@@ -2,7 +2,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ChronicleJavaStreamInfo } from 'src/app/model/JavaChronicle';
 import { AuthService } from 'src/app/services/auth.service';
+import { DialogService } from 'src/app/services/dialog.service';
 import { JavaChronicleService } from '../services/java-chronicle.service';
+import { JavaInsertComponent } from './dialogs/java-insert/java-insert.component';
 
 @Component({
   selector: 'app-java-stream-list',
@@ -12,7 +14,7 @@ import { JavaChronicleService } from '../services/java-chronicle.service';
 export class JavaStreamListComponent implements OnInit {
   streamList: Array<ChronicleJavaStreamInfo> | null = []
 
-  constructor(private javaChronicle: JavaChronicleService, public authService: AuthService) { }
+  constructor(private javaChronicle: JavaChronicleService, public authService: AuthService, private dialog: DialogService) { }
 
   ngOnInit(): void {
     this.javaChronicle.currentStreamList.subscribe(list => this.streamList = list);
@@ -28,7 +30,7 @@ export class JavaStreamListComponent implements OnInit {
   }
 
   insertData(stream : ChronicleJavaStreamInfo){
-
+    this.dialog.openDialog(JavaInsertComponent, {maxHeight: "800px", data: {name: stream.name}});
   }
 
   showTreeHeight(name: string){

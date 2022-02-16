@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ChronicleJavaStreamInfo } from 'src/app/model/JavaChronicle';
 import { AuthService, BACKEND_URL } from 'src/app/services/auth.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -47,5 +48,12 @@ export class JavaChronicleService {
       }
     });
     return result;
+  }
+
+  async insert(name: string, events: any[]) {
+    return await this.getHttp().post(BACKEND_URL + "native/insert", {streamName: name, events: events}).pipe(map(value => {
+      this.snackBar.openGreenSnackBar("Insertion Complete");
+      return value;
+    })).toPromise();
   }
 }

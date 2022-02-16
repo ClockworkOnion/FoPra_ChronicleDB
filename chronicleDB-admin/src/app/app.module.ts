@@ -75,6 +75,7 @@ import { JobResultComponent } from './page-messages/job-result/job-result.compon
 import { MinMaxTreeHeightComponent } from './page-home/stream-list/min-max-tree-height/min-max-tree-height.component';
 import { JavaCreateStreamComponent } from './java/java-page-create-stream/java-create-stream/java-create-stream.component';
 import { JavaStreamListComponent } from './java/java-stream-list/java-stream-list.component';
+import { JavaInsertComponent } from './java/java-stream-list/dialogs/java-insert/java-insert.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { JavaStreamListComponent } from './java/java-stream-list/java-stream-lis
     JobResultComponent,
     MinMaxTreeHeightComponent,
     JavaCreateStreamComponent,
-    JavaStreamListComponent
+    JavaStreamListComponent,
+    JavaInsertComponent
   ],
   imports: [
     BrowserModule,

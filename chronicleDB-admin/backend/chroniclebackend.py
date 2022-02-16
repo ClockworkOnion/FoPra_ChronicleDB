@@ -366,6 +366,24 @@ def nativeStreamInfo():
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
+@app.route('/native/insert', methods=['POST'])
+def nativeInsertStream():
+    print("Received request for Java 'native/insert':")
+    print("stream name" + json.loads(request.data)["streamName"])
+
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    # Nutzer Validierung fehlt!
+    if not (validation.verifyJWT(token)):  
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################
+
+    response = requests.post(chronicleUrl + "native/insert/", json=json.loads(request.data))
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
  
  
 
