@@ -33,6 +33,9 @@ table {
   width: 100%;
 }
 
+.mat-column-steamId {
+  max-width: 100px;
+}
 .mat-column-options {
   max-width: 100px;
 }

@@ -2,12 +2,9 @@
     <mat-expansion-panel-header>
         <mat-panel-title>
             {{result.timeStamp | date: 'dd.MM.yyyy HH:mm'}} &nbsp; &nbsp;
-
+            {{result.requestType}} (Stream {{result.streamId}})
             <ng-container *ngIf="result.info">
-                {{result.info}} ({{result.requestType}})
-            </ng-container>
-            <ng-container *ngIf="!result.info">
-                {{result.requestType}}
+                &nbsp; &nbsp; {{result.info}}
             </ng-container>
         </mat-panel-title>
         <!-- <mat-panel-description>

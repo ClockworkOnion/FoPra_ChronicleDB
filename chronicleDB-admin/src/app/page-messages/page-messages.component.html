@@ -1,3 +1,13 @@
+<div style="text-align: end; margin-top: 32px; margin-right: 32px; margin-left: 32px;">
+    <button mat-raised-button color="primary" (click)="jobService.getJobResultsFromBackend()" style="margin-right: 16px;">
+        <mat-icon>refresh</mat-icon> &nbsp;
+        Refresh
+    </button> 
+    <button mat-raised-button color="primary" (click)="jobService.deleteAllResults()">
+        <mat-icon>delete</mat-icon> &nbsp;
+        Delete All Results
+    </button>
+</div>
 <div class="grid-container">
     <mat-accordion>
         <app-job-result *ngFor="let result of jobResults" [result]="result"></app-job-result>

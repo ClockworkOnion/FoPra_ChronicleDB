@@ -18,7 +18,17 @@
         <!-- Info Column -->
         <ng-container matColumnDef="info">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Info </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.info || element.requestType}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.requestType}} 
+            <ng-container *ngIf="element.info">
+              ({{element.info}})
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <!-- StreamId Column -->
+        <ng-container matColumnDef="streamId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Stream </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.streamId}} </mat-cell>
         </ng-container>
 
         <!-- Time Column -->

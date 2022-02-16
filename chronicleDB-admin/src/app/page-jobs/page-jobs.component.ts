@@ -13,7 +13,7 @@ import { JobService } from '../services/job.service';
 export class PageJobsComponent implements OnInit, AfterViewInit {
   jobs: ChronicleJob[] = [];
   dataSource: MatTableDataSource<ChronicleJob> = new MatTableDataSource();
-  displayedColumns: string[] = ['info', "startDate", "nextRun", "interval", "options"];
+  displayedColumns: string[] = ['info', "streamId", "startDate", "nextRun", "interval", "options"];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -57,6 +57,8 @@ export class PageJobsComponent implements OnInit, AfterViewInit {
       switch (sort.active) {
         case 'startDate':
           return compare(a.startDate.getTime(), b.startDate.getTime(), isAsc);
+        case 'streamId':
+          return compare(a.streamId, b.streamId, isAsc);
         case 'nextRun':
           return compare(a.nextRun.getTime(), b.nextRun.getTime(), isAsc);
         case 'interval':

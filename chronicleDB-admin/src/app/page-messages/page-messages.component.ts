@@ -10,7 +10,7 @@ import { JobService } from '../services/job.service';
 export class PageMessagesComponent implements OnInit {
   jobResults: JobResult[] = [];
 
-  constructor(private jobService: JobService) { }
+  constructor(public jobService: JobService) { }
 
   ngOnInit(): void {
     this.jobService.jobResultsBS$.subscribe(results => this.jobResults = results);

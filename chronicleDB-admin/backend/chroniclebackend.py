@@ -3,6 +3,7 @@ from datetime import datetime
 from urllib import response
 from xml.dom import ValidationErr
 from attr import validate
+from userlogs import JSON_date_from_datetime
 from flask import Flask, request
 from flask import jsonify, make_response
 from flask_restful import Api, Resource
@@ -55,7 +56,7 @@ def write_task_response_to_log(job, response):
         return
     helper.indentPrint("Chronicle Task Response", str(response.json()))
     logEntry = {}
-    logEntry["timeStamp"] = str(datetime.now())
+    logEntry["timeStamp"] = JSON_date_from_datetime(datetime.now())
     logEntry["streamId"] = job["job"]["streamId"]
     logEntry["requestType"] = job["job"]["requestType"]
     if ("info" in job["job"]):

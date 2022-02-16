@@ -64,7 +64,11 @@ export class JobService {
         this.jobResults.push(backendJobResultToJobResult(result));
       })
       
-      this.numberOfUnreadMessages = Math.max(this.jobResults.length - prevNumber, 0);
+      if (!this.router.url.includes("messages")) { // Zahl nicht erhöhen, wenn man bereits auf der Seite ist.
+        this.numberOfUnreadMessages = Math.max(this.jobResults.length - prevNumber, 0);
+      } else {
+        this.numberOfUnreadMessages = 0;
+      }
       
       this.jobResults.sort((a: JobResult, b: JobResult) => this.compare(a.timeStamp.getTime(), b.timeStamp.getTime(), false))
       this.jobResultsBS.next(this.jobResults);
@@ -145,6 +149,12 @@ export class JobService {
     this.jobResults.forEach((value, index) => {
       if (value == jobResult) this.jobResults.splice(index, 1);
     });
+    this.jobResultsBS.next(this.jobResults);
+  }
+
+  deleteAllResults() {
+    console.error("TODO delete JobResult in Backend");
+    this.jobResults = [];
     this.jobResultsBS.next(this.jobResults);
   }
 
