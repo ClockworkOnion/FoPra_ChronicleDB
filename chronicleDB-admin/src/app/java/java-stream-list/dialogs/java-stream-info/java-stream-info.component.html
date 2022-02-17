@@ -12,13 +12,13 @@
     <mat-form-field>
         <mat-label *ngIf="info.timeInterval?.lowerInclusive">Lower Bound (Incl.)</mat-label>
         <mat-label *ngIf="!info.timeInterval?.lowerInclusive">Lower Bound (Excl.)</mat-label>
-        <input matInput readonly value="{{info.timeInterval?.lower}}">
+        <input matInput readonly value="{{info.timeInterval?.lower}}" style="text-align: center;">
     </mat-form-field>
     
     <mat-form-field>
         <mat-label *ngIf="info.timeInterval?.upperInclusive">Upper Bound (Incl.)</mat-label>
         <mat-label *ngIf="!info.timeInterval?.upperInclusive">Upper Bound (Excl.)</mat-label>
-        <input matInput readonly value="{{info.timeInterval?.upper}}">
+        <input matInput readonly value="{{info.timeInterval?.upper}}" style="text-align: center;">
     </mat-form-field>
     <p><i>Number of Entries:</i> {{info.eventCount}}</p>
 </div>
