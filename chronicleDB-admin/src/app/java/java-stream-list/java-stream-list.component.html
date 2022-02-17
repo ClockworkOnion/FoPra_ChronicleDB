@@ -2,11 +2,11 @@
     <div class="streamListElement-box" *ngFor="let stream of streamList" cdkDrag>
         <ng-container *ngIf="stream">
             <span class="statusPoint online">●</span>
-            <b>Stream: {{ stream.name }} </b>
+            <b style="min-width: 150px;">Stream: {{ stream.name }} </b>
             <div class="filler"></div>
             <ng-container *ngIf="stream.timeInterval">
-                |
-                <div class="filler"></div>
+                <!-- |
+                <div class="filler"></div> -->
                 Event Count : {{ stream.eventCount }}
                 <div class="filler"></div>
                 |
@@ -35,17 +35,17 @@
                     <mat-icon>key</mat-icon>
                     <span>Get Key</span>
                 </button> -->
-                <button mat-menu-item (click)="showTreeHeight(stream.name)">
+                <!-- <button mat-menu-item (click)="showTreeHeight(stream.name)">
                     <mat-icon>height</mat-icon>
                     <span>Get Tree Height</span>
+                </button> -->
+                <button mat-menu-item (click)="query(stream.name)" >
+                    <mat-icon>analytics</mat-icon>
+                    <span>Query</span>
                 </button>
                 <button mat-menu-item (click)="showInfo(stream.name)">
                     <mat-icon>info</mat-icon>
                     <span>Stream Info</span>
-                </button>
-                <button mat-menu-item (click)="timeTravel(stream.name)" >
-                    <mat-icon>analytics</mat-icon>
-                    <span>Query Time travel</span>
                 </button>
             </mat-menu>
 

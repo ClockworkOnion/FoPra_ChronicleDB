@@ -384,6 +384,40 @@ def nativeInsertStream():
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
+@app.route('/native/schema', methods=['POST'])
+def nativeSchema():
+    print("Received request for Java 'native/schema':")
+
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    # Nutzer Validierung fehlt!
+    if not (validation.verifyJWT(token)):  
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################
+
+    response = requests.post(chronicleUrl + "native/schema/", json=json.loads(request.data))
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
+@app.route('/native/query', methods=['POST'])
+def nativeQuery():
+    print("Received request for Java 'native/query':")
+
+    # Validation #####################################
+    print("Validating Token:")
+    token = request.headers["Authorization"]
+    if (token): print("Found Header")
+    # Nutzer Validierung fehlt!
+    if not (validation.verifyJWT(token)):  
+        return make_response({"Access" : "denied!!"}, 403)
+    # Method #########################################
+
+    response = requests.post(chronicleUrl + "native/query/", json=json.loads(request.data))
+    print("Response from ChronicleDB: "+ str(response))
+    return response.text
+
  
  
 

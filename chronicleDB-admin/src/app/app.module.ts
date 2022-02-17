@@ -78,6 +78,7 @@ import { JavaStreamListComponent } from './java/java-stream-list/java-stream-lis
 import { JavaInsertComponent } from './java/java-stream-list/dialogs/java-insert/java-insert.component';
 import { JavaStreamInfoComponent } from './java/java-stream-list/dialogs/java-stream-info/java-stream-info.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { JavaQueryComponent } from './java/java-stream-list/dialogs/java-query/java-query.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +116,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     JavaCreateStreamComponent,
     JavaStreamListComponent,
     JavaInsertComponent,
-    JavaStreamInfoComponent
+    JavaStreamInfoComponent,
+    JavaQueryComponent
   ],
   imports: [
     BrowserModule,

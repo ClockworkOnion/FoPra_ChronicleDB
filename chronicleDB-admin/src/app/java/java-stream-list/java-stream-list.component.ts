@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { JavaChronicleService } from '../services/java-chronicle.service';
 import { JavaInsertComponent } from './dialogs/java-insert/java-insert.component';
+import { JavaQueryComponent } from './dialogs/java-query/java-query.component';
 import { JavaStreamInfoComponent } from './dialogs/java-stream-info/java-stream-info.component';
 
 @Component({
@@ -34,12 +35,8 @@ export class JavaStreamListComponent implements OnInit {
     this.dialog.openDialog(JavaInsertComponent, {maxHeight: "800px", data: {name: stream.name}});
   }
 
-  showTreeHeight(name: string){
-
-  }
-
-  timeTravel(name: string){
-
+  query(name: string){
+    this.dialog.openDialog(JavaQueryComponent, {maxHeight: "800px", disableClose: true, data: {name: name}});
   }
 
   showInfo(name: string){
