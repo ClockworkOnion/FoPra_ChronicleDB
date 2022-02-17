@@ -1,0 +1,9 @@
+.preview {
+    /* width: 100%; */
+  }
+  
+  .previewTextArea {
+    font-family: "Courier New", Courier, monospace;
+    overflow: hidden;
+  }
+  

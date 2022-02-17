@@ -1,0 +1,36 @@
+<h2>Stream Info: {{info.name}}</h2>
+
+<!-- timeInterval?: {
+    lower: number;
+    upper: number;
+    lowerInclusive: boolean;
+    upperInclusive: boolean;
+  }; -->
+
+  
+<div *ngIf="info.timeInterval" style="text-align: center;">
+    <mat-form-field>
+        <mat-label *ngIf="info.timeInterval?.lowerInclusive">Lower Bound (Incl.)</mat-label>
+        <mat-label *ngIf="!info.timeInterval?.lowerInclusive">Lower Bound (Excl.)</mat-label>
+        <input matInput readonly value="{{info.timeInterval?.lower}}">
+    </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label *ngIf="info.timeInterval?.upperInclusive">Upper Bound (Incl.)</mat-label>
+        <mat-label *ngIf="!info.timeInterval?.upperInclusive">Upper Bound (Excl.)</mat-label>
+        <input matInput readonly value="{{info.timeInterval?.upper}}">
+    </mat-form-field>
+    <p><i>Number of Entries:</i> {{info.eventCount}}</p>
+</div>
+
+<mat-form-field class="preview" appearance="fill" style="width: 900px;">
+    <mat-label>Schema</mat-label>
+    <textarea [readonly]="true" matInput type="text" cdkTextareaAutosize class="previewTextArea">{{schema}}</textarea>
+</mat-form-field>
+
+<div style="text-align: end;">
+    <button mat-stroked-button color="accent" (click)="copyInputMessage()">
+        <mat-icon>content_copy</mat-icon>
+        Copy to Clipboard
+    </button>
+</div>

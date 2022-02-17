@@ -76,6 +76,8 @@ import { MinMaxTreeHeightComponent } from './page-home/stream-list/min-max-tree-
 import { JavaCreateStreamComponent } from './java/java-page-create-stream/java-create-stream/java-create-stream.component';
 import { JavaStreamListComponent } from './java/java-stream-list/java-stream-list.component';
 import { JavaInsertComponent } from './java/java-stream-list/dialogs/java-insert/java-insert.component';
+import { JavaStreamInfoComponent } from './java/java-stream-list/dialogs/java-stream-info/java-stream-info.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
@@ -112,7 +114,8 @@ import { JavaInsertComponent } from './java/java-stream-list/dialogs/java-insert
     MinMaxTreeHeightComponent,
     JavaCreateStreamComponent,
     JavaStreamListComponent,
-    JavaInsertComponent
+    JavaInsertComponent,
+    JavaStreamInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -151,7 +154,8 @@ import { JavaInsertComponent } from './java/java-stream-list/dialogs/java-insert
     MatPaginatorModule,
     MatSortModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ClipboardModule
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
   

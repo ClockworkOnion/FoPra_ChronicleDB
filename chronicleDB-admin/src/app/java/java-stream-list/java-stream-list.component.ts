@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { JavaChronicleService } from '../services/java-chronicle.service';
 import { JavaInsertComponent } from './dialogs/java-insert/java-insert.component';
+import { JavaStreamInfoComponent } from './dialogs/java-stream-info/java-stream-info.component';
 
 @Component({
   selector: 'app-java-stream-list',
@@ -42,6 +43,6 @@ export class JavaStreamListComponent implements OnInit {
   }
 
   showInfo(name: string){
-
+    this.dialog.openDialog(JavaStreamInfoComponent, {maxHeight: "800px", data: {name: name}});
   }
 }
