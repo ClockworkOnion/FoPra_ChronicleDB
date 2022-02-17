@@ -7,15 +7,15 @@
             <ng-container *ngIf="stream.timeInterval">
                 <!-- |
                 <div class="filler"></div> -->
-                Event Count : {{ stream.eventCount }}
+                Event Count : <span style="min-width: 50px; text-align: center; ">{{ stream.eventCount }}</span>
                 <div class="filler"></div>
                 |
                 <div class="filler"></div>
-                Lower : {{ stream.timeInterval?.lower }}
+                Lower : <span style="min-width: 50px; text-align: center; ">{{ stream.timeInterval?.lower }}</span>
                 <div class="filler"></div>
                 |
                 <div class="filler"></div>
-                Upper : {{ stream.timeInterval?.upper }}
+                Upper : <span style="min-width: 50px; text-align: center;">{{ stream.timeInterval?.upper }}</span>
                 <div class="filler"></div>
             </ng-container>
             <ng-container *ngIf="!stream.timeInterval">
