@@ -38,7 +38,7 @@ def canUserRead(token, streamId):
     print(user["allowedStreams"])
     for id in user["allowedStreams"]:
         print("for...")
-        if id == int(streamId):
+        if str(id) == str(streamId):
             print("gefunden!!!")
             contains = True
     return bool(user["allStreamsAllowed"] or contains)
@@ -47,7 +47,7 @@ def canUserWrite(token, streamId):
     user = usermanagement.getUserByToken(token)
     contains = False
     for id in user["allowedInsertStreams"]:
-        if id == int(streamId):
+        if str(id) == str(streamId):
             contains = True
     return bool(user["canInsertAll"] or contains)
 

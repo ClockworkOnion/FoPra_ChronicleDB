@@ -73,7 +73,11 @@ def write_task_response_to_log(job, response):
 def delete_job():
     if not validateToken(request, "Delete Job"):
         return make_response({"Access" : "denied!!"}, 403)
-    print(request.data)
+    info = jwt.decode(request.headers["Authorization"], key=SECRET, algorithms=['HS256', ])
+    username = (info["username"])
+    data = json.loads(request.data) 
+    print("Received request:\n" + str(request.data) + "\nDeleting Job job...")
+    userlogs.deleteJob(str(username), data)
     return make_response({"mission" : "Complete"})
 
 @app.route('/add_scheduled_job', methods=['POST'])
@@ -311,12 +315,12 @@ def createUser():
     token = request.headers["Authorization"]
     if not (validateToken(request, "Create User") and validation.isUserAdmin(token)):  
         return make_response({"Access" : "denied!!"}, 403)
-    response=json.loads(request.data)
-    um.registerNewUser(response["username"],response["password"],response["isAdmin"],response["usesJavaVersion"],response["canCreateStream"],
-    response["allowedStreams"],response["allowedInsertStreams"],response["allStreamsAllowed"],
-    response["canInsertAll"])
-    helper.indentPrint("Create User Response", str(response))
-    return make_response(response,200)
+    user_data = json.loads(request.data)
+    um.registerNewUser(user_data["username"],user_data["password"],user_data["isAdmin"],user_data["usesJavaVersion"],user_data["canCreateStream"],
+    user_data["allowedStreams"],user_data["allowedInsertStreams"],user_data["allStreamsAllowed"],
+    user_data["canInsertAll"])
+    helper.indentPrint("Create User Response", str(user_data))
+    return make_response(user_data,200)
 
 @app.route('/delete_user', methods=['POST'])
 def deleteUser():

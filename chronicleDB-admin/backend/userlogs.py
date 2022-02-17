@@ -115,7 +115,6 @@ def JSON_date_from_datetime(date : datetime.datetime):
     newdate["seconds"] = date.second
     return newdate
     
-
 def interpret_time(time):
     timestamp = datetime.datetime()
     timestamp.hour = time["hour"]
@@ -137,18 +136,6 @@ def JobIsDue(job):
     due_datetime = datetime.datetime(dueDate["year"], dueDate["month"], dueDate["day"], dueDate["hours"], dueDate["minutes"], dueDate["seconds"])
     due_datetime = pytz.UTC.localize(due_datetime)
     print("[TIME NOW]: " + str(date_now) + " [NEXT RUN]: " + str(due_datetime) + " [IS DUE?]: " + str(date_now >= due_datetime))
-    # print("DUE INFO:")
-    # print(str(dueDate["year"]) + " vs " +  str(date_now.year))
-    # print(str(dueDate["month"]) + " vs " +  str(date_now.month))
-    # print(str(dueDate["day"]) + " vs " +  str(date_now.day))
-    # print(str(dueDate["hours"]) + " vs " +  str(date_now.hour))
-    # print(str(dueDate["minutes"]) + " vs " +  str(date_now.minute))
-    # print(str(dueDate["seconds"]) + " vs " +  str(date_now.second))
-    # if (int(dueDate["year"]) >= date_now.year and int(dueDate["month"]) >= date_now.month 
-    # and int(dueDate["day"] >= date_now.day and int(dueDate["hours"] >= date_now.hour 
-    # and int(dueDate["minutes"] >= date_now.minute and int(dueDate["seconds"] >= date_now.second))))):
-    #     is_due = True
-    # print("[Job nextrun info] Due Date: " + str(dueDate) + " Timestamp right now: " + str(currentTimeLocalized()) + " is due?: " + str(is_due))
     return date_now >= due_datetime
 
 def getAllDueJobs():
