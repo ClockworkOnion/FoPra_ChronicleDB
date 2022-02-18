@@ -19,6 +19,7 @@ export class JavaInsertComponent implements OnInit {
   tableSchema: string = "";
 
   fileName!: string;
+  parsingSuccessfull : boolean = false;
   fileContent!: string;
   insertJson!: any[];
 
@@ -50,8 +51,10 @@ export class JavaInsertComponent implements OnInit {
         } else {
           try {
             self.insertJson = JSON.parse(fileReader.result as string);
+            self.parsingSuccessfull = true;
             self.snackBar.openGreenSnackBar("Parsing of File to JSON successfull!");
           } catch (error) {
+            self.parsingSuccessfull = false;
             self.snackBar.openRedSnackBar("Parsing of File to JSON failed!");
           }
         }

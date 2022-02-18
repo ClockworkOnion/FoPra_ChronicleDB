@@ -10,7 +10,7 @@
     {{ fileName || "No file uploaded yet." }}
     &nbsp;&nbsp;&nbsp;&nbsp;
 
-    <button [disabled]="!fileName" mat-raised-button color="primary" style="float: right"
+    <button [disabled]="!(fileName && parsingSuccessfull)" mat-raised-button color="primary" style="float: right"
         (click)="onInsertEventClicked()" matTooltip="Insert the events displayed in the preview">
         Insert Event
     </button>
