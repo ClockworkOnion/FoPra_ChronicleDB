@@ -26,7 +26,7 @@ export enum ChronicleJavaAttributeType {
 export interface ChronicleJavaStreamInfo {
   name: string;
   eventCount: number;
-  timeInterval: {
+  timeInterval?: {
     lower: number;
     upper: number;
     lowerInclusive: boolean;

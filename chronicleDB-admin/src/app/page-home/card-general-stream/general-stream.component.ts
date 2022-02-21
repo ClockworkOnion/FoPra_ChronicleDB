@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,7 +23,8 @@ export class GeneralStreamComponent implements OnInit {
   constructor(
     public chronicleService: ChronicleService,
     private createService: CreateStreamService,
-    public authService: AuthService
+    public authService: AuthService,
+    public router : Router
   ) { }
 
   updateURL(url: string) {
@@ -38,5 +40,14 @@ export class GeneralStreamComponent implements OnInit {
       (message: any) => (this.eventProperties = message)
     );
     this.chronicleService.getUrl().then((url:string) => this.chronicleUrl.setValue(url));
+  }
+
+  createStreamClicked(){
+    console.log("clicked")
+    if(this.authService.usesJavaVersion){
+      this.router.navigate(["java/create_stream"])
+    } else {
+      this.router.navigate(["rust/create_stream"])
+    }
   }
 }

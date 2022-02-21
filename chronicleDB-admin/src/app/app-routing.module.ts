@@ -1,3 +1,4 @@
+import { JavaCreateStreamComponent } from './java/java-page-create-stream/java-create-stream/java-create-stream.component';
 import { SystemInfoComponent } from './page-system-info/system-info/system-info.component';
 import { DashboardComponent } from './page-home/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'user_management', component: UserManagementComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, AdminAuthGuard]} },
   { path: 'show_right_flank', component: ShowRightFlankComponent },
   // { path: 'time_travel', component: TimeTravelComponent },
-  { path: 'create_stream', component: CreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, CreateAuthGuard]} },
+  { path: 'rust/create_stream', component: CreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, CreateAuthGuard]} },
+  { path: 'java/create_stream', component: JavaCreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, CreateAuthGuard]} },
   { path: '**', redirectTo: '' }, // als letztes wird alles andere zu home weitergeleitet...
 ];
 

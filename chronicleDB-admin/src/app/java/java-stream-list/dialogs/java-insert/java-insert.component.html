@@ -1,0 +1,24 @@
+<input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
+
+<div class="file-upload">
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()"
+        matTooltip="Upload a text file containing one or more Events. You can select a csv-file with the following columns: 
+        {{tableSchema}}">
+        <mat-icon>attach_file</mat-icon>
+    </button>
+    &nbsp;
+    {{ fileName || "No file uploaded yet." }}
+    &nbsp;&nbsp;&nbsp;&nbsp;
+
+    <button [disabled]="!(fileName && parsingSuccessfull)" mat-raised-button color="primary" style="float: right"
+        (click)="onInsertEventClicked()" matTooltip="Insert the events displayed in the preview">
+        Insert Event
+    </button>
+</div>
+<div *ngIf="fileContent" style="text-align: center;">
+    <mat-form-field class="preview" appearance="fill">
+        <mat-label>Preview</mat-label>
+        <textarea matInput cdkTextareaAutosize class="previewTextArea" readonly
+            matTooltip="Enter or edit the Event defined in the selected file." [(ngModel)]="fileContent"></textarea>
+    </mat-form-field>
+</div>

@@ -73,6 +73,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { PageMessagesComponent } from './page-messages/page-messages.component';
 import { JobResultComponent } from './page-messages/job-result/job-result.component';
 import { MinMaxTreeHeightComponent } from './page-home/stream-list/min-max-tree-height/min-max-tree-height.component';
+import { JavaCreateStreamComponent } from './java/java-page-create-stream/java-create-stream/java-create-stream.component';
+import { JavaStreamListComponent } from './java/java-stream-list/java-stream-list.component';
+import { JavaInsertComponent } from './java/java-stream-list/dialogs/java-insert/java-insert.component';
+import { JavaStreamInfoComponent } from './java/java-stream-list/dialogs/java-stream-info/java-stream-info.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { JavaQueryComponent } from './java/java-stream-list/dialogs/java-query/java-query.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +112,12 @@ import { MinMaxTreeHeightComponent } from './page-home/stream-list/min-max-tree-
     AddJobComponent,
     PageMessagesComponent,
     JobResultComponent,
-    MinMaxTreeHeightComponent
+    MinMaxTreeHeightComponent,
+    JavaCreateStreamComponent,
+    JavaStreamListComponent,
+    JavaInsertComponent,
+    JavaStreamInfoComponent,
+    JavaQueryComponent
   ],
   imports: [
     BrowserModule,
@@ -145,7 +156,8 @@ import { MinMaxTreeHeightComponent } from './page-home/stream-list/min-max-tree-
     MatPaginatorModule,
     MatSortModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ClipboardModule
   ],
   providers: [ChronicleService, CreateStreamService, InsertDataService, IDValidators,
   
