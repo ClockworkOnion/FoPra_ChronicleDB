@@ -8,11 +8,11 @@
         <mat-icon class="sidenav-icon"> home </mat-icon>
         &nbsp; Home
       </a>
-      <a mat-list-item routerLink="/jobs"  *ngIf="authService.isLoggedIn()">
+      <a mat-list-item routerLink="/rust/jobs"  *ngIf="authService.isLoggedIn() && !authService.usesJavaVersion">
         <mat-icon class="sidenav-icon"> event </mat-icon>
         &nbsp; Jobs
       </a>
-      <a mat-list-item routerLink="/rust/create_stream" *ngIf="authService.canUserCreateStreams()&&  !authService.usesJavaVersion">
+      <a mat-list-item routerLink="/rust/create_stream" *ngIf="authService.canUserCreateStreams() && !authService.usesJavaVersion">
         <mat-icon class="sidenav-icon"> add_circle_outline </mat-icon>
         &nbsp; Create New Stream
       </a>
@@ -24,7 +24,7 @@
         <mat-icon class="user"> manage_accounts </mat-icon>
         &nbsp; User Management
       </a>
-      <a mat-list-item routerLink="/systemInfo" *ngIf="authService.isLoggedIn()">
+      <a mat-list-item routerLink="/rust/systemInfo" *ngIf="authService.isLoggedIn() && !authService.usesJavaVersion">
         <mat-icon class="sidenav-icon"> info </mat-icon>
         &nbsp; System Info
       </a>
@@ -52,7 +52,7 @@
       &nbsp;
       &nbsp;
       
-      <button type="button" mat-icon-button *ngIf="authService.isLoggedIn()" routerLink="/messages">
+      <button type="button" mat-icon-button *ngIf="authService.isLoggedIn() && !authService.usesJavaVersion" routerLink="/rust/messages">
         <span class="material-icons" matBadge="{{jobService.numberOfUnreadMessages}}" matBadgeColor="warn" matBadgeSize="small" [matBadgeHidden]="jobService.numberOfUnreadMessages == 0">
           email
         </span>
@@ -95,7 +95,7 @@
               </mat-list> -->
               
               <div><button mat-button color="accent" disabled class="overlayelement">View Profile</button></div>
-              <div><button mat-button color="accent" class="overlayelement" [routerLink]="'jobs'" (click)="isOpen = false">My Jobs</button></div>
+              <div *ngIf="!authService.usesJavaVersion"><button mat-button color="accent" class="overlayelement" [routerLink]="'rust/jobs'" (click)="isOpen = false">My Jobs</button></div>
               <div><button mat-button color="accent" *ngIf="authService.isUserAdmin()" class="overlayelement" [routerLink]="'user_management'" (click)="isOpen = false">Manage Users</button></div>
     
               <div style="border-top: solid 1px #ccc;">

@@ -22,8 +22,8 @@ export class GetFlankService {
 
 
   rightFlankFromJSON(json: any, stream: ChronicleStream): string{
-      console.log("### Info: ###")
-      console.log(json);
+      // console.log("### Info: ###")
+      // console.log(json);
       
 
       // Collect General Info Strings:
@@ -81,7 +81,7 @@ export class GetFlankService {
       default: // leave prefix empty when type is string
         break;
     }
-    console.log("Payload type in stream: event no " + eventNo + " is: " + prefix + stream.event![eventNo].subtype)
+    // console.log("Payload type in stream: event no " + eventNo + " is: " + prefix + stream.event![eventNo].subtype)
   return prefix + stream.event![eventNo].subtype;
   }
 

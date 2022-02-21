@@ -3,6 +3,7 @@ from datetime import datetime
 from urllib import response
 from xml.dom import ValidationErr
 from attr import validate
+from usermanagement import getUserByToken
 from userlogs import JSON_date_from_datetime
 from flask import Flask, request
 from flask import jsonify, make_response
@@ -121,18 +122,30 @@ def setServerUrl():
     data = json.loads(request.data)
     helper.indentPrint("Set server URL request data", str(data))
 
+    user = getUserByToken(request.headers["Authorization"])
+    global javaChronicleUrl
     global chronicleUrl
-    chronicleUrl = data["url"]
+    if (user["usesJavaVersion"]):
+        javaChronicleUrl = data["url"]
+    else:
+        chronicleUrl = data["url"]
+
     with open("config.dat", "w")as outfile:
-        json.dump(data, outfile)
-    print("Changed Server URL to " + chronicleUrl)
+        json.dump({"url": chronicleUrl, "javaUrl": javaChronicleUrl}, outfile)
+
+    print("Changed Server URLs")
     return make_response({"message": "Successfully changed Server URL"})
 
 @app.route('/get_server_url', methods=['GET'])
 def getServerUrl():
     if not validateToken(request, "Getting Server URL"):
         return make_response({"Access" : "denied!!"}, 403)
-    return make_response({"url": chronicleUrl})
+
+    user = getUserByToken(request.headers["Authorization"])
+    if (user["usesJavaVersion"]):
+        return make_response({"url": javaChronicleUrl})
+    else:
+        return make_response({"url": chronicleUrl})
 
 # CHRONICLE METHODEN ############################################################################################
 
@@ -272,7 +285,7 @@ def nativeCreateStream():
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################   
     response=json.loads(request.data)
-    tmp =requests.post(chronicleUrl + "native/create-stream/", json=response)
+    tmp =requests.post(javaChronicleUrl + "native/create-stream/", json=response)
     print(tmp)
     return make_response(response,200)
 
@@ -290,8 +303,8 @@ def nativeGetStreams():
     # if not validation.isUserAdmin(request.headers["Authorization"]):
     #     return make_response({"Access" : "denied!!"}, 403)
 
-    print(chronicleUrl + "native/get-streams")
-    response = requests.get(chronicleUrl + "native/get-streams", request.data)
+    print(javaChronicleUrl + "native/get-streams")
+    response = requests.get(javaChronicleUrl + "native/get-streams", request.data)
     print("Response from ChronicleDB: "+ str(response.text))
     return jsonify(response.json())
 
@@ -308,7 +321,7 @@ def nativeStreamInfo():
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.post(chronicleUrl + "native/stream-info/", json=json.loads(request.data))
+    response = requests.post(javaChronicleUrl + "native/stream-info/", json=json.loads(request.data))
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -326,7 +339,7 @@ def nativeInsertStream():
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.post(chronicleUrl + "native/insert/", json=json.loads(request.data))
+    response = requests.post(javaChronicleUrl + "native/insert/", json=json.loads(request.data))
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -343,7 +356,7 @@ def nativeSchema():
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.post(chronicleUrl + "native/schema/", json=json.loads(request.data))
+    response = requests.post(javaChronicleUrl + "native/schema/", json=json.loads(request.data))
     print("Response from ChronicleDB: "+ str(response))
     return response.text
 
@@ -360,10 +373,10 @@ def nativeQuery():
         return make_response({"Access" : "denied!!"}, 403)
     # Method #########################################
 
-    response = requests.post(chronicleUrl + "native/query/", json=json.loads(request.data))
+    response = requests.post(javaChronicleUrl + "native/query/", json=json.loads(request.data))
     print("Response from ChronicleDB: "+ str(response))
     return response.text
-    
+
 
 # LOGIN METHODEN ################################################################################################
 
@@ -460,6 +473,8 @@ def loadUrl():
     print(data)
     global chronicleUrl
     chronicleUrl = data["url"]
+    global javaChronicleUrl
+    javaChronicleUrl = data["javaUrl"]
 
 if __name__ == "__main__":
     # Set up scheduler

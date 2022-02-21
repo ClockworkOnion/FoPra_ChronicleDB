@@ -4,6 +4,8 @@ import { AuthService } from '../auth.service';
 import { AdminAuthGuard } from './admin-auth-guard.service';
 import { AuthGuard } from './auth-guard.service';
 import { CreateAuthGuard } from './create-auth-guard.service';
+import { JavaAuthGuard } from './java-auth-guard.service';
+import { RustAuthGuard } from './rust-auth-guard.service';
 
 @Injectable({
   providedIn: 'root'
@@ -65,12 +67,18 @@ export class MasterGuard implements CanActivate {
       case CreateAuthGuard:
         guard = new CreateAuthGuard(this.router, this.authService);
         break;
+      case JavaAuthGuard:
+        guard = new JavaAuthGuard(this.router, this.authService);
+        break;
+      case RustAuthGuard:
+        guard = new RustAuthGuard(this.router, this.authService);
+        break;
       default:
         break;
     }
 
     if (!guard) {
-      console.log("Kein entsprechenden Guard gefunden!");
+      console.error("Kein entsprechenden Guard gefunden!");
       return Promise.reject(false);
     }
 

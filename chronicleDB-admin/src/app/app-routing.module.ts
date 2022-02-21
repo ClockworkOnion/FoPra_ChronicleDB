@@ -15,20 +15,22 @@ import { UserManagementComponent } from './page-user-management/user-management/
 import { AdminAuthGuard } from './services/guards/admin-auth-guard.service';
 import { PageJobsComponent } from './page-jobs/page-jobs.component';
 import { PageMessagesComponent } from './page-messages/page-messages.component';
+import { RustAuthGuard } from './services/guards/rust-auth-guard.service';
+import { JavaAuthGuard } from './services/guards/java-auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard]} },
-  { path: 'jobs', component: PageJobsComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard]} },
-  { path: 'messages', component: PageMessagesComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard]} },
   { path: 'login', component: PageLoginComponent },
   { path: 'no-access', component: NoAccessComponent },
   // {path:"insertData",component:InsertDataTabMenuComponent},
-  { path: 'systemInfo', component: SystemInfoComponent },
   { path: 'user_management', component: UserManagementComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, AdminAuthGuard]} },
-  { path: 'show_right_flank', component: ShowRightFlankComponent },
+  // { path: 'show_right_flank', component: ShowRightFlankComponent },
   // { path: 'time_travel', component: TimeTravelComponent },
-  { path: 'rust/create_stream', component: CreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, CreateAuthGuard]} },
-  { path: 'java/create_stream', component: JavaCreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, CreateAuthGuard]} },
+  { path: 'rust/systemInfo', component: SystemInfoComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, RustAuthGuard]} },
+  { path: 'rust/create_stream', component: CreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, RustAuthGuard, CreateAuthGuard]} },
+  { path: 'rust/jobs', component: PageJobsComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, RustAuthGuard]} },
+  { path: 'rust/messages', component: PageMessagesComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, RustAuthGuard]} },
+  { path: 'java/create_stream', component: JavaCreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, JavaAuthGuard, CreateAuthGuard]} },
   { path: '**', redirectTo: '' }, // als letztes wird alles andere zu home weitergeleitet...
 ];
 

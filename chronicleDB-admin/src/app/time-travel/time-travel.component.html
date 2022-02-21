@@ -29,10 +29,10 @@
                 [disabled]="!intervalFormControl.valid" style="margin-right: 8px;">
                 Go!
             </button>
-            <button mat-stroked-button color="accent" (click)="closeDialog()">
+            <button mat-stroked-button color="accent" (click)="closeDialog()" type="button">
                 Close
             </button>
-            <button mat-stroked-button color="accent" (click)="createJob()" 
+            <button mat-stroked-button color="accent" (click)="createJob()" type="button" 
                 *ngIf="!(data && data.disableCreateJob)" style="margin-left: 8px;">
                 <mat-icon>event_available</mat-icon>
                 Create A Job
