@@ -40,10 +40,6 @@ def make_empty_log(filename):
         json.dump(contents, log)
         log.flush()
 
-def clearLog(user_id):
-    with open((str(user_id)+".log"), "w") as outfile:
-        outfile.write("Log for user: " + str(user_id)+ "\n")
-
 def getUserById(user_id, user_data):
     for u in user_data["users"]:
         if (u["username"] == user_id):
@@ -80,11 +76,12 @@ def deleteJob(user_id, job_data):
     foundIndex = -1
     for index, job in enumerate(jobs):
         if job["startDate"] == job_data["startDate"]:
-            print("\nFound job with startDate " + job_data["startDate"] + " at index " + str(index))
+            print("\nFound job with startDate " + str(job_data["startDate"]) + " at index " + str(index))
             foundIndex = index
     if foundIndex != -1:
         del jobs[foundIndex]
-    print("Removed job:\t" + str(job_data) + "\nJobs left for user " + user_id + ":\t" + str(jobs))
+        writeUserFile(user_data)
+        print("Removed job:\t" + str(job_data) + "\nJobs left for user " + user_id + ":\t" + str(jobs))
 
 def addToNextRunTimestamp(user_id, job_data, seconds_to_add):
     user_data = JSONread(USERFILE)

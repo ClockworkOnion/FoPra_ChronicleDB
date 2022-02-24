@@ -112,6 +112,13 @@ def get_user_log(user_id):
         return make_response({"Access" : "denied!!"}, 403)
     return make_response(userlogs.get_user_log(user_id))
 
+@app.route('/reset_user_log/<user_id>', methods=['GET'])
+def reset_user_log(user_id):
+    if not validateToken(request, "Reset User Log"):
+        return make_response({"Access" : "denied!!"}, 403)
+    userlogs.make_empty_log(str(user_id) + ".log")
+    return make_response({"message": "Successfully reset the logs"})
+
 # BACKEND METHODEN ############################################################################################
 
 @app.route('/set_server_url', methods=['POST'])

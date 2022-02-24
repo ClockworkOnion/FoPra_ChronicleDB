@@ -153,9 +153,9 @@ export class JobService {
   }
 
   deleteAllResults() {
-    console.error("TODO delete JobResult in Backend");
     this.jobResults = [];
     this.jobResultsBS.next(this.jobResults);
+    this.chronicle.getHttp().get(BACKEND_URL + "reset_user_log/" + this.authService.username).toPromise();
   }
 
   markResultsAsRead() {
@@ -172,7 +172,7 @@ export class JobService {
       }
     );
     snackBarRef.onAction().subscribe(() => {
-      this.router.navigateByUrl("/jobs");
+      this.router.navigateByUrl("/rust/jobs");
     });
   }
 }
