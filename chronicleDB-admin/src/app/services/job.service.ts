@@ -37,7 +37,8 @@ export class JobService {
   ) {
     const backendTimer = timer(1000, 60000); // nach 60s aktualisieren
     backendTimer.subscribe(val => {
-      this.getJobResultsFromBackend()
+      if (authService.isLoggedIn())
+        this.getJobResultsFromBackend()
     })
   }
 
