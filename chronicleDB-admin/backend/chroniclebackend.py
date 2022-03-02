@@ -56,15 +56,32 @@ def do_periodic_tasks():
                 response = requests.get(chronicleUrl + "max_key/" + str(j["job"]["streamId"]))
                 write_task_response_to_log(j, response)
             except Exception as e:
-                print("Error getting max Key: " + str(e.__class__) +  "\nDoes a stream with keys in it exist?")
+                print("!!! Error getting max Key: " + str(e.__class__))
 
         if (j["job"]["requestType"] == "Min Key"):
             try:
                 print("Getting max key according to job. Response from chronicle:")
                 response = requests.get(chronicleUrl + "min_key/" + str(j["job"]["streamId"]))
                 write_task_response_to_log(j, response)
-            except:
-                print("Error getting min Key: " + str(e.__class__) +  "\nDoes a stream with keys in it exist?")
+            except Exception as e:
+                print("!!! Error getting min Key: " + str(e.__class__) )
+       
+        if (j["job"]["requestType"] == "Tree Height"):
+            try:
+                print("Getting tree height according to job. Response from chronicle:")
+                response = requests.get(chronicleUrl + "tree_height/" + str(j["job"]["streamId"]))
+                write_task_response_to_log(j, response)
+            except Exception as e:
+                print("!!! Error getting Tree Height: " + str(e.__class__) )
+
+        if (j["job"]["requestType"] == "Stream Info"):
+            try:
+                print("Getting stream info according to job. Response from chronicle:")
+                response = requests.get(chronicleUrl + "stream_info/" + str(j["job"]["streamId"]))
+                write_stream_info_to_log(j, response)
+            except Exception as e:
+                print("!!! Error getting Stream Info: " + str(e.__class__))
+
 
     print(30 * "-" + " Finished periodic tasks. " + 30 * "-")
 
@@ -80,6 +97,23 @@ def write_task_response_to_log(job, response):
     if ("info" in job["job"]):
         logEntry["info"] = job["job"]["info"]
     logEntry["payload"] = str(response.json())
+    helper.indentPrint("Created new Log Entry", str(logEntry))
+    userlogs.appendToLog(job["username"], logEntry)
+    userlogs.addToNextRunTimestamp(job["username"], job["job"], job["job"]["interval"]["value"])
+    print("User " + job["username"] + " log written and done. Next run in " + str(job["job"]["interval"]["value"]) + " seconds.")
+
+def write_stream_info_to_log(job, response):
+    if (response.status_code != 200):
+        print("Request to chronicleDB unsuccessful!")
+        return
+    helper.indentPrint("Chronicle Stream Info Response", response.text)
+    logEntry = {}
+    logEntry["timeStamp"] = JSON_date_from_datetime(datetime.now())
+    logEntry["streamId"] = job["job"]["streamId"]
+    logEntry["requestType"] = job["job"]["requestType"]
+    if ("info" in job["job"]):
+        logEntry["info"] = job["job"]["info"]
+    logEntry["payload"] = response.text
     helper.indentPrint("Created new Log Entry", str(logEntry))
     userlogs.appendToLog(job["username"], logEntry)
     userlogs.addToNextRunTimestamp(job["username"], job["job"], job["job"]["interval"]["value"])
