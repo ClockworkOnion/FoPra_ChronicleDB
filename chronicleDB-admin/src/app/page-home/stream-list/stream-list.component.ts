@@ -7,7 +7,7 @@ import { InsertDataTabMenuComponent } from 'src/app/page-insert-data/insert-data
 import { TimeTravelComponent } from 'src/app/time-travel/time-travel.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { StreamInfoComponent } from 'src/app/stream-info/stream-info.component';
-import { ShowRightFlankComponent } from 'src/app/components/show-right-flank/show-right-flank.component';
+import { ShowRightFlankComponent } from 'src/app/show-right-flank/show-right-flank.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MinMaxTreeHeightComponent } from './min-max-tree-height/min-max-tree-height.component';
 import { ChronicleRequest } from 'src/app/model/ChronicleJob';

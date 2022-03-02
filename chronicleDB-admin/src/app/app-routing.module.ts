@@ -3,9 +3,7 @@ import { SystemInfoComponent } from './page-system-info/system-info/system-info.
 import { DashboardComponent } from './page-home/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
 import { CreateStreamComponent } from './page-create-stream/create-stream/create-stream.component';
-import { TimeTravelComponent } from './time-travel/time-travel.component';
 import { PageLoginComponent } from './page-login/page-login.component';
 import { NoAccessComponent } from './no-access/no-access.component';
 import { AuthGuard } from './services/guards/auth-guard.service';
@@ -22,10 +20,7 @@ const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard]} },
   { path: 'login', component: PageLoginComponent },
   { path: 'no-access', component: NoAccessComponent },
-  // {path:"insertData",component:InsertDataTabMenuComponent},
   { path: 'user_management', component: UserManagementComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, AdminAuthGuard]} },
-  // { path: 'show_right_flank', component: ShowRightFlankComponent },
-  // { path: 'time_travel', component: TimeTravelComponent },
   { path: 'rust/systemInfo', component: SystemInfoComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, RustAuthGuard]} },
   { path: 'rust/create_stream', component: CreateStreamComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, RustAuthGuard, CreateAuthGuard]} },
   { path: 'rust/jobs', component: PageJobsComponent, canActivate: [MasterGuard], data: {guards: [AuthGuard, RustAuthGuard]} },

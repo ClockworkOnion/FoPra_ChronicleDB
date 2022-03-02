@@ -45,7 +45,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UploadDataComponent } from './page-insert-data/upload-data/upload-data.component';
 import { CreateStreamService } from './services/rest services/create-stream.service';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { ShowRightFlankComponent } from './components/show-right-flank/show-right-flank.component';
+import { ShowRightFlankComponent } from './show-right-flank/show-right-flank.component';
 import { CreateStreamComponent } from './page-create-stream/create-stream/create-stream.component';
 import { StreamEventPropertyComponent } from './page-create-stream/card-stream-event-properties/stream-event-property.component';
 import { EventgeneratorComponent } from './page-create-stream/card-stream-event-properties/eventgenerator/eventgenerator.component';

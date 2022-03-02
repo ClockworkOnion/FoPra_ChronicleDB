@@ -3,7 +3,7 @@ import { MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { BehaviorSubject, timer } from 'rxjs';
-import { ShowRightFlankComponent } from '../components/show-right-flank/show-right-flank.component';
+import { ShowRightFlankComponent } from '../show-right-flank/show-right-flank.component';
 import { BackendJob, backendJobToChronicleJob, ChronicleJob, chronicleJobToBackendJob, ChronicleRequest, JobResult, backendJobResultToJobResult, BackendJobResult } from '../model/ChronicleJob';
 import { MinMaxTreeHeightComponent } from '../page-home/stream-list/min-max-tree-height/min-max-tree-height.component';
 import { AddJobComponent } from '../page-jobs/add-job/add-job.component';
