@@ -13,7 +13,12 @@
   <mat-tab label="Upload File"> 
     <mat-card class="card">
       <mat-card-header>
-        <mat-card-title> Upload File with Events </mat-card-title>
+        <mat-card-title> 
+          Upload File with Events 
+          <button mat-icon-button class="iconButtonInTitle" matTooltip="The uploaded file has to contain a JSON Array of events.">
+            <mat-icon>info</mat-icon>
+          </button>
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content class="card-content">
         <app-upload-data></app-upload-data>

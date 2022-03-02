@@ -25,6 +25,22 @@ export class SnackBarService {
     this.snackBarConfig.duration = parseInt(this.snackBarAutoHide, 0);
     this.snackBarConfig.panelClass = 'custom-snackbar';
     this.snackBarRef = this.snackBar.open(message, '', this.snackBarConfig);
-    
+  }
+  
+  openSnackBarwithStyle(message:string,panel :string) {
+    this.snackBarConfig = new MatSnackBarConfig();
+    this.snackBarConfig.horizontalPosition = this.horizontalPosition;
+    this.snackBarConfig.verticalPosition = this.verticalPosition;
+    this.snackBarConfig.duration = parseInt(this.snackBarAutoHide, 0);
+    this.snackBarConfig.panelClass = panel;
+    this.snackBarRef = this.snackBar.open(message, '', this.snackBarConfig);
+  }
+
+  openGreenSnackBar(message: string) {
+    this.openSnackBarwithStyle(message, "green-snackbar");
+  }
+  
+  openRedSnackBar(message: string) {
+    this.openSnackBarwithStyle(message, "red-snackbar");
   }
 }

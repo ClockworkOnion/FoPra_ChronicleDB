@@ -1,0 +1,37 @@
+<mat-expansion-panel hideToggle style="border-radius: 25px; margin-bottom: 16px;">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <span style="min-width: 300px;">
+                {{result.timeStamp | date: 'dd.MM.yyyy HH:mm'}} &nbsp; &nbsp;
+                {{result.requestType}} (Stream {{result.streamId}})
+            </span>
+            <ng-container *ngIf="result.info">
+                &nbsp; &nbsp; {{result.info}}
+            </ng-container>
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+            Hier könnte eine Beschreibung stehen...
+        </mat-panel-description> -->
+        <!-- <ng-container *ngIf="true" >
+            <button mat-icon-button color="primary" matTooltip="Remove Entry from Messages" style="float: right;">
+                <mat-icon>delete</mat-icon>
+            </button>-->
+        <!-- <button mat-icon-button color="primary" matTooltip="Copy Payload to Clipboard" style="float: right; right: 0px; top: 0px;">
+                <mat-icon>content_copy</mat-icon>
+            </button> -->
+        <!-- </ng-container> -->
+    </mat-expansion-panel-header>
+    <div>
+        <!-- <button mat-icon-button color="accent" matTooltip="Remove Entry from Messages" (click)="onDelete()" style="float: right;">
+            <mat-icon>delete</mat-icon>
+        </button> -->
+        <button mat-icon-button color="accent" matTooltip="Copy Payload to Clipboard" (click)="onCopy(area)" style="float: right;">
+            <mat-icon>content_copy</mat-icon>
+        </button>
+        <mat-form-field class="preview" appearance="fill" style="width: calc(100% - 50px);">
+            <mat-label>Payload</mat-label>
+            <textarea [readonly]="true" matInput type="text" cdkTextareaAutosize #area
+                class="previewTextArea">{{result.payload}}</textarea>
+        </mat-form-field>
+    </div>
+</mat-expansion-panel>

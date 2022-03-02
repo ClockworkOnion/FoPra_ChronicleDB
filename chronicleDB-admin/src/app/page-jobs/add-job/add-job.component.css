@@ -1,0 +1,16 @@
+/* .time::-webkit-calendar-picker-indicator {
+    width: 24px;
+    height: 24px;
+} */
+
+
+.secondsinput::-webkit-outer-spin-button,
+.secondsinput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.secondsinput[type=number] {
+  -moz-appearance: textfield;
+}

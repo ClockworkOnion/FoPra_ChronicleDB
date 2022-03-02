@@ -1,0 +1,50 @@
+.grid-container {
+  margin: 20px;
+  padding-bottom: 16px;
+}
+
+.dashboard-card {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  margin-bottom: 20px;
+  margin-right: 32px;
+  border-radius: 25px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.card-content {
+  padding: 20pt;
+}
+
+.iconButtonInTitle {
+  margin-left: 8px;
+  top: -3px;
+}
+
+/* Damit der Spinner in dem Button angezeigt wird... */
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}

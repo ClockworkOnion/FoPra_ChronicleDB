@@ -8,35 +8,31 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="dashboard-card">
+  <mat-card class="dashboard-card" *ngIf="!authService.usesJavaVersion">
     <mat-card-header>
       <mat-card-title> 
         Stream List 
-        <button mat-icon-button color="primary" (click)="streamList.refresh()" matTooltip="Refresh the stream selection." class="iconButtonInTitle">
+        <button mat-icon-button color="accent" (click)="streamList.refresh()" matTooltip="Refresh the stream selection." class="iconButtonInTitle">
           <mat-icon>refresh</mat-icon>
         </button>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="card-content">
-      <app-stream-list #streamList></app-stream-list>
+      <app-stream-list #streamList ></app-stream-list>
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="dashboard-card">
+  <mat-card class="dashboard-card" *ngIf="authService.usesJavaVersion">
     <mat-card-header>
-      <mat-card-title> Customize Event </mat-card-title>
+      <mat-card-title> 
+        Stream List 
+        <button mat-icon-button color="accent" (click)="streamListJava.refresh()" matTooltip="Refresh the stream selection." class="iconButtonInTitle">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </mat-card-title>
     </mat-card-header>
     <mat-card-content class="card-content">
-      <app-eventgenerator></app-eventgenerator>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="dashboard-card">
-    <mat-card-header>
-      <mat-card-title> Stream Properties </mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="card-content">
-      <app-stream-properties></app-stream-properties>
+      <app-java-stream-list #streamListJava></app-java-stream-list>
     </mat-card-content>
   </mat-card>
 </div>

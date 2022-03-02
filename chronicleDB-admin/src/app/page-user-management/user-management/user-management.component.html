@@ -1,0 +1,129 @@
+<div class="grid-container">
+  <mat-card class="dashboard-card">
+    <mat-card-header>
+      <mat-card-title> User Management </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <div>
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filter" #input>
+        </mat-form-field>
+      </div>
+
+      <div class="example-container mat-elevation-z8">
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+          <!-- Username Column -->
+          <ng-container matColumnDef="username">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Username
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <img class="avatar" *ngIf="row.isAdmin" src="/assets/avatars/avatar1.png" width="200" height="60" />
+              <img class="avatar" *ngIf="!row.isAdmin" src="/assets/avatars/avatar3.png" width="200" height="60" />
+              &nbsp;
+              {{row.username}}
+            </mat-cell>
+          </ng-container>
+
+          <!-- isadmin  Column -->
+          <ng-container matColumnDef="isAdmin">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Admin</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-icon aria-hidden="true" class="true" *ngIf="row.isAdmin">done</mat-icon>
+              <mat-icon aria-hidden="false" class="false" *ngIf="!row.isAdmin">close</mat-icon>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="usesJava">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Java </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-icon aria-hidden="true" class="true" *ngIf="row.usesJavaVersion">done</mat-icon>
+              <mat-icon aria-hidden="false" class="false" *ngIf="!row.usesJavaVersion">close</mat-icon>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Reading Rights Column -->
+          <ng-container matColumnDef="readingRights">
+            <mat-header-cell *matHeaderCellDef> Reading Rights </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <div *ngIf="row.allStreamsAllowed">
+                <mat-icon aria-hidden="true" class="true">done</mat-icon>
+              </div>
+              <div *ngIf="row.allowedStreams.length == 0 && !row.allStreamsAllowed">
+                <mat-icon aria-hidden="false" class="false">close</mat-icon>
+              </div>
+              <div *ngIf="row.allowedStreams.length != 0">{{row.allowedStreams}}</div>
+            </mat-cell>
+          </ng-container>
+          <!-- Writing Rights Column -->
+          <ng-container matColumnDef="writingRights">
+            <mat-header-cell *matHeaderCellDef> Writing Rights </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <div *ngIf="row.canInsertAll">
+                <mat-icon aria-hidden="true" class="true">done</mat-icon>
+              </div>
+              <div *ngIf="row.allowedInsertStreams.length == 0 && !row.canInsertAll">
+                <mat-icon aria-hidden="false" class="false">close</mat-icon>
+              </div>
+              <div *ngIf="row.allowedInsertStreams.length != 0">{{row.allowedInsertStreams}}</div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="canCreateStreams">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Create Streams </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-icon aria-hidden="true" class="true" *ngIf="row.canCreateStreams">done</mat-icon>
+              <mat-icon aria-hidden="false" class="false" *ngIf="!row.canCreateStreams">close</mat-icon>
+            </mat-cell>
+          </ng-container>
+          <!--Edit menu Column-->
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+            <mat-cell *matCellDef="let row" class="edit">
+
+              <button mat-icon-button aria-label="Example icon-button with a menu" [matMenuTriggerFor]="menu">
+                <mat-icon class="more-button">more_vert</mat-icon>
+              </button>
+
+              <mat-menu #menu="matMenu">
+
+                <button mat-menu-item (click)="editUser(row.username)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit User</span>
+                </button>
+
+                <button mat-menu-item (click)="deleteUser(row.username)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete User</span>
+                </button>
+              </mat-menu>
+
+
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No User matching the filter "{{input.value}}"</td>
+          </tr>
+        </mat-table>
+
+
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+
+      <div style="text-align: center; margin-top: 32px;">
+        <button mat-raised-button color="primary" (click)="addUser()">
+          Add a New User
+        </button>
+      </div>
+
+
+    </mat-card-content>
+  </mat-card>
+</div>

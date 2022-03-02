@@ -1,0 +1,62 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.grid-container {
+  margin: 20px;
+  padding-bottom: 16px;
+}
+
+.dashboard-card {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  margin-bottom: 20px;
+  margin-right: 32px;
+  border-radius: 25px;
+}
+
+.card-content {
+  padding: 20pt;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+.mat-column-edit {
+  max-width: 50px;
+}
+
+.true {
+  color: green;
+}
+
+.false {
+  color: red;
+}
+
+/* .mat-column-canCreateStreams {
+  font-style: italic;
+} */

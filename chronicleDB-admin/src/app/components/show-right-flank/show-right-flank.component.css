@@ -1,0 +1,22 @@
+.padded {
+  margin: 20px;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  margin-bottom: 20px;
+  margin-right: 50px;
+  border-radius: 25px;
+}
+.newlines {
+  white-space: pre-line;
+}
+
+.preview {
+  /* width: 100%; */
+}
+
+.previewTextArea {
+  font-family: "Courier New", Courier, monospace;
+  overflow: hidden;
+}

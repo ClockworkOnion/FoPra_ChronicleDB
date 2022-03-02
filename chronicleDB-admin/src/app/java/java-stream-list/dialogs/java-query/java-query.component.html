@@ -1,0 +1,85 @@
+<div style="margin: 16px">
+    <h2>Query</h2>
+
+    <form (ngSubmit)="executeQuery()" [formGroup]="intervalFormControl">
+        <div style="text-align: center">
+            <mat-form-field style="width: 900px" appearance="fill" class="preview"
+                matTooltip="Please enter the SQL Query for this Request.">
+                <mat-label>SQL Query String</mat-label>
+                <textarea matInput formControlName="queryString" cdkTextareaAutosize placeholder="SELECT ... FROM ..."
+                    class="previewTextArea"></textarea>
+            </mat-form-field>
+
+            <br />
+            <mat-checkbox formControlName="appendFrom">
+                Append "<span style="font-family: 'Courier New', Courier, monospace">FROM {{ data.name }}</span>"
+                automaticly
+            </mat-checkbox>
+            <div style="margin-top: 16px">
+                <mat-form-field appearance="fill" matTooltip="Please enter the starting timestamp">
+                    <mat-label for="lowerBound">From</mat-label>
+                    <input matInput formControlName="lowerBound" type="number" id="lowerBoundInput" name="lowerBound" />
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field appearance="fill" matTooltip="Please enter the goal timestamp">
+                    <mat-label for="upperBound">To</mat-label>
+                    <input matInput formControlName="upperBound" type="number" id="upperBoundInput" name="upperBound" />
+                </mat-form-field>
+            </div>
+            <mat-error *ngIf="intervalFormControl.errors?.interval">
+                This intervall is not possible!
+            </mat-error>
+        </div>
+
+        <div style="text-align: center; margin-top: 16px">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!intervalFormControl.valid"
+                style="margin-right: 8px" matTooltip="Execute this Query.">
+                Go!
+            </button>
+            <button mat-stroked-button color="accent" type="button" (click)="closeDialog()"
+                matTooltip="Close this Dialog.">
+                Close
+            </button>
+        </div>
+    </form>
+
+    <mat-tab-group dynamicHeight *ngIf="columnNames.length > 0" style="margin-top: 32px" mat-align-tabs="center">
+        <mat-tab label="Table view">
+            <div style="margin: 16px">
+                <mat-form-field appearance="standard" style="width: 100%">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input />
+                </mat-form-field>
+                <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" (matSortChange)="sortData($event)">
+                    <ng-container *ngFor="let disCol of columnNames" matColumnDef="{{ disCol }}">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ disCol }}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{ element[disCol] }}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnNames"></mat-row>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="100">No data found</td>
+                    </tr>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of events"></mat-paginator>
+            </div>
+        </mat-tab>
+        <mat-tab label="String View">
+            <mat-form-field style="width: 100%;" appearance="fill" class="preview">
+                <mat-label>Response</mat-label>
+                <textarea matInput readonly cdkTextareaAutosize class="previewTextArea" [value]="outputInfo"></textarea>
+            </mat-form-field>
+        </mat-tab>
+    </mat-tab-group>
+    <div style="text-align: end;" *ngIf="columnNames.length > 0">
+        <button mat-stroked-button color="accent" (click)="copyResult()">
+            <mat-icon>content_copy</mat-icon>
+            Copy to Clipboard
+        </button>
+    </div>
+</div>

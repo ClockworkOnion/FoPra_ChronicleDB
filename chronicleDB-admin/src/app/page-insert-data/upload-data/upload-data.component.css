@@ -1,7 +1,13 @@
 .file-input {
-    display: none;
-  }
+  display: none;
+}
+
 .preview {
-  width: 100%;
+  width: 800px;
   margin-top: 32px;
+}
+
+.previewTextArea {
+  font-family: "Courier New", Courier, monospace;
+  overflow: hidden;
 }

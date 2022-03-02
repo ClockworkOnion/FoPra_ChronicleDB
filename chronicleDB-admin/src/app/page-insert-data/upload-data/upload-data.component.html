@@ -6,22 +6,23 @@
 <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload />
 
 <div class="file-upload">
-    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()" matTooltip="Upload a text file containing one or more Events">
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()"
+        matTooltip="Upload a text file containing one or more Events">
         <mat-icon>attach_file</mat-icon>
     </button>
     &nbsp;
     {{ fileName || "No file uploaded yet." }}
+    &nbsp;&nbsp;&nbsp;&nbsp;
 
-    <button mat-raised-button color="primary" style="float: right;" (click)="onInsertEventClicked()" matTooltip="Insert the events displayed in the preview">
+    <button [disabled]="!fileName" mat-raised-button color="primary" style="float: right"
+        (click)="onInsertEventClicked()" matTooltip="Insert the events displayed in the preview">
         Insert Event
     </button>
 </div>
 <div *ngIf="fileContent">
     <mat-form-field class="preview" appearance="fill">
         <mat-label>Preview</mat-label>
-        <textarea matInput cdkTextareaAutosize 
-        style="font-family: 'Courier New', Courier, monospace;" 
-        matTooltip="Enter or edit the Event defined in the selected file."
-        [(ngModel)]="fileContent"></textarea>
-      </mat-form-field>
+        <textarea matInput cdkTextareaAutosize class="previewTextArea"
+            matTooltip="Enter or edit the Event defined in the selected file." [(ngModel)]="fileContent"></textarea>
+    </mat-form-field>
 </div>

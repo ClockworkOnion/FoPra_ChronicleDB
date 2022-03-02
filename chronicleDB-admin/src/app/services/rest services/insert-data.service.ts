@@ -1,6 +1,8 @@
+import { HttpResponse } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { ChronicleEventElement, EventCompoundType, EventElementSingleOrList, EventElementType } from 'src/app/model/ChronicleEvent';
 import { ChronicleStream } from 'src/app/model/ChronicleStream';
+import { BACKEND_URL } from '../auth.service';
 import { ChronicleService } from '../chronicle.service';
 import { SnackBarService } from '../snack-bar.service';
 
@@ -8,39 +10,32 @@ import { SnackBarService } from '../snack-bar.service';
   providedIn: 'root'
 })
 export class InsertDataService {
-  private currentStream!: ChronicleStream|null;
 
-  constructor(private chronicleService: ChronicleService, private snackBar: SnackBarService) {
-    this.chronicleService.selectedStream$.subscribe(stream => {
-      this.currentStream = stream;      
-    });
+  constructor(private chronicleService: ChronicleService, private snackBar: SnackBarService) {  }
+
+  async insertEvent(event:string[], timestamp: number, stream: ChronicleStream) : Promise<HttpResponse<Object>> {
+    let body = this.parseInputToBody(event, timestamp, stream);
+
+    console.log(body);
+    
+
+    return await this.chronicleService.getHttp()
+      .post(BACKEND_URL + "insert_ordered/" + stream.id, body, {observe: 'response'}).toPromise()
+      // .then(response => {
+      //   console.log(response);
+      //   this.snackBar.openSnackBarwithStyle("Event successfully inserted!","green-snackbar")
+      // });
   }
 
-  insertEvent(event:string[], timestamp: number) {
-    let url = this.chronicleService.getUrl();
-    if (!url || !this.currentStream) {
-      return; 
-    }
-    let body = this.parseInputToBody(event, timestamp);
-
-    this.chronicleService.getHttp()
-      .post(url + "insert_ordered/" + this.currentStream!.id, body)
-      .subscribe(response => this.snackBar.openSnackBar("Event successfully inserted!"));
+  async insertEventString(event:string, id: number) {
+    return await this.chronicleService.getHttp()
+      .post(BACKEND_URL + "insert_ordered/" + id, event, {observe: 'response'}).toPromise()
+      
+      // .subscribe(response => this.snackBar.openSnackBarwithStyle("Event successfully inserted!","green-snackbar"));
   }
 
-  insertEventString(event:string) {
-    let url = this.chronicleService.getUrl();
-    if (!url || !this.currentStream) {
-      return; 
-    }
-
-    this.chronicleService.getHttp()
-      .post(url + "insert_ordered/" + this.currentStream!.id, event)
-      .subscribe(response => this.snackBar.openSnackBar("Event successfully inserted!"));
-  }
-
-  parseInputToBody(eventInput:string[], timestamp: number) {
-    let eventDef = this.currentStream!.event;
+  parseInputToBody(eventInput:string[], timestamp: number, stream: ChronicleStream) {
+    let eventDef = stream.event!;
     let payload: string = '';
 
     for (let i = 0; i < eventInput.length; i++) {
@@ -70,8 +65,8 @@ export class InsertDataService {
     }
 
     // wrap payload with Compound
-    if (this.currentStream!.compoundType != EventCompoundType.single) {
-      payload = '{"' + this.currentStream!.compoundType + '":[' + payload + ']}';
+    if (stream.compoundType != EventCompoundType.single) {
+      payload = '{"' + stream.compoundType + '":[' + payload + ']}';
     }
     return `{"t1":${timestamp},"payload":${payload}}`;
   }

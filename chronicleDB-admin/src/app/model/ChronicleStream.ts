@@ -2,6 +2,10 @@ import { ChronicleEventElement, EventCompoundType } from "./ChronicleEvent";
 
 export interface ChronicleStream {
   id: number,
-  event: ChronicleEventElement[]
-  compoundType: EventCompoundType
+  online: boolean,
+  event?: ChronicleEventElement[],
+  compoundType?: EventCompoundType,
+  minKey:string;
+  maxKey:string;
+  treeHeight:string;
 }

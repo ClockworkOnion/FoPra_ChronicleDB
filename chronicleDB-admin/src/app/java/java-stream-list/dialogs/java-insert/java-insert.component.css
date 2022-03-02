@@ -1,0 +1,14 @@
+.file-input {
+  display: none;
+}
+
+.preview {
+  width: 100%;
+  min-width: 800px;
+  margin-top: 32px;
+}
+
+.previewTextArea {
+  font-family: "Courier New", Courier, monospace;
+  overflow: hidden;
+}

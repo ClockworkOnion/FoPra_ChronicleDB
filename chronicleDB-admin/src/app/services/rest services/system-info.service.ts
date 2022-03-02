@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BACKEND_URL } from '../auth.service';
 import { ChronicleService } from '../chronicle.service';
 
 @Injectable({
@@ -10,6 +11,6 @@ export class SystemInfoService {
 
 
   getSystemInfo(){
-    return this.data.getHttp().get(this.data.getUrl() +"system_info",{responseType:"text"}) 
+    return this.data.getHttp().get(BACKEND_URL +"system_info",{responseType:"text"}) 
   }
 }

@@ -115,3 +115,111 @@ Anwesend: Johannes Buder, Davit Davtyan, Lars Happel
 - Beschlossen die Services aufzuspalten in
 - Es soll ein Modell implementiert werden, um die Stream-Events intern zu repräsentieren
 - Davit implementiert Dark-Mode und Progress Bar bei der Kommunikation mit ChronicleDB
+
+
+## Besprechung vom 06.12.21
+Awensend: Johannes Buder, Davit Davtyan, Lars Happel
+
+### Login
+Zunächst wollen wir ein eigenes Backend erstellen, welches wir mittels einer REST-API ansprechen. Dies wollen wir in den Ferien fertig gestellt haben.
+Für die User legen wir dann jeweils ihre Rollen, Berechtigungen und sonstige Daten an. Den Login wollen wir mittels JWT umsetzen und verifizieren.  
+Wir planen eine Seite, auf der ein Admin dann die Berechtigungen der Benutzer verwalten und modifizieren kann. Jedoch hat für uns erst mal Priorität, 
+dass die Logik und die entsprechende Anzeige funktioniert.
+
+### Max/Min Key
+Wir wollen direkt in der Streamliste den Max und Min key anzeigen lassen.
+
+
+
+
+## Mini-Besprechung vom 12.01.22
+Awensend: Johannes Buder, Lars Happel
+
+### Login
+Wir wollen auf ein Python-Backend umsteigen. Da wir bisher schon mit einer REST-API gearbeitet haben, sollte der Austausch problemlos.
+Da die oben erwähnte Logik schon funktioniert, wollen wir nun eine Admin-Verwaltungsseite erstellen und die Login-Seite aufhübschen :)
+
+## Besprechung 13.01.21
+
+### Login/Backend
+Ein bisscchen Bugfixing betrieben beim Backend. Das Login funktioniert nun via Backend. Wir haben uns entschlossen auch für die anderen Requests das Backend zu nutzen, damit der Token verifiziert werden kann. Ansonsten wäre die Sicherheitslücke zu groß, da man selbst Web Token generieren könnte und somit die Nutzerverwaltung aushebeln.
+
+
+
+
+## Mini-Besprechung vom 17.01.22
+Awensend: Johannes Buder, Davit Davtyan
+
+### Dialoge
+Wir wollen verhindern, dass manche Dialoge (TimeTravel) geschlossen werden, wenn man weg klickt.
+
+#### Time Travel
+- neues UI machen und anpassen
+
+#### Show Right Flank
+- UI hinzufügen (bisher nur Konsole)
+
+
+
+
+## Besprechung vom 20.01.22
+Awensend: Johannes Buder, Davit Davtyan, Lars Happel
+
+- Gemeinsames Betrachten der Tabellendarstellung in Time-Travel.
+- Erörterung des weiteren Vorgehens zum Verbinden des Backend mit dem Frontend
+
+
+
+
+## Besprechung vom 27.01.22
+Awensend: Johannes Buder, Davit Davtyan, Lars Happel
+
+### Show Right Flank
+Da Show Right Flank noch nicht fertig im Kontextmenü der Streams ist, wollen wir dies aktuell angehen. 
+Dann können wir auch links das Menü "aufrüumen", dass da nicht mehr viel Debug-Zeug angezeigt werden muss.
+
+### Darkmode
+Wir haben ebenso nochmal den Darkmode für alle Bereiche umgesetzt und besprochen (Dialoge etc)
+
+### Insert
+Wir haben gemerkt, dass zu schnelles einfügen Chronicle überlastet und wir da anhand des Codes noch 
+mehr überprüfen müssen. Dies wollen wir nun noch weiter anpassen.
+
+### User Management
+Wir haben das Menü bei der Login-Seite aufgeräumt, weitere Beschränkungen eingefügt und weitere Änderungen vorgenommen.
+
+
+## Spontane Besprechung vom 01.02.22
+Awensend: Johannes Buder, Lars Happel, Davit Davtyan
+
+### Jobs
+Jobs werden parallel durch das Frontend und Backend verwaltet. Das Backend führt periodisch Anfragen an die Datenbank aus und sammelt diese, so dass der User diese in Form einer Log Datei abrufen kann.
+
+Wir haben besprochen in welcher Form die Anfragen an das Backend stattfinden sollen, und welche Informationen bzgl. der Jobs festgehalten werden müssen:
+- Startzeitpunkt des Jobs
+- Nächster Ausführungszeitpunkt
+- ggfs. Intervall bis zur nächsten Ausführung
+- ID des gewählten Streams
+- Typ der auszuführenden Anfrage
+- Info Text (Name des Jobs, den der User vergeben kann)
+
+Zusätzlich ist ggfs. festzuhalten wieviele der neu geloggten Anfragen der User bereits betrachtet hat, um die Zahl der neuen Nachrichten rechts-oben am Brief Icon anpassen zu können.
+
+Die Ergebnisse der Anfragen sollen bis auf weiteres 1:1 als Text in einer separaten Log Datei für jeden User gespeichert werden. Später kann dann evtl. das Format angepasst werden um die Logs schöner darzustellen.
+
+
+
+
+## Besprechung vom 09.02.22
+Awensend: Johannes Buder, Lars Happel
+
+### Jobs
+Wir erstellen noch die letzten JobTypen, sodass wir dann Jobs für Stream Info, System Info, Time Travel, Right Flank, Max Key, Min Key und Tree Height haben. 
+Im Frontend wird bereits alles angezeigt, sogar die Messages, von den automatischen Ausführungen der Jobs. Die Kommunikation mit dem Backend besteht auch schon,
+aber die automatische Ausführung muss noch fertig gestellt werden.
+
+### Java-Version
+Wir haben uns dazu entschieden, dass wir in der Nutzerverwaltung für jeden Nutzer festlegen, ob er die Java oder die Rust-Verion benutzt. 
+Dementsprechend soll auch die Website angezeigt werden. Wir wollen die unterschiedlichen Versionen in der URL ebenso anzeigen.
+Wenn wir die anderen Themen abgeschlossen haben (sollte nicht mehr lange dauern), werden wir die einzelnen Komponenten (Create Stream etc) 
+für die Java-Variante duplizieren und anpassen. (Wir haben uns gegen riesige if-else überall entschieden und spalten unser Projekt in sogesagt 2 Teile auf: Rust und Java)

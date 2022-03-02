@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ChronicleStream } from 'src/app/model/ChronicleStream';
+import { ChronicleService } from 'src/app/services/chronicle.service';
 import { InsertDataService } from 'src/app/services/rest services/insert-data.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 @Component({
   selector: 'app-upload-data',
@@ -10,7 +14,9 @@ export class UploadDataComponent {
   fileName!: string;
   fileContent!: string;
 
-  constructor(private insertService: InsertDataService) {}
+  constructor(private insertService: InsertDataService, private chronicle: ChronicleService,
+    @Inject(MAT_DIALOG_DATA) public data: {stream: ChronicleStream},
+    private snackBar: SnackBarService) {}
 
   onFileSelected(event: any) {
     if (!event.target) return;
@@ -29,9 +35,16 @@ export class UploadDataComponent {
   }
 
   onInsertEventClicked() {
-    let lines:string[] = this.fileContent.split("\n").map(line => line.trim());
-    lines.forEach(line => {
-      this.insertService.insertEventString(line);
+    let lines : string = this.fileContent.split("\n").map(line => line.trim()).join("");
+    let events : Array<any> = JSON.parse(lines);
+    events.forEach(event => {
+      this.insertService.insertEventString(JSON.stringify(event), this.data.stream.id).then(value => {
+        if (value.status != 200) {
+          this.snackBar.openSnackBarwithStyle("Insertion failed!","red-snackbar");
+          return;
+        }
+      });
     })
+    this.snackBar.openSnackBarwithStyle("Event successfully inserted!","green-snackbar")
   }
 }

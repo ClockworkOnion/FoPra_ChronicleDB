@@ -1,0 +1,13 @@
+<h2>{{ title }}</h2>
+<!-- <p>{{ title }} of Stream with ID {{ data.streamId }} is {{ body }}.</p> -->
+<mat-form-field appearance="fill">
+  <mat-label>{{ title }} of Stream with ID {{ data.streamId }}</mat-label>
+  <input matInput [value]="body" readonly/>
+</mat-form-field>
+
+<div style="text-align: end;">
+    <button mat-stroked-button color="accent" (click)="createJob()" *ngIf="!data.disableCreateJob">
+        <mat-icon>event_available</mat-icon>
+        Create A Job
+    </button>
+</div>

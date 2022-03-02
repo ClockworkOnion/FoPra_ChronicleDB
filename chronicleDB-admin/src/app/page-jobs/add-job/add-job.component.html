@@ -1,0 +1,58 @@
+<div style="margin: 16px">
+    <h2>Add a new Job</h2>
+
+    <form [formGroup]="formGroup">
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="fill">
+            <mat-label>Enter a Time</mat-label>
+            <input type="time" matInput formControlName="time" class="time" #timeInput />
+            <button matSuffix mat-icon-button>
+                <mat-icon>schedule</mat-icon>
+            </button>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="fill">
+            <mat-label>Select Interval</mat-label>
+            <mat-select formControlName="interval">
+                <div style="text-align: center">
+                    <mat-form-field style="margin: 8px">
+                        <mat-label>Add a new Interval</mat-label>
+                        <input class="secondsinput" matInput type="number" #intervalInput />
+                        <button mat-icon-button (click)="addInterval(intervalInput.value)" color="primary" matSuffix>
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+                <mat-option *ngFor="let interval of intervalArray" [value]="interval">{{
+                    interval.text
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Add Info to display</mat-label>
+                <input matInput formControlName="info" />
+                <mat-icon matSuffix>info</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <div style="text-align: center; margin-top: 16px">
+            <button [disabled]="this.formGroup.invalid" mat-dialog-close mat-raised-button color="primary"
+                (click)="onSubmit()">
+                Add
+            </button>
+            &nbsp;
+            <button mat-dialog-close mat-raised-button color="warn" [mat-dialog-close]="null">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>

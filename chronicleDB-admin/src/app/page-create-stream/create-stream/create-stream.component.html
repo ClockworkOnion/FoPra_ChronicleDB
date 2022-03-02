@@ -1,0 +1,36 @@
+<div class="grid-container">
+    <mat-card class="dashboard-card">
+        <mat-card-header>
+            <mat-card-title> Customize Event </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content">
+            <app-eventgenerator></app-eventgenerator>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-expansion-panel class ="dashboard-card">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Stream Properties
+            </mat-panel-title>
+            <mat-panel-description>
+                Select Options for Streams
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+         <div class ="card-content">
+             <app-stream-properties></app-stream-properties>
+            </div>
+        </mat-expansion-panel>
+
+    <mat-card class="dashboard-card">
+        <mat-card-content class="card-content">
+            <span style="color: gray">ChronicleDB Server URL: {{ chronicleService.url }}</span>
+            <button mat-raised-button color="primary" style="display: block; margin: auto"
+                matTooltip="Create a new stream with the given URL, the event definition and the defined properties."
+                (click)="onCreateStreamClicked()"
+                [disabled]="createService.isHttpRequestPending" [class.spinner]="createService.isHttpRequestPending">
+                Create A New Stream
+            </button>
+        </mat-card-content>
+    </mat-card>
+</div>

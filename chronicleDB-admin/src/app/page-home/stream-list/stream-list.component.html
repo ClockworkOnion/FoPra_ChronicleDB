@@ -1,0 +1,76 @@
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <div class="streamListElement-box" *ngFor="let stream of streamList" cdkDrag>
+    <ng-container *ngIf="stream">
+      <span [ngClass]="{'online' : stream['online'], 'offline': !stream['online']}" class="statusPoint">●</span>
+      <b>Stream ID : {{stream.id}} </b>
+      <div class= "filler"></div>
+      |
+      <div class= "filler"></div>
+      Tree-height : {{stream.treeHeight}}
+      <div class= "filler"></div>
+      |
+      <div class= "filler"></div>
+      MinKey : {{stream.minKey}} 
+      <div class= "filler"></div>
+      |
+      <div class= "filler"></div> 
+      MaxKey : {{stream.maxKey}}
+      <div class= "filler"></div>
+      <span class="example-spacer"></span>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+
+        <button mat-menu-item (click)="insertData(stream)" [disabled]="!stream.online" *ngIf="authService.canUserInsertToStream(stream.id)">
+          <mat-icon>add</mat-icon>
+          <span>Insert Data</span>
+        </button>       
+        <button mat-menu-item [matMenuTriggerFor]="keys" [disabled]="!stream.online">
+          <mat-icon>key</mat-icon>
+          <span>Get Key</span>
+        </button>
+
+        <button mat-menu-item (click)="showTreeHeight(stream.id)" [disabled]="!stream.online">
+          <mat-icon>height</mat-icon>
+          <span>Get Tree Height</span>
+        </button>   
+
+        <button mat-menu-item  (click)="showInfo(stream.id)" [disabled]="!stream.online">
+          <mat-icon>info</mat-icon>
+          <span>Stream Info</span>
+        </button>
+        <button mat-menu-item  (click)="showRightFlank(stream)" [disabled]="!stream.online">
+          <mat-icon>visibility</mat-icon>
+          <span>Show right Flank</span>
+        </button>
+        <button mat-menu-item (click)="timeTravel(stream.id)" [disabled]="!stream.online">
+          <mat-icon>analytics</mat-icon>
+          <span>Query Time travel</span>
+        </button>
+        <button mat-menu-item (click)="shutDown(stream.id)" *ngIf="stream.online && authService.isUserAdmin()">
+          <mat-icon>close</mat-icon>
+          <span>Shutdown Stream</span>
+        </button>
+        <button mat-menu-item (click)="recover(stream.id)" *ngIf="!stream.online && authService.isUserAdmin()">
+          <mat-icon>restore</mat-icon>
+          <span>*CAUTION* Recover Stream</span>
+        </button>
+      </mat-menu>
+      
+      <mat-menu #keys="matMenu">
+        <button mat-menu-item (click)="showMaxKey(stream.id)">
+          Maximum Key
+        </button>
+        <button mat-menu-item (click)="showMinKey(stream.id)">
+          Minimum Key
+        </button>
+      </mat-menu>
+    </ng-container>
+  </div>
+</div>
+<div id="output"></div>
+
+
+  
