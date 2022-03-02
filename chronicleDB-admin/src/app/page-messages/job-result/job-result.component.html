@@ -1,8 +1,10 @@
 <mat-expansion-panel hideToggle style="border-radius: 25px; margin-bottom: 16px;">
     <mat-expansion-panel-header>
         <mat-panel-title>
-            {{result.timeStamp | date: 'dd.MM.yyyy HH:mm'}} &nbsp; &nbsp;
-            {{result.requestType}} (Stream {{result.streamId}})
+            <span style="min-width: 300px;">
+                {{result.timeStamp | date: 'dd.MM.yyyy HH:mm'}} &nbsp; &nbsp;
+                {{result.requestType}} (Stream {{result.streamId}})
+            </span>
             <ng-container *ngIf="result.info">
                 &nbsp; &nbsp; {{result.info}}
             </ng-container>
@@ -20,13 +22,13 @@
         <!-- </ng-container> -->
     </mat-expansion-panel-header>
     <div>
-        <button mat-icon-button color="accent" matTooltip="Remove Entry from Messages" (click)="onDelete()" style="float: right;">
+        <!-- <button mat-icon-button color="accent" matTooltip="Remove Entry from Messages" (click)="onDelete()" style="float: right;">
             <mat-icon>delete</mat-icon>
-        </button>
+        </button> -->
         <button mat-icon-button color="accent" matTooltip="Copy Payload to Clipboard" (click)="onCopy(area)" style="float: right;">
             <mat-icon>content_copy</mat-icon>
         </button>
-        <mat-form-field class="preview" appearance="fill" style="width: calc(100% - 100px);">
+        <mat-form-field class="preview" appearance="fill" style="width: calc(100% - 50px);">
             <mat-label>Payload</mat-label>
             <textarea [readonly]="true" matInput type="text" cdkTextareaAutosize #area
                 class="previewTextArea">{{result.payload}}</textarea>
