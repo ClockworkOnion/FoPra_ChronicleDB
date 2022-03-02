@@ -49,6 +49,23 @@ def do_periodic_tasks():
             request_body = '{"'+exclusive_or_inclusive+'":{"start":'+str(from_timestamp)+',"end":'+str(to_timestamp)+'}'+'}'
             response = requests.post(chronicleUrl + "query_time_travel/" + str(j["job"]["config"]["data"]["streamId"]), request_body)
             write_task_response_to_log(j, response)
+        
+        if (j["job"]["requestType"] == "Max Key"):
+            try:
+                print("Getting max key according to job. Response from chronicle:")
+                response = requests.get(chronicleUrl + "max_key/" + str(j["job"]["streamId"]))
+                write_task_response_to_log(j, response)
+            except Exception as e:
+                print("Error getting max Key: " + str(e.__class__) +  "\nDoes a stream with keys in it exist?")
+
+        if (j["job"]["requestType"] == "Min Key"):
+            try:
+                print("Getting max key according to job. Response from chronicle:")
+                response = requests.get(chronicleUrl + "min_key/" + str(j["job"]["streamId"]))
+                write_task_response_to_log(j, response)
+            except:
+                print("Error getting min Key: " + str(e.__class__) +  "\nDoes a stream with keys in it exist?")
+
     print(30 * "-" + " Finished periodic tasks. " + 30 * "-")
 
 def write_task_response_to_log(job, response):
