@@ -15,8 +15,7 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 export class JavaChronicleService {
   constructor(
     private http: HttpClient,
-    private snackBar: SnackBarService,
-    private authService: AuthService
+    private snackBar: SnackBarService
   ) { }
 
   getHttp(): HttpClient {

@@ -3,7 +3,7 @@ import { ChronicleEventElement, EventElementSingleOrList, EventElementSubtype, E
 
 export class EventElementValidator {
     static validateFloat(value: string, subtype: EventElementSubtype): ValidationErrors | null {
-        if (!value.match(/^\d+\.\d+$/))
+        if (!value.match(/^(\+|\-)?\d+\.\d+$/))
             return {error: "No Float!"}
         return null;
     }

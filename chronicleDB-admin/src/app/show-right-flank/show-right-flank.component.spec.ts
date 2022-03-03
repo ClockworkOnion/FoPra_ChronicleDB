@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShowRightFlankComponent } from './show-right-flank.component';
 
-describe('ShowRightFlankComponent', () => {
+xdescribe('ShowRightFlankComponent', () => {
   let component: ShowRightFlankComponent;
   let fixture: ComponentFixture<ShowRightFlankComponent>;
 
@@ -17,9 +17,5 @@ describe('ShowRightFlankComponent', () => {
     fixture = TestBed.createComponent(ShowRightFlankComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });

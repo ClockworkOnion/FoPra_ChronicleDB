@@ -1,4 +1,6 @@
+import { Overlay } from '@angular/cdk/overlay';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { SnackBarComponent } from './snack-bar.component';
 
@@ -8,7 +10,7 @@ describe('SnackBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SnackBarComponent ]
+      declarations: [ SnackBarComponent ], providers: [MatSnackBar, Overlay]
     })
     .compileComponents();
   });

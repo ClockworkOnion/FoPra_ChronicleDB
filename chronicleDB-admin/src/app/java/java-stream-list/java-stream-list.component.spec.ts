@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { JavaStreamListComponent } from './java-stream-list.component';
 
-describe('JavaStreamListComponent', () => {
+xdescribe('JavaStreamListComponent', () => {
   let component: JavaStreamListComponent;
   let fixture: ComponentFixture<JavaStreamListComponent>;
 
@@ -17,9 +17,5 @@ describe('JavaStreamListComponent', () => {
     fixture = TestBed.createComponent(JavaStreamListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });
