@@ -104,6 +104,13 @@ export class JavaInsertComponent implements OnInit {
     this.snackBar.openGreenSnackBar("Parsing of CSV successfull!")
   }
 
+  /**
+   * Nimmt einen einzigen Eintrag aus der CSV Tabelle und parst diesesn zu dem Typ,
+   * den der Header vorgibt
+   * @param element ein Eintrag der CSV
+   * @param headerName Header der Spalte von dem Eintrag
+   * @returns element in dem passenden Typ zur Spalte
+   */
   parseEventElementToCorrectType(element: string, headerName: string) : any {
     if (headerName.toUpperCase() == CSV_TIMESTAMP_HEADER) {
       return Number(element);
